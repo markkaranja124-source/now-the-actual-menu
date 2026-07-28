@@ -1,5 +1,6 @@
 /* ==========================================================================
-   RIB HOUSE - ZANNY COLLECTION STYLE MENU LANDING PAGE JS LOGIC
+   RIB HOUSE - HAUTE SMOKEHOUSE & WOOD-FIRED GRILL
+   INTERACTIVE JAVASCRIPT LOGIC & ANIMATIONS
    ========================================================================== */
 
 // --- 1. MENU DATASET ---
@@ -209,470 +210,24 @@ let currentCategory = 'all';
 let searchQuery = '';
 let currentSort = 'featured';
 let cart = JSON.parse(localStorage.getItem('ribhouse_cart') || '[]');
-let activeQuickViewItem = null;
-let activeQuickViewQty = 1;
 
-// --- 3. DOM ELEMENTS ---
-const menuGrid = document.getElementById('menu-grid');
-const categoryButtons = document.querySelectorAll('.category-pill');
-const quickSearchInput = document.getElementById('quick-search');
-const clearSearchBtn = document.getElementById('clear-search');
-const sortSelect = document.getElementById('sort-select');
-const visibleCountEl = document.getElementById('visible-count');
-const resetFiltersBtn = document.getElementById('reset-filters-btn');
-const emptyStateEl = document.getElementById('empty-state');
-const emptyResetBtn = document.getElementById('empty-reset-btn');
-
-// Cart Drawer DOM
-const cartToggleBtn = document.getElementById('cart-toggle-btn');
-const cartCloseBtn = document.getElementById('cart-close-btn');
-const cartDrawer = document.getElementById('cart-drawer');
-const cartOverlay = document.getElementById('cart-drawer-overlay');
-const cartBadgeCount = document.getElementById('cart-badge-count');
-const cartItemsContainer = document.getElementById('cart-items-container');
-const cartSubtotalEl = document.getElementById('cart-subtotal');
-const cartTaxEl = document.getElementById('cart-tax');
-const cartTotalEl = document.getElementById('cart-total');
-const drawerItemCount = document.getElementById('drawer-item-count');
-const checkoutBtn = document.getElementById('checkout-btn');
-
-// QuickView Modal DOM
-const qvOverlay = document.getElementById('quickview-modal-overlay');
-const qvCloseBtn = document.getElementById('modal-close-btn');
-const qvImg = document.getElementById('qv-img');
-const qvBadge = document.getElementById('qv-badge');
-const qvCategory = document.getElementById('qv-category');
-const qvTitle = document.getElementById('qv-title');
-const qvPrice = document.getElementById('qv-price');
-const qvSpice = document.getElementById('qv-spice');
-const qvDescription = document.getElementById('qv-description');
-const qvSpecsGrid = document.getElementById('qv-specs-grid');
-const qvQtyVal = document.getElementById('qv-qty-val');
-const qvQtyMinus = document.getElementById('qv-qty-minus');
-const qvQtyPlus = document.getElementById('qv-qty-plus');
-const qvAddToCartBtn = document.getElementById('qv-add-to-cart-btn');
-
-// Checkout Modal DOM
-const checkoutModalOverlay = document.getElementById('checkout-modal-overlay');
-const checkoutModalClose = document.getElementById('checkout-modal-close');
-const checkoutForm = document.getElementById('checkout-form');
-const checkoutModalTotal = document.getElementById('checkout-modal-total');
-
-// --- 4. INITIALIZATION ---
+// --- 3. INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
-    updateCategoryCounts();
-    renderFilteredMenu();
+    initScrollNavbar();
+    initScrollReveal();
+    initMenuFilter();
+    initCartDrawer();
+    initModals();
+    initFaqAccordion();
+    renderMenu();
     updateCartUI();
-    initScrollHeader();
-    createEmberParticles();
-    bindEvents();
 });
 
-// --- 5. CATEGORY COUNTS UPDATE ---
-function updateCategoryCounts() {
-    const counts = {
-        all: MENU_ITEMS.length,
-        ribs: 0,
-        steaks: 0,
-        starters: 0,
-        sides: 0,
-        drinks: 0,
-        desserts: 0
-    };
-
-    MENU_ITEMS.forEach(item => {
-        if (counts[item.category] !== undefined) {
-            counts[item.category]++;
-        }
-    });
-
-    Object.keys(counts).forEach(cat => {
-        const el = document.getElementById(`count-${cat}`);
-        if (el) el.textContent = counts[cat];
-    });
-}
-
-// --- 6. RENDER MENU ITEMS GRID ---
-function renderFilteredMenu() {
-    let items = MENU_ITEMS.filter(item => {
-        const matchesCategory = (currentCategory === 'all') || (item.category === currentCategory);
-        const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                              item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                              item.badge.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesCategory && matchesSearch;
-    });
-
-    // Sorting
-    if (currentSort === 'price-low') {
-        items.sort((a, b) => a.price - b.price);
-    } else if (currentSort === 'price-high') {
-        items.sort((a, b) => b.price - a.price);
-    } else if (currentSort === 'spicy') {
-        items.sort((a, b) => b.spiceVal - a.spiceVal);
-    } else {
-        // Featured
-        items.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
-    }
-
-    // Update UI counters
-    visibleCountEl.textContent = items.length;
-    resetFiltersBtn.style.display = (currentCategory !== 'all' || searchQuery !== '') ? 'inline-block' : 'none';
-
-    if (items.length === 0) {
-        menuGrid.style.display = 'none';
-        emptyStateEl.style.display = 'block';
-    } else {
-        menuGrid.style.display = 'grid';
-        emptyStateEl.style.display = 'none';
-        menuGrid.innerHTML = items.map(item => createMenuCardHTML(item)).join('');
-    }
-}
-
-function createMenuCardHTML(item) {
-    return `
-        <div class="menu-card" data-id="${item.id}">
-            <div class="card-image-wrapper">
-                <img src="${item.image}" alt="${item.title}" class="card-img" loading="lazy">
-                <span class="card-badge">${item.badge}</span>
-                <button class="card-quickview-btn" onclick="openQuickView('${item.id}')">QUICK VIEW</button>
-            </div>
-            <div class="card-body">
-                <span class="card-category-tag">${item.category.toUpperCase()}</span>
-                <h3 class="card-title">${item.title}</h3>
-                <p class="card-desc">${item.description}</p>
-                <div class="card-footer">
-                    <span class="card-price">$${item.price.toFixed(2)}</span>
-                    <button class="card-add-btn" onclick="quickAddToCart('${item.id}')">+ ADD TO BAG</button>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-// --- 7. CART LOGIC (Zanny Collection Bag) ---
-function quickAddToCart(itemId) {
-    const item = MENU_ITEMS.find(i => i.id === itemId);
-    if (!item) return;
-    addToCart(item, 1, []);
-    showToast(`🔥 ${item.title} added to order bag!`);
-}
-
-function addToCart(item, qty = 1, addons = []) {
-    const addonPriceSum = addons.reduce((sum, a) => sum + parseFloat(a.price), 0);
-    const unitPrice = item.price + addonPriceSum;
-    const cartItemId = item.id + (addons.length ? '-' + addons.map(a => a.name).join('-') : '');
-
-    const existingIndex = cart.findIndex(c => c.cartItemId === cartItemId);
-    if (existingIndex > -1) {
-        cart[existingIndex].qty += qty;
-    } else {
-        cart.push({
-            cartItemId,
-            id: item.id,
-            title: item.title,
-            image: item.image,
-            unitPrice,
-            qty,
-            addons
-        });
-    }
-
-    saveCart();
-    updateCartUI();
-    openCartDrawer();
-}
-
-function updateCartQuantity(cartItemId, delta) {
-    const item = cart.find(c => c.cartItemId === cartItemId);
-    if (!item) return;
-
-    item.qty += delta;
-    if (item.qty <= 0) {
-        cart = cart.filter(c => c.cartItemId !== cartItemId);
-    }
-    saveCart();
-    updateCartUI();
-}
-
-function removeFromCart(cartItemId) {
-    cart = cart.filter(c => c.cartItemId !== cartItemId);
-    saveCart();
-    updateCartUI();
-    showToast('Item removed from order bag');
-}
-
-function saveCart() {
-    localStorage.setItem('ribhouse_cart', JSON.stringify(cart));
-}
-
-function updateCartUI() {
-    const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-    const subtotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
-    const tax = subtotal * 0.08;
-    const total = subtotal + tax;
-
-    cartBadgeCount.textContent = totalQty;
-    drawerItemCount.textContent = `${totalQty} item${totalQty !== 1 ? 's' : ''}`;
-    cartSubtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-    cartTaxEl.textContent = `$${tax.toFixed(2)}`;
-    cartTotalEl.textContent = `$${total.toFixed(2)}`;
-    checkoutModalTotal.textContent = `$${total.toFixed(2)}`;
-
-    checkoutBtn.disabled = cart.length === 0;
-
-    if (cart.length === 0) {
-        cartItemsContainer.innerHTML = `
-            <div style="text-align: center; padding: 40px 10px; color: var(--color-text-sub);">
-                <div style="font-size: 2.5rem; margin-bottom: 8px;">🛍️</div>
-                <p style="font-family: var(--font-subheading); letter-spacing: 1px;">YOUR ORDER BAG IS EMPTY</p>
-                <small>Explore our menu drops and add your favorite dishes!</small>
-            </div>
-        `;
-    } else {
-        cartItemsContainer.innerHTML = cart.map(item => `
-            <div class="cart-item-card">
-                <img src="${item.image}" alt="${item.title}" class="cart-item-thumb">
-                <div class="cart-item-details">
-                    <h4 class="cart-item-title">${item.title}</h4>
-                    ${item.addons && item.addons.length ? `<div class="cart-item-addons">+ ${item.addons.map(a => a.name).join(', ')}</div>` : ''}
-                    <span class="cart-item-price">$${(item.unitPrice * item.qty).toFixed(2)}</span>
-                    <div class="cart-qty-controls">
-                        <button class="cart-qty-btn" onclick="updateCartQuantity('${item.cartItemId}', -1)">-</button>
-                        <span class="cart-qty-val">${item.qty}</span>
-                        <button class="cart-qty-btn" onclick="updateCartQuantity('${item.cartItemId}', 1)">+</button>
-                    </div>
-                </div>
-                <button class="cart-item-remove" onclick="removeFromCart('${item.cartItemId}')">&times;</button>
-            </div>
-        `).join('');
-    }
-}
-
-function openCartDrawer() {
-    cartDrawer.classList.add('active');
-    cartOverlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeCartDrawer() {
-    cartDrawer.classList.remove('active');
-    cartOverlay.classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-// --- 8. QUICK VIEW LIGHTBOX MODAL ---
-function openQuickView(itemId) {
-    const item = MENU_ITEMS.find(i => i.id === itemId);
-    if (!item) return;
-
-    activeQuickViewItem = item;
-    activeQuickViewQty = 1;
-
-    qvImg.src = item.image;
-    qvBadge.textContent = item.badge;
-    qvCategory.textContent = item.category.toUpperCase();
-    qvTitle.textContent = item.title;
-    qvPrice.textContent = `$${item.price.toFixed(2)}`;
-    qvSpice.textContent = item.spice !== 'None' ? item.spice : '';
-    qvDescription.textContent = item.description;
-
-    // Specs
-    qvSpecsGrid.innerHTML = Object.entries(item.specs).map(([key, val]) => `
-        <div class="spec-item">
-            <strong>${key}</strong>
-            <span>${val}</span>
-        </div>
-    `).join('');
-
-    // Reset Checkboxes & Qty
-    document.querySelectorAll('.addon-checkbox').forEach(cb => cb.checked = false);
-    qvQtyVal.textContent = activeQuickViewQty;
-
-    qvOverlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeQuickView() {
-    qvOverlay.classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-// --- 9. EVENT BINDINGS ---
-function bindEvents() {
-    // Category Tabs
-    categoryButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            categoryButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentCategory = btn.getAttribute('data-category');
-            renderFilteredMenu();
-        });
-    });
-
-    // Quick Search
-    quickSearchInput.addEventListener('input', (e) => {
-        searchQuery = e.target.value;
-        clearSearchBtn.style.display = searchQuery ? 'block' : 'none';
-        renderFilteredMenu();
-    });
-
-    clearSearchBtn.addEventListener('click', () => {
-        quickSearchInput.value = '';
-        searchQuery = '';
-        clearSearchBtn.style.display = 'none';
-        renderFilteredMenu();
-    });
-
-    // Sort Dropdown
-    sortSelect.addEventListener('change', (e) => {
-        currentSort = e.target.value;
-        renderFilteredMenu();
-    });
-
-    // Reset Buttons
-    resetFiltersBtn.addEventListener('click', resetAllFilters);
-    emptyResetBtn.addEventListener('click', resetAllFilters);
-
-    // Cart Controls
-    cartToggleBtn.addEventListener('click', openCartDrawer);
-    cartCloseBtn.addEventListener('click', closeCartDrawer);
-    cartOverlay.addEventListener('click', closeCartDrawer);
-
-    // QuickView Qty Buttons
-    qvQtyMinus.addEventListener('click', () => {
-        if (activeQuickViewQty > 1) {
-            activeQuickViewQty--;
-            qvQtyVal.textContent = activeQuickViewQty;
-        }
-    });
-
-    qvQtyPlus.addEventListener('click', () => {
-        activeQuickViewQty++;
-        qvQtyVal.textContent = activeQuickViewQty;
-    });
-
-    qvAddToCartBtn.addEventListener('click', () => {
-        if (!activeQuickViewItem) return;
-        const selectedAddons = [];
-        document.querySelectorAll('.addon-checkbox:checked').forEach(cb => {
-            selectedAddons.push({
-                name: cb.getAttribute('data-name'),
-                price: parseFloat(cb.value)
-            });
-        });
-
-        addToCart(activeQuickViewItem, activeQuickViewQty, selectedAddons);
-        closeQuickView();
-        showToast(`🔥 Added ${activeQuickViewQty}x ${activeQuickViewItem.title} to bag!`);
-    });
-
-    qvCloseBtn.addEventListener('click', closeQuickView);
-    qvOverlay.addEventListener('click', (e) => {
-        if (e.target === qvOverlay) closeQuickView();
-    });
-
-    // Featured Bundle Button
-    const addBundleBtn = document.getElementById('add-bundle-btn');
-    if (addBundleBtn) {
-        addBundleBtn.addEventListener('click', () => {
-            const tomahawk = MENU_ITEMS.find(i => i.id === 'steak-tomahawk-02');
-            const ribs = MENU_ITEMS.find(i => i.id === 'ribs-signature-01');
-            if (tomahawk && ribs) {
-                addToCart(tomahawk, 1, []);
-                addToCart(ribs, 1, []);
-                showToast('🔥 Ultimate Tomahawk & Rib Platter bundle added!');
-            }
-        });
-    }
-
-    // Reservation & Checkout Modals
-    checkoutBtn.addEventListener('click', () => {
-        closeCartDrawer();
-        checkoutModalOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    });
-
-    checkoutModalClose.addEventListener('click', () => {
-        checkoutModalOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-    });
-
-    checkoutForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('cust-name').value;
-        const phone = document.getElementById('cust-phone').value;
-
-        checkoutModalOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-        cart = [];
-        saveCart();
-        updateCartUI();
-
-        showToast(`✅ Thank you, ${name}! Your order has been placed successfully.`);
-    });
-
-    // Reserve Table Triggers
-    const reserveBtns = [
-        document.getElementById('hero-reserve-btn'),
-        document.getElementById('footer-reserve-btn'),
-        document.getElementById('mobile-reserve-trigger')
-    ];
-
-    reserveBtns.forEach(btn => {
-        if (btn) {
-            btn.addEventListener('click', () => {
-                checkoutModalOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-        }
-    });
-
-    // Mobile Navigation Toggle
-    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-    const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
-    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-
-    if (mobileMenuToggle && mobileNavOverlay) {
-        mobileMenuToggle.addEventListener('click', () => {
-            mobileNavOverlay.classList.toggle('active');
-        });
-
-        mobileNavLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileNavOverlay.classList.remove('active');
-            });
-        });
-    }
-
-    // Footer Category Links
-    document.querySelectorAll('.footer-cat-link').forEach(link => {
-        link.addEventListener('click', (e) => {
-            const cat = link.getAttribute('data-cat');
-            if (cat) {
-                categoryButtons.forEach(b => {
-                    if (b.getAttribute('data-category') === cat) b.click();
-                });
-            }
-        });
-    });
-}
-
-function resetAllFilters() {
-    currentCategory = 'all';
-    searchQuery = '';
-    quickSearchInput.value = '';
-    clearSearchBtn.style.display = 'none';
-    categoryButtons.forEach(b => {
-        b.classList.toggle('active', b.getAttribute('data-category') === 'all');
-    });
-    renderFilteredMenu();
-}
-
-// --- 10. SCROLL HEADER & EMBER EFFECTS ---
-function initScrollHeader() {
+// --- 4. NAVBAR SCROLL EFFECT ---
+function initScrollNavbar() {
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 40) {
+        if (window.scrollY > 60) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
@@ -680,52 +235,345 @@ function initScrollHeader() {
     });
 }
 
-function createEmberParticles() {
-    const container = document.getElementById('embers-container');
-    if (!container) return;
+// --- 5. SCROLL REVEAL ANIMATION (INTERSECTION OBSERVER) ---
+function initScrollReveal() {
+    const revealElements = document.querySelectorAll('.reveal-on-scroll');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.15 });
 
-    for (let i = 0; i < 25; i++) {
-        const ember = document.createElement('div');
-        ember.className = 'ember-particle';
-        const size = Math.random() * 4 + 2;
-        ember.style.cssText = `
-            position: absolute;
-            width: ${size}px;
-            height: ${size}px;
-            background: #FF6B00;
-            border-radius: 50%;
-            left: ${Math.random() * 100}%;
-            bottom: -10px;
-            opacity: ${Math.random() * 0.7 + 0.3};
-            box-shadow: 0 0 10px #FF5500;
-            animation: floatEmber ${Math.random() * 4 + 4}s linear infinite;
-            animation-delay: ${Math.random() * 5}s;
-        `;
-        container.appendChild(ember);
-    }
-
-    // Add keyframe style dynamically
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes floatEmber {
-            0% { transform: translateY(0) translateX(0) scale(1); opacity: 0.8; }
-            50% { transform: translateY(-300px) translateX(${Math.random() * 40 - 20}px) scale(0.8); opacity: 0.5; }
-            100% { transform: translateY(-600px) translateX(${Math.random() * 80 - 40}px) scale(0.2); opacity: 0; }
-        }
-    `;
-    document.head.appendChild(style);
+    revealElements.forEach(el => observer.observe(el));
 }
 
-// --- 11. TOAST NOTIFICATIONS ---
-function showToast(message) {
-    const container = document.getElementById('toast-container');
-    const toast = document.createElement('div');
-    toast.className = 'toast-message';
-    toast.innerHTML = `<span>${message}</span>`;
-    container.appendChild(toast);
+// --- 6. MENU FILTERING & RENDERING ---
+function initMenuFilter() {
+    const categoryPills = document.querySelectorAll('.category-pill');
+    const quickSearchInput = document.getElementById('quick-search');
+    const sortSelect = document.getElementById('sort-select');
 
-    setTimeout(() => {
-        toast.style.animation = 'toastIn 0.3s ease reverse forwards';
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
+    categoryPills.forEach(pill => {
+        pill.addEventListener('click', (e) => {
+            categoryPills.forEach(btn => btn.classList.remove('active'));
+            const targetPill = e.currentTarget;
+            targetPill.classList.add('active');
+            currentCategory = targetPill.dataset.category;
+            renderMenu();
+        });
+    });
+
+    if (quickSearchInput) {
+        quickSearchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.toLowerCase().trim();
+            renderMenu();
+        });
+    }
+
+    if (sortSelect) {
+        sortSelect.addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            renderMenu();
+        });
+    }
+}
+
+function renderMenu() {
+    const menuGrid = document.getElementById('menu-grid');
+    const visibleCountEl = document.getElementById('visible-count');
+    if (!menuGrid) return;
+
+    let filtered = MENU_ITEMS.filter(item => {
+        const matchesCategory = (currentCategory === 'all') || (item.category === currentCategory);
+        const matchesSearch = item.title.toLowerCase().includes(searchQuery) ||
+                              item.description.toLowerCase().includes(searchQuery) ||
+                              item.badge.toLowerCase().includes(searchQuery);
+        return matchesCategory && matchesSearch;
+    });
+
+    // Sorting
+    if (currentSort === 'price-low') {
+        filtered.sort((a, b) => a.price - b.price);
+    } else if (currentSort === 'price-high') {
+        filtered.sort((a, b) => b.price - a.price);
+    } else if (currentSort === 'spicy') {
+        filtered.sort((a, b) => b.spiceVal - a.spiceVal);
+    } else {
+        filtered.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+    }
+
+    if (visibleCountEl) visibleCountEl.textContent = filtered.length;
+
+    menuGrid.innerHTML = '';
+
+    if (filtered.length === 0) {
+        menuGrid.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
+                <p style="font-family: var(--font-serif); font-size: 1.8rem; color: var(--color-cream);">No Drops Found</p>
+                <p style="color: var(--color-text-muted); font-size: 0.9rem;">Try broadening your filter query.</p>
+            </div>
+        `;
+        return;
+    }
+
+    filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'menu-card';
+        card.innerHTML = `
+            <div class="menu-card-img-wrapper">
+                <img src="${item.image}" alt="${item.title}" class="menu-card-img">
+                <span class="menu-badge">${item.badge}</span>
+            </div>
+            <div class="menu-card-body">
+                <div class="menu-card-header">
+                    <h3 class="menu-card-title">${item.title}</h3>
+                    <span class="menu-card-price">$${item.price.toFixed(2)}</span>
+                </div>
+                <p class="menu-card-desc">${item.description}</p>
+                <div class="menu-specs-tags">
+                    ${Object.entries(item.specs).map(([key, val]) => `<span class="spec-tag">${key}: ${val}</span>`).join('')}
+                </div>
+                <div class="menu-card-actions">
+                    <button class="btn-add-bag" onclick="addToCart('${item.id}')">ADD TO BAG</button>
+                    <button class="btn-quick-view" onclick="openQuickView('${item.id}')">VIEW</button>
+                </div>
+            </div>
+        `;
+        menuGrid.appendChild(card);
+    });
+}
+
+// --- 7. CART DRAWER & ORDER BAG LOGIC ---
+function initCartDrawer() {
+    const cartToggleBtn = document.getElementById('cart-toggle-btn');
+    const cartCloseBtn = document.getElementById('cart-close-btn');
+    const cartDrawer = document.getElementById('cart-drawer');
+    const cartOverlay = document.getElementById('cart-drawer-overlay');
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const addBundleBtn = document.getElementById('add-bundle-btn');
+
+    if (cartToggleBtn) {
+        cartToggleBtn.addEventListener('click', () => {
+            cartDrawer.classList.add('active');
+            cartOverlay.classList.add('active');
+        });
+    }
+
+    if (cartCloseBtn) {
+        cartCloseBtn.addEventListener('click', closeCartDrawer);
+    }
+    if (cartOverlay) {
+        cartOverlay.addEventListener('click', closeCartDrawer);
+    }
+
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', () => {
+            alert('Order checkout initialized. Presenting order confirmation summary.');
+        });
+    }
+
+    if (addBundleBtn) {
+        addBundleBtn.addEventListener('click', () => {
+            addToCart('steak-tomahawk-02');
+            cartDrawer.classList.add('active');
+            cartOverlay.classList.add('active');
+        });
+    }
+}
+
+function closeCartDrawer() {
+    const cartDrawer = document.getElementById('cart-drawer');
+    const cartOverlay = document.getElementById('cart-drawer-overlay');
+    if (cartDrawer) cartDrawer.classList.remove('active');
+    if (cartOverlay) cartOverlay.classList.remove('active');
+}
+
+function addToCart(itemId) {
+    const item = MENU_ITEMS.find(i => i.id === itemId);
+    if (!item) return;
+
+    const existingIndex = cart.findIndex(c => c.id === itemId);
+    if (existingIndex > -1) {
+        cart[existingIndex].qty += 1;
+    } else {
+        cart.push({ ...item, qty: 1 });
+    }
+
+    saveCart();
+    updateCartUI();
+
+    // Auto open cart drawer
+    const cartDrawer = document.getElementById('cart-drawer');
+    const cartOverlay = document.getElementById('cart-drawer-overlay');
+    if (cartDrawer) cartDrawer.classList.add('active');
+    if (cartOverlay) cartOverlay.classList.add('active');
+}
+
+function changeQty(itemId, delta) {
+    const index = cart.findIndex(c => c.id === itemId);
+    if (index === -1) return;
+
+    cart[index].qty += delta;
+    if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+    }
+    saveCart();
+    updateCartUI();
+}
+
+function saveCart() {
+    localStorage.setItem('ribhouse_cart', JSON.stringify(cart));
+}
+
+function updateCartUI() {
+    const cartBadgeCount = document.getElementById('cart-badge-count');
+    const cartItemsContainer = document.getElementById('cart-items-container');
+    const cartSubtotalEl = document.getElementById('cart-subtotal');
+    const cartTaxEl = document.getElementById('cart-tax');
+    const cartTotalEl = document.getElementById('cart-total');
+    const checkoutBtn = document.getElementById('checkout-btn');
+
+    const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    const tax = subtotal * 0.08;
+    const total = subtotal + tax;
+
+    if (cartBadgeCount) cartBadgeCount.textContent = totalQty;
+    if (cartSubtotalEl) cartSubtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+    if (cartTaxEl) cartTaxEl.textContent = `$${tax.toFixed(2)}`;
+    if (cartTotalEl) cartTotalEl.textContent = `$${total.toFixed(2)}`;
+
+    if (checkoutBtn) checkoutBtn.disabled = cart.length === 0;
+
+    if (cartItemsContainer) {
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = `
+                <div style="text-align: center; padding: 40px 0; color: var(--color-text-muted);">
+                    <p style="font-family: var(--font-serif); font-size: 1.2rem;">Your Order Bag is Empty</p>
+                    <p style="font-size: 0.8rem;">Explore the catalog drops to add menu items.</p>
+                </div>
+            `;
+            return;
+        }
+
+        cartItemsContainer.innerHTML = cart.map(item => `
+            <div style="display: flex; gap: 12px; align-items: center; border-bottom: 1px solid var(--color-border-dark); padding-bottom: 12px;">
+                <img src="${item.image}" alt="${item.title}" style="width: 60px; height: 60px; object-fit: cover;">
+                <div style="flex: 1;">
+                    <h4 style="font-family: var(--font-serif); font-size: 1rem; color: var(--color-cream);">${item.title}</h4>
+                    <span style="font-size: 0.8rem; color: var(--color-gold);">$${(item.price * item.qty).toFixed(2)}</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <button onclick="changeQty('${item.id}', -1)" style="color: var(--color-gold); border: 1px solid var(--color-border-dark); width: 24px; height: 24px;">-</button>
+                    <span style="font-size: 0.85rem; color: var(--color-cream);">${item.qty}</span>
+                    <button onclick="changeQty('${item.id}', 1)" style="color: var(--color-gold); border: 1px solid var(--color-border-dark); width: 24px; height: 24px;">+</button>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+// --- 8. MODAL LOGIC (RESERVATION & QUICK VIEW) ---
+function initModals() {
+    // Reservation Modal
+    const resModal = document.getElementById('reservation-modal');
+    const resOverlay = document.getElementById('reservation-modal-overlay');
+    const resClose = document.getElementById('res-modal-close');
+    const navReserveBtn = document.getElementById('nav-reserve-btn');
+    const heroReserveBtn = document.getElementById('hero-reserve-btn');
+    const locReserveBtn = document.getElementById('location-reserve-btn');
+    const resForm = document.getElementById('reservation-form');
+
+    function openResModal() {
+        if (resModal && resOverlay) {
+            resModal.classList.add('active');
+            resOverlay.classList.add('active');
+        }
+    }
+
+    function closeResModal() {
+        if (resModal && resOverlay) {
+            resModal.classList.remove('active');
+            resOverlay.classList.remove('active');
+        }
+    }
+
+    if (navReserveBtn) navReserveBtn.addEventListener('click', openResModal);
+    if (heroReserveBtn) heroReserveBtn.addEventListener('click', openResModal);
+    if (locReserveBtn) locReserveBtn.addEventListener('click', openResModal);
+    if (resClose) resClose.addEventListener('click', closeResModal);
+    if (resOverlay) resOverlay.addEventListener('click', closeResModal);
+
+    if (resForm) {
+        resForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for reserving a table at Rib House. A confirmation message has been recorded.');
+            closeResModal();
+        });
+    }
+
+    // Quick View Modal
+    const qvModal = document.getElementById('quickview-modal');
+    const qvOverlay = document.getElementById('quickview-modal-overlay');
+    const qvClose = document.getElementById('qv-modal-close');
+
+    if (qvClose) {
+        qvClose.addEventListener('click', () => {
+            if (qvModal) qvModal.classList.remove('active');
+            if (qvOverlay) qvOverlay.classList.remove('active');
+        });
+    }
+}
+
+function openQuickView(itemId) {
+    const item = MENU_ITEMS.find(i => i.id === itemId);
+    if (!item) return;
+
+    const qvModal = document.getElementById('quickview-modal');
+    const qvOverlay = document.getElementById('quickview-modal-overlay');
+
+    document.getElementById('qv-img').src = item.image;
+    document.getElementById('qv-category').textContent = item.category;
+    document.getElementById('qv-title').textContent = item.title;
+    document.getElementById('qv-price').textContent = `$${item.price.toFixed(2)}`;
+    document.getElementById('qv-description').textContent = item.description;
+
+    const addBtn = document.getElementById('qv-add-to-cart-btn');
+    addBtn.onclick = () => {
+        addToCart(item.id);
+        if (qvModal) qvModal.classList.remove('active');
+        if (qvOverlay) qvOverlay.classList.remove('active');
+    };
+
+    if (qvModal && qvOverlay) {
+        qvModal.classList.add('active');
+        qvOverlay.classList.add('active');
+    }
+}
+
+// --- 9. FAQ ACCORDION LOGIC ---
+function initFaqAccordion() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const button = item.querySelector('.faq-button');
+        const content = item.querySelector('.faq-content');
+
+        if (button && content) {
+            button.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(i => {
+                    i.classList.remove('active');
+                    const c = i.querySelector('.faq-content');
+                    if (c) c.style.maxHeight = null;
+                });
+
+                if (!isActive) {
+                    item.classList.add('active');
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }
+            });
+        }
+    });
 }

@@ -1,136 +1,14 @@
 /* ==========================================================================
-   RIB HOUSE - OFFICIAL BREAKFAST & BARISTA MENU + MAIN DISHES
-   STRICT WORD-FOR-WORD ACCURACY (NO PICTURES FOR BREAKFAST MENU)
+   RIB HOUSE - COMPLETE MAIN DISHES & BREAKFAST MENU
+   STRICT WORD-FOR-WORD ACCURACY MATCHING ALL PHYSICAL MENU SHEETS
    ========================================================================== */
 
-// --- 1. OFFICIAL BREAKFAST COMBOS & SPECIALS (PAGES 2 & 3) ---
-const BREAKFAST_COMBOS = [
-    {
-        name: 'PANCAKE BREAKFAST',
-        price: 400,
-        desc: 'Tea, 2 pancakes and pan Fried Bacon',
-        category: 'combos'
-    },
-    {
-        name: 'MINI BREAKFAST',
-        price: 310,
-        desc: 'Tea, 2 fried egg, Toast and sausage, A Small Glass Of Juice',
-        category: 'combos'
-    },
-    {
-        name: 'RIB HOUSE BREAKFAST',
-        price: 300,
-        desc: 'Tea, Liver and Chapati',
-        category: 'combos'
-    },
-    {
-        name: 'MAIN BREAKFAST',
-        price: 400,
-        desc: 'Tea, 2 Eggs, Beef Bacon/Sausages, Toast and a glass of juice',
-        category: 'combos'
-    },
-    {
-        name: 'GOAT SOUP BREAKFAST',
-        price: 300,
-        desc: 'Served with a piece of goat meat, goat soup, chapati and veges.',
-        category: 'combos'
-    },
-    {
-        name: 'CHICKEN SOUP BREAKFAST',
-        price: 300,
-        desc: 'Served With: A Piece Of Chicken Kienyeji, Chicken Soup, Chapati And Veges',
-        category: 'combos'
-    },
-    {
-        name: 'CHIPS COMBO',
-        price: 300,
-        desc: 'Chips Served With Tea / Egg / Andazi / Kachumbari',
-        category: 'combos'
-    },
-    {
-        name: 'SAMOSA COMBO',
-        price: 280,
-        desc: '1 Egg / Samosa / Andazi / Tea',
-        category: 'combos'
-    },
-    {
-        name: 'TRADITION BREAK',
-        price: 300,
-        desc: 'Tea, Nduma / Ngwaci, Egg Kienyeji, veges',
-        category: 'combos'
-    },
-    {
-        name: 'FARMERS CHOICE',
-        price: 380,
-        desc: 'Tea, Beef bacon/Sausage and a Toast',
-        category: 'combos'
-    },
-    {
-        name: 'RIB HOUSE BITE',
-        price: 200,
-        desc: 'Tea, Andazi and a Sausage',
-        category: 'combos'
-    },
-    {
-        name: 'SPECIAL BREAKFAST',
-        price: 220,
-        desc: 'Tea, one fried egg, toast and a sausage',
-        category: 'combos'
-    },
-    {
-        name: 'RIB HOUSE SPECIAL',
-        price: 310,
-        desc: 'Tea, Bacon/ 2 Sausages and Chapati',
-        category: 'combos'
-    },
-    {
-        name: 'BRITISH BREAKFAST',
-        price: 320,
-        desc: 'Tea, Liver and Toast',
-        category: 'combos'
-    }
-];
-
-// --- 2. BARISTA MENU (PAGE 4: HOT & COLD BEVERAGES) ---
-const BARISTA_DRINKS = [
-    // HOT BEVERAGES
-    { name: 'House Coffee white', price: 150, category: 'hot' },
-    { name: 'House Coffee Black', price: 100, category: 'hot' },
-    { name: 'Black Coffee W lemon', price: 110, category: 'hot' },
-    { name: 'Americano', price: 150, category: 'hot' },
-    { name: 'Latte Mocha', price: 150, category: 'hot' },
-    { name: 'Latte Machiatto', price: 180, category: 'hot' },
-    { name: 'Coffee Latte', price: 150, category: 'hot' },
-    { name: 'Lemon Tea', price: 100, category: 'hot' },
-    { name: 'Lemon Tea W Honey', price: 150, category: 'hot' },
-    { name: 'Lemon Water', price: 70, category: 'hot' },
-    { name: 'Tea special', price: 100, category: 'hot' },
-    { name: 'Tea Masala White', price: 130, category: 'hot' },
-    { name: 'Tea Masala Black', price: 100, category: 'hot' },
-    { name: 'Ginger Tea', price: 130, category: 'hot' },
-    { name: 'Dawa', price: 200, category: 'hot' },
-    { name: 'Honey Espresso', price: 110, category: 'hot' },
-    { name: 'Hot Milk', price: 100, category: 'hot' },
-    { name: 'Honey Cone', price: 50, category: 'hot' },
-    { name: 'Cappuccino (Single)', price: 150, category: 'hot' },
-    { name: 'Cappuccino (Double)', price: 180, category: 'hot' },
-    { name: 'Espresso (Single)', price: 120, category: 'hot' },
-    { name: 'Espresso (Double)', price: 150, category: 'hot' },
-
-    // COLD BEVERAGES
-    { name: 'Milkshake (Chocolate, Blueberry, Strawberry, vanilla)', price: 250, category: 'cold' },
-    { name: 'Espresso (Cold)', price: 250, category: 'cold' },
-    { name: 'Oreo shake', price: 300, category: 'cold' },
-    { name: 'Smoothies (banana, passion, Tropical)', price: 200, category: 'cold' },
-    { name: 'Ice Cream Scoops', price: 150, category: 'cold' },
-    { name: 'Lemonade (blue, classic, Mint)', price: 100, category: 'cold' },
-    { name: 'Iced Coffee', price: 180, category: 'cold' }
-];
-
-// --- 3. MAIN DISHES MENU ---
-const MAIN_DISHES = [
+// --- 1. MAIN DISHES DATASET (PAGES 1 & 2) ---
+const MAIN_DISHES_EXPANDED = [
+    // STAPLE MEAT DISHES WITH SIDES
     {
         name: 'MATUMBO FRY',
+        category: 'mains',
         options: [
             { side: 'Ugali / Chapati', price: 400 },
             { side: 'Rice / Mukimo', price: 410 },
@@ -141,6 +19,7 @@ const MAIN_DISHES = [
     },
     {
         name: 'BEEF STEW / FRY',
+        category: 'mains',
         options: [
             { side: 'Ugali / Chapati', price: 440 },
             { side: 'Rice / Mukimo', price: 450 },
@@ -151,6 +30,7 @@ const MAIN_DISHES = [
     },
     {
         name: 'GOAT STEW / FRY',
+        category: 'mains',
         options: [
             { side: 'Ugali / Chapati', price: 470 },
             { side: 'Rice / Mukimo', price: 480 },
@@ -161,6 +41,7 @@ const MAIN_DISHES = [
     },
     {
         name: 'LIVER',
+        category: 'mains',
         options: [
             { side: 'Ugali / Chapati', price: 470 },
             { side: 'Rice / Mukimo', price: 480 },
@@ -171,6 +52,7 @@ const MAIN_DISHES = [
     },
     {
         name: 'CHICKEN KIENYEJI QUARTER',
+        category: 'mains',
         options: [
             { side: 'Ugali / Chapati', price: 570 },
             { side: 'Rice / Mukimo', price: 580 },
@@ -181,6 +63,7 @@ const MAIN_DISHES = [
     },
     {
         name: 'CHICKEN WET FRY',
+        category: 'mains',
         options: [
             { side: 'Ugali / Chapati', price: 450 },
             { side: 'Rice / Mukimo', price: 460 },
@@ -191,6 +74,7 @@ const MAIN_DISHES = [
     },
     {
         name: 'BEEF STEAK',
+        category: 'mains',
         options: [
             { side: 'Ugali / Chapati', price: 590 },
             { side: 'Rice / Mukimo', price: 600 },
@@ -198,20 +82,106 @@ const MAIN_DISHES = [
             { side: 'Chips', price: 740 },
             { side: 'Chips Masala', price: 800 }
         ]
+    },
+
+    // DEEP FRIED CHICKEN & FISH
+    {
+        name: 'DEEP FRIED CHICKEN',
+        category: 'fish-poultry',
+        options: [
+            { side: 'Ugali / Chapati', price: 390 },
+            { side: 'Rice / Mukimo', price: 400 },
+            { side: 'Pilau', price: 490 },
+            { side: 'Chips', price: 600 },
+            { side: 'Chips Masala', price: 630 }
+        ]
+    },
+    {
+        name: 'FISH FILLET',
+        category: 'fish-poultry',
+        options: [
+            { side: 'Ugali / Chapati', price: 490 },
+            { side: 'Rice / Mukimo', price: 480 },
+            { side: 'Pilau', price: 570 },
+            { side: 'Chips', price: 600 },
+            { side: 'Chips Masala', price: 650 }
+        ]
+    },
+    {
+        name: 'TILAPIA STEW',
+        category: 'fish-poultry',
+        options: [
+            { side: 'Ugali / Chapati', price: 590 },
+            { side: 'Rice / Mukimo', price: 600 },
+            { side: 'Pilau', price: 690 },
+            { side: 'Chips', price: 720 },
+            { side: 'Chips Masala', price: 770 }
+        ]
+    },
+    {
+        name: 'TILAPIA FRY',
+        category: 'fish-poultry',
+        options: [
+            { side: 'Ugali / Chapati', price: 570 },
+            { side: 'Rice / Mukimo', price: 580 },
+            { side: 'Pilau', price: 680 },
+            { side: 'Chips', price: 700 },
+            { side: 'Chips Masala', price: 750 }
+        ]
     }
+];
+
+// --- 2. CHOMA, CHEMSHA, TUMBUKIZA & PLATTERS ---
+const MEAT_PORTIONS_AND_PLATTERS = [
+    // CHOMA ZONE
+    { name: 'CHOMA BEEF (1 KG)', price: 1100, cat: 'choma' },
+    { name: 'CHOMA BEEF (0.5 KG)', price: 550, cat: 'choma' },
+    { name: 'CHOMA GOAT (1 KG)', price: 1200, cat: 'choma' },
+    { name: 'CHOMA GOAT (0.5 KG)', price: 600, cat: 'choma' },
+
+    // CHEMSHA ZONE
+    { name: 'CHEMSHA BEEF (1 KG)', price: 1200, cat: 'chemsha' },
+    { name: 'CHEMSHA BEEF (0.5 KG)', price: 600, cat: 'chemsha' },
+    { name: 'CHEMSHA GOAT (1 KG)', price: 1300, cat: 'chemsha' },
+    { name: 'CHEMSHA GOAT (0.5 KG)', price: 650, cat: 'chemsha' },
+
+    // FRY / TUMBUKIZA ON ORDER
+    { name: 'BEEF FRY / TUMBUKIZA (1 KG)', price: 1300, cat: 'tumbukiza' },
+    { name: 'BEEF FRY / TUMBUKIZA (0.5 KG)', price: 650, cat: 'tumbukiza' },
+    { name: 'GOAT FRY / TUMBUKIZA (1 KG)', price: 1400, cat: 'tumbukiza' },
+    { name: 'GOAT FRY / TUMBUKIZA (0.5 KG)', price: 700, cat: 'tumbukiza' },
+
+    // SPECIAL PLATTER
+    { 
+        name: 'CHICKEN PLATTER FOR 4 (ON ORDER)', 
+        price: 1900, 
+        cat: 'platter',
+        desc: 'Includes 2 Portions Chicken Wet Fry, 2 Portions Beef Fry, 1 Portion Chips, 2 Portions Ugali/Chapati, 2 Portions Veggies-spinach, 4 Small Glasses of Juice' 
+    }
+];
+
+// --- 3. EXTRA SIDES & VEGES ---
+const MAIN_EXTRA_SIDES = [
+    { name: 'Rice / Mukimo Special', price: 250 },
+    { name: 'Pilau Special', price: 270 },
+    { name: 'Chips Plain', price: 220 },
+    { name: 'Chips Masala', price: 270 },
+    { name: 'Rice Plain', price: 200 },
+    { name: 'Mukimo Plain', price: 200 },
+    { name: 'Waru', price: 120 },
+    { name: 'Spinach', price: 120 },
+    { name: 'Banana', price: 100 }
 ];
 
 // --- 4. STATE & CART ---
 let cart = JSON.parse(localStorage.getItem('ribhouse_cart') || '[]');
-let activeBreakfastTab = 'combos';
 
 // --- 5. INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
     initScrollNavbar();
-    initScrollReveal();
-    initBreakfastFilter();
-    renderBreakfastMenuTextOnly();
     renderMainDishes();
+    renderMeatPortions();
+    renderExtraSides();
     initCartDrawer();
     initModals();
     updateCartUI();
@@ -229,86 +199,17 @@ function initScrollNavbar() {
     });
 }
 
-function initScrollReveal() {
-    const revealElements = document.querySelectorAll('.reveal-on-scroll');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-            }
-        });
-    }, { threshold: 0.1 });
-
-    revealElements.forEach(el => observer.observe(el));
-}
-
-// --- 7. BREAKFAST MENU FILTER & RENDER (NO PICTURES, STRICT WORDS ONLY) ---
-function initBreakfastFilter() {
-    const pills = document.querySelectorAll('#bk-tabs .category-pill');
-    pills.forEach(pill => {
-        pill.addEventListener('click', (e) => {
-            pills.forEach(b => b.classList.remove('active'));
-            const target = e.currentTarget;
-            target.classList.add('active');
-            activeBreakfastTab = target.dataset.category;
-            renderBreakfastMenuTextOnly();
-        });
-    });
-}
-
-function renderBreakfastMenuTextOnly() {
-    const grid = document.getElementById('breakfast-text-grid');
-    if (!grid) return;
-
-    if (activeBreakfastTab === 'combos') {
-        grid.innerHTML = BREAKFAST_COMBOS.map(item => `
-            <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                        <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">${item.name}</h3>
-                        <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">${item.price}/=</span>
-                    </div>
-                    <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 16px;">${item.desc}</p>
-                </div>
-                <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('${item.name}', ${item.price})">ADD TO BAG</button>
-            </div>
-        `).join('');
-    } else if (activeBreakfastTab === 'hot') {
-        const hotItems = BARISTA_DRINKS.filter(d => d.category === 'hot');
-        grid.innerHTML = hotItems.map(item => `
-            <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream);">${item.name}</h4>
-                    <span style="font-size: 0.95rem; color: var(--color-gold); font-weight: 500;">${item.price}/=</span>
-                </div>
-                <button class="btn-add-bag" style="padding: 6px 14px; font-size: 0.7rem;" onclick="addCustomToCart('${item.name}', ${item.price})">ADD TO BAG</button>
-            </div>
-        `).join('');
-    } else if (activeBreakfastTab === 'cold') {
-        const coldItems = BARISTA_DRINKS.filter(d => d.category === 'cold');
-        grid.innerHTML = coldItems.map(item => `
-            <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream);">${item.name}</h4>
-                    <span style="font-size: 0.95rem; color: var(--color-gold); font-weight: 500;">${item.price}/=</span>
-                </div>
-                <button class="btn-add-bag" style="padding: 6px 14px; font-size: 0.7rem;" onclick="addCustomToCart('${item.name}', ${item.price})">ADD TO BAG</button>
-            </div>
-        `).join('');
-    }
-}
-
-// --- 8. RENDER MAIN DISHES MENU ---
+// --- 7. RENDER MAIN DISHES WITH SELECTABLE SIDES ---
 function renderMainDishes() {
     const grid = document.getElementById('main-dishes-grid');
     if (!grid) return;
 
-    grid.innerHTML = MAIN_DISHES.map((dish, idx) => {
+    grid.innerHTML = MAIN_DISHES_EXPANDED.map((dish, idx) => {
         const defaultOption = dish.options[0];
         return `
             <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                    <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-cream); margin-bottom: 12px; text-transform: uppercase;">${dish.name}</h3>
+                    <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-cream); margin-bottom: 12px; text-transform: uppercase;">${dish.name}</h3>
                     <div style="margin-bottom: 16px;">
                         <label style="display:block; font-size: 0.65rem; color: var(--color-gold); letter-spacing: 1.5px; margin-bottom: 6px; text-transform: uppercase;">SELECT SIDE OPTION:</label>
                         <select id="main-select-${idx}" onchange="updateMainPrice(${idx})" style="width:100%; background:var(--color-black); border:1px solid var(--color-border-dark); color:var(--color-cream); padding:10px 12px; font-size:0.85rem; outline:none; cursor:pointer;">
@@ -335,7 +236,7 @@ function updateMainPrice(idx) {
 }
 
 function addMainDishToCart(idx) {
-    const dish = MAIN_DISHES[idx];
+    const dish = MAIN_DISHES_EXPANDED[idx];
     const select = document.getElementById(`main-select-${idx}`);
     const selectedOption = select.options[select.selectedIndex];
     const side = selectedOption.dataset.side;
@@ -345,7 +246,42 @@ function addMainDishToCart(idx) {
     addCustomToCart(title, price);
 }
 
-// --- 9. CART SYSTEM ---
+// --- 8. RENDER CHOMA, CHEMSHA & PLATTERS ---
+function renderMeatPortions() {
+    const grid = document.getElementById('meat-portions-grid');
+    if (!grid) return;
+
+    grid.innerHTML = MEAT_PORTIONS_AND_PLATTERS.map(item => `
+        <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                    <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">${item.name}</h4>
+                    <span style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-gold); font-weight: bold;">${item.price}/=</span>
+                </div>
+                ${item.desc ? `<p style="font-size: 0.8rem; color: var(--color-text-muted); line-height: 1.5; margin-bottom: 12px;">${item.desc}</p>` : ''}
+            </div>
+            <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('${item.name}', ${item.price})">ADD TO BAG</button>
+        </div>
+    `).join('');
+}
+
+// --- 9. RENDER EXTRA SIDES ---
+function renderExtraSides() {
+    const grid = document.getElementById('extra-sides-grid');
+    if (!grid) return;
+
+    grid.innerHTML = MAIN_EXTRA_SIDES.map(side => `
+        <div style="background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-cream);">${side.name}</h4>
+                <span style="font-size: 0.9rem; color: var(--color-gold);">${side.price}/=</span>
+            </div>
+            <button class="btn-add-bag" style="padding: 6px 14px; font-size: 0.7rem;" onclick="addCustomToCart('${side.name}', ${side.price})">ADD TO BAG</button>
+        </div>
+    `).join('');
+}
+
+// --- 10. CART SYSTEM ---
 function addCustomToCart(title, price) {
     const id = title.toLowerCase().replace(/[^a-z0-9]/g, '-');
     const existing = cart.find(c => c.id === id);
@@ -424,7 +360,7 @@ function updateCartUI() {
     }
 }
 
-// --- 10. DRAWER & MODALS ---
+// --- 11. DRAWER & MODALS ---
 function initCartDrawer() {
     const cartToggleBtn = document.getElementById('cart-toggle-btn');
     const cartCloseBtn = document.getElementById('cart-close-btn');

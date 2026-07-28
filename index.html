@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIB HOUSE | Premium Smoke & Grill Collection Menu</title>
+    <meta name="description" content="Explore the official Rib House Menu Collection. Premium wood-fired steaks, 12-hour slow-smoked ribs, gourmet sides, and handcrafted cocktails. Walk-ins & Online Ordering.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-black text-white">
+
+    <!-- Top Announcement Bar -->
+    <div class="announcement-bar">
+        <div class="announcement-content">
+            <span class="pulse-dot"></span>
+            <span class="announcement-text">🔥 OFFICIAL DROP: 12-HOUR SLOW-SMOKED HICKORY RIBS NOW SERVING | WALK-INS & ONLINE ORDERING</span>
+            <span class="announcement-badge">LIMITED AVAILABILITY</span>
+        </div>
+    </div>
+
+    <!-- Sticky Navigation Header -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <!-- Brand Logo -->
+            <a href="#" class="brand-logo" aria-label="Rib House Homepage">
+                <img src="ChatGPT Image Jul 28, 2026, 09_34_43 AM.png" alt="Rib House Flame Logo" class="brand-img">
+                <div class="brand-text">
+                    <span class="brand-title">RIB HOUSE</span>
+                    <span class="brand-subtitle">SMOKE & GRILL CO.</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="nav-links-desktop">
+                <a href="#hero" class="nav-link active">LANDING</a>
+                <a href="#menu-collection" class="nav-link">THE MENU</a>
+                <a href="#featured-drop" class="nav-link">FEATURED DROP</a>
+                <a href="#our-smoke" class="nav-link">OUR SMOKE</a>
+                <a href="#contact" class="nav-link">LOCATION & HOURS</a>
+            </nav>
+
+            <!-- Action Controls: Search & Bag -->
+            <div class="nav-actions">
+                <div class="nav-search-wrapper">
+                    <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="quick-search" placeholder="Search menu..." aria-label="Search menu items">
+                    <button class="clear-search-btn" id="clear-search" aria-label="Clear search">&times;</button>
+                </div>
+
+                <button class="cart-trigger-btn" id="cart-toggle-btn" aria-label="View Order Bag">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="cart-btn-label">ORDER BAG</span>
+                    <span class="cart-badge-count" id="cart-badge-count">0</span>
+                </button>
+
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle Navigation Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu Overlay -->
+        <div class="mobile-nav-overlay" id="mobile-nav-overlay">
+            <nav class="mobile-nav-links">
+                <a href="#hero" class="mobile-nav-link">LANDING</a>
+                <a href="#menu-collection" class="mobile-nav-link">THE MENU</a>
+                <a href="#featured-drop" class="mobile-nav-link">FEATURED DROP</a>
+                <a href="#our-smoke" class="mobile-nav-link">OUR SMOKE</a>
+                <a href="#contact" class="mobile-nav-link">LOCATION & HOURS</a>
+                <a href="#menu-collection" class="btn-primary-orange mobile-reserve-btn">ORDER ONLINE</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main>
+
+        <!-- HERO / LANDING VISUAL SECTION -->
+        <section class="hero-landing" id="hero">
+            <div class="hero-bg-overlay"></div>
+            <div class="hero-embers" id="embers-container"></div>
+            
+            <div class="hero-container">
+                <!-- Large Central Brand Emblem Visual -->
+                <div class="hero-brand-card">
+                    <div class="hero-logo-wrapper">
+                        <img src="landingpage.png" alt="Rib House Best Quality Grilled Meat" class="hero-main-logo">
+                    </div>
+                    <div class="hero-tag-strip">
+                        <span class="hero-chip">WOOD-FIRED 800°F</span>
+                        <span class="hero-chip orange-glow">12HR SMOKED</span>
+                        <span class="hero-chip">NO RESERVATIONS - WALK-INS WELCOME</span>
+                    </div>
+                </div>
+
+                <div class="hero-content">
+                    <span class="hero-subtitle-badge">OFFICIAL MENU CATALOG</span>
+                    <h1 class="hero-title">THE SMOKE & FIRE <br><span class="text-orange-gradient">COLLECTION</span></h1>
+                    <p class="hero-description">
+                        Curated wood-fired steaks, slow-smoked ribs, gourmet sides, and signature craft cocktails. Crafted with patience, smoke, and fiery passion.
+                    </p>
+
+                    <div class="hero-cta-group">
+                        <a href="#menu-collection" class="btn-hero-primary">
+                            <span>BROWSE MENU COLLECTION</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <polyline points="19 12 12 19 5 12"></polyline>
+                            </svg>
+                        </a>
+                        <a href="#contact" class="btn-hero-secondary">
+                            <span>LOCATION & HOURS</span>
+                        </a>
+                    </div>
+
+                    <!-- Visual Metrics Bar -->
+                    <div class="hero-stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-number">12 hrs</span>
+                            <span class="stat-label">Hickory Wood Smoke</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-number">28 Days</span>
+                            <span class="stat-label">Dry Aged Steak Cuts</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-number">Walk-In</span>
+                            <span class="stat-label">First-Come Seating</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MENU COLLECTION SECTION (Zanny Collection Inspired) -->
+        <section class="menu-collection-section" id="menu-collection">
+            <div class="collection-header">
+                <div class="collection-title-block">
+                    <span class="section-tag-orange">CATALOG DROPS</span>
+                    <h2 class="section-heading">EXPLORE THE MENU</h2>
+                    <p class="section-subtext">Filter through our signature BBQ, steaks, handcrafted drinks, and side pairings.</p>
+                </div>
+
+                <!-- Live Filters & Category Pills -->
+                <div class="collection-controls">
+                    <div class="category-tabs-scroll">
+                        <button class="category-pill active" data-category="all">
+                            <span>ALL DROPS</span>
+                            <span class="pill-count" id="count-all">11</span>
+                        </button>
+                        <button class="category-pill" data-category="ribs">
+                            <span>SIGNATURE RIBS</span>
+                            <span class="pill-count" id="count-ribs">2</span>
+                        </button>
+                        <button class="category-pill" data-category="steaks">
+                            <span>PRIME STEAKS</span>
+                            <span class="pill-count" id="count-steaks">3</span>
+                        </button>
+                        <button class="category-pill" data-category="starters">
+                            <span>STARTERS</span>
+                            <span class="pill-count" id="count-starters">1</span>
+                        </button>
+                        <button class="category-pill" data-category="sides">
+                            <span>GOURMET SIDES</span>
+                            <span class="pill-count" id="count-sides">2</span>
+                        </button>
+                        <button class="category-pill" data-category="drinks">
+                            <span>CRAFT DRINKS</span>
+                            <span class="pill-count" id="count-drinks">2</span>
+                        </button>
+                        <button class="category-pill" data-category="desserts">
+                            <span>DESSERTS</span>
+                            <span class="pill-count" id="count-desserts">1</span>
+                        </button>
+                    </div>
+
+                    <!-- Sort Controls -->
+                    <div class="sort-wrapper">
+                        <label for="sort-select" class="sort-label">SORT BY:</label>
+                        <select id="sort-select" class="sort-dropdown">
+                            <option value="featured">Featured Drops</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="spicy">Spicy Rating</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Filter Status & Search Notice -->
+            <div class="filter-status-bar" id="filter-status-bar">
+                <span class="status-text">Showing <strong id="visible-count">11</strong> items</span>
+                <button class="reset-filter-link" id="reset-filters-btn" style="display: none;">Reset Filters</button>
+            </div>
+
+            <!-- Menu Grid Container -->
+            <div class="menu-grid" id="menu-grid">
+                <!-- JavaScript will dynamically render menu collection items here -->
+            </div>
+
+            <!-- Empty State Notice -->
+            <div class="empty-state" id="empty-state" style="display: none;">
+                <div class="empty-icon">🔥</div>
+                <h3>No Menu Items Found</h3>
+                <p>We couldn't find anything matching your search query or filter. Try checking your spelling or clearing filters.</p>
+                <button class="btn-primary-orange" id="empty-reset-btn">View All Items</button>
+            </div>
+        </section>
+
+        <!-- FEATURED SPECIAL DROP BANNER -->
+        <section class="featured-drop-section" id="featured-drop">
+            <div class="featured-banner-card">
+                <div class="featured-badge-tag">CHEF'S EXCLUSIVE DROP</div>
+                <div class="featured-grid">
+                    <div class="featured-content">
+                        <span class="featured-edition">SEASONAL SMOKE COLLECTION #04</span>
+                        <h2 class="featured-title">THE ULTIMATE TOMAHAWK & RIB SMOKE PLATTER</h2>
+                        <p class="featured-desc">
+                            A legendary feast featuring our 40oz USDA Prime Dry-Aged Tomahawk Steak, a full rack of 12-hour hickory smoked St. Louis ribs, loaded smoked mac & cheese, and two handcrafted cherrywood Old Fashioned cocktails.
+                        </p>
+                        <div class="featured-meta">
+                            <div class="meta-box">
+                                <span class="meta-title">SERVES</span>
+                                <span class="meta-val">2 - 4 Guests</span>
+                            </div>
+                            <div class="meta-box">
+                                <span class="meta-title">WOOD PAIRING</span>
+                                <span class="meta-val">White Oak & Cherry</span>
+                            </div>
+                            <div class="meta-box">
+                                <span class="meta-title">SPECIAL PRICE</span>
+                                <span class="meta-val orange-text">$129.99 <s class="original-price">$160.00</s></span>
+                            </div>
+                        </div>
+                        <div class="featured-actions">
+                            <button class="btn-primary-orange add-bundle-btn" id="add-bundle-btn">
+                                <span>ORDER SMOKE PLATTER BUNDLE</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="featured-image-wrapper">
+                        <img src="tomahawk.jpg" alt="Ultimate Tomahawk Platter" class="featured-img">
+                        <div class="featured-glow"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OUR SMOKE PHILOSOPHY / STORY SECTION -->
+        <section class="smoke-story-section" id="our-smoke">
+            <div class="story-container">
+                <div class="story-badge-header">
+                    <span class="section-tag-orange">OUR CRAFT</span>
+                    <h2 class="section-heading">THE ART OF SMOKE & WOOD</h2>
+                </div>
+
+                <div class="story-grid">
+                    <div class="story-card">
+                        <div class="story-num">01</div>
+                        <h3>PROPRIETARY 14-SPICE RUB</h3>
+                        <p>Every cut of meat is hand-trimmed and massaged with our secret house dry rub blend of toasted chili, brown sugar, smoked paprika, sea salt, and aromatic peppers.</p>
+                    </div>
+
+                    <div class="story-card active-card">
+                        <div class="story-num">02</div>
+                        <h3>12-HOUR HICKORY SMOKE</h3>
+                        <p>We burn 100% natural hickory and cherry logs slowly at low temperatures (225°F) for up to 16 hours to form the iconic deep red smoke ring and crisp bark glaze.</p>
+                    </div>
+
+                    <div class="story-card">
+                        <div class="story-num">03</div>
+                        <h3>800°F WOOD SEAR</h3>
+                        <p>Steaks are finished over open white oak flames at 800 degrees to lock in natural marbling juices while caramelizing the seasoned exterior crust.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOCATION & HOURS SECTION -->
+        <section class="location-section" id="contact">
+            <div class="location-grid">
+                <div class="location-info">
+                    <span class="section-tag-orange">VISIT THE HOUSE</span>
+                    <h2>DINE WITH US OR ORDER TAKEOUT</h2>
+                    <p>Experience the aroma of authentic wood smoke. <strong>Walk-ins & first-come, first-served seating only. No table reservations accepted.</strong></p>
+
+                    <div class="info-blocks">
+                        <div class="info-item">
+                            <div class="info-icon">📍</div>
+                            <div>
+                                <strong>LOCATION ADDRESS</strong>
+                                <p>454 Hickory Smoke Boulevard, Grill District, NY 10001</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">🕒</div>
+                            <div>
+                                <strong>OPENING HOURS</strong>
+                                <p>Mon - Thu: 4:00 PM – 11:00 PM<br>Fri - Sun: 12:00 PM – 1:00 AM</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">📞</div>
+                            <div>
+                                <strong>DIRECT ORDERS & INQUIRIES</strong>
+                                <p>(555) 892-SMOKE | orders@ribhousebbq.com</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#menu-collection" class="btn-primary-orange" id="footer-reserve-btn">ORDER DINE-IN / TAKEOUT</a>
+                </div>
+
+                <div class="location-visual">
+                    <img src="hero_ribs.jpg" alt="Rib House Restaurant Visual" class="location-img">
+                    <div class="location-overlay">
+                        <div class="location-overlay-card">
+                            <span class="card-pulse"></span>
+                            <h4>FIRST-COME DINE-IN SEATING</h4>
+                            <p>Live Hickory Smoker Operating Daily</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img src="ChatGPT Image Jul 28, 2026, 09_34_43 AM.png" alt="Rib House Logo" class="footer-logo">
+                <div class="footer-brand-name">RIB HOUSE</div>
+                <p class="footer-tagline">BEST QUALITY GRILLED MEAT & SMOKED RIBS</p>
+            </div>
+            
+            <div class="footer-nav">
+                <div class="footer-col">
+                    <h4>NAVIGATION</h4>
+                    <a href="#hero">Landing Page</a>
+                    <a href="#menu-collection">Menu Catalog</a>
+                    <a href="#featured-drop">Featured Drop</a>
+                    <a href="#our-smoke">Craft & Story</a>
+                </div>
+                <div class="footer-col">
+                    <h4>POPULAR CATEGORIES</h4>
+                    <a href="#menu-collection" class="footer-cat-link" data-cat="ribs">Signature Ribs</a>
+                    <a href="#menu-collection" class="footer-cat-link" data-cat="steaks">USDA Prime Steaks</a>
+                    <a href="#menu-collection" class="footer-cat-link" data-cat="sides">Gourmet Sides</a>
+                    <a href="#menu-collection" class="footer-cat-link" data-cat="drinks">Craft Cocktails</a>
+                </div>
+                <div class="footer-col">
+                    <h4>POLICY & HOUSE RULES</h4>
+                    <p class="theme-label">Walk-In Dining Only</p>
+                    <p class="theme-desc">No Table Reservations | Black, Orange & White Aesthetic</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 RIB HOUSE SMOKE & GRILL CO. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+
+    <!-- SLIDE-OUT ORDER BAG DRAWER (Zanny Collection Style) -->
+    <div class="cart-drawer-overlay" id="cart-drawer-overlay"></div>
+    <aside class="cart-drawer" id="cart-drawer" aria-label="Order Bag Drawer">
+        <div class="drawer-header">
+            <div class="drawer-title-group">
+                <h3>YOUR ORDER BAG</h3>
+                <span class="drawer-item-count" id="drawer-item-count">0 items</span>
+            </div>
+            <button class="drawer-close-btn" id="cart-close-btn" aria-label="Close Order Bag">&times;</button>
+        </div>
+
+        <div class="drawer-items-list" id="cart-items-container">
+            <!-- Dynamic Cart Items Rendered Here -->
+        </div>
+
+        <div class="drawer-footer" id="cart-footer">
+            <div class="summary-line">
+                <span>Subtotal</span>
+                <span class="summary-value" id="cart-subtotal">$0.00</span>
+            </div>
+            <div class="summary-line">
+                <span>Est. Taxes (8%)</span>
+                <span class="summary-value" id="cart-tax">$0.00</span>
+            </div>
+            <div class="summary-line total-line">
+                <span>TOTAL</span>
+                <span class="summary-value orange-text" id="cart-total">$0.00</span>
+            </div>
+
+            <button class="btn-primary-orange checkout-btn" id="checkout-btn" disabled>
+                <span>PROCEED TO CHECKOUT</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- ITEM QUICK VIEW MODAL (Zanny Collection Detail View) -->
+    <div class="modal-overlay" id="quickview-modal-overlay">
+        <div class="modal-container quickview-modal" id="quickview-modal">
+            <button class="modal-close-btn" id="modal-close-btn">&times;</button>
+            <div class="quickview-grid">
+                <div class="quickview-img-wrapper">
+                    <img src="" alt="" id="qv-img" class="quickview-img">
+                    <span class="quickview-badge" id="qv-badge"></span>
+                </div>
+                <div class="quickview-details">
+                    <span class="qv-category" id="qv-category"></span>
+                    <h2 class="qv-title" id="qv-title"></h2>
+                    <div class="qv-price-row">
+                        <span class="qv-price" id="qv-price"></span>
+                        <span class="qv-spice-indicator" id="qv-spice"></span>
+                    </div>
+
+                    <p class="qv-description" id="qv-description"></p>
+
+                    <!-- Item Specifications Grid -->
+                    <div class="qv-specs-grid" id="qv-specs-grid">
+                        <!-- Dynamic specs -->
+                    </div>
+
+                    <!-- Custom Options / Add-ons -->
+                    <div class="qv-options-block">
+                        <label class="options-heading">ADD EXTRA SIDES / SAUCES:</label>
+                        <div class="options-list">
+                            <label class="custom-checkbox-label">
+                                <input type="checkbox" value="2.50" data-name="Extra Smoked BBQ Sauce" class="addon-checkbox">
+                                <span>Extra Smoked BBQ Sauce (+$2.50)</span>
+                            </label>
+                            <label class="custom-checkbox-label">
+                                <input type="checkbox" value="3.00" data-name="Pickled Jalapenos & Onions" class="addon-checkbox">
+                                <span>Pickled Jalapenos & Onions (+$3.00)</span>
+                            </label>
+                            <label class="custom-checkbox-label">
+                                <input type="checkbox" value="4.50" data-name="Melted Smoked Gouda Dip" class="addon-checkbox">
+                                <span>Melted Smoked Gouda Dip (+$4.50)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Quantity & Add Button -->
+                    <div class="qv-actions-row">
+                        <div class="quantity-picker">
+                            <button class="qty-btn" id="qv-qty-minus">-</button>
+                            <span class="qty-val" id="qv-qty-val">1</span>
+                            <button class="qty-btn" id="qv-qty-plus">+</button>
+                        </div>
+
+                        <button class="btn-primary-orange qv-add-btn" id="qv-add-to-cart-btn">
+                            <span>ADD TO ORDER BAG</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHECKOUT MODAL -->
+    <div class="modal-overlay" id="checkout-modal-overlay">
+        <div class="modal-container checkout-modal">
+            <button class="modal-close-btn" id="checkout-modal-close">&times;</button>
+            <div class="modal-header">
+                <h3>COMPLETE YOUR MENU ORDER</h3>
+                <p>Select your order type and details below.</p>
+            </div>
+            <form id="checkout-form" class="checkout-form">
+                <div class="form-group-radio">
+                    <label class="radio-option">
+                        <input type="radio" name="orderType" value="dinein" checked>
+                        <span class="radio-card">
+                            <strong>DINE-IN ORDER</strong>
+                            <small>Order directly to your table number</small>
+                        </span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="orderType" value="takeout">
+                        <span class="radio-card">
+                            <strong>TAKEOUT PICKUP</strong>
+                            <small>Pick up hot from our smoker counter</small>
+                        </span>
+                    </label>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="cust-name">FULL NAME *</label>
+                        <input type="text" id="cust-name" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="cust-phone">PHONE NUMBER *</label>
+                        <input type="tel" id="cust-phone" required placeholder="(555) 000-0000">
+                    </div>
+                    <div class="form-group" id="table-number-group">
+                        <label for="cust-table">TABLE NUMBER / NOTES</label>
+                        <input type="text" id="cust-table" placeholder="Table #14 or Pickup Time">
+                    </div>
+                    <div class="form-group">
+                        <label for="cust-pay">PAYMENT METHOD</label>
+                        <select id="cust-pay">
+                            <option value="card">Credit / Debit Card</option>
+                            <option value="mpesa">M-Pesa / Mobile Payment</option>
+                            <option value="cash">Pay at Counter / Table Cash</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="checkout-order-summary-box">
+                    <span>Order Total:</span>
+                    <strong class="orange-text" id="checkout-modal-total">$0.00</strong>
+                </div>
+
+                <button type="submit" class="btn-primary-orange submit-order-btn">
+                    <span>CONFIRM & SUBMIT ORDER</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

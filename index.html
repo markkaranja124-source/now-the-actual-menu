@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RIB HOUSE | Best Quality Grilled Meat & Haute Smokehouse</title>
-    <meta name="description" content="Official Rib House Menu. Best Quality Grilled Meat, Goat Stew, Beef Steak, Chicken Kienyeji, Breakfast Samosas, Barista Special Dawa, and Cold Drinks. Till No: 4977556.">
+    <title>RIB HOUSE | Official Breakfast & Main Dishes Menu</title>
+    <meta name="description" content="Official Rib House Menu. Best Quality Grilled Meat, Goat Stew, Beef Steak, Chicken Kienyeji, Samosas, Barista Special Dawa, and Cold Drinks. Till No: 4977556.">
     
     <!-- Google Fonts: Cormorant Garamond (Serif) & Plus Jakarta Sans (Sans-serif) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,8 +29,8 @@
         <div class="nav-container">
             <!-- Left Category Navigation -->
             <nav class="nav-left">
-                <a href="#collections" class="nav-link">COLLECTIONS</a>
-                <a href="#menu-catalog" class="nav-link">THE MENU</a>
+                <a href="#breakfast-section" class="nav-link">BREAKFAST MENU</a>
+                <a href="#main-dishes-section" class="nav-link">MAIN DISHES</a>
                 <a href="#our-craft" class="nav-link">OUR CRAFT</a>
                 <a href="#press" class="nav-link">PRESS</a>
                 <a href="#location" class="nav-link">LOCATION</a>
@@ -44,14 +44,6 @@
 
             <!-- Right Actions: Search, Reserve & Bag -->
             <div class="nav-right">
-                <button class="nav-search-btn" id="open-search-btn" aria-label="Search Menu">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                    <span>SEARCH</span>
-                </button>
-
                 <button class="btn-nav-reserve" id="nav-reserve-btn">RESERVE TABLE</button>
 
                 <button class="cart-trigger-btn" id="cart-toggle-btn" aria-label="View Order Bag">
@@ -81,17 +73,15 @@
                 <div class="hero-badge">BEST QUALITY GRILLED MEAT • TILL NO. 4977556</div>
                 <h1 class="hero-title">THE ART OF FIRE & <span class="gold-gradient">FLAME</span></h1>
                 <p class="hero-description">
-                    Prime beef steaks, 12-hour slow-cooked goat stew, fried Kienyeji chicken, breakfast snacks, and artisanal barista specials.
+                    Explore our official **Breakfast Menu** and **Main Dishes Menu** below. Crafted with fresh local meats, rich broths, and barista creations.
                 </p>
                 <div class="hero-cta-group">
-                    <a href="#menu-catalog" class="btn-hero-outline">
-                        <span>EXPLORE FULL MENU</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                            <polyline points="19 12 12 19 5 12"></polyline>
-                        </svg>
+                    <a href="#breakfast-section" class="btn-hero-outline">
+                        <span>1. BREAKFAST MENU</span>
                     </a>
-                    <button class="btn-hero-secondary" id="hero-reserve-btn">ORDER DINE-IN / TAKEOUT</button>
+                    <a href="#main-dishes-section" class="btn-hero-secondary">
+                        <span>2. MAIN DISHES MENU</span>
+                    </a>
                 </div>
             </div>
 
@@ -124,131 +114,60 @@
             </div>
         </section>
 
-        <!-- CURATED EDITORIAL COLLECTIONS -->
-        <section class="section-wrapper reveal-on-scroll" id="collections">
-            <div class="section-header-editorial">
-                <span class="section-tag">01 / OFFICIAL SELECTIONS</span>
-                <h2 class="section-heading-editorial">EXPLORE OUR MENUS</h2>
-                <p class="section-subtext-editorial">From sizzling main dishes to fresh morning pastries and barista creations.</p>
-            </div>
-
-            <div class="collections-grid">
-                <!-- Collection 1 -->
-                <div class="collection-card">
-                    <img src="hero_ribs.jpg" alt="Main Dishes & Steaks" class="collection-bg-img">
-                    <div class="collection-overlay"></div>
-                    <div class="collection-content">
-                        <span class="collection-subtitle">SELECTION 01</span>
-                        <h3 class="collection-title">MAIN DISHES & STEAKS</h3>
-                        <p class="collection-desc">Goat Stew, Beef Steak with Chips Masala, Chicken Kienyeji, Matumbo Fry, and Beef Stew.</p>
-                        <a href="#menu-catalog" class="collection-link" data-cat="mains">
-                            <span>VIEW MAINS MENU</span> &rarr;
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Collection 2 -->
-                <div class="collection-card">
-                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80" alt="Breakfast & Snacks" class="collection-bg-img">
-                    <div class="collection-overlay"></div>
-                    <div class="collection-content">
-                        <span class="collection-subtitle">SELECTION 02</span>
-                        <h3 class="collection-title">BREAKFAST & SNACKS</h3>
-                        <p class="collection-desc">Crispy Beef Samosas, Farmhouse Sausages, Fresh Andazi, Minced Kebabs, and Bone Soup.</p>
-                        <a href="#menu-catalog" class="collection-link" data-cat="breakfast">
-                            <span>VIEW BREAKFAST</span> &rarr;
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Collection 3 -->
-                <div class="collection-card">
-                    <img src="old_fashioned.jpg" alt="Barista & Cold Drinks" class="collection-bg-img">
-                    <div class="collection-overlay"></div>
-                    <div class="collection-content">
-                        <span class="collection-subtitle">SELECTION 03</span>
-                        <h3 class="collection-title">BARISTA & DRINKS</h3>
-                        <p class="collection-desc">Special House Dawa, Tea Masala, Cappuccinos, Oreo Milkshakes, and Mint Lemonade.</p>
-                        <a href="#menu-catalog" class="collection-link" data-cat="hot-drinks">
-                            <span>VIEW DRINKS</span> &rarr;
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- INTERACTIVE MENU CATALOG (THE DROPS) -->
-        <section class="menu-catalog-section" id="menu-catalog">
-            <div class="section-wrapper" style="padding-top: 0; padding-bottom: 0;">
+        <!-- PART 1: THE BREAKFAST & DRINKS MENU SECTION -->
+        <section class="menu-catalog-section" id="breakfast-section" style="background: var(--color-black);">
+            <div class="section-wrapper">
                 <div class="section-header-editorial">
-                    <span class="section-tag">02 / THE CATALOG</span>
-                    <h2 class="section-heading-editorial">THE OFFICIAL RIB HOUSE MENU</h2>
-                    <p class="section-subtext-editorial">Filter through our authentic main dishes, breakfast items, hot barista drinks, and cold shakes.</p>
+                    <span class="section-tag">PART 01 / MORNING SELECTIONS</span>
+                    <h2 class="section-heading-editorial">BREAKFAST & DRINKS MENU</h2>
+                    <p class="section-subtext-editorial">Start your day the right way with hot barista coffees, Dawa, bone soups, samosas, and fresh fruit shakes.</p>
                 </div>
 
-                <div class="catalog-controls">
-                    <!-- Category Pills -->
+                <!-- Category Tabs for Breakfast -->
+                <div class="catalog-controls" id="breakfast-tabs">
                     <div class="category-tabs-wrapper">
                         <button class="category-pill active" data-category="all">
-                            <span>ALL ITEMS</span>
-                            <span class="pill-count" id="count-all">20</span>
+                            <span>ALL BREAKFAST & DRINKS</span>
                         </button>
-                        <button class="category-pill" data-category="mains">
-                            <span>MAIN DISHES</span>
-                            <span class="pill-count" id="count-mains">7</span>
+                        <button class="category-pill" data-category="snacks">
+                            <span>SNACKS & PASTRIES</span>
                         </button>
-                        <button class="category-pill" data-category="breakfast">
-                            <span>BREAKFAST & SNACKS</span>
-                            <span class="pill-count" id="count-breakfast">5</span>
+                        <button class="category-pill" data-category="soups">
+                            <span>BONE SOUPS (CHEMSHA)</span>
                         </button>
                         <button class="category-pill" data-category="hot-drinks">
-                            <span>HOT DRINKS & BARISTA</span>
-                            <span class="pill-count" id="count-hot">3</span>
+                            <span>BARISTA & HOT DRINKS</span>
                         </button>
                         <button class="category-pill" data-category="cold-drinks">
-                            <span>COLD DRINKS & SHAKES</span>
-                            <span class="pill-count" id="count-cold">3</span>
+                            <span>COLD BEVERAGES & SHAKES</span>
                         </button>
-                        <button class="category-pill" data-category="sides">
-                            <span>SIDES & EXTRAS</span>
-                            <span class="pill-count" id="count-sides">2</span>
-                        </button>
-                    </div>
-
-                    <!-- Search & Sort Row -->
-                    <div class="catalog-search-row">
-                        <div class="search-input-box">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                            </svg>
-                            <input type="text" id="quick-search" placeholder="Search menu items by dish name..." aria-label="Search menu catalog">
-                        </div>
-
-                        <div class="sort-select-box">
-                            <select id="sort-select" aria-label="Sort Menu Items">
-                                <option value="featured">Featured Favorites</option>
-                                <option value="price-low">Price: Low to High</option>
-                                <option value="price-high">Price: High to Low</option>
-                                <option value="spicy">Spicy Rating</option>
-                            </select>
-                        </div>
                     </div>
                 </div>
 
-                <div class="filter-status-bar">
-                    <span>Showing <strong id="visible-count" class="text-gold">20</strong> items in catalog</span>
-                    <button id="reset-filters-btn" style="display:none; color: var(--color-gold); background:none; border:none; cursor:pointer;">Reset Filters</button>
-                </div>
-
-                <!-- Menu Cards Grid -->
-                <div class="menu-grid" id="menu-grid">
-                    <!-- Dynamic rendering via app.js -->
+                <!-- Breakfast Grid -->
+                <div class="menu-grid" id="breakfast-grid">
+                    <!-- Dynamic Rendering via app.js -->
                 </div>
             </div>
         </section>
 
-        <!-- CHEF'S EXCLUSIVE DROP BANNER -->
+        <!-- PART 2: THE MAIN DISHES MENU SECTION -->
+        <section class="menu-catalog-section" id="main-dishes-section" style="background: var(--color-dark-surface); border-top: 1px solid var(--color-border-gold);">
+            <div class="section-wrapper">
+                <div class="section-header-editorial">
+                    <span class="section-tag">PART 02 / THE FEAST</span>
+                    <h2 class="section-heading-editorial">MAIN DISHES MENU</h2>
+                    <p class="section-subtext-editorial">Select your favorite meat dish and choose your side pairing (Ugali/Chapati, Rice/Mukimo, Pilau, Chips, Chips Masala) to order directly.</p>
+                </div>
+
+                <!-- Main Dishes Grid -->
+                <div class="menu-grid" id="main-dishes-grid">
+                    <!-- Dynamic Rendering via app.js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- CHEF'S FEATURED SPECIAL BANNER -->
         <section class="section-wrapper reveal-on-scroll" id="featured-drop">
             <div class="featured-drop-wrapper">
                 <div class="featured-drop-grid">
@@ -274,8 +193,8 @@
                             </div>
                         </div>
 
-                        <button class="btn-hero-outline" id="add-bundle-btn">
-                            <span>ORDER BEEF STEAK SPECIAL</span>
+                        <button class="btn-hero-outline" onclick="addCustomToCart('SPECIAL BEEF STEAK WITH CHIPS MASALA', 800, 'tomahawk.jpg')">
+                            <span>ORDER BEEF STEAK SPECIAL (KSh 800)</span>
                         </button>
                     </div>
 
@@ -302,7 +221,7 @@
                 </div>
                 <div class="craft-card">
                     <div class="craft-num">02</div>
-                    <h3 class="craft-title">SLOWER SIMMERED GRAVIES</h3>
+                    <h3 class="craft-title">SLOW SIMMERED GRAVIES</h3>
                     <p class="craft-desc">Our stews and wet fries are cooked slowly with fresh tomatoes, garlic, coriander, and house spice reductions.</p>
                 </div>
                 <div class="craft-card">
@@ -316,7 +235,7 @@
         <!-- PRESS & RECOGNITION -->
         <section class="press-section reveal-on-scroll" id="press">
             <div class="section-header-editorial">
-                <span class="section-tag">04 / CUSTOMER PRAISE</span>
+                <span class="section-tag">04 / CUSTOMER REVIEWS</span>
                 <h2 class="section-heading-editorial">WHAT GUESTS SAY</h2>
             </div>
 
@@ -324,7 +243,7 @@
                 <div class="press-card">
                     <div>
                         <div class="quote-mark">“</div>
-                        <p class="press-quote">The Goat Stew with Ugali is unbeatable. Best grilled meat experience with fast delivery!</p>
+                        <p class="press-quote">The Goat Stew with Ugali & Mukimo is unbelievable! Fastest food delivery in town.</p>
                     </div>
                     <span class="press-author">LOCAL GOURMET GUIDE</span>
                 </div>
@@ -332,7 +251,7 @@
                 <div class="press-card">
                     <div>
                         <div class="quote-mark">“</div>
-                        <p class="press-quote">Special House Dawa and morning Samosas are my daily ritual. Absolute 10/10 quality.</p>
+                        <p class="press-quote">Special House Dawa and morning Beef Samosas are my daily ritual. 10/10 recommendation!</p>
                     </div>
                     <span class="press-author">DAILY VISITOR REVIEW</span>
                 </div>
@@ -347,86 +266,11 @@
             </div>
         </section>
 
-        <!-- EDITORIAL GALLERY GRID -->
-        <section class="section-wrapper reveal-on-scroll" id="gallery">
-            <div class="section-header-editorial">
-                <span class="section-tag">05 / THE GALLERY</span>
-                <h2 class="section-heading-editorial">DISHES & ATMOSPHERE</h2>
-            </div>
-
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="hero_ribs.jpg" alt="Goat Meat Grill">
-                    <div class="gallery-overlay">
-                        <span class="text-gold">VIEW DISH</span>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="tomahawk.jpg" alt="Beef Steak Sizzler">
-                    <div class="gallery-overlay">
-                        <span class="text-gold">VIEW DISH</span>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="mac_cheese.jpg" alt="Chips Masala">
-                    <div class="gallery-overlay">
-                        <span class="text-gold">VIEW DISH</span>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="old_fashioned.jpg" alt="House Dawa & Barista Specials">
-                    <div class="gallery-overlay">
-                        <span class="text-gold">VIEW DISH</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FAQ ACCORDION SECTION -->
-        <section class="section-wrapper reveal-on-scroll" id="faq">
-            <div class="section-header-editorial">
-                <span class="section-tag">06 / HELP & INFORMATION</span>
-                <h2 class="section-heading-editorial">FREQUENTLY ASKED QUESTIONS</h2>
-            </div>
-
-            <div class="faq-container">
-                <div class="faq-item">
-                    <button class="faq-button">
-                        <span>WHAT IS YOUR M-PESA TILL NUMBER?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-content">
-                        <p>Our official M-Pesa Buy Goods Till Number is <strong>4977556</strong> (Rib House).</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-button">
-                        <span>HOW DO I PLACE DIRECT ORDERS OR TAKEOUT?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-content">
-                        <p>You can order directly through our website Order Bag or call our order hotline at <strong>0724 594 204</strong>.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-button">
-                        <span>ARE BREAKFAST ITEMS SERVED DAILY?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-content">
-                        <p>Yes. Our Breakfast Menu (Samosas, Sausages, Andazi, Kebabs, Bone Soup, and Barista Dawa) is served fresh every morning.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- RESERVATION & LOCATION SECTION -->
         <section class="section-wrapper reveal-on-scroll" id="location">
             <div class="location-wrapper">
                 <div class="location-info">
-                    <span class="section-tag">07 / CONTACT & DELIVERY</span>
+                    <span class="section-tag">05 / CONTACT & DELIVERY</span>
                     <h2>VISIT OR ORDER DIRECT</h2>
                     <p>Experience the finest grilled meats and hot meals daily.</p>
 
@@ -459,20 +303,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- VIP NEWSLETTER -->
-        <section class="newsletter-section reveal-on-scroll" id="newsletter">
-            <div class="newsletter-box">
-                <span class="section-tag">DAILY SPECIALS</span>
-                <h2 class="section-heading-editorial">STAY UPDATED WITH RIB HOUSE</h2>
-                <p class="section-subtext-editorial">Subscribe to get notifications on daily meat drops and special weekend offers.</p>
-
-                <form class="newsletter-form" id="newsletter-form">
-                    <input type="email" placeholder="Enter your email address..." required aria-label="Email address">
-                    <button type="submit" class="btn-hero-outline">SUBSCRIBE</button>
-                </form>
-            </div>
-        </section>
     </main>
 
     <!-- LUXURY FOOTER -->
@@ -486,17 +316,17 @@
             <div class="footer-col">
                 <h4>NAVIGATION</h4>
                 <a href="#hero">Landing</a>
-                <a href="#collections">Selections</a>
-                <a href="#menu-catalog">Menu Catalog</a>
+                <a href="#breakfast-section">Breakfast Menu</a>
+                <a href="#main-dishes-section">Main Dishes</a>
                 <a href="#our-craft">Our Craft</a>
             </div>
 
             <div class="footer-col">
                 <h4>CATEGORIES</h4>
-                <a href="#menu-catalog">Main Dishes</a>
-                <a href="#menu-catalog">Breakfast & Snacks</a>
-                <a href="#menu-catalog">Hot Barista Drinks</a>
-                <a href="#menu-catalog">Cold Shakes & Juices</a>
+                <a href="#main-dishes-section">Main Dishes</a>
+                <a href="#breakfast-section">Breakfast & Snacks</a>
+                <a href="#breakfast-section">Hot Barista Drinks</a>
+                <a href="#breakfast-section">Cold Shakes & Juices</a>
             </div>
 
             <div class="footer-col">
@@ -578,22 +408,6 @@
 
             <button type="submit" class="btn-hero-outline" style="width: 100%; margin-top: 12px;">SUBMIT RESERVATION</button>
         </form>
-    </div>
-
-    <!-- ITEM QUICK VIEW MODAL -->
-    <div class="modal-overlay" id="quickview-modal-overlay"></div>
-    <div class="modal-container" id="quickview-modal" style="max-width: 760px;">
-        <span class="modal-close-btn" id="qv-modal-close">&times;</span>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center;">
-            <img src="" id="qv-img" alt="" style="width: 100%; height: 300px; object-fit: cover; border: 1px solid var(--color-border-dark);">
-            <div>
-                <span id="qv-category" style="font-size: 0.65rem; color: var(--color-gold); letter-spacing: 2px; text-transform: uppercase;"></span>
-                <h2 id="qv-title" style="font-family: var(--font-serif); font-size: 1.8rem; color: var(--color-cream); margin-top: 4px;"></h2>
-                <div id="qv-price" style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-gold); margin: 8px 0;"></div>
-                <p id="qv-description" style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 16px;"></p>
-                <button class="btn-hero-outline" id="qv-add-to-cart-btn" style="width: 100%;">ADD TO BAG</button>
-            </div>
-        </div>
     </div>
 
     <script src="app.js"></script>

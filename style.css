@@ -235,6 +235,28 @@ img {
     text-align: center;
 }
 
+.nav-logo-img {
+    height: 54px;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 2px;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+}
+
+.hero-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.hero-logo-img {
+    width: 170px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 20px rgba(245, 215, 142, 0.35));
+}
+
 .brand-title {
     font-family: var(--font-serif);
     font-size: 1.85rem;

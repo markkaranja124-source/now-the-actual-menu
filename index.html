@@ -116,7 +116,7 @@
             </div>
         </section>
 
-        <!-- PART 1: BREAKFAST & BARISTA MENU SECTION (NO PICTURES, WORDS & PRICES ONLY) -->
+        <!-- PART 1: BREAKFAST & BARISTA MENU SECTION (STRICTLY NO PICTURES, WORDS & PRICES ONLY) -->
         <section class="menu-catalog-section" id="breakfast-section" style="background: var(--color-black);">
             <div class="section-wrapper">
                 <div class="section-header-editorial">
@@ -142,7 +142,71 @@
 
                 <!-- Text-Only Breakfast Grid (NO PICTURES) -->
                 <div class="menu-grid" id="breakfast-text-grid" style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));">
-                    <!-- Dynamic Text-Only Rendering via app.js -->
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">PANCAKE BREAKFAST</h3>
+                                <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">400/=</span>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 16px;">Tea, 2 pancakes and pan Fried Bacon</p>
+                        </div>
+                        <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('PANCAKE BREAKFAST', 400)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">MINI BREAKFAST</h3>
+                                <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">310/=</span>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 16px;">Tea, 2 fried egg, Toast and sausage, A Small Glass Of Juice</p>
+                        </div>
+                        <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('MINI BREAKFAST', 310)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">RIB HOUSE BREAKFAST</h3>
+                                <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">300/=</span>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 16px;">Tea, Liver and Chapati</p>
+                        </div>
+                        <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('RIB HOUSE BREAKFAST', 300)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">MAIN BREAKFAST</h3>
+                                <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">400/=</span>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 16px;">Tea, 2 Eggs, Beef Bacon/Sausages, Toast and a glass of juice</p>
+                        </div>
+                        <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('MAIN BREAKFAST', 400)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">GOAT SOUP BREAKFAST</h3>
+                                <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">300/=</span>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 16px;">Served with a piece of goat meat, goat soup, chapati and veges.</p>
+                        </div>
+                        <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('GOAT SOUP BREAKFAST', 300)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">CHICKEN SOUP BREAKFAST</h3>
+                                <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">300/=</span>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 16px;">Served With: A Piece Of Chicken Kienyeji, Chicken Soup, Chapati And Veges</p>
+                        </div>
+                        <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('CHICKEN SOUP BREAKFAST', 300)">ADD TO BAG</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -156,9 +220,240 @@
                     <p class="section-subtext-editorial">Select your main meat or fish dish and pick your exact side option to view the exact price.</p>
                 </div>
 
-                <!-- Main Dishes Grid -->
+                <!-- Main Dishes Grid (STATIC HTML CARDS) -->
                 <div class="menu-grid" id="main-dishes-grid" style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); margin-bottom: 50px;">
-                    <!-- Dynamic Rendering via app.js -->
+                    
+                    <!-- MATUMBO FRY -->
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-cream); margin-bottom: 12px; text-transform: uppercase;">MATUMBO FRY</h3>
+                            <div style="margin-bottom: 16px;">
+                                <label style="display:block; font-size: 0.65rem; color: var(--color-gold); letter-spacing: 1.5px; margin-bottom: 6px; text-transform: uppercase;">SELECT SIDE OPTION:</label>
+                                <select id="main-select-0" onchange="updateMainPrice(0)" style="width:100%; background:var(--color-black); border:1px solid var(--color-border-dark); color:var(--color-cream); padding:10px 12px; font-size:0.85rem; outline:none; cursor:pointer;">
+                                    <option value="400" data-side="Ugali / Chapati">Ugali / Chapati — 400/=</option>
+                                    <option value="410" data-side="Rice / Mukimo">Rice / Mukimo — 410/=</option>
+                                    <option value="500" data-side="Pilau">Pilau — 500/=</option>
+                                    <option value="540" data-side="Chips">Chips — 540/=</option>
+                                    <option value="600" data-side="Chips Masala">Chips Masala — 600/=</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid var(--color-border-dark); padding-top: 12px;">
+                            <span style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-gold); font-weight: bold;" id="main-price-0">400/=</span>
+                            <button class="btn-add-bag" onclick="addMainDishToCart(0)">ADD TO BAG</button>
+                        </div>
+                    </div>
+
+                    <!-- BEEF STEW / FRY -->
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-cream); margin-bottom: 12px; text-transform: uppercase;">BEEF STEW / FRY</h3>
+                            <div style="margin-bottom: 16px;">
+                                <label style="display:block; font-size: 0.65rem; color: var(--color-gold); letter-spacing: 1.5px; margin-bottom: 6px; text-transform: uppercase;">SELECT SIDE OPTION:</label>
+                                <select id="main-select-1" onchange="updateMainPrice(1)" style="width:100%; background:var(--color-black); border:1px solid var(--color-border-dark); color:var(--color-cream); padding:10px 12px; font-size:0.85rem; outline:none; cursor:pointer;">
+                                    <option value="440" data-side="Ugali / Chapati">Ugali / Chapati — 440/=</option>
+                                    <option value="450" data-side="Rice / Mukimo">Rice / Mukimo — 450/=</option>
+                                    <option value="510" data-side="Pilau">Pilau — 510/=</option>
+                                    <option value="590" data-side="Chips">Chips — 590/=</option>
+                                    <option value="630" data-side="Chips Masala">Chips Masala — 630/=</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid var(--color-border-dark); padding-top: 12px;">
+                            <span style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-gold); font-weight: bold;" id="main-price-1">440/=</span>
+                            <button class="btn-add-bag" onclick="addMainDishToCart(1)">ADD TO BAG</button>
+                        </div>
+                    </div>
+
+                    <!-- GOAT STEW / FRY -->
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-cream); margin-bottom: 12px; text-transform: uppercase;">GOAT STEW / FRY</h3>
+                            <div style="margin-bottom: 16px;">
+                                <label style="display:block; font-size: 0.65rem; color: var(--color-gold); letter-spacing: 1.5px; margin-bottom: 6px; text-transform: uppercase;">SELECT SIDE OPTION:</label>
+                                <select id="main-select-2" onchange="updateMainPrice(2)" style="width:100%; background:var(--color-black); border:1px solid var(--color-border-dark); color:var(--color-cream); padding:10px 12px; font-size:0.85rem; outline:none; cursor:pointer;">
+                                    <option value="470" data-side="Ugali / Chapati">Ugali / Chapati — 470/=</option>
+                                    <option value="480" data-side="Rice / Mukimo">Rice / Mukimo — 480/=</option>
+                                    <option value="570" data-side="Pilau">Pilau — 570/=</option>
+                                    <option value="620" data-side="Chips">Chips — 620/=</option>
+                                    <option value="670" data-side="Chips Masala">Chips Masala — 670/=</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid var(--color-border-dark); padding-top: 12px;">
+                            <span style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-gold); font-weight: bold;" id="main-price-2">470/=</span>
+                            <button class="btn-add-bag" onclick="addMainDishToCart(2)">ADD TO BAG</button>
+                        </div>
+                    </div>
+
+                    <!-- LIVER -->
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-cream); margin-bottom: 12px; text-transform: uppercase;">LIVER</h3>
+                            <div style="margin-bottom: 16px;">
+                                <label style="display:block; font-size: 0.65rem; color: var(--color-gold); letter-spacing: 1.5px; margin-bottom: 6px; text-transform: uppercase;">SELECT SIDE OPTION:</label>
+                                <select id="main-select-3" onchange="updateMainPrice(3)" style="width:100%; background:var(--color-black); border:1px solid var(--color-border-dark); color:var(--color-cream); padding:10px 12px; font-size:0.85rem; outline:none; cursor:pointer;">
+                                    <option value="470" data-side="Ugali / Chapati">Ugali / Chapati — 470/=</option>
+                                    <option value="480" data-side="Rice / Mukimo">Rice / Mukimo — 480/=</option>
+                                    <option value="570" data-side="Pilau">Pilau — 570/=</option>
+                                    <option value="620" data-side="Chips">Chips — 620/=</option>
+                                    <option value="630" data-side="Chips Masala">Chips Masala — 630/=</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid var(--color-border-dark); padding-top: 12px;">
+                            <span style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-gold); font-weight: bold;" id="main-price-3">470/=</span>
+                            <button class="btn-add-bag" onclick="addMainDishToCart(3)">ADD TO BAG</button>
+                        </div>
+                    </div>
+
+                    <!-- CHICKEN KIENYEJI QUARTER -->
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-cream); margin-bottom: 12px; text-transform: uppercase;">CHICKEN KIENYEJI QUARTER</h3>
+                            <div style="margin-bottom: 16px;">
+                                <label style="display:block; font-size: 0.65rem; color: var(--color-gold); letter-spacing: 1.5px; margin-bottom: 6px; text-transform: uppercase;">SELECT SIDE OPTION:</label>
+                                <select id="main-select-4" onchange="updateMainPrice(4)" style="width:100%; background:var(--color-black); border:1px solid var(--color-border-dark); color:var(--color-cream); padding:10px 12px; font-size:0.85rem; outline:none; cursor:pointer;">
+                                    <option value="570" data-side="Ugali / Chapati">Ugali / Chapati — 570/=</option>
+                                    <option value="580" data-side="Rice / Mukimo">Rice / Mukimo — 580/=</option>
+                                    <option value="670" data-side="Pilau">Pilau — 670/=</option>
+                                    <option value="720" data-side="Chips">Chips — 720/=</option>
+                                    <option value="750" data-side="Chips Masala">Chips Masala — 750/=</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid var(--color-border-dark); padding-top: 12px;">
+                            <span style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-gold); font-weight: bold;" id="main-price-4">570/=</span>
+                            <button class="btn-add-bag" onclick="addMainDishToCart(4)">ADD TO BAG</button>
+                        </div>
+                    </div>
+
+                    <!-- CHICKEN WET FRY -->
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-cream); margin-bottom: 12px; text-transform: uppercase;">CHICKEN WET FRY</h3>
+                            <div style="margin-bottom: 16px;">
+                                <label style="display:block; font-size: 0.65rem; color: var(--color-gold); letter-spacing: 1.5px; margin-bottom: 6px; text-transform: uppercase;">SELECT SIDE OPTION:</label>
+                                <select id="main-select-5" onchange="updateMainPrice(5)" style="width:100%; background:var(--color-black); border:1px solid var(--color-border-dark); color:var(--color-cream); padding:10px 12px; font-size:0.85rem; outline:none; cursor:pointer;">
+                                    <option value="450" data-side="Ugali / Chapati">Ugali / Chapati — 450/=</option>
+                                    <option value="460" data-side="Rice / Mukimo">Rice / Mukimo — 460/=</option>
+                                    <option value="550" data-side="Pilau">Pilau — 550/=</option>
+                                    <option value="580" data-side="Chips">Chips — 580/=</option>
+                                    <option value="630" data-side="Chips Masala">Chips Masala — 630/=</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid var(--color-border-dark); padding-top: 12px;">
+                            <span style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-gold); font-weight: bold;" id="main-price-5">450/=</span>
+                            <button class="btn-add-bag" onclick="addMainDishToCart(5)">ADD TO BAG</button>
+                        </div>
+                    </div>
+
+                    <!-- BEEF STEAK -->
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-cream); margin-bottom: 12px; text-transform: uppercase;">BEEF STEAK</h3>
+                            <div style="margin-bottom: 16px;">
+                                <label style="display:block; font-size: 0.65rem; color: var(--color-gold); letter-spacing: 1.5px; margin-bottom: 6px; text-transform: uppercase;">SELECT SIDE OPTION:</label>
+                                <select id="main-select-6" onchange="updateMainPrice(6)" style="width:100%; background:var(--color-black); border:1px solid var(--color-border-dark); color:var(--color-cream); padding:10px 12px; font-size:0.85rem; outline:none; cursor:pointer;">
+                                    <option value="590" data-side="Ugali / Chapati">Ugali / Chapati — 590/=</option>
+                                    <option value="600" data-side="Rice / Mukimo">Rice / Mukimo — 600/=</option>
+                                    <option value="690" data-side="Pilau">Pilau — 690/=</option>
+                                    <option value="740" data-side="Chips">Chips — 740/=</option>
+                                    <option value="800" data-side="Chips Masala">Chips Masala — 800/=</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid var(--color-border-dark); padding-top: 12px;">
+                            <span style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-gold); font-weight: bold;" id="main-price-6">590/=</span>
+                            <button class="btn-add-bag" onclick="addMainDishToCart(6)">ADD TO BAG</button>
+                        </div>
+                    </div>
+
+                    <!-- DEEP FRIED CHICKEN -->
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-cream); margin-bottom: 12px; text-transform: uppercase;">DEEP FRIED CHICKEN</h3>
+                            <div style="margin-bottom: 16px;">
+                                <label style="display:block; font-size: 0.65rem; color: var(--color-gold); letter-spacing: 1.5px; margin-bottom: 6px; text-transform: uppercase;">SELECT SIDE OPTION:</label>
+                                <select id="main-select-7" onchange="updateMainPrice(7)" style="width:100%; background:var(--color-black); border:1px solid var(--color-border-dark); color:var(--color-cream); padding:10px 12px; font-size:0.85rem; outline:none; cursor:pointer;">
+                                    <option value="390" data-side="Ugali / Chapati">Ugali / Chapati — 390/=</option>
+                                    <option value="400" data-side="Rice / Mukimo">Rice / Mukimo — 400/=</option>
+                                    <option value="490" data-side="Pilau">Pilau — 490/=</option>
+                                    <option value="600" data-side="Chips">Chips — 600/=</option>
+                                    <option value="630" data-side="Chips Masala">Chips Masala — 630/=</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid var(--color-border-dark); padding-top: 12px;">
+                            <span style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-gold); font-weight: bold;" id="main-price-7">390/=</span>
+                            <button class="btn-add-bag" onclick="addMainDishToCart(7)">ADD TO BAG</button>
+                        </div>
+                    </div>
+
+                    <!-- FISH FILLET -->
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-cream); margin-bottom: 12px; text-transform: uppercase;">FISH FILLET</h3>
+                            <div style="margin-bottom: 16px;">
+                                <label style="display:block; font-size: 0.65rem; color: var(--color-gold); letter-spacing: 1.5px; margin-bottom: 6px; text-transform: uppercase;">SELECT SIDE OPTION:</label>
+                                <select id="main-select-8" onchange="updateMainPrice(8)" style="width:100%; background:var(--color-black); border:1px solid var(--color-border-dark); color:var(--color-cream); padding:10px 12px; font-size:0.85rem; outline:none; cursor:pointer;">
+                                    <option value="490" data-side="Ugali / Chapati">Ugali / Chapati — 490/=</option>
+                                    <option value="480" data-side="Rice / Mukimo">Rice / Mukimo — 480/=</option>
+                                    <option value="570" data-side="Pilau">Pilau — 570/=</option>
+                                    <option value="600" data-side="Chips">Chips — 600/=</option>
+                                    <option value="650" data-side="Chips Masala">Chips Masala — 650/=</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid var(--color-border-dark); padding-top: 12px;">
+                            <span style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-gold); font-weight: bold;" id="main-price-8">490/=</span>
+                            <button class="btn-add-bag" onclick="addMainDishToCart(8)">ADD TO BAG</button>
+                        </div>
+                    </div>
+
+                    <!-- TILAPIA STEW -->
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-cream); margin-bottom: 12px; text-transform: uppercase;">TILAPIA STEW</h3>
+                            <div style="margin-bottom: 16px;">
+                                <label style="display:block; font-size: 0.65rem; color: var(--color-gold); letter-spacing: 1.5px; margin-bottom: 6px; text-transform: uppercase;">SELECT SIDE OPTION:</label>
+                                <select id="main-select-9" onchange="updateMainPrice(9)" style="width:100%; background:var(--color-black); border:1px solid var(--color-border-dark); color:var(--color-cream); padding:10px 12px; font-size:0.85rem; outline:none; cursor:pointer;">
+                                    <option value="590" data-side="Ugali / Chapati">Ugali / Chapati — 590/=</option>
+                                    <option value="600" data-side="Rice / Mukimo">Rice / Mukimo — 600/=</option>
+                                    <option value="690" data-side="Pilau">Pilau — 690/=</option>
+                                    <option value="720" data-side="Chips">Chips — 720/=</option>
+                                    <option value="770" data-side="Chips Masala">Chips Masala — 770/=</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid var(--color-border-dark); padding-top: 12px;">
+                            <span style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-gold); font-weight: bold;" id="main-price-9">590/=</span>
+                            <button class="btn-add-bag" onclick="addMainDishToCart(9)">ADD TO BAG</button>
+                        </div>
+                    </div>
+
+                    <!-- TILAPIA FRY -->
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-cream); margin-bottom: 12px; text-transform: uppercase;">TILAPIA FRY</h3>
+                            <div style="margin-bottom: 16px;">
+                                <label style="display:block; font-size: 0.65rem; color: var(--color-gold); letter-spacing: 1.5px; margin-bottom: 6px; text-transform: uppercase;">SELECT SIDE OPTION:</label>
+                                <select id="main-select-10" onchange="updateMainPrice(10)" style="width:100%; background:var(--color-black); border:1px solid var(--color-border-dark); color:var(--color-cream); padding:10px 12px; font-size:0.85rem; outline:none; cursor:pointer;">
+                                    <option value="570" data-side="Ugali / Chapati">Ugali / Chapati — 570/=</option>
+                                    <option value="580" data-side="Rice / Mukimo">Rice / Mukimo — 580/=</option>
+                                    <option value="680" data-side="Pilau">Pilau — 680/=</option>
+                                    <option value="700" data-side="Chips">Chips — 700/=</option>
+                                    <option value="750" data-side="Chips Masala">Chips Masala — 750/=</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid var(--color-border-dark); padding-top: 12px;">
+                            <span style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-gold); font-weight: bold;" id="main-price-10">570/=</span>
+                            <button class="btn-add-bag" onclick="addMainDishToCart(10)">ADD TO BAG</button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -172,18 +467,200 @@
                     <p class="section-subtext-editorial">Beef & Goat by KG, Tumbukiza on order, and the Family Chicken Platter for 4.</p>
                 </div>
 
-                <!-- Choma & Platter Grid -->
+                <!-- Choma & Platter Grid (STATIC HTML CARDS) -->
                 <div class="menu-grid" id="meat-portions-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); margin-bottom: 50px;">
-                    <!-- Dynamic Rendering via app.js -->
+                    
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">CHOMA BEEF (1 KG)</h4>
+                                <span style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-gold); font-weight: bold;">1100/=</span>
+                            </div>
+                        </div>
+                        <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('CHOMA BEEF (1 KG)', 1100)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">CHOMA BEEF (0.5 KG)</h4>
+                                <span style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-gold); font-weight: bold;">550/=</span>
+                            </div>
+                        </div>
+                        <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('CHOMA BEEF (0.5 KG)', 550)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">CHOMA GOAT (1 KG)</h4>
+                                <span style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-gold); font-weight: bold;">1200/=</span>
+                            </div>
+                        </div>
+                        <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('CHOMA GOAT (1 KG)', 1200)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">CHOMA GOAT (0.5 KG)</h4>
+                                <span style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-gold); font-weight: bold;">600/=</span>
+                            </div>
+                        </div>
+                        <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('CHOMA GOAT (0.5 KG)', 600)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">CHEMSHA BEEF (1 KG)</h4>
+                                <span style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-gold); font-weight: bold;">1200/=</span>
+                            </div>
+                        </div>
+                        <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('CHEMSHA BEEF (1 KG)', 1200)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">CHEMSHA BEEF (0.5 KG)</h4>
+                                <span style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-gold); font-weight: bold;">600/=</span>
+                            </div>
+                        </div>
+                        <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('CHEMSHA BEEF (0.5 KG)', 600)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">CHEMSHA GOAT (1 KG)</h4>
+                                <span style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-gold); font-weight: bold;">1300/=</span>
+                            </div>
+                        </div>
+                        <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('CHEMSHA GOAT (1 KG)', 1300)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">CHEMSHA GOAT (0.5 KG)</h4>
+                                <span style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-gold); font-weight: bold;">650/=</span>
+                            </div>
+                        </div>
+                        <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('CHEMSHA GOAT (0.5 KG)', 650)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">BEEF FRY / TUMBUKIZA (1 KG)</h4>
+                                <span style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-gold); font-weight: bold;">1300/=</span>
+                            </div>
+                        </div>
+                        <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('BEEF FRY / TUMBUKIZA (1 KG)', 1300)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">GOAT FRY / TUMBUKIZA (1 KG)</h4>
+                                <span style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-gold); font-weight: bold;">1400/=</span>
+                            </div>
+                        </div>
+                        <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('GOAT FRY / TUMBUKIZA (1 KG)', 1400)">ADD TO BAG</button>
+                    </div>
+
+                    <!-- CHICKEN PLATTER FOR 4 -->
+                    <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; grid-column: 1 / -1; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-cream); text-transform: uppercase;">CHICKEN PLATTER FOR 4 (ON ORDER)</h3>
+                                <span style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-gold); font-weight: bold;">1900/=</span>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 16px;">Includes 2 Portions Chicken Wet Fry, 2 Portions Beef Fry, 1 Portion Chips, 2 Portions Ugali/Chapati, 2 Portions Veggies-spinach, 4 Small Glasses of Juice</p>
+                        </div>
+                        <button class="btn-hero-outline" style="width: 100%;" onclick="addCustomToCart('CHICKEN PLATTER FOR 4 (ON ORDER)', 1900)">ORDER CHICKEN PLATTER FOR 4 (1900/=)</button>
+                    </div>
+
                 </div>
 
                 <div class="section-header-editorial" style="margin-bottom: 30px;">
                     <h3 style="font-family: var(--font-serif); font-size: 2rem; color: var(--color-cream); text-transform: uppercase;">EXTRA SIDES & VEGES</h3>
                 </div>
 
-                <!-- Extra Sides Grid -->
+                <!-- Extra Sides Grid (STATIC HTML CARDS) -->
                 <div class="menu-grid" id="extra-sides-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
-                    <!-- Dynamic Rendering via app.js -->
+                    <div style="background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-cream);">Rice / Mukimo Special</h4>
+                            <span style="font-size: 0.9rem; color: var(--color-gold);">250/=</span>
+                        </div>
+                        <button class="btn-add-bag" style="padding: 6px 14px; font-size: 0.7rem;" onclick="addCustomToCart('Rice / Mukimo Special', 250)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-cream);">Pilau Special</h4>
+                            <span style="font-size: 0.9rem; color: var(--color-gold);">270/=</span>
+                        </div>
+                        <button class="btn-add-bag" style="padding: 6px 14px; font-size: 0.7rem;" onclick="addCustomToCart('Pilau Special', 270)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-cream);">Chips Plain</h4>
+                            <span style="font-size: 0.9rem; color: var(--color-gold);">220/=</span>
+                        </div>
+                        <button class="btn-add-bag" style="padding: 6px 14px; font-size: 0.7rem;" onclick="addCustomToCart('Chips Plain', 220)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-cream);">Chips Masala</h4>
+                            <span style="font-size: 0.9rem; color: var(--color-gold);">270/=</span>
+                        </div>
+                        <button class="btn-add-bag" style="padding: 6px 14px; font-size: 0.7rem;" onclick="addCustomToCart('Chips Masala', 270)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-cream);">Rice Plain</h4>
+                            <span style="font-size: 0.9rem; color: var(--color-gold);">200/=</span>
+                        </div>
+                        <button class="btn-add-bag" style="padding: 6px 14px; font-size: 0.7rem;" onclick="addCustomToCart('Rice Plain', 200)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-cream);">Mukimo Plain</h4>
+                            <span style="font-size: 0.9rem; color: var(--color-gold);">200/=</span>
+                        </div>
+                        <button class="btn-add-bag" style="padding: 6px 14px; font-size: 0.7rem;" onclick="addCustomToCart('Mukimo Plain', 200)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-cream);">Waru</h4>
+                            <span style="font-size: 0.9rem; color: var(--color-gold);">120/=</span>
+                        </div>
+                        <button class="btn-add-bag" style="padding: 6px 14px; font-size: 0.7rem;" onclick="addCustomToCart('Waru', 120)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-cream);">Spinach</h4>
+                            <span style="font-size: 0.9rem; color: var(--color-gold);">120/=</span>
+                        </div>
+                        <button class="btn-add-bag" style="padding: 6px 14px; font-size: 0.7rem;" onclick="addCustomToCart('Spinach', 120)">ADD TO BAG</button>
+                    </div>
+
+                    <div style="background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-cream);">Banana</h4>
+                            <span style="font-size: 0.9rem; color: var(--color-gold);">100/=</span>
+                        </div>
+                        <button class="btn-add-bag" style="padding: 6px 14px; font-size: 0.7rem;" onclick="addCustomToCart('Banana', 100)">ADD TO BAG</button>
+                    </div>
                 </div>
             </div>
         </section>

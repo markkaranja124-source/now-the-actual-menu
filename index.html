@@ -29,10 +29,11 @@
         <div class="nav-container">
             <!-- Left Category Navigation -->
             <nav class="nav-left">
-                <a href="#breakfast-section" class="nav-link">BREAKFAST & BARISTA</a>
+                <a href="#bk-combos" class="nav-link">BREAKFAST COMBOS</a>
+                <a href="#bk-hot" class="nav-link">HOT DRINKS</a>
+                <a href="#bk-cold" class="nav-link">COLD DRINKS</a>
                 <a href="#main-dishes-section" class="nav-link">MAIN DISHES</a>
                 <a href="#choma-chemsha-section" class="nav-link">CHOMA & PLATTERS</a>
-                <a href="#location" class="nav-link">CONTACT / TILL NO</a>
             </nav>
 
             <!-- Centered Luxury Logo Emblem -->
@@ -76,13 +77,13 @@
                 </p>
                 <div class="hero-cta-group">
                     <a href="#breakfast-section" class="btn-hero-outline">
-                        <span>1. BREAKFAST & BARISTA</span>
+                        <span>1. BREAKFAST COMBOS</span>
+                    </a>
+                    <a href="#bk-hot" class="btn-hero-outline">
+                        <span>2. HOT & COLD BARISTA DRINKS</span>
                     </a>
                     <a href="#main-dishes-section" class="btn-hero-secondary">
-                        <span>2. MAIN DISHES MENU</span>
-                    </a>
-                    <a href="#choma-chemsha-section" class="btn-hero-outline">
-                        <span>3. CHOMA & PLATTERS</span>
+                        <span>3. MAIN DISHES MENU</span>
                     </a>
                 </div>
             </div>
@@ -125,12 +126,27 @@
                     <p class="section-subtext-editorial">Start your day the right way! All breakfasts served hot & fresh.</p>
                 </div>
 
+                <!-- Navigation Quick Pills for Breakfast & Barista Subsections -->
+                <div class="catalog-controls" style="margin-bottom: 40px;">
+                    <div class="category-tabs-wrapper">
+                        <a href="#bk-combos" class="category-pill active" style="text-decoration: none;">
+                            <span>☕ BREAKFAST COMBOS & SPECIALS</span>
+                        </a>
+                        <a href="#bk-hot" class="category-pill" style="text-decoration: none;">
+                            <span>🔥 HOT BEVERAGES & BARISTA</span>
+                        </a>
+                        <a href="#bk-cold" class="category-pill" style="text-decoration: none;">
+                            <span>🥤 COLD BEVERAGES & SHAKES</span>
+                        </a>
+                    </div>
+                </div>
+
                 <!-- SUBSECTION 1: BREAKFAST COMBOS & SPECIALS -->
-                <div style="margin-bottom: 30px; border-bottom: 1px solid var(--color-border-gold); padding-bottom: 10px;">
+                <div id="bk-combos" style="scroll-margin-top: 100px; margin-bottom: 30px; border-bottom: 1px solid var(--color-border-gold); padding-bottom: 10px;">
                     <h3 style="font-family: var(--font-serif); font-size: 1.8rem; color: var(--color-gold); text-transform: uppercase;">BREAKFAST COMBOS & SPECIALS</h3>
                 </div>
 
-                <div class="menu-grid" style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); margin-bottom: 50px;">
+                <div class="menu-grid" style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); margin-bottom: 60px;">
                     <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
                             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
@@ -287,11 +303,11 @@
                 </div>
 
                 <!-- SUBSECTION 2: BARISTA & HOT DRINKS (PAGE 4) -->
-                <div style="margin-bottom: 30px; border-bottom: 1px solid var(--color-border-gold); padding-bottom: 10px;">
+                <div id="bk-hot" style="scroll-margin-top: 100px; margin-bottom: 30px; border-bottom: 1px solid var(--color-border-gold); padding-bottom: 10px;">
                     <h3 style="font-family: var(--font-serif); font-size: 1.8rem; color: var(--color-gold); text-transform: uppercase;">BARISTA & HOT BEVERAGES</h3>
                 </div>
 
-                <div class="menu-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); margin-bottom: 50px;">
+                <div class="menu-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); margin-bottom: 60px;">
                     <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; justify-content: space-between; align-items: center;">
                         <div><h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream);">House Coffee white</h4><span style="font-size: 0.95rem; color: var(--color-gold);">150/=</span></div>
                         <button class="btn-add-bag" style="padding: 6px 14px; font-size: 0.7rem;" onclick="addCustomToCart('House Coffee white', 150)">ADD TO BAG</button>
@@ -383,7 +399,7 @@
                 </div>
 
                 <!-- SUBSECTION 3: COLD BEVERAGES & SHAKES (PAGE 4) -->
-                <div style="margin-bottom: 30px; border-bottom: 1px solid var(--color-border-gold); padding-bottom: 10px;">
+                <div id="bk-cold" style="scroll-margin-top: 100px; margin-bottom: 30px; border-bottom: 1px solid var(--color-border-gold); padding-bottom: 10px;">
                     <h3 style="font-family: var(--font-serif); font-size: 1.8rem; color: var(--color-gold); text-transform: uppercase;">COLD BEVERAGES & SHAKES</h3>
                 </div>
 
@@ -925,17 +941,18 @@
             <div class="footer-col">
                 <h4>NAVIGATION</h4>
                 <a href="#hero">Landing</a>
-                <a href="#breakfast-section">Breakfast & Barista</a>
+                <a href="#bk-combos">Breakfast Combos</a>
+                <a href="#bk-hot">Hot Drinks</a>
+                <a href="#bk-cold">Cold Drinks</a>
                 <a href="#main-dishes-section">Main Dishes</a>
-                <a href="#choma-chemsha-section">Choma & Platters</a>
             </div>
 
             <div class="footer-col">
                 <h4>CATEGORIES</h4>
                 <a href="#main-dishes-section">Main Dishes</a>
                 <a href="#choma-chemsha-section">Choma & Chemsha</a>
-                <a href="#breakfast-section">Breakfast Combos</a>
-                <a href="#breakfast-section">Barista Hot Drinks</a>
+                <a href="#bk-combos">Breakfast Combos</a>
+                <a href="#bk-hot">Barista Hot Drinks</a>
             </div>
 
             <div class="footer-col">

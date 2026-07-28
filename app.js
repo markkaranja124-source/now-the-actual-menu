@@ -1,73 +1,133 @@
 /* ==========================================================================
-   RIB HOUSE - STRICT OFFICIAL MENU DATASET & INTERACTIVE LOGIC
-   STRICTLY MATCHES PHYSICAL MENU SHEETS WITH ZERO ASSUMPTIONS
+   RIB HOUSE - OFFICIAL BREAKFAST & BARISTA MENU + MAIN DISHES
+   STRICT WORD-FOR-WORD ACCURACY (NO PICTURES FOR BREAKFAST MENU)
    ========================================================================== */
 
-// --- 1. DRINKS AND SNACKS MENU (EXACT MATCH TO PHYSICAL MENU PAGE) ---
-const DRINKS_AND_SNACKS = [
-    // SNACKS & SOUPS
-    { id: 'ds-samosa', name: 'Samosa', category: 'snacks', price: 70 },
-    { id: 'ds-sausage', name: 'Sausage', category: 'snacks', price: 70 },
-    { id: 'ds-andazi', name: 'Andazi', category: 'snacks', price: 50 },
-    { id: 'ds-kebab', name: 'Kebab', category: 'snacks', price: 100 },
-    { id: 'ds-chapati', name: 'Chapati white/brown', category: 'snacks', price: 70 },
-    { id: 'ds-bone-soup', name: 'Bone soup', category: 'snacks', price: 100 },
-    { id: 'ds-soup-chemsha', name: 'Soup Chemsha', category: 'snacks', price: 150 },
-
-    // COLD BEVERAGES
-    { id: 'ds-soda', name: 'Soda', category: 'cold', price: 70 },
-    { id: 'ds-pepsi', name: 'Pepsi', category: 'cold', price: 70 },
-    { id: 'ds-minute-maid', name: 'Minute Maid', category: 'cold', price: 100 },
-    { id: 'ds-dasani-1l', name: 'Dasani 1 Ltr', category: 'cold', price: 150 },
-    { id: 'ds-dasani-500ml', name: 'Dasani 500ml', category: 'cold', price: 100 },
-    { id: 'ds-kereita-500ml', name: 'Kereita Water 500ml', category: 'cold', price: 60 },
-    { id: 'ds-kereita-1l', name: 'Kereita Water 1 Ltr', category: 'cold', price: 100 },
-    { id: 'ds-passion-juice', name: 'Passion Juice', category: 'cold', price: 150 },
-    { id: 'ds-cocktail-juice', name: 'Cocktail Juice', category: 'cold', price: 150 },
-    { id: 'ds-mango', name: 'Mango', category: 'cold', price: 150 },
-    { id: 'ds-mint-lemonade', name: 'Mint Lemonade', category: 'cold', price: 100 },
-    { id: 'ds-juice-takeaway', name: 'Juice Take Away', category: 'cold', price: 200 },
-    { id: 'ds-lemonade-varieties', name: 'Lemonade (blue, classic, Mint)', category: 'cold', price: 100 },
-    { id: 'ds-iced-coffee', name: 'Iced Coffee', category: 'cold', price: 200 },
-
-    // MILKSHAKE & SMOOTHIES
-    { id: 'ds-milkshake', name: 'Milkshake (Chocolate, Blueberry, Strawberry, Vanilla)', category: 'shakes', price: 250 },
-    { id: 'ds-oreo-shake', name: 'Oreo shake', category: 'shakes', price: 300 },
-    { id: 'ds-smoothies', name: 'Smoothies (banana, passion, Tropical)', category: 'shakes', price: 200 },
-    { id: 'ds-ice-cream', name: 'Ice Cream Scoops', category: 'shakes', price: 150 },
-
-    // BARISTA SPECIAL
-    { id: 'ds-dawa', name: 'Dawa', category: 'barista', price: 200 },
-    { id: 'ds-dawa-taway', name: 'Dawa T/Away', category: 'barista', price: 250 },
-    { id: 'ds-tea-special', name: 'Tea Special', category: 'barista', price: 100 },
-    { id: 'ds-house-coffee-white', name: 'House Coffee White', category: 'barista', price: 150 },
-    { id: 'ds-house-coffee-black', name: 'House Coffee Black', category: 'barista', price: 100 },
-
-    // HOT BEVERAGES
-    { id: 'ds-cappuccino-single', name: 'Cappuccino (Single)', category: 'hot', price: 120 },
-    { id: 'ds-cappuccino-double', name: 'Cappuccino (Double)', category: 'hot', price: 180 },
-    { id: 'ds-espresso-single', name: 'Espresso (Single)', category: 'hot', price: 120 },
-    { id: 'ds-espresso-double', name: 'Espresso (Double)', category: 'hot', price: 150 },
-    { id: 'ds-americano', name: 'Americano', category: 'hot', price: 150 },
-    { id: 'ds-latte-machiatto', name: 'Latte Machiatto', category: 'hot', price: 180 },
-    { id: 'ds-latte-mocha', name: 'Latte Mocha', category: 'hot', price: 150 },
-    { id: 'ds-coffee-latte', name: 'Coffee Latte', category: 'hot', price: 150 },
-    { id: 'ds-white-coffee', name: 'White Coffee', category: 'hot', price: 100 },
-    { id: 'ds-black-coffee', name: 'Black Coffee', category: 'hot', price: 80 },
-    { id: 'ds-black-coffee-lemon', name: 'Black Coffee W Lemon', category: 'hot', price: 110 },
-    { id: 'ds-tea-masala-white', name: 'Tea Masala White', category: 'hot', price: 100 },
-    { id: 'ds-tea-masala-black', name: 'Tea Masala Black', category: 'hot', price: 130 },
-    { id: 'ds-milk', name: 'Milk', category: 'hot', price: 100 },
-    { id: 'ds-lemon-water', name: 'Lemon water', category: 'hot', price: 70 },
-    { id: 'ds-lemon-tea', name: 'Lemon Tea', category: 'hot', price: 100 },
-    { id: 'ds-lemon-tea-honey', name: 'Lemon Tea W Honey', category: 'hot', price: 150 },
-    { id: 'ds-white-chocolate', name: 'White Chocolate', category: 'hot', price: 100 },
-    { id: 'ds-black-chocolate', name: 'Black Chocolate', category: 'hot', price: 80 },
-    { id: 'ds-black-milo', name: 'Black Milo', category: 'hot', price: 90 },
-    { id: 'ds-honey-cone', name: 'Honey Cone', category: 'hot', price: 50 }
+// --- 1. OFFICIAL BREAKFAST COMBOS & SPECIALS (PAGES 2 & 3) ---
+const BREAKFAST_COMBOS = [
+    {
+        name: 'PANCAKE BREAKFAST',
+        price: 400,
+        desc: 'Tea, 2 pancakes and pan Fried Bacon',
+        category: 'combos'
+    },
+    {
+        name: 'MINI BREAKFAST',
+        price: 310,
+        desc: 'Tea, 2 fried egg, Toast and sausage, A Small Glass Of Juice',
+        category: 'combos'
+    },
+    {
+        name: 'RIB HOUSE BREAKFAST',
+        price: 300,
+        desc: 'Tea, Liver and Chapati',
+        category: 'combos'
+    },
+    {
+        name: 'MAIN BREAKFAST',
+        price: 400,
+        desc: 'Tea, 2 Eggs, Beef Bacon/Sausages, Toast and a glass of juice',
+        category: 'combos'
+    },
+    {
+        name: 'GOAT SOUP BREAKFAST',
+        price: 300,
+        desc: 'Served with a piece of goat meat, goat soup, chapati and veges.',
+        category: 'combos'
+    },
+    {
+        name: 'CHICKEN SOUP BREAKFAST',
+        price: 300,
+        desc: 'Served With: A Piece Of Chicken Kienyeji, Chicken Soup, Chapati And Veges',
+        category: 'combos'
+    },
+    {
+        name: 'CHIPS COMBO',
+        price: 300,
+        desc: 'Chips Served With Tea / Egg / Andazi / Kachumbari',
+        category: 'combos'
+    },
+    {
+        name: 'SAMOSA COMBO',
+        price: 280,
+        desc: '1 Egg / Samosa / Andazi / Tea',
+        category: 'combos'
+    },
+    {
+        name: 'TRADITION BREAK',
+        price: 300,
+        desc: 'Tea, Nduma / Ngwaci, Egg Kienyeji, veges',
+        category: 'combos'
+    },
+    {
+        name: 'FARMERS CHOICE',
+        price: 380,
+        desc: 'Tea, Beef bacon/Sausage and a Toast',
+        category: 'combos'
+    },
+    {
+        name: 'RIB HOUSE BITE',
+        price: 200,
+        desc: 'Tea, Andazi and a Sausage',
+        category: 'combos'
+    },
+    {
+        name: 'SPECIAL BREAKFAST',
+        price: 220,
+        desc: 'Tea, one fried egg, toast and a sausage',
+        category: 'combos'
+    },
+    {
+        name: 'RIB HOUSE SPECIAL',
+        price: 310,
+        desc: 'Tea, Bacon/ 2 Sausages and Chapati',
+        category: 'combos'
+    },
+    {
+        name: 'BRITISH BREAKFAST',
+        price: 320,
+        desc: 'Tea, Liver and Toast',
+        category: 'combos'
+    }
 ];
 
-// --- 2. MAIN DISHES MENU (EXACT MATCH TO PHYSICAL MENU PAGE) ---
+// --- 2. BARISTA MENU (PAGE 4: HOT & COLD BEVERAGES) ---
+const BARISTA_DRINKS = [
+    // HOT BEVERAGES
+    { name: 'House Coffee white', price: 150, category: 'hot' },
+    { name: 'House Coffee Black', price: 100, category: 'hot' },
+    { name: 'Black Coffee W lemon', price: 110, category: 'hot' },
+    { name: 'Americano', price: 150, category: 'hot' },
+    { name: 'Latte Mocha', price: 150, category: 'hot' },
+    { name: 'Latte Machiatto', price: 180, category: 'hot' },
+    { name: 'Coffee Latte', price: 150, category: 'hot' },
+    { name: 'Lemon Tea', price: 100, category: 'hot' },
+    { name: 'Lemon Tea W Honey', price: 150, category: 'hot' },
+    { name: 'Lemon Water', price: 70, category: 'hot' },
+    { name: 'Tea special', price: 100, category: 'hot' },
+    { name: 'Tea Masala White', price: 130, category: 'hot' },
+    { name: 'Tea Masala Black', price: 100, category: 'hot' },
+    { name: 'Ginger Tea', price: 130, category: 'hot' },
+    { name: 'Dawa', price: 200, category: 'hot' },
+    { name: 'Honey Espresso', price: 110, category: 'hot' },
+    { name: 'Hot Milk', price: 100, category: 'hot' },
+    { name: 'Honey Cone', price: 50, category: 'hot' },
+    { name: 'Cappuccino (Single)', price: 150, category: 'hot' },
+    { name: 'Cappuccino (Double)', price: 180, category: 'hot' },
+    { name: 'Espresso (Single)', price: 120, category: 'hot' },
+    { name: 'Espresso (Double)', price: 150, category: 'hot' },
+
+    // COLD BEVERAGES
+    { name: 'Milkshake (Chocolate, Blueberry, Strawberry, vanilla)', price: 250, category: 'cold' },
+    { name: 'Espresso (Cold)', price: 250, category: 'cold' },
+    { name: 'Oreo shake', price: 300, category: 'cold' },
+    { name: 'Smoothies (banana, passion, Tropical)', price: 200, category: 'cold' },
+    { name: 'Ice Cream Scoops', price: 150, category: 'cold' },
+    { name: 'Lemonade (blue, classic, Mint)', price: 100, category: 'cold' },
+    { name: 'Iced Coffee', price: 180, category: 'cold' }
+];
+
+// --- 3. MAIN DISHES MENU ---
 const MAIN_DISHES = [
     {
         name: 'MATUMBO FRY',
@@ -141,33 +201,23 @@ const MAIN_DISHES = [
     }
 ];
 
-const MAIN_PLAIN_SIDES = [
-    { name: 'Rice / Mukimo Special', price: 250 },
-    { name: 'Pilau Special', price: 270 },
-    { name: 'Chips Plain', price: 220 },
-    { name: 'Chips Masala', price: 270 },
-    { name: 'Rice Plain', price: 200 },
-    { name: 'Mukimo Plain', price: 200 }
-];
-
-// --- 3. STATE & CART ---
+// --- 4. STATE & CART ---
 let cart = JSON.parse(localStorage.getItem('ribhouse_cart') || '[]');
-let activeSnackFilter = 'all';
+let activeBreakfastTab = 'combos';
 
-// --- 4. INITIALIZATION ---
+// --- 5. INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
     initScrollNavbar();
     initScrollReveal();
-    initSnackFilter();
-    renderDrinksAndSnacks();
+    initBreakfastFilter();
+    renderBreakfastMenuTextOnly();
     renderMainDishes();
-    renderPlainSides();
     initCartDrawer();
     initModals();
     updateCartUI();
 });
 
-// --- 5. NAVBAR SCROLL EFFECT ---
+// --- 6. NAVBAR SCROLL OBSERVER ---
 function initScrollNavbar() {
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
@@ -179,7 +229,6 @@ function initScrollNavbar() {
     });
 }
 
-// --- 6. SCROLL REVEAL OBSERVER ---
 function initScrollReveal() {
     const revealElements = document.querySelectorAll('.reveal-on-scroll');
     const observer = new IntersectionObserver((entries) => {
@@ -193,40 +242,63 @@ function initScrollReveal() {
     revealElements.forEach(el => observer.observe(el));
 }
 
-// --- 7. FILTER & RENDER DRINKS AND SNACKS ---
-function initSnackFilter() {
-    const pills = document.querySelectorAll('#snack-tabs .category-pill');
+// --- 7. BREAKFAST MENU FILTER & RENDER (NO PICTURES, STRICT WORDS ONLY) ---
+function initBreakfastFilter() {
+    const pills = document.querySelectorAll('#bk-tabs .category-pill');
     pills.forEach(pill => {
         pill.addEventListener('click', (e) => {
             pills.forEach(b => b.classList.remove('active'));
             const target = e.currentTarget;
             target.classList.add('active');
-            activeSnackFilter = target.dataset.category;
-            renderDrinksAndSnacks();
+            activeBreakfastTab = target.dataset.category;
+            renderBreakfastMenuTextOnly();
         });
     });
 }
 
-function renderDrinksAndSnacks() {
-    const grid = document.getElementById('drinks-snacks-grid');
+function renderBreakfastMenuTextOnly() {
+    const grid = document.getElementById('breakfast-text-grid');
     if (!grid) return;
 
-    let items = DRINKS_AND_SNACKS.filter(i => (activeSnackFilter === 'all') || (i.category === activeSnackFilter));
-
-    grid.innerHTML = items.map(item => `
-        <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                    <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream);">${item.name}</h3>
-                    <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: 600;">KSh ${item.price}</span>
+    if (activeBreakfastTab === 'combos') {
+        grid.innerHTML = BREAKFAST_COMBOS.map(item => `
+            <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                        <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">${item.name}</h3>
+                        <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">${item.price}/=</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 16px;">${item.desc}</p>
                 </div>
+                <button class="btn-add-bag" style="width: 100%;" onclick="addCustomToCart('${item.name}', ${item.price})">ADD TO BAG</button>
             </div>
-            <button class="btn-add-bag" style="width: 100%; margin-top: 12px;" onclick="addCustomToCart('${item.name}', ${item.price})">ADD TO BAG</button>
-        </div>
-    `).join('');
+        `).join('');
+    } else if (activeBreakfastTab === 'hot') {
+        const hotItems = BARISTA_DRINKS.filter(d => d.category === 'hot');
+        grid.innerHTML = hotItems.map(item => `
+            <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream);">${item.name}</h4>
+                    <span style="font-size: 0.95rem; color: var(--color-gold); font-weight: 500;">${item.price}/=</span>
+                </div>
+                <button class="btn-add-bag" style="padding: 6px 14px; font-size: 0.7rem;" onclick="addCustomToCart('${item.name}', ${item.price})">ADD TO BAG</button>
+            </div>
+        `).join('');
+    } else if (activeBreakfastTab === 'cold') {
+        const coldItems = BARISTA_DRINKS.filter(d => d.category === 'cold');
+        grid.innerHTML = coldItems.map(item => `
+            <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream);">${item.name}</h4>
+                    <span style="font-size: 0.95rem; color: var(--color-gold); font-weight: 500;">${item.price}/=</span>
+                </div>
+                <button class="btn-add-bag" style="padding: 6px 14px; font-size: 0.7rem;" onclick="addCustomToCart('${item.name}', ${item.price})">ADD TO BAG</button>
+            </div>
+        `).join('');
+    }
 }
 
-// --- 8. RENDER MAIN DISHES WITH EXACT PRICES ---
+// --- 8. RENDER MAIN DISHES MENU ---
 function renderMainDishes() {
     const grid = document.getElementById('main-dishes-grid');
     if (!grid) return;
@@ -236,17 +308,17 @@ function renderMainDishes() {
         return `
             <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                    <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-cream); margin-bottom: 8px; text-transform: uppercase;">${dish.name}</h3>
+                    <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-cream); margin-bottom: 12px; text-transform: uppercase;">${dish.name}</h3>
                     <div style="margin-bottom: 16px;">
                         <label style="display:block; font-size: 0.65rem; color: var(--color-gold); letter-spacing: 1.5px; margin-bottom: 6px; text-transform: uppercase;">SELECT SIDE OPTION:</label>
                         <select id="main-select-${idx}" onchange="updateMainPrice(${idx})" style="width:100%; background:var(--color-black); border:1px solid var(--color-border-dark); color:var(--color-cream); padding:10px 12px; font-size:0.85rem; outline:none; cursor:pointer;">
-                            ${dish.options.map(opt => `<option value="${opt.price}" data-side="${opt.side}">${opt.side} — KSh ${opt.price}</option>`).join('')}
+                            ${dish.options.map(opt => `<option value="${opt.price}" data-side="${opt.side}">${opt.side} — ${opt.price}/=</option>`).join('')}
                         </select>
                     </div>
                 </div>
 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid var(--color-border-dark); padding-top: 12px;">
-                    <span style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-gold); font-weight: bold;" id="main-price-${idx}">KSh ${defaultOption.price}</span>
+                    <span style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-gold); font-weight: bold;" id="main-price-${idx}">${defaultOption.price}/=</span>
                     <button class="btn-add-bag" onclick="addMainDishToCart(${idx})">ADD TO BAG</button>
                 </div>
             </div>
@@ -258,7 +330,7 @@ function updateMainPrice(idx) {
     const select = document.getElementById(`main-select-${idx}`);
     const priceEl = document.getElementById(`main-price-${idx}`);
     if (select && priceEl) {
-        priceEl.textContent = `KSh ${select.value}`;
+        priceEl.textContent = `${select.value}/=`;
     }
 }
 
@@ -273,23 +345,7 @@ function addMainDishToCart(idx) {
     addCustomToCart(title, price);
 }
 
-// --- 9. RENDER PLAIN SIDES ---
-function renderPlainSides() {
-    const grid = document.getElementById('plain-sides-grid');
-    if (!grid) return;
-
-    grid.innerHTML = MAIN_PLAIN_SIDES.map(side => `
-        <div style="background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-cream);">${side.name}</h4>
-                <span style="font-size: 0.9rem; color: var(--color-gold);">KSh ${side.price}</span>
-            </div>
-            <button class="btn-add-bag" style="padding: 6px 12px; font-size: 0.65rem;" onclick="addCustomToCart('${side.name}', ${side.price})">ADD TO BAG</button>
-        </div>
-    `).join('');
-}
-
-// --- 10. CART SYSTEM ---
+// --- 9. CART SYSTEM ---
 function addCustomToCart(title, price) {
     const id = title.toLowerCase().replace(/[^a-z0-9]/g, '-');
     const existing = cart.find(c => c.id === id);
@@ -336,8 +392,8 @@ function updateCartUI() {
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
 
     if (cartBadgeCount) cartBadgeCount.textContent = totalQty;
-    if (cartSubtotalEl) cartSubtotalEl.textContent = `KSh ${subtotal.toFixed(0)}`;
-    if (cartTotalEl) cartTotalEl.textContent = `KSh ${subtotal.toFixed(0)}`;
+    if (cartSubtotalEl) cartSubtotalEl.textContent = `${subtotal.toFixed(0)}/=`;
+    if (cartTotalEl) cartTotalEl.textContent = `${subtotal.toFixed(0)}/=`;
 
     if (checkoutBtn) checkoutBtn.disabled = cart.length === 0;
 
@@ -356,7 +412,7 @@ function updateCartUI() {
             <div style="display: flex; gap: 12px; align-items: center; border-bottom: 1px solid var(--color-border-dark); padding-bottom: 12px;">
                 <div style="flex: 1;">
                     <h4 style="font-family: var(--font-serif); font-size: 0.95rem; color: var(--color-cream);">${item.title}</h4>
-                    <span style="font-size: 0.8rem; color: var(--color-gold);">KSh ${item.price * item.qty}</span>
+                    <span style="font-size: 0.8rem; color: var(--color-gold);">${item.price * item.qty}/=</span>
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <button onclick="changeQty('${item.id}', -1)" style="color: var(--color-gold); border: 1px solid var(--color-border-dark); width: 24px; height: 24px;">-</button>
@@ -368,7 +424,7 @@ function updateCartUI() {
     }
 }
 
-// --- 11. DRAWER & MODALS ---
+// --- 10. DRAWER & MODALS ---
 function initCartDrawer() {
     const cartToggleBtn = document.getElementById('cart-toggle-btn');
     const cartCloseBtn = document.getElementById('cart-close-btn');

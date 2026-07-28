@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RIB HOUSE | Official Breakfast & Main Dishes Menu</title>
-    <meta name="description" content="Official Rib House Menu. Best Quality Grilled Meat, Goat Stew, Beef Steak, Chicken Kienyeji, Samosas, Barista Special Dawa, and Cold Drinks. Till No: 4977556.">
+    <title>RIB HOUSE | Official Drinks, Snacks & Main Dishes Menu</title>
+    <meta name="description" content="Official Rib House Menu. Best Quality Grilled Meat, Goat Stew, Beef Steak, Chicken Kienyeji, Matumbo Fry, Samosas, Dawa, Coffee, Shakes. Till No: 4977556.">
     
     <!-- Google Fonts: Cormorant Garamond (Serif) & Plus Jakarta Sans (Sans-serif) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,11 +29,9 @@
         <div class="nav-container">
             <!-- Left Category Navigation -->
             <nav class="nav-left">
-                <a href="#breakfast-section" class="nav-link">BREAKFAST MENU</a>
+                <a href="#drinks-snacks-section" class="nav-link">DRINKS & SNACKS</a>
                 <a href="#main-dishes-section" class="nav-link">MAIN DISHES</a>
-                <a href="#our-craft" class="nav-link">OUR CRAFT</a>
-                <a href="#press" class="nav-link">PRESS</a>
-                <a href="#location" class="nav-link">LOCATION</a>
+                <a href="#location" class="nav-link">CONTACT / TILL NO</a>
             </nav>
 
             <!-- Centered Luxury Logo Emblem -->
@@ -42,7 +40,7 @@
                 <span class="brand-subtitle">BEST QUALITY GRILLED MEAT</span>
             </a>
 
-            <!-- Right Actions: Search, Reserve & Bag -->
+            <!-- Right Actions: Reserve & Bag -->
             <div class="nav-right">
                 <button class="btn-nav-reserve" id="nav-reserve-btn">RESERVE TABLE</button>
 
@@ -71,13 +69,13 @@
             
             <div class="hero-content">
                 <div class="hero-badge">BEST QUALITY GRILLED MEAT • TILL NO. 4977556</div>
-                <h1 class="hero-title">THE ART OF FIRE & <span class="gold-gradient">FLAME</span></h1>
+                <h1 class="hero-title">OFFICIAL <span class="gold-gradient">MENU</span></h1>
                 <p class="hero-description">
-                    Explore our official **Breakfast Menu** and **Main Dishes Menu** below. Crafted with fresh local meats, rich broths, and barista creations.
+                    Explore our strictly official **Drinks & Snacks Menu** and **Main Dishes Menu** below. Fast delivery & dine-in.
                 </p>
                 <div class="hero-cta-group">
-                    <a href="#breakfast-section" class="btn-hero-outline">
-                        <span>1. BREAKFAST MENU</span>
+                    <a href="#drinks-snacks-section" class="btn-hero-outline">
+                        <span>1. DRINKS & SNACKS MENU</span>
                     </a>
                     <a href="#main-dishes-section" class="btn-hero-secondary">
                         <span>2. MAIN DISHES MENU</span>
@@ -109,159 +107,72 @@
                 </div>
                 <div class="metric-item">
                     <span class="metric-number">HAUTE</span>
-                    <span class="metric-label">Flame & Smoke Quality</span>
+                    <span class="metric-label">Best Quality Grilled Meat</span>
                 </div>
             </div>
         </section>
 
-        <!-- PART 1: THE BREAKFAST & DRINKS MENU SECTION -->
-        <section class="menu-catalog-section" id="breakfast-section" style="background: var(--color-black);">
+        <!-- PART 1: DRINKS AND SNACKS MENU SECTION -->
+        <section class="menu-catalog-section" id="drinks-snacks-section" style="background: var(--color-black);">
             <div class="section-wrapper">
                 <div class="section-header-editorial">
-                    <span class="section-tag">PART 01 / MORNING SELECTIONS</span>
-                    <h2 class="section-heading-editorial">BREAKFAST & DRINKS MENU</h2>
-                    <p class="section-subtext-editorial">Start your day the right way with hot barista coffees, Dawa, bone soups, samosas, and fresh fruit shakes.</p>
+                    <span class="section-tag">OFFICIAL MENU / PART 01</span>
+                    <h2 class="section-heading-editorial">DRINKS AND SNACKS</h2>
+                    <p class="section-subtext-editorial">Strictly official snacks, cold beverages, milkshakes, smoothies, barista specials, and hot drinks.</p>
                 </div>
 
-                <!-- Category Tabs for Breakfast -->
-                <div class="catalog-controls" id="breakfast-tabs">
+                <!-- Category Tabs for Drinks & Snacks -->
+                <div class="catalog-controls" id="snack-tabs">
                     <div class="category-tabs-wrapper">
                         <button class="category-pill active" data-category="all">
-                            <span>ALL BREAKFAST & DRINKS</span>
+                            <span>ALL DRINKS & SNACKS</span>
                         </button>
                         <button class="category-pill" data-category="snacks">
-                            <span>SNACKS & PASTRIES</span>
+                            <span>SNACKS & SOUPS</span>
                         </button>
-                        <button class="category-pill" data-category="soups">
-                            <span>BONE SOUPS (CHEMSHA)</span>
+                        <button class="category-pill" data-category="cold">
+                            <span>COLD BEVERAGES</span>
                         </button>
-                        <button class="category-pill" data-category="hot-drinks">
-                            <span>BARISTA & HOT DRINKS</span>
+                        <button class="category-pill" data-category="shakes">
+                            <span>MILKSHAKE & SMOOTHIES</span>
                         </button>
-                        <button class="category-pill" data-category="cold-drinks">
-                            <span>COLD BEVERAGES & SHAKES</span>
+                        <button class="category-pill" data-category="barista">
+                            <span>BARISTA SPECIAL</span>
+                        </button>
+                        <button class="category-pill" data-category="hot">
+                            <span>HOT BEVERAGES</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- Breakfast Grid -->
-                <div class="menu-grid" id="breakfast-grid">
+                <!-- Drinks & Snacks Grid -->
+                <div class="menu-grid" id="drinks-snacks-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
                     <!-- Dynamic Rendering via app.js -->
                 </div>
             </div>
         </section>
 
-        <!-- PART 2: THE MAIN DISHES MENU SECTION -->
+        <!-- PART 2: MAIN DISHES MENU SECTION -->
         <section class="menu-catalog-section" id="main-dishes-section" style="background: var(--color-dark-surface); border-top: 1px solid var(--color-border-gold);">
             <div class="section-wrapper">
                 <div class="section-header-editorial">
-                    <span class="section-tag">PART 02 / THE FEAST</span>
-                    <h2 class="section-heading-editorial">MAIN DISHES MENU</h2>
-                    <p class="section-subtext-editorial">Select your favorite meat dish and choose your side pairing (Ugali/Chapati, Rice/Mukimo, Pilau, Chips, Chips Masala) to order directly.</p>
+                    <span class="section-tag">OFFICIAL MENU / PART 02</span>
+                    <h2 class="section-heading-editorial">MAIN DISHES</h2>
+                    <p class="section-subtext-editorial">Select your main meat dish and pick your exact side option to see the exact price.</p>
                 </div>
 
                 <!-- Main Dishes Grid -->
-                <div class="menu-grid" id="main-dishes-grid">
+                <div class="menu-grid" id="main-dishes-grid" style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); margin-bottom: 60px;">
                     <!-- Dynamic Rendering via app.js -->
                 </div>
-            </div>
-        </section>
 
-        <!-- CHEF'S FEATURED SPECIAL BANNER -->
-        <section class="section-wrapper reveal-on-scroll" id="featured-drop">
-            <div class="featured-drop-wrapper">
-                <div class="featured-drop-grid">
-                    <div class="featured-content">
-                        <span class="featured-badge">RIB HOUSE SPECIAL SELECTION</span>
-                        <h2 class="featured-title">SPECIAL BEEF STEAK WITH CHIPS MASALA</h2>
-                        <p class="featured-desc">
-                            Juicy prime beef tenderloin seared over high flame with house seasonings, served hot alongside fresh chips masala.
-                        </p>
-                        
-                        <div class="featured-specs-row">
-                            <div class="feat-spec-item">
-                                <span>MEAT</span>
-                                <strong>Prime Beef Steak</strong>
-                            </div>
-                            <div class="feat-spec-item">
-                                <span>SIDE</span>
-                                <strong>Spicy Chips Masala</strong>
-                            </div>
-                            <div class="feat-spec-item">
-                                <span>SPECIAL PRICE</span>
-                                <strong class="text-gold">KSh 800</strong>
-                            </div>
-                        </div>
-
-                        <button class="btn-hero-outline" onclick="addCustomToCart('SPECIAL BEEF STEAK WITH CHIPS MASALA', 800, 'tomahawk.jpg')">
-                            <span>ORDER BEEF STEAK SPECIAL (KSh 800)</span>
-                        </button>
-                    </div>
-
-                    <div class="featured-img-frame">
-                        <img src="tomahawk.jpg" alt="Special Beef Steak">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- OUR CRAFT & CULINARY PHILOSOPHY -->
-        <section class="section-wrapper reveal-on-scroll" id="our-craft">
-            <div class="section-header-editorial">
-                <span class="section-tag">03 / OUR PHILOSOPHY</span>
-                <h2 class="section-heading-editorial">GOOD FOOD • GOOD MOOD</h2>
-                <p class="section-subtext-editorial">Every meal is prepared fresh with premium local meats, whole spices, and rich traditional broths.</p>
-            </div>
-
-            <div class="craft-steps-grid">
-                <div class="craft-card">
-                    <div class="craft-num">01</div>
-                    <h3 class="craft-title">FRESH LOCAL MEATS</h3>
-                    <p class="craft-desc">We select top-grade beef, goat, and organic Kienyeji chicken daily to ensure tender textures and rich authentic flavors.</p>
-                </div>
-                <div class="craft-card">
-                    <div class="craft-num">02</div>
-                    <h3 class="craft-title">SLOW SIMMERED GRAVIES</h3>
-                    <p class="craft-desc">Our stews and wet fries are cooked slowly with fresh tomatoes, garlic, coriander, and house spice reductions.</p>
-                </div>
-                <div class="craft-card">
-                    <div class="craft-num">03</div>
-                    <h3 class="craft-title">BARISTA & BAKERY</h3>
-                    <p class="craft-desc">From fresh morning Dawa and Tea Masala to crispy samosas and thick Oreo shakes, every item is made to order.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- PRESS & RECOGNITION -->
-        <section class="press-section reveal-on-scroll" id="press">
-            <div class="section-header-editorial">
-                <span class="section-tag">04 / CUSTOMER REVIEWS</span>
-                <h2 class="section-heading-editorial">WHAT GUESTS SAY</h2>
-            </div>
-
-            <div class="press-grid">
-                <div class="press-card">
-                    <div>
-                        <div class="quote-mark">“</div>
-                        <p class="press-quote">The Goat Stew with Ugali & Mukimo is unbelievable! Fastest food delivery in town.</p>
-                    </div>
-                    <span class="press-author">LOCAL GOURMET GUIDE</span>
+                <div class="section-header-editorial" style="margin-bottom: 30px;">
+                    <h3 style="font-family: var(--font-serif); font-size: 2rem; color: var(--color-cream); text-transform: uppercase;">EXTRA SIDES</h3>
                 </div>
 
-                <div class="press-card">
-                    <div>
-                        <div class="quote-mark">“</div>
-                        <p class="press-quote">Special House Dawa and morning Beef Samosas are my daily ritual. 10/10 recommendation!</p>
-                    </div>
-                    <span class="press-author">DAILY VISITOR REVIEW</span>
-                </div>
-
-                <div class="press-card">
-                    <div>
-                        <div class="quote-mark">“</div>
-                        <p class="press-quote">Chicken Kienyeji with Pilau is seasoned to perfection. Convenient M-Pesa Till No. 4977556 payment!</p>
-                    </div>
-                    <span class="press-author">FOODIE JOURNAL</span>
+                <!-- Plain Sides Grid -->
+                <div class="menu-grid" id="plain-sides-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
+                    <!-- Dynamic Rendering via app.js -->
                 </div>
             </div>
         </section>
@@ -270,15 +181,15 @@
         <section class="section-wrapper reveal-on-scroll" id="location">
             <div class="location-wrapper">
                 <div class="location-info">
-                    <span class="section-tag">05 / CONTACT & DELIVERY</span>
-                    <h2>VISIT OR ORDER DIRECT</h2>
-                    <p>Experience the finest grilled meats and hot meals daily.</p>
+                    <span class="section-tag">OFFICIAL DETAILS</span>
+                    <h2>RIB HOUSE ORDERS & PAYMENT</h2>
+                    <p>Best Quality Grilled Meat. Place your order for dine-in, takeout, or delivery.</p>
 
                     <div class="location-details-list">
                         <div class="loc-detail-item">
                             <div>
-                                <strong>M-PESA TILL NUMBER</strong>
-                                <p class="text-gold" style="font-size: 1.2rem; font-weight: bold;">Till No. 4977556</p>
+                                <strong>M-PESA BUY GOODS TILL NUMBER</strong>
+                                <p class="text-gold" style="font-size: 1.4rem; font-weight: bold;">Till No. 4977556</p>
                             </div>
                         </div>
                         <div class="loc-detail-item">
@@ -316,17 +227,16 @@
             <div class="footer-col">
                 <h4>NAVIGATION</h4>
                 <a href="#hero">Landing</a>
-                <a href="#breakfast-section">Breakfast Menu</a>
+                <a href="#drinks-snacks-section">Drinks & Snacks</a>
                 <a href="#main-dishes-section">Main Dishes</a>
-                <a href="#our-craft">Our Craft</a>
             </div>
 
             <div class="footer-col">
                 <h4>CATEGORIES</h4>
                 <a href="#main-dishes-section">Main Dishes</a>
-                <a href="#breakfast-section">Breakfast & Snacks</a>
-                <a href="#breakfast-section">Hot Barista Drinks</a>
-                <a href="#breakfast-section">Cold Shakes & Juices</a>
+                <a href="#drinks-snacks-section">Snacks & Soups</a>
+                <a href="#drinks-snacks-section">Cold Beverages</a>
+                <a href="#drinks-snacks-section">Barista & Hot Drinks</a>
             </div>
 
             <div class="footer-col">
@@ -359,10 +269,6 @@
             <div class="summary-line">
                 <span>Subtotal</span>
                 <span id="cart-subtotal">KSh 0</span>
-            </div>
-            <div class="summary-line">
-                <span>Taxes & Service</span>
-                <span id="cart-tax">Included</span>
             </div>
             <div class="summary-line total-line">
                 <span>TOTAL</span>

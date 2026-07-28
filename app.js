@@ -1,365 +1,169 @@
 /* ==========================================================================
-   RIB HOUSE - OFFICIAL MENU DATASET & TWO-PART LANDING PAGE LOGIC
-   1. BREAKFAST & DRINKS MENU
-   2. MAIN DISHES MENU WITH SIDE SELECTION
+   RIB HOUSE - STRICT OFFICIAL MENU DATASET & INTERACTIVE LOGIC
+   STRICTLY MATCHES PHYSICAL MENU SHEETS WITH ZERO ASSUMPTIONS
    ========================================================================== */
 
-// --- 1. BREAKFAST & DRINKS MENU DATASET ---
-const BREAKFAST_ITEMS = [
+// --- 1. DRINKS AND SNACKS MENU (EXACT MATCH TO PHYSICAL MENU PAGE) ---
+const DRINKS_AND_SNACKS = [
     // SNACKS & SOUPS
-    {
-        id: 'bk-samosa',
-        title: 'BEEF SAMOSA',
-        category: 'snacks',
-        price: 70,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80',
-        badge: 'FRESH BAKED',
-        description: 'Crispy golden pastry stuffed with spiced minced beef, spring onions, and coriander.',
-        specs: {'FILLING': 'Spiced Beef Mince', 'PASTRY': 'Hand Folded Crispy'}
-    },
-    {
-        id: 'bk-sausage',
-        title: 'FARMHOUSE SAUSAGE',
-        category: 'snacks',
-        price: 70,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=800&q=80',
-        badge: 'PAN GRILLED',
-        description: 'Juicy pan-grilled beef sausage served hot.',
-        specs: {'MEAT': '100% Beef', 'COOK': 'Pan Seared'}
-    },
-    {
-        id: 'bk-andazi',
-        title: 'COASTAL ANDAZI',
-        category: 'snacks',
-        price: 50,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&fit=crop&w=800&q=80',
-        badge: 'FRESH BATCH',
-        description: 'Soft cardamom-scented fried dough pastry.',
-        specs: {'FLAVOR': 'Cardamom & Coconut', 'BEST WITH': 'Masala Tea'}
-    },
-    {
-        id: 'bk-kebab',
-        title: 'SPECIAL MINCED BEEF KEBAB',
-        category: 'snacks',
-        price: 100,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80',
-        badge: 'CHEF FAVORITE',
-        description: 'Deep-fried egg-coated spiced minced beef ball loaded with garlic and herbs.',
-        specs: {'MEAT': 'Spiced Beef Mince', 'COATING': 'Golden Egg Batter'}
-    },
-    {
-        id: 'bk-chapati',
-        title: 'SOFT CHAPATI (WHITE / BROWN)',
-        category: 'snacks',
-        price: 70,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80',
-        badge: 'FLAKY LAYERS',
-        description: 'Warm, layered wheat chapati cooked on traditional iron skillet.',
-        specs: {'TYPE': 'White or Brown Wheat', 'COOK': 'Traditional Skillet'}
-    },
-    {
-        id: 'bk-bone-soup',
-        title: 'TRADITIONAL BONE SOUP',
-        category: 'soups',
-        price: 100,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=80',
-        badge: 'HERBAL BROTH',
-        description: 'Slow-simmered beef bone broth seasoned with fresh ginger, garlic, and peppercorns.',
-        specs: {'BROTH': '12-Hr Simmered', 'HERBS': 'Ginger & Garlic'}
-    },
-    {
-        id: 'bk-soup-chemsha',
-        title: 'SPECIAL SOUP CHEMSHA',
-        category: 'soups',
-        price: 150,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=80',
-        badge: 'RESTORATIVE',
-        description: 'Rich boiled beef bone and meat soup with green vegetables and herbs.',
-        specs: {'INCLUDES': 'Beef Tender Meat & Herbs', 'SERVED': 'Hot Bowl'}
-    },
+    { id: 'ds-samosa', name: 'Samosa', category: 'snacks', price: 70 },
+    { id: 'ds-sausage', name: 'Sausage', category: 'snacks', price: 70 },
+    { id: 'ds-andazi', name: 'Andazi', category: 'snacks', price: 50 },
+    { id: 'ds-kebab', name: 'Kebab', category: 'snacks', price: 100 },
+    { id: 'ds-chapati', name: 'Chapati white/brown', category: 'snacks', price: 70 },
+    { id: 'ds-bone-soup', name: 'Bone soup', category: 'snacks', price: 100 },
+    { id: 'ds-soup-chemsha', name: 'Soup Chemsha', category: 'snacks', price: 150 },
 
-    // BARISTA & HOT DRINKS
-    {
-        id: 'hot-dawa',
-        title: 'SPECIAL HOUSE DAWA',
-        category: 'hot-drinks',
-        price: 200,
-        currency: 'KSh',
-        image: 'old_fashioned.jpg',
-        badge: 'BARISTA SPECIAL',
-        description: 'Steaming hot blend of pure lemon juice, crushed ginger root, and natural honey.',
-        specs: {'INGREDIENTS': 'Ginger, Lemon & Honey', 'TAKEAWAY': 'KSh 250'}
-    },
-    {
-        id: 'hot-tea-masala-white',
-        title: 'TEA MASALA WHITE',
-        category: 'hot-drinks',
-        price: 100,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80',
-        badge: 'SPICED TEA',
-        description: 'Highland black tea brewed with whole milk and aromatic crushed masala spices.',
-        specs: {'MILK': 'Fresh Dairy', 'SPICES': 'Cardamom & Cloves'}
-    },
-    {
-        id: 'hot-tea-masala-black',
-        title: 'TEA MASALA BLACK',
-        category: 'hot-drinks',
-        price: 130,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80',
-        badge: 'HERBAL TEA',
-        description: 'Strong Kenyan black tea infused with double masala spice reduction.',
-        specs: {'BASE': 'Kenyan Black Tea', 'SPICE': 'Double Masala'}
-    },
-    {
-        id: 'hot-house-coffee-white',
-        title: 'HOUSE COFFEE WHITE',
-        category: 'hot-drinks',
-        price: 150,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80',
-        badge: 'ARABICA BREW',
-        description: 'Freshly roasted Kenyan coffee served with hot steamed milk.',
-        specs: {'BEANS': 'Kenyan Arabica', 'MILK': 'Steamed Milk'}
-    },
-    {
-        id: 'hot-house-coffee-black',
-        title: 'HOUSE COFFEE BLACK',
-        category: 'hot-drinks',
-        price: 100,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80',
-        badge: 'STRONG BREW',
-        description: 'Pure black Kenyan coffee brewed rich and bold.',
-        specs: {'BEANS': 'Kenyan Arabica', 'SERVED': 'Black Hot'}
-    },
-    {
-        id: 'hot-cappuccino',
-        title: 'CAPPUCCINO',
-        category: 'hot-drinks',
-        price: 120,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=800&q=80',
-        badge: 'BARISTA ART',
-        description: 'Espresso topped with creamy foamed milk. (Single KSh 120 / Double KSh 180)',
-        specs: {'SINGLE': 'KSh 120', 'DOUBLE': 'KSh 180'}
-    },
-    {
-        id: 'hot-espresso',
-        title: 'ESPRESSO SHOT',
-        category: 'hot-drinks',
-        price: 120,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=800&q=80',
-        badge: 'PURE ESSENCE',
-        description: 'Rich, concentrated shot of Kenyan coffee bean blend. (Single KSh 120 / Double KSh 150)',
-        specs: {'SINGLE': 'KSh 120', 'DOUBLE': 'KSh 150'}
-    },
-    {
-        id: 'hot-latte-macchiato',
-        title: 'LATTE MACCHIATO / MOCHA',
-        category: 'hot-drinks',
-        price: 180,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?auto=format&fit=crop&w=800&q=80',
-        badge: 'SPECIALTY COFFEE',
-        description: 'Layered espresso with steamed milk foam or rich chocolate mocha syrup.',
-        specs: {'LATTE MACCHIATO': 'KSh 180', 'LATTE MOCHA': 'KSh 150'}
-    },
+    // COLD BEVERAGES
+    { id: 'ds-soda', name: 'Soda', category: 'cold', price: 70 },
+    { id: 'ds-pepsi', name: 'Pepsi', category: 'cold', price: 70 },
+    { id: 'ds-minute-maid', name: 'Minute Maid', category: 'cold', price: 100 },
+    { id: 'ds-dasani-1l', name: 'Dasani 1 Ltr', category: 'cold', price: 150 },
+    { id: 'ds-dasani-500ml', name: 'Dasani 500ml', category: 'cold', price: 100 },
+    { id: 'ds-kereita-500ml', name: 'Kereita Water 500ml', category: 'cold', price: 60 },
+    { id: 'ds-kereita-1l', name: 'Kereita Water 1 Ltr', category: 'cold', price: 100 },
+    { id: 'ds-passion-juice', name: 'Passion Juice', category: 'cold', price: 150 },
+    { id: 'ds-cocktail-juice', name: 'Cocktail Juice', category: 'cold', price: 150 },
+    { id: 'ds-mango', name: 'Mango', category: 'cold', price: 150 },
+    { id: 'ds-mint-lemonade', name: 'Mint Lemonade', category: 'cold', price: 100 },
+    { id: 'ds-juice-takeaway', name: 'Juice Take Away', category: 'cold', price: 200 },
+    { id: 'ds-lemonade-varieties', name: 'Lemonade (blue, classic, Mint)', category: 'cold', price: 100 },
+    { id: 'ds-iced-coffee', name: 'Iced Coffee', category: 'cold', price: 200 },
 
-    // COLD BEVERAGES & SHAKES
-    {
-        id: 'cold-passion-juice',
-        title: 'FRESH PASSION JUICE',
-        category: 'cold-drinks',
-        price: 150,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=800&q=80',
-        badge: 'FRESH PRESSED',
-        description: 'Cold-pressed fresh local passion fruit juice.',
-        specs: {'FRUIT': '100% Passion Fruit', 'TAKEAWAY': 'KSh 200'}
-    },
-    {
-        id: 'cold-cocktail-juice',
-        title: 'COCKTAIL JUICE / MANGO',
-        category: 'cold-drinks',
-        price: 150,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=800&q=80',
-        badge: 'TROPICAL BLEND',
-        description: 'Chilled blend of tropical mango, passion, and orange juices.',
-        specs: {'VARIETY': 'Mango / Mixed Cocktail', 'SERVED': 'Iced'}
-    },
-    {
-        id: 'cold-mint-lemonade',
-        title: 'MINT LEMONADE',
-        category: 'cold-drinks',
-        price: 100,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=800&q=80',
-        badge: 'ICED COOLER',
-        description: 'Zesty lemon juice muddled with crushed fresh mint leaves.',
-        specs: {'HERB': 'Fresh Mint', 'CITRUS': 'Fresh Lemon'}
-    },
-    {
-        id: 'cold-oreo-shake',
-        title: 'OREO COOKIE SHAKE',
-        category: 'cold-drinks',
-        price: 300,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80',
-        badge: 'PREMIUM SHAKE',
-        description: 'Thick vanilla ice cream shake blended with real Oreo cookies.',
-        specs: {'BASE': 'Vanilla Ice Cream', 'MIX': 'Crushed Oreo'}
-    },
-    {
-        id: 'cold-milkshake-classic',
-        title: 'CLASSIC MILKSHAKE (CHOCOLATE / VANILLA / STRAWBERRY / BLUEBERRY)',
-        category: 'cold-drinks',
-        price: 250,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80',
-        badge: 'RICH & CREAMY',
-        description: 'Hand-spun ice cream milkshake in your choice of flavor.',
-        specs: {'FLAVORS': 'Chocolate, Vanilla, Strawberry, Blueberry'}
-    },
-    {
-        id: 'cold-smoothie',
-        title: 'TROPICAL SMOOTHIE (BANANA / PASSION)',
-        category: 'cold-drinks',
-        price: 200,
-        currency: 'KSh',
-        image: 'https://images.unsplash.com/photo-1502741126161-b048400d085d?auto=format&fit=crop&w=800&q=80',
-        badge: 'REAL FRUIT',
-        description: 'Blended fresh tropical banana, passion fruit, and yoghurt smoothie.',
-        specs: {'BASE': 'Fresh Fruit & Yoghurt'}
-    }
+    // MILKSHAKE & SMOOTHIES
+    { id: 'ds-milkshake', name: 'Milkshake (Chocolate, Blueberry, Strawberry, Vanilla)', category: 'shakes', price: 250 },
+    { id: 'ds-oreo-shake', name: 'Oreo shake', category: 'shakes', price: 300 },
+    { id: 'ds-smoothies', name: 'Smoothies (banana, passion, Tropical)', category: 'shakes', price: 200 },
+    { id: 'ds-ice-cream', name: 'Ice Cream Scoops', category: 'shakes', price: 150 },
+
+    // BARISTA SPECIAL
+    { id: 'ds-dawa', name: 'Dawa', category: 'barista', price: 200 },
+    { id: 'ds-dawa-taway', name: 'Dawa T/Away', category: 'barista', price: 250 },
+    { id: 'ds-tea-special', name: 'Tea Special', category: 'barista', price: 100 },
+    { id: 'ds-house-coffee-white', name: 'House Coffee White', category: 'barista', price: 150 },
+    { id: 'ds-house-coffee-black', name: 'House Coffee Black', category: 'barista', price: 100 },
+
+    // HOT BEVERAGES
+    { id: 'ds-cappuccino-single', name: 'Cappuccino (Single)', category: 'hot', price: 120 },
+    { id: 'ds-cappuccino-double', name: 'Cappuccino (Double)', category: 'hot', price: 180 },
+    { id: 'ds-espresso-single', name: 'Espresso (Single)', category: 'hot', price: 120 },
+    { id: 'ds-espresso-double', name: 'Espresso (Double)', category: 'hot', price: 150 },
+    { id: 'ds-americano', name: 'Americano', category: 'hot', price: 150 },
+    { id: 'ds-latte-machiatto', name: 'Latte Machiatto', category: 'hot', price: 180 },
+    { id: 'ds-latte-mocha', name: 'Latte Mocha', category: 'hot', price: 150 },
+    { id: 'ds-coffee-latte', name: 'Coffee Latte', category: 'hot', price: 150 },
+    { id: 'ds-white-coffee', name: 'White Coffee', category: 'hot', price: 100 },
+    { id: 'ds-black-coffee', name: 'Black Coffee', category: 'hot', price: 80 },
+    { id: 'ds-black-coffee-lemon', name: 'Black Coffee W Lemon', category: 'hot', price: 110 },
+    { id: 'ds-tea-masala-white', name: 'Tea Masala White', category: 'hot', price: 100 },
+    { id: 'ds-tea-masala-black', name: 'Tea Masala Black', category: 'hot', price: 130 },
+    { id: 'ds-milk', name: 'Milk', category: 'hot', price: 100 },
+    { id: 'ds-lemon-water', name: 'Lemon water', category: 'hot', price: 70 },
+    { id: 'ds-lemon-tea', name: 'Lemon Tea', category: 'hot', price: 100 },
+    { id: 'ds-lemon-tea-honey', name: 'Lemon Tea W Honey', category: 'hot', price: 150 },
+    { id: 'ds-white-chocolate', name: 'White Chocolate', category: 'hot', price: 100 },
+    { id: 'ds-black-chocolate', name: 'Black Chocolate', category: 'hot', price: 80 },
+    { id: 'ds-black-milo', name: 'Black Milo', category: 'hot', price: 90 },
+    { id: 'ds-honey-cone', name: 'Honey Cone', category: 'hot', price: 50 }
 ];
 
-// --- 2. MAIN DISHES MENU DATASET (WITH DYNAMIC SIDE OPTIONS) ---
-const MAIN_DISHES_ITEMS = [
+// --- 2. MAIN DISHES MENU (EXACT MATCH TO PHYSICAL MENU PAGE) ---
+const MAIN_DISHES = [
     {
-        id: 'main-goat-stew',
-        title: 'GOAT STEW / FRY',
-        badge: 'RIB HOUSE SPECIALTY',
-        image: 'hero_ribs.jpg',
-        description: 'Tender goat meat slow-simmered in rich tomato, garlic, and coriander gravy.',
-        options: [
-            { side: 'Ugali / Chapati', price: 470 },
-            { side: 'Rice / Mukimo', price: 480 },
-            { side: 'Pilau', price: 570 },
-            { side: 'Chips Plain', price: 620 },
-            { side: 'Chips Masala', price: 670 }
-        ]
-    },
-    {
-        id: 'main-beef-steak',
-        title: 'BEEF STEAK',
-        badge: 'FLAME SEARED',
-        image: 'tomahawk.jpg',
-        description: 'Prime beef steak seared over high fire with signature seasoning and rich reduction.',
-        options: [
-            { side: 'Ugali / Chapati', price: 590 },
-            { side: 'Rice / Mukimo', price: 600 },
-            { side: 'Pilau', price: 690 },
-            { side: 'Chips Plain', price: 740 },
-            { side: 'Chips Masala', price: 800 }
-        ]
-    },
-    {
-        id: 'main-chicken-kienyeji',
-        title: 'CHICKEN KIENYEJI QUARTER',
-        badge: 'ORGANIC FREE RANGE',
-        image: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=800&q=80',
-        description: 'Authentic free-range Kienyeji quarter chicken braised with traditional spices.',
-        options: [
-            { side: 'Ugali / Chapati', price: 570 },
-            { side: 'Rice / Mukimo', price: 580 },
-            { side: 'Pilau', price: 670 },
-            { side: 'Chips Plain', price: 720 },
-            { side: 'Chips Masala', price: 750 }
-        ]
-    },
-    {
-        id: 'main-chicken-wet-fry',
-        title: 'CHICKEN WET FRY',
-        badge: 'POPULAR FAVORITE',
-        image: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80',
-        description: 'Succulent chicken pieces tossed in onion, garlic, and fresh herb reduction.',
-        options: [
-            { side: 'Ugali / Chapati', price: 450 },
-            { side: 'Rice / Mukimo', price: 460 },
-            { side: 'Pilau', price: 550 },
-            { side: 'Chips Plain', price: 580 },
-            { side: 'Chips Masala', price: 630 }
-        ]
-    },
-    {
-        id: 'main-matumbo-fry',
-        title: 'MATUMBO FRY',
-        badge: 'TRADITIONAL DELICACY',
-        image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
-        description: 'Cleaned tripe slow-cooked with fresh tomatoes, green pepper, and herbs.',
+        name: 'MATUMBO FRY',
         options: [
             { side: 'Ugali / Chapati', price: 400 },
             { side: 'Rice / Mukimo', price: 410 },
             { side: 'Pilau', price: 500 },
-            { side: 'Chips Plain', price: 540 },
+            { side: 'Chips', price: 540 },
             { side: 'Chips Masala', price: 600 }
         ]
     },
     {
-        id: 'main-beef-stew',
-        title: 'BEEF STEW / FRY',
-        badge: 'DAILY CLASSIC',
-        image: 'https://images.unsplash.com/photo-1588168333986-5078d3ae3976?auto=format&fit=crop&w=800&q=80',
-        description: 'Tender beef cubes stewed in rich house gravy.',
+        name: 'BEEF STEW / FRY',
         options: [
             { side: 'Ugali / Chapati', price: 440 },
             { side: 'Rice / Mukimo', price: 450 },
             { side: 'Pilau', price: 510 },
-            { side: 'Chips Plain', price: 590 },
+            { side: 'Chips', price: 590 },
             { side: 'Chips Masala', price: 630 }
         ]
     },
     {
-        id: 'main-liver-fry',
-        title: 'LIVER FRY',
-        badge: 'NUTRIENT RICH',
-        image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
-        description: 'Fresh beef liver pan-seared with sweet onions and green peppers.',
+        name: 'GOAT STEW / FRY',
         options: [
             { side: 'Ugali / Chapati', price: 470 },
             { side: 'Rice / Mukimo', price: 480 },
             { side: 'Pilau', price: 570 },
-            { side: 'Chips Plain', price: 620 },
+            { side: 'Chips', price: 620 },
+            { side: 'Chips Masala', price: 670 }
+        ]
+    },
+    {
+        name: 'LIVER',
+        options: [
+            { side: 'Ugali / Chapati', price: 470 },
+            { side: 'Rice / Mukimo', price: 480 },
+            { side: 'Pilau', price: 570 },
+            { side: 'Chips', price: 620 },
             { side: 'Chips Masala', price: 630 }
+        ]
+    },
+    {
+        name: 'CHICKEN KIENYEJI QUARTER',
+        options: [
+            { side: 'Ugali / Chapati', price: 570 },
+            { side: 'Rice / Mukimo', price: 580 },
+            { side: 'Pilau', price: 670 },
+            { side: 'Chips', price: 720 },
+            { side: 'Chips Masala', price: 750 }
+        ]
+    },
+    {
+        name: 'CHICKEN WET FRY',
+        options: [
+            { side: 'Ugali / Chapati', price: 450 },
+            { side: 'Rice / Mukimo', price: 460 },
+            { side: 'Pilau', price: 550 },
+            { side: 'Chips', price: 580 },
+            { side: 'Chips Masala', price: 630 }
+        ]
+    },
+    {
+        name: 'BEEF STEAK',
+        options: [
+            { side: 'Ugali / Chapati', price: 590 },
+            { side: 'Rice / Mukimo', price: 600 },
+            { side: 'Pilau', price: 690 },
+            { side: 'Chips', price: 740 },
+            { side: 'Chips Masala', price: 800 }
         ]
     }
 ];
 
-// --- 3. GLOBAL STATE & CART ---
+const MAIN_PLAIN_SIDES = [
+    { name: 'Rice / Mukimo Special', price: 250 },
+    { name: 'Pilau Special', price: 270 },
+    { name: 'Chips Plain', price: 220 },
+    { name: 'Chips Masala', price: 270 },
+    { name: 'Rice Plain', price: 200 },
+    { name: 'Mukimo Plain', price: 200 }
+];
+
+// --- 3. STATE & CART ---
 let cart = JSON.parse(localStorage.getItem('ribhouse_cart') || '[]');
-let breakfastCategory = 'all';
+let activeSnackFilter = 'all';
 
 // --- 4. INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
     initScrollNavbar();
     initScrollReveal();
-    initBreakfastFilter();
-    renderBreakfastMenu();
-    renderMainDishesMenu();
+    initSnackFilter();
+    renderDrinksAndSnacks();
+    renderMainDishes();
+    renderPlainSides();
     initCartDrawer();
     initModals();
-    initFaqAccordion();
     updateCartUI();
 });
 
@@ -389,113 +193,111 @@ function initScrollReveal() {
     revealElements.forEach(el => observer.observe(el));
 }
 
-// --- 7. BREAKFAST MENU FILTER & RENDER ---
-function initBreakfastFilter() {
-    const pills = document.querySelectorAll('#breakfast-tabs .category-pill');
+// --- 7. FILTER & RENDER DRINKS AND SNACKS ---
+function initSnackFilter() {
+    const pills = document.querySelectorAll('#snack-tabs .category-pill');
     pills.forEach(pill => {
         pill.addEventListener('click', (e) => {
             pills.forEach(b => b.classList.remove('active'));
             const target = e.currentTarget;
             target.classList.add('active');
-            breakfastCategory = target.dataset.category;
-            renderBreakfastMenu();
+            activeSnackFilter = target.dataset.category;
+            renderDrinksAndSnacks();
         });
     });
 }
 
-function renderBreakfastMenu() {
-    const grid = document.getElementById('breakfast-grid');
+function renderDrinksAndSnacks() {
+    const grid = document.getElementById('drinks-snacks-grid');
     if (!grid) return;
 
-    let items = BREAKFAST_ITEMS.filter(i => (breakfastCategory === 'all') || (i.category === breakfastCategory));
+    let items = DRINKS_AND_SNACKS.filter(i => (activeSnackFilter === 'all') || (i.category === activeSnackFilter));
 
     grid.innerHTML = items.map(item => `
-        <div class="menu-card">
-            <div class="menu-card-img-wrapper">
-                <img src="${item.image}" alt="${item.title}" class="menu-card-img">
-                <span class="menu-badge">${item.badge}</span>
-            </div>
-            <div class="menu-card-body">
-                <div class="menu-card-header">
-                    <h3 class="menu-card-title">${item.title}</h3>
-                    <span class="menu-card-price">KSh ${item.price}</span>
-                </div>
-                <p class="menu-card-desc">${item.description}</p>
-                <div class="menu-specs-tags">
-                    ${Object.entries(item.specs).map(([k, v]) => `<span class="spec-tag">${k}: ${v}</span>`).join('')}
-                </div>
-                <div class="menu-card-actions">
-                    <button class="btn-add-bag" onclick="addCustomToCart('${item.title}', ${item.price}, '${item.image}')">ADD TO BAG</button>
+        <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                    <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream);">${item.name}</h3>
+                    <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: 600;">KSh ${item.price}</span>
                 </div>
             </div>
+            <button class="btn-add-bag" style="width: 100%; margin-top: 12px;" onclick="addCustomToCart('${item.name}', ${item.price})">ADD TO BAG</button>
         </div>
     `).join('');
 }
 
-// --- 8. MAIN DISHES MENU RENDER (WITH INTERACTIVE SIDE SELECTOR) ---
-function renderMainDishesMenu() {
+// --- 8. RENDER MAIN DISHES WITH EXACT PRICES ---
+function renderMainDishes() {
     const grid = document.getElementById('main-dishes-grid');
     if (!grid) return;
 
-    grid.innerHTML = MAIN_DISHES_ITEMS.map((dish, idx) => {
+    grid.innerHTML = MAIN_DISHES.map((dish, idx) => {
         const defaultOption = dish.options[0];
         return `
-            <div class="menu-card" id="dish-card-${idx}">
-                <div class="menu-card-img-wrapper">
-                    <img src="${dish.image}" alt="${dish.title}" class="menu-card-img">
-                    <span class="menu-badge">${dish.badge}</span>
-                </div>
-                <div class="menu-card-body">
-                    <div class="menu-card-header">
-                        <h3 class="menu-card-title">${dish.title}</h3>
-                        <span class="menu-card-price" id="dish-price-${idx}">KSh ${defaultOption.price}</span>
-                    </div>
-                    <p class="menu-card-desc">${dish.description}</p>
-                    
+            <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-cream); margin-bottom: 8px; text-transform: uppercase;">${dish.name}</h3>
                     <div style="margin-bottom: 16px;">
-                        <label style="display:block; font-size: 0.65rem; color: var(--color-gold); letter-spacing: 1.5px; margin-bottom: 6px; text-transform: uppercase;">SELECT YOUR SIDE PAIRING:</label>
-                        <select id="dish-select-${idx}" onchange="updateDishPrice(${idx})" style="width:100%; background:var(--color-black); border:1px solid var(--color-border-dark); color:var(--color-cream); padding:8px 12px; font-size:0.8rem; outline:none; cursor:pointer;">
+                        <label style="display:block; font-size: 0.65rem; color: var(--color-gold); letter-spacing: 1.5px; margin-bottom: 6px; text-transform: uppercase;">SELECT SIDE OPTION:</label>
+                        <select id="main-select-${idx}" onchange="updateMainPrice(${idx})" style="width:100%; background:var(--color-black); border:1px solid var(--color-border-dark); color:var(--color-cream); padding:10px 12px; font-size:0.85rem; outline:none; cursor:pointer;">
                             ${dish.options.map(opt => `<option value="${opt.price}" data-side="${opt.side}">${opt.side} — KSh ${opt.price}</option>`).join('')}
                         </select>
                     </div>
+                </div>
 
-                    <div class="menu-card-actions">
-                        <button class="btn-add-bag" onclick="addDishToCart(${idx})">ADD DISH TO BAG</button>
-                    </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid var(--color-border-dark); padding-top: 12px;">
+                    <span style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-gold); font-weight: bold;" id="main-price-${idx}">KSh ${defaultOption.price}</span>
+                    <button class="btn-add-bag" onclick="addMainDishToCart(${idx})">ADD TO BAG</button>
                 </div>
             </div>
         `;
     }).join('');
 }
 
-function updateDishPrice(idx) {
-    const select = document.getElementById(`dish-select-${idx}`);
-    const priceEl = document.getElementById(`dish-price-${idx}`);
+function updateMainPrice(idx) {
+    const select = document.getElementById(`main-select-${idx}`);
+    const priceEl = document.getElementById(`main-price-${idx}`);
     if (select && priceEl) {
         priceEl.textContent = `KSh ${select.value}`;
     }
 }
 
-function addDishToCart(idx) {
-    const dish = MAIN_DISHES_ITEMS[idx];
-    const select = document.getElementById(`dish-select-${idx}`);
+function addMainDishToCart(idx) {
+    const dish = MAIN_DISHES[idx];
+    const select = document.getElementById(`main-select-${idx}`);
     const selectedOption = select.options[select.selectedIndex];
     const side = selectedOption.dataset.side;
     const price = parseFloat(select.value);
 
-    const title = `${dish.title} WITH ${side.toUpperCase()}`;
-    addCustomToCart(title, price, dish.image);
+    const title = `${dish.name} WITH ${side.toUpperCase()}`;
+    addCustomToCart(title, price);
 }
 
-// --- 9. CART SYSTEM ---
-function addCustomToCart(title, price, image) {
+// --- 9. RENDER PLAIN SIDES ---
+function renderPlainSides() {
+    const grid = document.getElementById('plain-sides-grid');
+    if (!grid) return;
+
+    grid.innerHTML = MAIN_PLAIN_SIDES.map(side => `
+        <div style="background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-cream);">${side.name}</h4>
+                <span style="font-size: 0.9rem; color: var(--color-gold);">KSh ${side.price}</span>
+            </div>
+            <button class="btn-add-bag" style="padding: 6px 12px; font-size: 0.65rem;" onclick="addCustomToCart('${side.name}', ${side.price})">ADD TO BAG</button>
+        </div>
+    `).join('');
+}
+
+// --- 10. CART SYSTEM ---
+function addCustomToCart(title, price) {
     const id = title.toLowerCase().replace(/[^a-z0-9]/g, '-');
     const existing = cart.find(c => c.id === id);
 
     if (existing) {
         existing.qty += 1;
     } else {
-        cart.push({ id, title, price, image, qty: 1 });
+        cart.push({ id, title, price, qty: 1 });
     }
 
     saveCart();
@@ -544,7 +346,7 @@ function updateCartUI() {
             cartItemsContainer.innerHTML = `
                 <div style="text-align: center; padding: 40px 0; color: var(--color-text-muted);">
                     <p style="font-family: var(--font-serif); font-size: 1.2rem;">Your Order Bag is Empty</p>
-                    <p style="font-size: 0.8rem;">Explore the Breakfast or Main Dishes menu to add items.</p>
+                    <p style="font-size: 0.8rem;">Add your favorite items from the menu.</p>
                 </div>
             `;
             return;
@@ -552,7 +354,6 @@ function updateCartUI() {
 
         cartItemsContainer.innerHTML = cart.map(item => `
             <div style="display: flex; gap: 12px; align-items: center; border-bottom: 1px solid var(--color-border-dark); padding-bottom: 12px;">
-                <img src="${item.image}" alt="${item.title}" style="width: 60px; height: 60px; object-fit: cover;">
                 <div style="flex: 1;">
                     <h4 style="font-family: var(--font-serif); font-size: 0.95rem; color: var(--color-cream);">${item.title}</h4>
                     <span style="font-size: 0.8rem; color: var(--color-gold);">KSh ${item.price * item.qty}</span>
@@ -567,7 +368,7 @@ function updateCartUI() {
     }
 }
 
-// --- 10. DRAWER & MODAL LOGIC ---
+// --- 11. DRAWER & MODALS ---
 function initCartDrawer() {
     const cartToggleBtn = document.getElementById('cart-toggle-btn');
     const cartCloseBtn = document.getElementById('cart-close-btn');
@@ -635,28 +436,4 @@ function initModals() {
             closeResModal();
         });
     }
-}
-
-function initFaqAccordion() {
-    const faqItems = document.querySelectorAll('.faq-item');
-    faqItems.forEach(item => {
-        const button = item.querySelector('.faq-button');
-        const content = item.querySelector('.faq-content');
-
-        if (button && content) {
-            button.addEventListener('click', () => {
-                const isActive = item.classList.contains('active');
-                faqItems.forEach(i => {
-                    i.classList.remove('active');
-                    const c = i.querySelector('.faq-content');
-                    if (c) c.style.maxHeight = null;
-                });
-
-                if (!isActive) {
-                    item.classList.add('active');
-                    content.style.maxHeight = content.scrollHeight + 'px';
-                }
-            });
-        }
-    });
 }

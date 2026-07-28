@@ -125,14 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // --- 3. NAVBAR SCROLL OBSERVER ---
 function initScrollNavbar() {
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 60) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
+    // Navbar moves up naturally with page scroll
 }
 
 // --- 4. DYNAMIC PRICE SELECTOR FOR MAIN DISHES ---

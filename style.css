@@ -160,24 +160,13 @@ img {
    3. LUXURY TRANSPARENT NAVBAR OVER HERO
    -------------------------------------------------------------------------- */
 .navbar {
-    position: fixed;
-    top: 36px;
+    position: absolute;
+    top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
-    transition: var(--transition-smooth);
     background: transparent;
     padding: 20px 0;
-}
-
-.navbar.scrolled {
-    top: 0;
-    background: rgba(8, 8, 10, 0.88);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border-bottom: 1px solid var(--color-border-gold);
-    padding: 14px 0;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
 }
 
 .nav-container {

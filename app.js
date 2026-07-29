@@ -34,10 +34,10 @@ function initSectionSlideshows() {
 // 3. OFFLINE RIB HOUSE MENU AI ASSISTANT LOGIC & SELECTION ENGINE
 // ==========================================================================
 
-// LocalStorage Cart Helper Functions
+// SessionStorage Cart Helper Functions (Resets to 0 on fresh page run)
 function getSelectedCart() {
     try {
-        return JSON.parse(localStorage.getItem('ribhouse_selected_cart')) || [];
+        return JSON.parse(sessionStorage.getItem('ribhouse_selected_cart')) || [];
     } catch(e) {
         return [];
     }
@@ -45,7 +45,7 @@ function getSelectedCart() {
 
 function saveSelectedCart(cart) {
     try {
-        localStorage.setItem('ribhouse_selected_cart', JSON.stringify(cart));
+        sessionStorage.setItem('ribhouse_selected_cart', JSON.stringify(cart));
     } catch(e) {}
     updateSelectionBarUI();
 }

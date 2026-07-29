@@ -238,7 +238,12 @@ function initMenuAIAssistant() {
 
         msgDiv.innerHTML = html;
         messagesFeed.appendChild(msgDiv);
-        messagesFeed.scrollTop = messagesFeed.scrollHeight;
+
+        if (sender === 'bot') {
+            msgDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            messagesFeed.scrollTop = messagesFeed.scrollHeight;
+        }
     }
 
     function formatMarkdownText(str) {

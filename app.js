@@ -321,6 +321,11 @@ function initMenuAIAssistant() {
         const numberMatches = q.match(/\d+/g);
         const isBudgetQuery = q.includes("budget") || q.includes("under") || q.includes("below") || q.includes("cheap") || q.includes("less than") || q.includes("between") || q.includes("buy with") || q.includes("shilling") || q.includes("ksh") || q.includes("kes") || q.includes("price") || numberMatches;
 
+        // Intent Category Scoping (Meal/Dish vs Drinks vs Breakfast)
+        const isMealQuery = q.includes("meal") || q.includes("dish") || q.includes("food") || q.includes("eat") || q.includes("lunch") || q.includes("dinner") || q.includes("choma") || q.includes("chemsha") || q.includes("main");
+        const isDrinkQuery = q.includes("drink") || q.includes("coffee") || q.includes("tea") || q.includes("dawa") || q.includes("juice") || q.includes("shake") || q.includes("beverage") || q.includes("soda");
+        const isBreakfastQuery = q.includes("breakfast") || q.includes("morning") || q.includes("pancake");
+
         if (isBudgetQuery && numberMatches && numberMatches.length > 0) {
             const numbers = numberMatches.map(n => parseInt(n, 10)).filter(n => n >= 30 && n <= 10000);
             
@@ -328,24 +333,35 @@ function initMenuAIAssistant() {
                 let matches = [];
                 let headerText = '';
 
+                let pool = KNOWLEDGE;
+                if (isMealQuery) {
+                    pool = KNOWLEDGE.filter(item => item.category === "main" || item.category === "choma");
+                } else if (isDrinkQuery) {
+                    pool = KNOWLEDGE.filter(item => item.category === "hot-drinks" || item.category === "cold-drinks");
+                } else if (isBreakfastQuery) {
+                    pool = KNOWLEDGE.filter(item => item.category === "breakfast");
+                }
+
                 if (q.includes("between") && numbers.length >= 2) {
                     const minP = Math.min(numbers[0], numbers[1]);
                     const maxP = Math.max(numbers[0], numbers[1]);
                     
-                    matches = KNOWLEDGE.filter(item => {
+                    matches = pool.filter(item => {
                         const priceNum = parseInt(item.price.replace(/[^0-9]/g, ''), 10);
                         return priceNum && priceNum >= minP && priceNum <= maxP;
                     });
                     
-                    headerText = `Found **${matches.length}** meals between **KSh ${minP}** and **KSh ${maxP}**:`;
+                    const scopeLabel = isMealQuery ? "Main Dishes & Choma meals" : isDrinkQuery ? "Barista Drinks" : "items";
+                    headerText = `Found **${matches.length}** ${scopeLabel} between **KSh ${minP}** and **KSh ${maxP}**:`;
                 } else {
                     const maxBudget = numbers[0];
-                    matches = KNOWLEDGE.filter(item => {
+                    matches = pool.filter(item => {
                         const priceNum = parseInt(item.price.replace(/[^0-9]/g, ''), 10);
                         return priceNum && priceNum <= maxBudget;
                     });
 
-                    headerText = `Found **${matches.length}** meals under **KSh ${maxBudget}**:`;
+                    const scopeLabel = isMealQuery ? "Main Dishes & Wood-Fired Choma meals" : isDrinkQuery ? "Barista Drinks" : "items";
+                    headerText = `Found **${matches.length}** ${scopeLabel} under **KSh ${maxBudget}**:`;
                 }
 
                 matches.sort((a, b) => {
@@ -360,7 +376,7 @@ function initMenuAIAssistant() {
                         cards: matches
                     };
                 } else {
-                    const higherMatches = KNOWLEDGE.map(item => ({
+                    const higherMatches = pool.map(item => ({
                         item,
                         num: parseInt(item.price.replace(/[^0-9]/g, ''), 10) || 0
                     }))
@@ -370,7 +386,7 @@ function initMenuAIAssistant() {
                     .map(x => x.item);
 
                     return {
-                        text: `No meals were found within your budget. Here are the closest options:`,
+                        text: `No matching options were found within KSh ${numbers[0]}. Here are the closest options:`,
                         cards: higherMatches
                     };
                 }

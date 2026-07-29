@@ -48,10 +48,6 @@
                 <span class="brand-subtitle">BEST QUALITY GRILLED MEAT</span>
             </a>
 
-            <!-- Right Actions: Reserve -->
-            <div class="nav-right">
-                <button class="btn-nav-reserve" id="nav-reserve-btn">RESERVE TABLE</button>
-            </div>
         </div>
     </header>
 
@@ -1106,8 +1102,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <button class="btn-hero-outline" id="location-reserve-btn">RESERVE A TABLE</button>
                 </div>
 
                 <div class="featured-img-frame">
@@ -1156,42 +1150,7 @@
         </div>
     </footer>
 
-    <!-- TABLE RESERVATION MODAL -->
-    <div class="modal-overlay" id="reservation-modal-overlay"></div>
-    <div class="modal-container" id="reservation-modal">
-        <span class="modal-close-btn" id="res-modal-close">&times;</span>
-        <h2 class="modal-title">TABLE RESERVATION</h2>
-        <p style="color: var(--color-text-muted); font-size: 0.85rem; margin-bottom: 24px;">Rib House • Best Quality
-            Grilled Meat</p>
-
-        <form id="reservation-form">
-            <div class="form-group">
-                <label for="res-name">FULL NAME</label>
-                <input type="text" id="res-name" required placeholder="Your Name">
-            </div>
-            <div class="form-group">
-                <label for="res-phone">PHONE NUMBER</label>
-                <input type="tel" id="res-phone" required placeholder="07XX XXX XXX">
-            </div>
-            <div class="form-group">
-                <label for="res-type">RESERVATION TYPE</label>
-                <select id="res-type">
-                    <option value="dinein">Dine-In Table Reservation</option>
-                    <option value="takeout">Takeout / Pickup Order</option>
-                    <option value="delivery">Delivery Request</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="res-date">DATE & TIME</label>
-                <input type="datetime-local" id="res-date" required>
-            </div>
-
-            <button type="submit" class="btn-hero-outline" style="width: 100%; margin-top: 12px;">SUBMIT
-                RESERVATION</button>
-        </form>
-    </div>
-
-    <script src="app.js?v=20260729"></script>
+    <script src="app.js?v=20260729_nores1"></script>
 </body>
 
 </html>

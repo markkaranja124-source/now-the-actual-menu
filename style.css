@@ -303,6 +303,20 @@ img {
     z-index: 3;
 }
 
+/* Translucent Glassmorphism strictly for Food Item Boxes */
+.menu-grid > div {
+    background: rgba(15, 15, 20, 0.55) !important;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.menu-grid > div:hover {
+    background: rgba(25, 25, 32, 0.72) !important;
+    border-color: var(--color-gold) !important;
+}
+
 .brand-title {
     font-family: var(--font-serif);
     font-size: 1.85rem;

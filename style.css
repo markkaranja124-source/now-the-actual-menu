@@ -3326,5 +3326,123 @@ img {
     }
 }
 
+/* ==========================================================================
+   20. MOBILE PHONE OPTIMIZATION & RESPONSIVE SAFETY OVERRIDES
+   ========================================================================== */
+.summary-btn-group {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+@media (max-width: 768px) {
+    .header-bar-container {
+        flex-direction: column;
+        gap: 14px;
+        text-align: center;
+        padding: 14px 16px;
+    }
+
+    .nav-right-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        gap: 8px !important;
+    }
+
+    .nav-link-btn {
+        font-size: 0.675rem;
+        padding: 6px 12px;
+    }
+
+    .order-luxury-wrapper {
+        padding: 24px 16px 80px 16px;
+    }
+
+    .order-item-row-luxury {
+        padding: 18px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .order-item-main-info {
+        width: 100%;
+        gap: 14px;
+    }
+
+    .order-dish-image-frame {
+        width: 75px;
+        height: 75px;
+    }
+
+    .order-dish-title {
+        font-size: 1.25rem;
+    }
+
+    .order-item-actions-block {
+        width: 100%;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .order-summary-luxury-card {
+        padding: 24px 18px;
+    }
+
+    .summary-main-heading {
+        font-size: 1.75rem;
+    }
+
+    .summary-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .summary-total-banner {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+
+    .summary-grand-total {
+        font-size: 2rem;
+    }
+
+    .summary-btn-group {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-back-menu {
+        font-size: 0.7rem;
+    }
+
+    .order-hero-title {
+        font-size: 1.8rem;
+    }
+
+    .order-hero-banner-section {
+        height: 220px;
+    }
+
+    .quantity-controls-pill {
+        padding: 4px 10px;
+    }
+
+    .btn-qty-round {
+        width: 24px;
+        height: 24px;
+        font-size: 0.95rem;
+    }
+
+    .btn-remove-pill {
+        padding: 8px 14px;
+        font-size: 0.675rem;
+    }
+}
+
 
 

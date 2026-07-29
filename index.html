@@ -1318,6 +1318,80 @@
         </div>
     </footer>
 
+    <!-- ==========================================================================
+         OFFLINE RIB HOUSE MENU AI ASSISTANT WIDGET
+         ========================================================================== -->
+    
+    <!-- Floating Flaming AI Assistant Trigger Button & Speech Teaser -->
+    <div class="ai-assistant-widget" id="ai-assistant-widget">
+        <!-- Floating Speech Bubble Teaser -->
+        <div class="ai-speech-teaser" id="ai-speech-teaser">
+            <span class="teaser-text" id="teaser-text">💡 Ask me: "Dishes under 400/="</span>
+            <button class="teaser-close" id="teaser-close" aria-label="Close Teaser">&times;</button>
+        </div>
+
+        <!-- Flaming Logo Trigger Button -->
+        <button class="ai-flaming-trigger" id="ai-flaming-trigger" aria-label="Open Rib House Menu AI Assistant">
+            <div class="flame-aura-ring"></div>
+            <div class="flame-particles"></div>
+            <div class="flaming-logo-box">
+                <img src="logo.png" alt="Rib House AI" class="flaming-logo-img">
+            </div>
+            <span class="ai-trigger-label">ASK AI</span>
+        </button>
+    </div>
+
+    <!-- AI Assistant Slide-up Chat Drawer & Overlay -->
+    <div class="ai-drawer-overlay" id="ai-drawer-overlay"></div>
+
+    <aside class="ai-chat-drawer" id="ai-chat-drawer" aria-label="Rib House Menu AI Assistant Chat">
+        <!-- Drawer Header -->
+        <div class="ai-drawer-header">
+            <div class="ai-header-info">
+                <div class="ai-avatar-flame">
+                    <img src="logo.png" alt="Rib House Emblem">
+                    <span class="online-dot"></span>
+                </div>
+                <div>
+                    <h3 class="ai-header-title">RIB HOUSE MENU AI</h3>
+                    <span class="ai-header-status">Instant Dish Helper & Recommendations</span>
+                </div>
+            </div>
+            <button class="ai-close-btn" id="ai-close-btn" aria-label="Close Chat">&times;</button>
+        </div>
+
+        <!-- Quick Action Chips -->
+        <div class="ai-chips-bar">
+            <button class="ai-chip" data-query="breakfast under 400">☕ Breakfast under 400/=</button>
+            <button class="ai-chip" data-query="under 500">💰 Dishes under 500/=</button>
+            <button class="ai-chip" data-query="chicken platter for 4">🍗 Platter for 4 People</button>
+            <button class="ai-chip" data-query="choma and chemsha">🔥 Choma & Chemsha</button>
+            <button class="ai-chip" data-query="cold drinks and shakes">🥤 Shakes & Drinks</button>
+            <button class="ai-chip" data-query="till number and hotline">📞 Till & Hotline</button>
+        </div>
+
+        <!-- Messages Stream -->
+        <div class="ai-messages-feed" id="ai-messages-feed">
+            <div class="ai-msg ai-msg-bot">
+                <div class="ai-msg-bubble">
+                    <p>Habari! 👋 Welcome to <strong>Rib House</strong>! I am your AI Dish Helper.</p>
+                    <p style="margin-top: 6px;">Ask me anything about our dishes, prices, ingredients, or tap any quick topic above!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Input Bar -->
+        <form class="ai-input-form" id="ai-input-form">
+            <input type="text" id="ai-input-field" placeholder="Ask about any dish, price, or combo..." autocomplete="off" required>
+            <button type="submit" class="ai-send-btn" aria-label="Send Question">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </form>
+    </aside>
+
     <script src="app.js?v=20260729_nores1"></script>
 </body>
 

@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RIB HOUSE | Your Selected Order</title>
-    <meta name="description" content="Review your selected Rib House meals, adjust quantities, and proceed to checkout.">
+    <title>RIB HOUSE | Your Selected Feast</title>
+    <meta name="description" content="Review your selected Rib House wood-fired dishes, adjust quantities, and proceed to checkout.">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,10 +15,10 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="logo.png">
 
-    <link rel="stylesheet" href="style.css?v=20260729_order2">
+    <link rel="stylesheet" href="style.css?v=20260729_order3">
 </head>
 
-<body>
+<body class="order-page-body">
 
     <!-- Header Navigation Bar -->
     <header class="page-header-bar">
@@ -36,29 +36,43 @@
         </div>
     </header>
 
-    <main class="order-page-wrapper">
+    <!-- Artistic Culinary Hero Banner Header -->
+    <section class="order-hero-banner-section">
+        <div class="order-hero-overlay"></div>
+        
+        <!-- Animated Ember Particles -->
+        <div class="embers-container">
+            <div class="ember-particle" style="left: 15%; animation-duration: 4s; animation-delay: 0s;"></div>
+            <div class="ember-particle" style="left: 35%; animation-duration: 5.5s; animation-delay: 1.2s;"></div>
+            <div class="ember-particle" style="left: 60%; animation-duration: 4.8s; animation-delay: 0.5s;"></div>
+            <div class="ember-particle" style="left: 80%; animation-duration: 6s; animation-delay: 1.8s;"></div>
+        </div>
+
+        <div class="order-hero-content">
+            <span class="order-hero-subtitle">Wood-Fired Culinary Experience</span>
+            <h1 class="order-hero-title">YOUR SELECTED FEAST</h1>
+            <p class="order-hero-desc">Every dish crafted fresh with authentic Kenya spices over open flames</p>
+        </div>
+    </section>
+
+    <main class="order-page-wrapper" style="padding-top: 40px;">
         <div class="order-vertical-container">
-            
-            <!-- Main Title Header -->
-            <div class="order-header-box">
-                <h1 class="order-section-title">YOUR SELECTED ORDER</h1>
-                <p style="color: var(--color-text-muted); font-size: 0.9rem;">
-                    Review your selected dishes below. Each item appears in a clean vertical row.
-                </p>
-            </div>
 
             <!-- Single Vertical Stacked Food Items List -->
             <div id="selected-order-items-list" class="order-vertical-list">
                 <!-- Dynamically populated via app.js -->
-                <p style="color: var(--color-text-muted); font-size: 0.9rem; padding: 20px 0; text-align: center;">
+                <p style="color: var(--color-text-muted); font-size: 0.9rem; padding: 40px 0; text-align: center;">
                     Loading your selected dishes...
                 </p>
             </div>
 
             <!-- Sticky / Bottom Order Summary Card -->
             <div class="summary-box-card sticky-bottom-summary">
-                <h2 class="order-section-title" style="font-size: 1.5rem; margin-bottom: 20px; text-align: center;">ORDER SUMMARY</h2>
-                
+                <div class="summary-card-header">
+                    <h2 class="order-section-title" style="font-size: 1.6rem; margin-bottom: 4px; text-align: center; border: none; padding: 0;">ORDER SUMMARY</h2>
+                    <p style="color: var(--color-gold); font-size: 0.8rem; text-align: center; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px;">Ready for Preparation</p>
+                </div>
+
                 <div class="summary-grid-row">
                     <div class="summary-stat-item">
                         <span>Selected Dishes</span>
@@ -89,7 +103,7 @@
         </div>
     </main>
 
-    <script src="app.js?v=20260729_order2"></script>
+    <script src="app.js?v=20260729_order3"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof renderSelectedOrderPage === 'function') {

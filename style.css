@@ -2737,7 +2737,141 @@ img {
     color: var(--color-cream);
 }
 
+/* ==========================================================================
+   ARTISTIC HERO BANNER & CULINARY THUMBNAILS FOR order.html
+   ========================================================================== */
+
+.order-hero-banner-section {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background: url('order_hero_banner.png') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    border-bottom: 2px solid var(--color-border-gold);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.order-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(8, 8, 10, 0.4) 0%, rgba(8, 8, 10, 0.85) 80%, #08080A 100%);
+    z-index: 1;
+}
+
+.embers-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.ember-particle {
+    position: absolute;
+    bottom: -10px;
+    width: 6px;
+    height: 6px;
+    background: #FF7F00;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #FF7F00, 0 0 20px #E5C158;
+    opacity: 0.8;
+    animation: emberFloat 5s infinite linear;
+}
+
+@keyframes emberFloat {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.9;
+    }
+    100% {
+        transform: translateY(-300px) scale(0.2);
+        opacity: 0;
+    }
+}
+
+.order-hero-content {
+    position: relative;
+    z-index: 3;
+    max-width: 800px;
+    padding: 0 24px;
+}
+
+.order-hero-subtitle {
+    font-size: 0.775rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    display: block;
+    margin-bottom: 8px;
+    text-shadow: 0 0 10px rgba(197, 160, 89, 0.5);
+}
+
+.order-hero-title {
+    font-family: var(--font-serif);
+    font-size: 2.8rem;
+    color: var(--color-cream);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+    margin-bottom: 12px;
+}
+
+.order-hero-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+}
+
+/* Culinary Dish Artwork Thumbnail & Badges */
+.order-dish-badge-container {
+    position: relative;
+    width: 84px;
+    height: 84px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--color-border-gold);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    flex-shrink: 0;
+    background: #111114;
+}
+
+.dish-row-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.order-item-row-vertical:hover .dish-row-thumbnail {
+    transform: scale(1.08);
+}
+
+.order-badge-pill {
+    display: inline-block;
+    background: rgba(197, 160, 89, 0.12);
+    border: 1px solid var(--color-gold);
+    color: var(--color-gold);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+}
+
 @media (max-width: 768px) {
+    .order-hero-title {
+        font-size: 2rem;
+    }
+    .order-hero-banner-section {
+        height: 240px;
+    }
     .ai-assistant-widget {
         bottom: 16px;
         right: 16px;
@@ -2773,5 +2907,6 @@ img {
         gap: 12px;
     }
 }
+
 
 

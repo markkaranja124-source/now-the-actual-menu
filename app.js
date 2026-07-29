@@ -544,16 +544,36 @@ function renderSelectedOrderPage() {
         totalQuantity += item.qty;
         totalPrice += itemSubtotal;
 
+        // Determine Dish Artwork Thumbnail & Category Badge
+        const nameLower = item.name.toLowerCase();
+        let dishImg = 'logo.png';
+        let categoryBadge = '🥩 Main Dish';
+
+        if (nameLower.includes('choma') || nameLower.includes('beef') || nameLower.includes('goat') || nameLower.includes('steak') || nameLower.includes('platter') || nameLower.includes('tumbukiza') || nameLower.includes('chemsha')) {
+            dishImg = 'order_dish_choma.png';
+            categoryBadge = '🔥 Wood-Fired Choma';
+        } else if (nameLower.includes('breakfast') || nameLower.includes('pancake') || nameLower.includes('egg') || nameLower.includes('toast') || nameLower.includes('bite') || nameLower.includes('samosa') || nameLower.includes('combo')) {
+            dishImg = 'order_dish_breakfast.png';
+            categoryBadge = '🥞 Gourmet Breakfast';
+        } else if (nameLower.includes('coffee') || nameLower.includes('tea') || nameLower.includes('shake') || nameLower.includes('drink') || nameLower.includes('dawa') || nameLower.includes('lemonade') || nameLower.includes('smoothie')) {
+            dishImg = 'logo.png';
+            categoryBadge = '🥤 Barista Brew & Shake';
+        } else if (nameLower.includes('tilapia') || nameLower.includes('fish')) {
+            dishImg = 'order_dish_choma.png';
+            categoryBadge = '🐟 Fresh Tilapia';
+        }
+
         html += `
             <div class="order-item-row-vertical" data-id="${item.id}">
                 <div class="order-item-left">
-                    <div class="order-dish-badge">
-                        <img src="logo.png" alt="Dish Emblem" class="dish-row-img">
+                    <div class="order-dish-badge-container">
+                        <img src="${dishImg}" alt="${item.name}" class="dish-row-thumbnail">
                     </div>
                     <div class="order-dish-info">
+                        <span class="order-badge-pill">${categoryBadge}</span>
                         <h3 class="order-dish-title">${item.name}</h3>
                         ${item.desc ? `<p class="order-dish-desc">${item.desc}</p>` : ''}
-                        <span class="order-dish-price-tag">Price: KSh ${item.price}</span>
+                        <div class="order-dish-price-tag">Unit Price: <strong>KSh ${item.price}</strong></div>
                     </div>
                 </div>
 
@@ -572,8 +592,8 @@ function renderSelectedOrderPage() {
                         <span class="order-subtotal-amount">KSh ${itemSubtotal}/=</span>
                     </div>
 
-                    <button class="btn-remove-row" onclick="removeCartItem('${item.id}')">
-                        🗑 Remove Item
+                    <button class="btn-remove-row" onclick="removeCartItem('${item.id}')" title="Remove Dish">
+                        🗑 Remove
                     </button>
                 </div>
             </div>

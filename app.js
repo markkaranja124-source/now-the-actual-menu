@@ -7,6 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollNavbar();
     initSectionSlideshows();
     initMenuAIAssistant();
+    updateSelectionBarUI();
+});
+
+window.addEventListener('pageshow', () => {
+    updateSelectionBarUI();
 });
 
 // --- 1. NAVBAR SCROLL OBSERVER ---
@@ -96,13 +101,18 @@ function updateSelectionBarUI() {
     if (!bar) return;
 
     const cart = getSelectedCart();
-    const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+    const totalDishes = cart.length;
+    const totalQuantity = cart.reduce((sum, item) => sum + item.qty, 0);
     const totalPrice = cart.reduce((sum, item) => sum + (item.numericPrice * item.qty), 0);
 
-    if (totalItems > 0) {
+    if (totalDishes > 0) {
         bar.style.display = 'flex';
-        if (countEl) countEl.textContent = `${totalItems} ${totalItems === 1 ? 'Item' : 'Items'} Selected`;
-        if (totalEl) totalEl.textContent = `Total: ${totalPrice}/=`;
+        if (countEl) {
+            countEl.textContent = `${totalDishes} ${totalDishes === 1 ? 'Dish' : 'Dishes'} (${totalQuantity} ${totalQuantity === 1 ? 'Item' : 'Items'}) Selected`;
+        }
+        if (totalEl) {
+            totalEl.textContent = `Total: KSh ${totalPrice.toLocaleString()}/=`;
+        }
     } else {
         bar.style.display = 'none';
     }

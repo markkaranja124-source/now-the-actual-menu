@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIB HOUSE | Your Selected Order</title>
+    <meta name="description" content="Review your selected Rib House meals, adjust quantities, and proceed to checkout.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <link rel="stylesheet" href="style.css?v=20260729_order1">
+</head>
+
+<body>
+
+    <!-- Header Navigation Bar -->
+    <header class="page-header-bar">
+        <div class="header-bar-container">
+            <a href="index.html" class="btn-back-menu">
+                <span>&larr; Back to Full Menu</span>
+            </a>
+
+            <a href="index.html" class="brand-logo">
+                <img src="logo.png" alt="Rib House Logo" class="nav-logo-img" style="height: 42px;">
+                <span class="brand-title" style="font-size: 1.4rem;">RIB HOUSE</span>
+            </a>
+
+            <div style="width: 120px;"></div> <!-- Spacer -->
+        </div>
+    </header>
+
+    <main class="order-page-wrapper">
+        <div class="order-layout-grid">
+            
+            <!-- Left: Selected Food Items List -->
+            <div class="order-items-card">
+                <h1 class="order-section-title">YOUR SELECTED ORDER</h1>
+                
+                <div id="selected-order-items-list">
+                    <!-- Dynamically populated via app.js -->
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; padding: 20px 0;">
+                        Loading your selected dishes...
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right: Order Summary & Checkout -->
+            <div class="summary-box-card">
+                <h2 class="order-section-title" style="font-size: 1.5rem; margin-bottom: 20px;">ORDER SUMMARY</h2>
+                
+                <div class="summary-row">
+                    <span>Selected Items:</span>
+                    <strong id="summary-items-count" style="color: var(--color-cream);">0 Items</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Estimated Prep Time:</span>
+                    <strong style="color: var(--color-gold);">15 &ndash; 25 mins</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Dining / Delivery Option:</span>
+                    <strong style="color: var(--color-cream);">Dine-In / Takeaway</strong>
+                </div>
+
+                <div class="summary-total-row">
+                    <span class="summary-total-label">Total Amount:</span>
+                    <span class="summary-total-amount" id="summary-total-amount">0/=</span>
+                </div>
+
+                <a href="checkout.html" class="btn-proceed-checkout" id="btn-proceed-checkout">
+                    <span>PROCEED TO CHECKOUT &rarr;</span>
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="app.js?v=20260729_order1"></script>
+    <script>
+        // Init Order Page logic on load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof renderSelectedOrderPage === 'function') {
+                renderSelectedOrderPage();
+            }
+        });
+    </script>
+</body>
+
+</html>

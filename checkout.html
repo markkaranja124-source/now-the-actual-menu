@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIB HOUSE | Checkout</title>
+    <meta name="description" content="Checkout and confirm your Rib House order.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <link rel="stylesheet" href="style.css?v=20260729_checkout1">
+</head>
+
+<body>
+
+    <!-- Header Navigation Bar -->
+    <header class="page-header-bar">
+        <div class="header-bar-container">
+            <a href="order.html" class="btn-back-menu">
+                <span>&larr; Back to Selected Order</span>
+            </a>
+
+            <a href="index.html" class="brand-logo">
+                <img src="logo.png" alt="Rib House Logo" class="nav-logo-img" style="height: 42px;">
+                <span class="brand-title" style="font-size: 1.4rem;">RIB HOUSE</span>
+            </a>
+
+            <div style="width: 120px;"></div> <!-- Spacer -->
+        </div>
+    </header>
+
+    <main class="order-page-wrapper">
+        <div class="order-layout-grid" style="grid-template-columns: 1.4fr 1fr;">
+            
+            <!-- Left: Checkout Form Placeholder -->
+            <div class="order-items-card">
+                <h1 class="order-section-title">CHECKOUT DETAILS</h1>
+                
+                <form id="checkout-demo-form" onsubmit="handleDemoCheckout(event)">
+                    <div class="form-group">
+                        <label for="customer-name">Full Name</label>
+                        <input type="text" id="customer-name" placeholder="e.g. John Doe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customer-phone">Phone Number</label>
+                        <input type="tel" id="customer-phone" placeholder="e.g. 0712345678" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dining-option">Order Type</label>
+                        <select id="dining-option" style="width: 100%; padding: 12px; background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); color: var(--color-cream);">
+                            <option value="dine-in">Dine-In (Table Service)</option>
+                            <option value="takeaway">Takeaway Pickup</option>
+                            <option value="delivery">Direct Delivery</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="table-notes">Table Number / Address Notes</label>
+                        <input type="text" id="table-notes" placeholder="e.g. Table 5 or Westlands branch">
+                    </div>
+
+                    <div style="margin-top: 24px; padding: 20px; background: var(--color-dark-surface); border: 1px solid var(--color-border-gold);">
+                        <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); margin-bottom: 8px;">M-PESA PAYMENT INSTRUCTIONS</h4>
+                        <p style="font-size: 0.85rem; color: var(--color-cream); line-height: 1.6;">
+                            • <strong>Till Number:</strong> <span style="color: var(--color-gold); font-weight: bold;">4977556</span><br>
+                            • <strong>Order Hotline:</strong> <span style="color: var(--color-gold); font-weight: bold;">0724 594 204</span>
+                        </p>
+                    </div>
+
+                    <button type="submit" class="btn-proceed-checkout" style="margin-top: 30px;">
+                        CONFIRM & PLACE ORDER (DEMO)
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right: Checkout Order Summary -->
+            <div class="summary-box-card">
+                <h2 class="order-section-title" style="font-size: 1.5rem; margin-bottom: 20px;">FINAL SUMMARY</h2>
+                
+                <div id="checkout-summary-items" style="margin-bottom: 20px; font-size: 0.85rem; color: var(--color-text-muted);">
+                    <!-- Dynamically populated via app.js -->
+                </div>
+
+                <div class="summary-total-row">
+                    <span class="summary-total-label">Total to Pay:</span>
+                    <span class="summary-total-amount" id="checkout-total-amount">0/=</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="app.js?v=20260729_checkout1"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof renderCheckoutPage === 'function') {
+                renderCheckoutPage();
+            }
+        });
+
+        function handleDemoCheckout(e) {
+            e.preventDefault();
+            alert("🎉 Thank you! Your order request has been received (Demo Mode).\n\nPay via Till No: 4977556 or call 0724 594 204 to complete payment.");
+            localStorage.removeItem('ribhouse_selected_cart');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+
+</html>

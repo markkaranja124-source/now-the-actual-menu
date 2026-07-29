@@ -2543,6 +2543,200 @@ img {
     box-shadow: var(--shadow-gold);
 }
 
+/* ==========================================================================
+   SINGLE-COLUMN VERTICAL ORDER PAGE LAYOUT & STICKY SUMMARY (order.html)
+   ========================================================================== */
+
+.order-vertical-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.order-header-box {
+    text-align: center;
+    border-bottom: 1px solid var(--color-border-gold);
+    padding-bottom: 20px;
+}
+
+.order-vertical-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Full-Width Vertical Order Item Row */
+.order-item-row-vertical {
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border-gold);
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    width: 100%;
+    transition: var(--transition-fast);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.order-item-row-vertical:hover {
+    border-color: var(--color-gold-bright);
+    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.15);
+}
+
+.order-item-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+}
+
+.order-dish-badge {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(197, 160, 89, 0.1);
+    border: 1px solid var(--color-border-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.dish-row-img {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+}
+
+.order-dish-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.order-dish-title {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    color: var(--color-cream);
+    letter-spacing: 0.5px;
+}
+
+.order-dish-desc {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+}
+
+.order-dish-price-tag {
+    font-size: 0.85rem;
+    color: var(--color-gold);
+    font-weight: 600;
+}
+
+.order-item-right {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+}
+
+.quantity-controls-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.qty-label {
+    font-size: 0.675rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-text-muted);
+}
+
+.order-subtotal-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    min-width: 100px;
+}
+
+.subtotal-label {
+    font-size: 0.675rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-text-muted);
+}
+
+.order-subtotal-amount {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    color: var(--color-gold);
+    font-weight: bold;
+}
+
+.btn-remove-row {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #EF4444;
+    padding: 8px 14px;
+    font-size: 0.725rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.btn-remove-row:hover {
+    background: #EF4444;
+    color: #FFFFFF;
+}
+
+/* Sticky Bottom Order Summary Box */
+.sticky-bottom-summary {
+    position: sticky;
+    bottom: 20px;
+    z-index: 90;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.9);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+}
+
+.summary-grid-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px dashed var(--color-border-dark);
+}
+
+.summary-stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+}
+
+.summary-stat-item span {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-text-muted);
+}
+
+.summary-stat-item strong {
+    font-size: 1.1rem;
+    color: var(--color-cream);
+}
+
 @media (max-width: 768px) {
     .ai-assistant-widget {
         bottom: 16px;
@@ -2565,5 +2759,19 @@ img {
     .order-layout-grid {
         grid-template-columns: 1fr;
     }
+    .order-item-row-vertical {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    .order-item-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .summary-grid-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
 }
+
 

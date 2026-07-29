@@ -227,7 +227,7 @@ function initMenuAIAssistant() {
                         ${card.desc ? `<p class="ai-dish-desc">${card.desc}</p>` : ''}
                         <div class="ai-card-actions">
                             <button class="btn-select-dish ${isSel ? 'active' : ''}" data-dish-name="${encodedName}" onclick="toggleSelectItem('${encodedData}')">
-                                ${isSel ? '✓ Selected' : '+ Select Item'}
+                                ${isSel ? '✓ Added to Order' : '+ Add to Order'}
                             </button>
                             ${card.targetId ? `<button class="ai-dish-link-btn" onclick="scrollToDishSection('${card.targetId}')">View in Menu &darr;</button>` : ''}
                         </div>
@@ -249,7 +249,6 @@ function initMenuAIAssistant() {
 
     // --- E. KNOWLEDGE BASE & AI MATCHING LOGIC ---
     const KNOWLEDGE = [
-        // Breakfast Combos
         { name: "PANCAKE BREAKFAST", price: "400/=", category: "breakfast", tags: ["pancake", "sweet", "breakfast"], desc: "Tea, 2 pancakes and pan Fried Bacon", targetId: "bk-combos" },
         { name: "MINI BREAKFAST", price: "310/=", category: "breakfast", tags: ["egg", "breakfast", "combo"], desc: "Tea, 2 fried egg, Toast, sausage, Small Glass Of Juice", targetId: "bk-combos" },
         { name: "RIB HOUSE BREAKFAST", price: "300/=", category: "breakfast", tags: ["liver", "chapati", "breakfast"], desc: "Tea, Liver and Chapati", targetId: "bk-combos" },
@@ -264,8 +263,6 @@ function initMenuAIAssistant() {
         { name: "SPECIAL BREAKFAST", price: "220/=", category: "breakfast", tags: ["egg", "toast", "sausage"], desc: "Tea, 1 fried egg, toast and a sausage", targetId: "bk-combos" },
         { name: "RIB HOUSE SPECIAL", price: "310/=", category: "breakfast", tags: ["bacon", "chapati"], desc: "Tea, Bacon/ 2 Sausages and Chapati", targetId: "bk-combos" },
         { name: "BRITISH BREAKFAST", price: "320/=", category: "breakfast", tags: ["liver", "toast"], desc: "Tea, Liver and Toast", targetId: "bk-combos" },
-
-        // Hot Beverages & Barista
         { name: "House Coffee White", price: "150/=", category: "hot-drinks", tags: ["coffee", "drink", "hot"], desc: "Rich brewed hot white coffee", targetId: "bk-hot" },
         { name: "House Coffee Black", price: "100/=", category: "hot-drinks", tags: ["coffee", "drink", "hot"], desc: "Pure black coffee brew", targetId: "bk-hot" },
         { name: "Black Coffee w Lemon", price: "110/=", category: "hot-drinks", tags: ["coffee", "lemon", "hot"], desc: "Black coffee with fresh lemon slice", targetId: "bk-hot" },
@@ -285,24 +282,18 @@ function initMenuAIAssistant() {
         { name: "Honey Cone", price: "50/=", category: "hot-drinks", tags: ["sweet", "snack", "dessert"], desc: "Sweet honey waffle cone treat", targetId: "bk-hot" },
         { name: "Cappuccino (Single)", price: "150/=", category: "hot-drinks", tags: ["coffee", "cappuccino"], desc: "Single shot cappuccino with foam", targetId: "bk-hot" },
         { name: "Espresso (Single)", price: "120/=", category: "hot-drinks", tags: ["coffee", "espresso"], desc: "Single shot concentrated coffee espresso", targetId: "bk-hot" },
-
-        // Cold Drinks & Shakes / Desserts
         { name: "Milkshake (Flavored)", price: "250/=", category: "cold-drinks", tags: ["shake", "milkshake", "dessert", "sweet", "cold"], desc: "Creamy thick milkshake", targetId: "bk-cold" },
         { name: "Lemonade (Flavor)", price: "100/=", category: "cold-drinks", tags: ["lemonade", "cold", "drink"], desc: "Chilled flavored lemonade", targetId: "bk-cold" },
         { name: "Oreo Shake", price: "300/=", category: "cold-drinks", tags: ["oreo", "shake", "dessert", "chocolate", "sweet"], desc: "Rich crushed Oreo chocolate shake", targetId: "bk-cold" },
         { name: "Smoothies (Tropical)", price: "200/=", category: "cold-drinks", tags: ["smoothie", "fruit", "cold"], desc: "Fresh blended tropical fruits", targetId: "bk-cold" },
         { name: "Ice Cream Scoops", price: "150/=", category: "cold-drinks", tags: ["ice cream", "dessert", "cold", "sweet"], desc: "Chilled gourmet ice cream", targetId: "bk-cold" },
         { name: "Iced Coffee", price: "180/=", category: "cold-drinks", tags: ["coffee", "cold", "iced"], desc: "Cold brewed espresso over ice", targetId: "bk-cold" },
-
-        // Main Dishes & Spicy / Vegetarian
         { name: "MATUMBO FRY", price: "From 400/=", category: "main", tags: ["matumbo", "spicy", "fry"], desc: "Ugali/Chapati (400/=), Rice/Mukimo (410/=), Pilau (500/=), Chips (540/=)", targetId: "main-dishes-grid" },
         { name: "BEEF STEW / FRY", price: "From 440/=", category: "main", tags: ["beef", "stew", "fry"], desc: "Ugali/Chapati (440/=), Rice/Mukimo (450/=), Pilau (550/=), Chips (580/=)", targetId: "main-dishes-grid" },
         { name: "GOAT STEW / FRY", price: "From 490/=", category: "main", tags: ["goat", "stew", "fry", "spicy"], desc: "Ugali/Chapati (490/=), Rice/Mukimo (500/=), Pilau (600/=), Chips (630/=)", targetId: "main-dishes-grid" },
         { name: "BEEF STEAK GRILLED", price: "From 580/=", category: "main", tags: ["beef", "steak", "grilled", "spicy"], desc: "Tender wood-fired beef steak served with side of choice", targetId: "main-dishes-grid" },
         { name: "CHICKEN WET / DRY FRY", price: "From 500/=", category: "main", tags: ["chicken", "fry", "spicy"], desc: "Pan fried chicken with your choice of side dish", targetId: "main-dishes-grid" },
         { name: "TILAPIA FRY WHOLE", price: "From 570/=", category: "main", tags: ["fish", "tilapia", "fry"], desc: "Crispy whole fried tilapia with side", targetId: "main-dishes-grid" },
-
-        // Choma & Platters
         { name: "CHOMA BEEF (1 KG)", price: "1100/=", category: "choma", tags: ["beef", "choma", "grilled", "popular"], desc: "Slow roasted tender beef choma per KG", targetId: "meat-portions-grid" },
         { name: "CHOMA GOAT (1 KG)", price: "1200/=", category: "choma", tags: ["goat", "choma", "grilled", "popular", "spicy"], desc: "Juicy grilled goat choma per KG", targetId: "meat-portions-grid" },
         { name: "CHEMSHA GOAT (1 KG)", price: "1300/=", category: "choma", tags: ["goat", "chemsha", "soup"], desc: "Boiled flavorful goat stew/soup per KG", targetId: "meat-portions-grid" },
@@ -313,15 +304,13 @@ function initMenuAIAssistant() {
     function generateAIReply(rawQuery) {
         const q = rawQuery.toLowerCase().trim();
 
-        // 1. Greetings
         if (q.match(/^(hi|hello|hey|habari|mambo|sasa|good morning|good afternoon)/)) {
             return {
-                text: "Habari! 😊 I am ready to help you choose the best meal. Ask me about **chicken dishes**, **spicy foods**, **vegetarian meals**, **desserts**, **drinks**, or **budget meals**!",
+                text: "Habari! 😊 I am ready to help you choose the best meal. Ask me about **everything under a budget**, **chicken dishes**, **spicy foods**, **vegetarian meals**, **desserts**, or **drinks**!",
                 cards: []
             };
         }
 
-        // 2. Till Number & Contact
         if (q.includes("till") || q.includes("mpesa") || q.includes("pay") || q.includes("phone") || q.includes("hotline") || q.includes("order") || q.includes("contact")) {
             return {
                 text: "💳 **Payment & Order Hotline Information**:\n\n• **M-Pesa Till Number:** 4977556\n• **Direct Order Hotline:** 0724 594 204\n• **Email:** ribhouseke@gmail.com\n\nAll meals are cooked fresh daily!",
@@ -329,16 +318,73 @@ function initMenuAIAssistant() {
             };
         }
 
-        // 3. Spicy Foods query
+        const numberMatches = q.match(/\d+/g);
+        const isBudgetQuery = q.includes("budget") || q.includes("under") || q.includes("below") || q.includes("cheap") || q.includes("less than") || q.includes("between") || q.includes("buy with") || q.includes("shilling") || q.includes("ksh") || q.includes("kes") || q.includes("price") || numberMatches;
+
+        if (isBudgetQuery && numberMatches && numberMatches.length > 0) {
+            const numbers = numberMatches.map(n => parseInt(n, 10)).filter(n => n >= 30 && n <= 10000);
+            
+            if (numbers.length > 0) {
+                let matches = [];
+                let headerText = '';
+
+                if (q.includes("between") && numbers.length >= 2) {
+                    const minP = Math.min(numbers[0], numbers[1]);
+                    const maxP = Math.max(numbers[0], numbers[1]);
+                    
+                    matches = KNOWLEDGE.filter(item => {
+                        const priceNum = parseInt(item.price.replace(/[^0-9]/g, ''), 10);
+                        return priceNum && priceNum >= minP && priceNum <= maxP;
+                    });
+                    
+                    headerText = `Found **${matches.length}** meals between **KSh ${minP}** and **KSh ${maxP}**:`;
+                } else {
+                    const maxBudget = numbers[0];
+                    matches = KNOWLEDGE.filter(item => {
+                        const priceNum = parseInt(item.price.replace(/[^0-9]/g, ''), 10);
+                        return priceNum && priceNum <= maxBudget;
+                    });
+
+                    headerText = `Found **${matches.length}** meals under **KSh ${maxBudget}**:`;
+                }
+
+                matches.sort((a, b) => {
+                    const numA = parseInt(a.price.replace(/[^0-9]/g, ''), 10) || 0;
+                    const numB = parseInt(b.price.replace(/[^0-9]/g, ''), 10) || 0;
+                    return numA - numB;
+                });
+
+                if (matches.length > 0) {
+                    return {
+                        text: headerText,
+                        cards: matches
+                    };
+                } else {
+                    const higherMatches = KNOWLEDGE.map(item => ({
+                        item,
+                        num: parseInt(item.price.replace(/[^0-9]/g, ''), 10) || 0
+                    }))
+                    .filter(x => x.num > numbers[0])
+                    .sort((a, b) => a.num - b.num)
+                    .slice(0, 5)
+                    .map(x => x.item);
+
+                    return {
+                        text: `No meals were found within your budget. Here are the closest options:`,
+                        cards: higherMatches
+                    };
+                }
+            }
+        }
+
         if (q.includes("spicy") || q.includes("chili") || q.includes("pepper") || q.includes("hot food")) {
             const spicyMatches = KNOWLEDGE.filter(item => item.tags && item.tags.includes("spicy"));
             return {
-                text: "🔥 **Recommended Spicy & Wood-Fired Specialties:**\nThese dishes feature authentic Kenya roast spices and rich pan frying:",
-                cards: spicyMatches.slice(0, 4)
+                text: `Found **${spicyMatches.length}** Spicy & Wood-Fired Specialties:`,
+                cards: spicyMatches
             };
         }
 
-        // 4. Vegetarian / Veges query
         if (q.includes("veg") || q.includes("vegetarian") || q.includes("greens") || q.includes("spinach")) {
             const vegMatches = KNOWLEDGE.filter(item => 
                 (item.tags && item.tags.includes("vegetarian")) || 
@@ -346,48 +392,19 @@ function initMenuAIAssistant() {
                 item.desc.toLowerCase().includes("veges")
             );
             return {
-                text: "🥗 **Vegetarian & Healthy Traditional Options:**",
-                cards: vegMatches.slice(0, 4)
+                text: `Found **${vegMatches.length}** Vegetarian & Healthy Options:`,
+                cards: vegMatches
             };
         }
 
-        // 5. Desserts & Sweet Treats query
         if (q.includes("dessert") || q.includes("sweet") || q.includes("ice cream") || q.includes("oreo") || q.includes("shake")) {
             const dessertMatches = KNOWLEDGE.filter(item => item.tags && item.tags.includes("dessert"));
             return {
-                text: "🍨 **Delicious Desserts & Chilled Shakes:**",
+                text: `Found **${dessertMatches.length}** Desserts & Chilled Shakes:`,
                 cards: dessertMatches
             };
         }
 
-        // 6. Dynamic Price & Budget Filter (handles "150", "under 400", "budget 500", etc.)
-        const numberMatch = q.match(/(\d+)/);
-        const isBudgetQuery = q.includes("budget") || q.includes("under") || q.includes("cheap") || q.includes("less than") || q.includes("shilling") || q.includes("ksh") || q.includes("kes") || q.includes("price") || numberMatch;
-
-        if (isBudgetQuery && numberMatch) {
-            const userBudget = parseInt(numberMatch[1], 10);
-            
-            if (userBudget >= 30 && userBudget <= 5000) {
-                const matches = KNOWLEDGE.filter(item => {
-                    const priceNum = parseInt(item.price.replace(/[^0-9]/g, ''), 10);
-                    return priceNum && priceNum <= userBudget;
-                }).slice(0, 5);
-
-                if (matches.length > 0) {
-                    return {
-                        text: `Here are top recommendations for your budget of **${userBudget}/=** or less:`,
-                        cards: matches
-                    };
-                } else {
-                    return {
-                        text: `Sorry, we don't have items under **${userBudget}/=**. Our lowest priced item is **50/=** (Honey Cone) followed by **70/=** (Lemon Water) and **100/=** (House Coffee Black, Lemon Tea, Hot Milk).`,
-                        cards: KNOWLEDGE.filter(i => parseInt(i.price.replace(/[^0-9]/g, ''), 10) <= 150).slice(0, 3)
-                    };
-                }
-            }
-        }
-
-        // 7. Group / Family Platter queries
         if (q.includes("4 people") || q.includes("group") || q.includes("family") || q.includes("platter") || q.includes("many people")) {
             const platter = KNOWLEDGE.find(item => item.name.includes("PLATTER FOR 4"));
             return {
@@ -396,87 +413,78 @@ function initMenuAIAssistant() {
             };
         }
 
-        // 8. Chicken dishes
         if (q.includes("chicken") || q.includes("kienyeji") || q.includes("poultry")) {
             const chickenMatches = KNOWLEDGE.filter(item => item.name.toLowerCase().includes("chicken"));
             return {
-                text: "🍗 **Signature Chicken Meals:**",
+                text: `Found **${chickenMatches.length}** Signature Chicken Meals:`,
                 cards: chickenMatches
             };
         }
 
-        // 9. Beef dishes
         if (q.includes("beef") || q.includes("steak") || q.includes("burger")) {
             const beefMatches = KNOWLEDGE.filter(item => item.name.toLowerCase().includes("beef"));
             return {
-                text: "🥩 **Juicy Grilled Beef & Steaks:**",
-                cards: beefMatches.slice(0, 4)
+                text: `Found **${beefMatches.length}** Grilled Beef & Steak Options:`,
+                cards: beefMatches
             };
         }
 
-        // 10. Goat Meat dishes
         if (q.includes("goat") || q.includes("mbuzi")) {
             const goatMatches = KNOWLEDGE.filter(item => item.name.toLowerCase().includes("goat"));
             return {
-                text: "🐐 **Our Signature Goat Meat Dishes:**",
+                text: `Found **${goatMatches.length}** Signature Goat Meat Dishes:`,
                 cards: goatMatches
             };
         }
 
-        // 11. Fish / Tilapia dishes
         if (q.includes("fish") || q.includes("tilapia") || q.includes("seafood")) {
             const fishMatches = KNOWLEDGE.filter(item => item.name.toLowerCase().includes("tilapia") || (item.tags && item.tags.includes("fish")));
             return {
-                text: "🐟 **Fresh Whole Tilapia Dish:**",
+                text: `Found **${fishMatches.length}** Fresh Whole Tilapia Dish:`,
                 cards: fishMatches
             };
         }
 
-        // 12. Shakes & Drinks
         if (q.includes("drink") || q.includes("coffee") || q.includes("tea") || q.includes("dawa") || q.includes("beverage")) {
-            const drinkMatches = KNOWLEDGE.filter(item => item.category === "hot-drinks" || item.category === "cold-drinks").slice(0, 4);
+            const drinkMatches = KNOWLEDGE.filter(item => item.category === "hot-drinks" || item.category === "cold-drinks");
             return {
-                text: "🥤 **Barista Coffee, Brewed Teas & Shakes:**",
+                text: `Found **${drinkMatches.length}** Barista Coffee, Teas & Shakes:`,
                 cards: drinkMatches
             };
         }
 
-        // 13. Breakfast & Combos
         if (q.includes("breakfast") || q.includes("morning") || q.includes("pancake") || q.includes("combo")) {
-            const bMatches = KNOWLEDGE.filter(item => item.category === "breakfast").slice(0, 4);
+            const bMatches = KNOWLEDGE.filter(item => item.category === "breakfast");
             return {
-                text: "☕ **Top Breakfast Combos & Specials:**\nAll breakfasts are served hot & fresh with tea!",
+                text: `Found **${bMatches.length}** Breakfast Combos & Specials:`,
                 cards: bMatches
             };
         }
 
-        // Default Smart Search across knowledge base tags & descriptions
         const generalMatches = KNOWLEDGE.filter(item => 
             item.name.toLowerCase().includes(q) || 
             item.desc.toLowerCase().includes(q) ||
             (item.tags && item.tags.some(t => q.includes(t)))
-        ).slice(0, 4);
+        );
 
         if (generalMatches.length > 0) {
             return {
-                text: `Here are delicious recommendations matching "**${rawQuery}**":`,
+                text: `Found **${generalMatches.length}** recommendations matching "**${rawQuery}**":`,
                 cards: generalMatches
             };
         }
 
-        // Fallback response with popular choices
         return {
-            text: `I couldn't find an exact match for "${rawQuery}", but here are some of our customer favorites:`,
+            text: `I couldn't find an exact match for "${rawQuery}", but here are popular recommendations:`,
             cards: [
-                KNOWLEDGE[0], // Pancake Breakfast
-                KNOWLEDGE[KNOWLEDGE.length - 1], // Chicken Platter for 4
+                KNOWLEDGE[0],
+                KNOWLEDGE[KNOWLEDGE.length - 1],
                 KNOWLEDGE.find(i => i.name.includes("BEEF STEAK"))
             ].filter(Boolean)
         };
     }
 }
 
-// Global helper function for "View in Menu" buttons inside chat
 window.scrollToDishSection = function(sectionId) {
     const targetEl = document.getElementById(sectionId);
     if (targetEl) {
@@ -490,11 +498,12 @@ window.scrollToDishSection = function(sectionId) {
 };
 
 // ==========================================================================
-// 4. "YOUR SELECTED ORDER" PAGE LOGIC (order.html)
+// 4. "YOUR SELECTED ORDER" PAGE LOGIC (order.html) - SINGLE VERTICAL COLUMN
 // ==========================================================================
 function renderSelectedOrderPage() {
     const listContainer = document.getElementById('selected-order-items-list');
     const itemsCountEl = document.getElementById('summary-items-count');
+    const totalQtyEl = document.getElementById('summary-total-qty');
     const totalAmountEl = document.getElementById('summary-total-amount');
     const checkoutBtn = document.getElementById('btn-proceed-checkout');
 
@@ -504,14 +513,15 @@ function renderSelectedOrderPage() {
 
     if (cart.length === 0) {
         listContainer.innerHTML = `
-            <div style="text-align: center; padding: 40px 0;">
-                <p style="font-size: 1.1rem; color: var(--color-cream); margin-bottom: 12px;">Your selection is currently empty!</p>
-                <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 24px;">Use our AI Dish Helper or browse the menu to select food items.</p>
-                <a href="index.html" class="btn-continue-order" style="display: inline-block;">&larr; Browse Full Menu</a>
+            <div style="text-align: center; padding: 60px 20px;">
+                <p style="font-size: 1.2rem; color: var(--color-cream); margin-bottom: 12px;">Your order selection is currently empty!</p>
+                <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 24px;">Use our AI Dish Helper or browse the menu to add delicious meals.</p>
+                <a href="index.html" class="btn-continue-order" style="display: inline-block;">&larr; Return to Menu</a>
             </div>
         `;
-        if (itemsCountEl) itemsCountEl.textContent = "0 Items";
-        if (totalAmountEl) totalAmountEl.textContent = "0/=";
+        if (itemsCountEl) itemsCountEl.textContent = "0 Dishes";
+        if (totalQtyEl) totalQtyEl.textContent = "0 Items";
+        if (totalAmountEl) totalAmountEl.textContent = "KSh 0/=";
         if (checkoutBtn) {
             checkoutBtn.style.opacity = '0.5';
             checkoutBtn.style.pointerEvents = 'none';
@@ -525,41 +535,56 @@ function renderSelectedOrderPage() {
     }
 
     let html = '';
-    let totalItems = 0;
+    let totalDishes = cart.length;
+    let totalQuantity = 0;
     let totalPrice = 0;
 
     cart.forEach(item => {
         const itemSubtotal = item.numericPrice * item.qty;
-        totalItems += item.qty;
+        totalQuantity += item.qty;
         totalPrice += itemSubtotal;
 
         html += `
-            <div class="order-item-row" data-id="${item.id}">
-                <div class="order-item-details" style="flex: 1;">
-                    <h4>${item.name}</h4>
-                    <p>${item.desc || 'Freshly prepared'}</p>
-                    <span class="order-item-price">${item.price} each</span>
+            <div class="order-item-row-vertical" data-id="${item.id}">
+                <div class="order-item-left">
+                    <div class="order-dish-badge">
+                        <img src="logo.png" alt="Dish Emblem" class="dish-row-img">
+                    </div>
+                    <div class="order-dish-info">
+                        <h3 class="order-dish-title">${item.name}</h3>
+                        ${item.desc ? `<p class="order-dish-desc">${item.desc}</p>` : ''}
+                        <span class="order-dish-price-tag">Price: KSh ${item.price}</span>
+                    </div>
                 </div>
 
-                <div class="quantity-controls">
-                    <button class="btn-qty" onclick="changeCartItemQty('${item.id}', -1)">&minus;</button>
-                    <span class="qty-number">${item.qty}</span>
-                    <button class="btn-qty" onclick="changeCartItemQty('${item.id}', 1)">&plus;</button>
-                </div>
+                <div class="order-item-right">
+                    <div class="quantity-controls-box">
+                        <span class="qty-label">Quantity:</span>
+                        <div class="quantity-controls">
+                            <button class="btn-qty" onclick="changeCartItemQty('${item.id}', -1)">&minus;</button>
+                            <span class="qty-number">${item.qty}</span>
+                            <button class="btn-qty" onclick="changeCartItemQty('${item.id}', 1)">&plus;</button>
+                        </div>
+                    </div>
 
-                <div style="text-align: right; min-width: 80px;">
-                    <span class="order-item-price">${itemSubtotal}/=</span>
-                </div>
+                    <div class="order-subtotal-box">
+                        <span class="subtotal-label">Subtotal:</span>
+                        <span class="order-subtotal-amount">KSh ${itemSubtotal}/=</span>
+                    </div>
 
-                <button class="btn-remove-item" onclick="removeCartItem('${item.id}')" title="Remove item">&times;</button>
+                    <button class="btn-remove-row" onclick="removeCartItem('${item.id}')">
+                        🗑 Remove Item
+                    </button>
+                </div>
             </div>
         `;
     });
 
     listContainer.innerHTML = html;
 
-    if (itemsCountEl) itemsCountEl.textContent = `${totalItems} ${totalItems === 1 ? 'Item' : 'Items'}`;
-    if (totalAmountEl) totalAmountEl.textContent = `${totalPrice}/=`;
+    if (itemsCountEl) itemsCountEl.textContent = `${totalDishes} ${totalDishes === 1 ? 'Dish' : 'Dishes'}`;
+    if (totalQtyEl) totalQtyEl.textContent = `${totalQuantity} ${totalQuantity === 1 ? 'Item' : 'Items'}`;
+    if (totalAmountEl) totalAmountEl.textContent = `KSh ${totalPrice}/=`;
 }
 
 // Global Quantity & Remove Handlers for order.html
@@ -596,7 +621,7 @@ function renderCheckoutPage() {
 
     if (cart.length === 0) {
         summaryItemsEl.innerHTML = `<p style="color: var(--color-text-muted);">No items selected. <a href="index.html" class="text-gold">Return to Menu</a></p>`;
-        if (totalAmountEl) totalAmountEl.textContent = "0/=";
+        if (totalAmountEl) totalAmountEl.textContent = "KSh 0/=";
         return;
     }
 
@@ -609,13 +634,11 @@ function renderCheckoutPage() {
         html += `
             <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
                 <span>${item.qty}x ${item.name}</span>
-                <strong style="color: var(--color-cream);">${itemSubtotal}/=</strong>
+                <strong style="color: var(--color-cream);">KSh ${itemSubtotal}/=</strong>
             </div>
         `;
     });
 
     summaryItemsEl.innerHTML = html;
-    if (totalAmountEl) totalAmountEl.textContent = `${totalPrice}/=`;
+    if (totalAmountEl) totalAmountEl.textContent = `KSh ${totalPrice}/=`;
 }
-
-

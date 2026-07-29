@@ -15,7 +15,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="logo.png">
 
-    <link rel="stylesheet" href="style.css?v=20260729_order1">
+    <link rel="stylesheet" href="style.css?v=20260729_order2">
 </head>
 
 <body>
@@ -37,42 +37,48 @@
     </header>
 
     <main class="order-page-wrapper">
-        <div class="order-layout-grid">
+        <div class="order-vertical-container">
             
-            <!-- Left: Selected Food Items List -->
-            <div class="order-items-card">
+            <!-- Main Title Header -->
+            <div class="order-header-box">
                 <h1 class="order-section-title">YOUR SELECTED ORDER</h1>
-                
-                <div id="selected-order-items-list">
-                    <!-- Dynamically populated via app.js -->
-                    <p style="color: var(--color-text-muted); font-size: 0.9rem; padding: 20px 0;">
-                        Loading your selected dishes...
-                    </p>
-                </div>
+                <p style="color: var(--color-text-muted); font-size: 0.9rem;">
+                    Review your selected dishes below. Each item appears in a clean vertical row.
+                </p>
             </div>
 
-            <!-- Right: Order Summary & Checkout -->
-            <div class="summary-box-card">
-                <h2 class="order-section-title" style="font-size: 1.5rem; margin-bottom: 20px;">ORDER SUMMARY</h2>
+            <!-- Single Vertical Stacked Food Items List -->
+            <div id="selected-order-items-list" class="order-vertical-list">
+                <!-- Dynamically populated via app.js -->
+                <p style="color: var(--color-text-muted); font-size: 0.9rem; padding: 20px 0; text-align: center;">
+                    Loading your selected dishes...
+                </p>
+            </div>
+
+            <!-- Sticky / Bottom Order Summary Card -->
+            <div class="summary-box-card sticky-bottom-summary">
+                <h2 class="order-section-title" style="font-size: 1.5rem; margin-bottom: 20px; text-align: center;">ORDER SUMMARY</h2>
                 
-                <div class="summary-row">
-                    <span>Selected Items:</span>
-                    <strong id="summary-items-count" style="color: var(--color-cream);">0 Items</strong>
+                <div class="summary-grid-row">
+                    <div class="summary-stat-item">
+                        <span>Selected Dishes</span>
+                        <strong id="summary-items-count">0 Dishes</strong>
+                    </div>
+
+                    <div class="summary-stat-item">
+                        <span>Total Quantity</span>
+                        <strong id="summary-total-qty">0 Items</strong>
+                    </div>
+
+                    <div class="summary-stat-item">
+                        <span>Estimated Prep Time</span>
+                        <strong style="color: var(--color-gold);">15 &ndash; 25 mins</strong>
+                    </div>
                 </div>
 
-                <div class="summary-row">
-                    <span>Estimated Prep Time:</span>
-                    <strong style="color: var(--color-gold);">15 &ndash; 25 mins</strong>
-                </div>
-
-                <div class="summary-row">
-                    <span>Dining / Delivery Option:</span>
-                    <strong style="color: var(--color-cream);">Dine-In / Takeaway</strong>
-                </div>
-
-                <div class="summary-total-row">
-                    <span class="summary-total-label">Total Amount:</span>
-                    <span class="summary-total-amount" id="summary-total-amount">0/=</span>
+                <div class="summary-total-row" style="margin-top: 20px; padding-top: 20px;">
+                    <span class="summary-total-label" style="font-size: 1.2rem;">TOTAL AMOUNT:</span>
+                    <span class="summary-total-amount" id="summary-total-amount" style="font-size: 2.2rem;">KSh 0/=</span>
                 </div>
 
                 <a href="checkout.html" class="btn-proceed-checkout" id="btn-proceed-checkout">
@@ -83,9 +89,8 @@
         </div>
     </main>
 
-    <script src="app.js?v=20260729_order1"></script>
+    <script src="app.js?v=20260729_order2"></script>
     <script>
-        // Init Order Page logic on load
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof renderSelectedOrderPage === 'function') {
                 renderSelectedOrderPage();

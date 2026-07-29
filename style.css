@@ -112,10 +112,10 @@ img {
 /* --------------------------------------------------------------------------
    2. ANNOUNCEMENT BAR
    -------------------------------------------------------------------------- */
-.top-left-open-daily {
+.top-right-open-daily {
     position: absolute;
     top: 24px;
-    left: 36px;
+    right: 36px;
     z-index: 1002;
     display: inline-flex;
     align-items: center;

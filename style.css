@@ -2378,6 +2378,44 @@ img {
     color: var(--color-cream);
 }
 
+/* Navigation Buttons for Header Bar */
+.nav-link-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    background: rgba(197, 160, 89, 0.12);
+    border: 1px solid var(--color-border-gold);
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.nav-link-btn:hover,
+.nav-link-btn.active {
+    background: var(--color-gold);
+    color: #08080A;
+    box-shadow: 0 0 15px rgba(229, 193, 88, 0.4);
+    transform: translateY(-1px);
+}
+
+.nav-link-btn.btn-coming-soon {
+    background: rgba(239, 127, 0, 0.15);
+    border-color: rgba(255, 127, 0, 0.5);
+    color: #FF7F00;
+}
+
+.nav-link-btn.btn-coming-soon:hover,
+.nav-link-btn.btn-coming-soon.active {
+    background: #FF7F00;
+    color: #FFFFFF;
+    box-shadow: 0 0 15px rgba(255, 127, 0, 0.5);
+}
+
 .order-page-wrapper {
     max-width: 1100px;
     margin: 0 auto;

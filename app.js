@@ -662,3 +662,95 @@ function renderCheckoutPage() {
     summaryItemsEl.innerHTML = html;
     if (totalAmountEl) totalAmountEl.textContent = `KSh ${totalPrice}/=`;
 }
+
+// ==========================================================================
+// 6. "ORDER SUMMARY" OVERVIEW PAGE LOGIC (order-summary.html)
+// ==========================================================================
+function renderOrderSummaryPage() {
+    const listContainer = document.getElementById('summary-items-overview-list');
+    const dishesCountEl = document.getElementById('summary-overview-dishes-count');
+    const totalQtyEl = document.getElementById('summary-overview-total-qty');
+    const grandTotalEl = document.getElementById('summary-overview-grand-total');
+
+    if (!listContainer) return;
+
+    const cart = getSelectedCart();
+
+    if (cart.length === 0) {
+        listContainer.innerHTML = `
+            <div style="text-align: center; padding: 60px 20px;">
+                <p style="font-size: 1.25rem; color: var(--color-cream); margin-bottom: 12px;">Your order is currently empty.</p>
+                <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 24px;">Explore our menu and add your favorite meals to view your order summary.</p>
+                <a href="index.html" class="btn-hero-secondary" style="display: inline-flex; align-items: center; justify-content: center; padding: 14px 28px;">
+                    <span>Browse Menu</span>
+                </a>
+            </div>
+        `;
+        if (dishesCountEl) dishesCountEl.textContent = "0 Dishes";
+        if (totalQtyEl) totalQtyEl.textContent = "0 Items";
+        if (grandTotalEl) grandTotalEl.textContent = "KSh 0/=";
+        return;
+    }
+
+    let html = '';
+    let totalDishes = cart.length;
+    let totalQuantity = 0;
+    let totalPrice = 0;
+
+    cart.forEach(item => {
+        const itemSubtotal = item.numericPrice * item.qty;
+        totalQuantity += item.qty;
+        totalPrice += itemSubtotal;
+
+        // Determine Dish Artwork Thumbnail & Category Badge
+        const nameLower = item.name.toLowerCase();
+        let dishImg = 'logo.png';
+        let categoryBadge = '🥩 Main Dish';
+
+        if (nameLower.includes('choma') || nameLower.includes('beef') || nameLower.includes('goat') || nameLower.includes('steak') || nameLower.includes('platter') || nameLower.includes('tumbukiza') || nameLower.includes('chemsha')) {
+            dishImg = 'order_dish_choma.png';
+            categoryBadge = '🔥 Wood-Fired Choma';
+        } else if (nameLower.includes('breakfast') || nameLower.includes('pancake') || nameLower.includes('egg') || nameLower.includes('toast') || nameLower.includes('bite') || nameLower.includes('samosa') || nameLower.includes('combo')) {
+            dishImg = 'order_dish_breakfast.png';
+            categoryBadge = '🥞 Gourmet Breakfast';
+        } else if (nameLower.includes('coffee') || nameLower.includes('tea') || nameLower.includes('shake') || nameLower.includes('drink') || nameLower.includes('dawa') || nameLower.includes('lemonade') || nameLower.includes('smoothie')) {
+            dishImg = 'logo.png';
+            categoryBadge = '🥤 Barista Brew & Shake';
+        } else if (nameLower.includes('tilapia') || nameLower.includes('fish')) {
+            dishImg = 'order_dish_choma.png';
+            categoryBadge = '🐟 Fresh Tilapia';
+        }
+
+        html += `
+            <div class="order-item-row-luxury" style="pointer-events: none;">
+                <div class="order-item-main-info">
+                    <div class="order-dish-image-frame">
+                        <img src="${dishImg}" alt="${item.name}" class="dish-row-thumbnail">
+                        <span class="order-badge-pill">${categoryBadge}</span>
+                    </div>
+                    <div class="order-dish-text-block">
+                        <h3 class="order-dish-title">${item.name}</h3>
+                        <div style="font-size: 0.85rem; color: var(--color-text-muted);">
+                            Quantity Selected: <strong style="color: var(--color-gold); font-size: 0.95rem;">${item.qty}</strong>
+                        </div>
+                        <div class="order-dish-price-tag">Unit Price: <strong>KSh ${item.price}</strong></div>
+                    </div>
+                </div>
+
+                <div class="order-item-actions-block">
+                    <div class="order-subtotal-box" style="align-items: flex-end;">
+                        <span class="subtotal-label">Subtotal</span>
+                        <span class="order-subtotal-amount" style="font-size: 1.5rem;">KSh ${itemSubtotal.toLocaleString()}/=</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    listContainer.innerHTML = html;
+
+    if (dishesCountEl) dishesCountEl.textContent = `${totalDishes} ${totalDishes === 1 ? 'Dish' : 'Dishes'}`;
+    if (totalQtyEl) totalQtyEl.textContent = `${totalQuantity} ${totalQuantity === 1 ? 'Item' : 'Items'}`;
+    if (grandTotalEl) grandTotalEl.textContent = `KSh ${totalPrice.toLocaleString()}/=`;
+}
+

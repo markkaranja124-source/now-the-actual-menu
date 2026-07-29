@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RIB HOUSE | Your Selected Feast</title>
-    <meta name="description" content="Review your selected Rib House wood-fired dishes, adjust quantities, and proceed to checkout.">
+    <title>RIB HOUSE | Order Summary</title>
+    <meta name="description" content="Review your selected Rib House meals before proceeding to order or checkout.">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="logo.png">
 
-    <link rel="stylesheet" href="style.css?v=20260729_order4">
+    <link rel="stylesheet" href="style.css?v=20260729_summary1">
 </head>
 
 <body class="order-page-body">
@@ -33,8 +33,8 @@
             </a>
 
             <div class="nav-right-buttons" style="display: flex; align-items: center; gap: 12px;">
-                <a href="order.html" class="nav-link-btn active">Your Order</a>
-                <a href="order-summary.html" class="nav-link-btn">Order Summary</a>
+                <a href="order.html" class="nav-link-btn">Your Order</a>
+                <a href="order-summary.html" class="nav-link-btn active">Order Summary</a>
                 <a href="checkout.html" class="nav-link-btn btn-coming-soon">Coming Soon</a>
             </div>
         </div>
@@ -53,9 +53,9 @@
         </div>
 
         <div class="order-hero-content">
-            <span class="order-hero-subtitle">Wood-Fired Culinary Experience</span>
-            <h1 class="order-hero-title">YOUR SELECTED FEAST</h1>
-            <p class="order-hero-desc">Every dish crafted fresh with authentic Kenya spices over open flames</p>
+            <span class="order-hero-subtitle">Selection Overview</span>
+            <h1 class="order-hero-title">ORDER SUMMARY</h1>
+            <p class="order-hero-desc">Review your selected meals before proceeding</p>
         </div>
     </section>
 
@@ -65,61 +65,61 @@
 
             <!-- Section Label Banner -->
             <div class="order-section-badge-bar">
-                <span class="order-section-tag">SELECTED COURSES</span>
+                <span class="order-section-tag">SELECTED MEALS OVERVIEW</span>
                 <div class="order-gold-line"></div>
             </div>
 
-            <!-- Single Vertical Stacked Food Items List -->
-            <div id="selected-order-items-list" class="order-vertical-list">
+            <!-- Single Vertical Stacked Summary Items List -->
+            <div id="summary-items-overview-list" class="order-vertical-list">
                 <!-- Dynamically populated via app.js -->
                 <p style="color: var(--color-text-muted); font-size: 0.95rem; padding: 50px 0; text-align: center;">
-                    Loading your selected dishes...
+                    Loading order overview...
                 </p>
             </div>
 
             <!-- In-Flow Luxury Order Summary Card -->
-            <div class="order-summary-luxury-card" id="order-summary-card">
+            <div class="order-summary-luxury-card" id="summary-overview-card">
                 <div class="summary-card-header">
-                    <span class="summary-top-tag">RESERVATION & ORDER REVIEW</span>
-                    <h2 class="summary-main-heading">ORDER SUMMARY</h2>
-                    <p class="summary-subtext">All prices are inclusive of taxes and freshly prepared to order</p>
+                    <span class="summary-top-tag">ORDER OVERVIEW & TOTALS</span>
+                    <h2 class="summary-main-heading">TOTALS SUMMARY</h2>
+                    <p class="summary-subtext">Complete summary of your current meal selections</p>
                 </div>
 
                 <div class="summary-stats-grid">
                     <div class="summary-stat-card">
                         <span class="stat-card-label">Selected Dishes</span>
-                        <strong class="stat-card-value" id="summary-items-count">0 Dishes</strong>
+                        <strong class="stat-card-value" id="summary-overview-dishes-count">0 Dishes</strong>
                     </div>
 
                     <div class="summary-stat-card">
                         <span class="stat-card-label">Total Quantity</span>
-                        <strong class="stat-card-value" id="summary-total-qty">0 Items</strong>
+                        <strong class="stat-card-value" id="summary-overview-total-qty">0 Items</strong>
                     </div>
 
                     <div class="summary-stat-card">
-                        <span class="stat-card-label">Estimated Prep Time</span>
-                        <strong class="stat-card-value gold-text">15 &ndash; 25 mins</strong>
+                        <span class="stat-card-label">Grand Total</span>
+                        <strong class="stat-card-value gold-text" id="summary-overview-grand-total">KSh 0/=</strong>
                     </div>
                 </div>
 
-                <div class="summary-total-banner">
-                    <span class="summary-total-title">GRAND TOTAL COST</span>
-                    <span class="summary-grand-total" id="summary-total-amount">KSh 0/=</span>
+                <div style="display: flex; gap: 16px; margin-top: 24px;">
+                    <a href="order.html" class="btn-hero-outline" style="flex: 1; text-align: center; justify-content: center; padding: 16px;">
+                        <span>&larr; Manage Order & Quantities</span>
+                    </a>
+                    <a href="checkout.html" class="btn-checkout-gold-gradient" style="flex: 1; text-align: center;">
+                        <span>Coming Soon &rarr;</span>
+                    </a>
                 </div>
-
-                <a href="checkout.html" class="btn-checkout-gold-gradient" id="btn-proceed-checkout">
-                    <span>COMING SOON &rarr;</span>
-                </a>
             </div>
 
         </div>
     </main>
 
-    <script src="app.js?v=20260729_order4"></script>
+    <script src="app.js?v=20260729_summary1"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            if (typeof renderSelectedOrderPage === 'function') {
-                renderSelectedOrderPage();
+            if (typeof renderOrderSummaryPage === 'function') {
+                renderOrderSummaryPage();
             }
         });
     </script>

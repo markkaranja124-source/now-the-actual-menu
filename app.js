@@ -121,11 +121,28 @@ const MAIN_DISHES_EXPANDED = [
 document.addEventListener('DOMContentLoaded', () => {
     initScrollNavbar();
     initModals();
+    initSectionSlideshows();
 });
 
 // --- 3. NAVBAR SCROLL OBSERVER ---
 function initScrollNavbar() {
     // Navbar moves up naturally with page scroll
+}
+
+// --- 3B. SECTION BACKGROUND SLIDESHOWS (KEN BURNS EFFECT) ---
+function initSectionSlideshows() {
+    const containers = document.querySelectorAll('.bg-slideshow-container');
+    containers.forEach(container => {
+        const slides = container.querySelectorAll('.bg-slide');
+        if (slides.length <= 1) return;
+
+        let currentIndex = 0;
+        setInterval(() => {
+            slides[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % slides.length;
+            slides[currentIndex].classList.add('active');
+        }, 5500);
+    });
 }
 
 // --- 4. DYNAMIC PRICE SELECTOR FOR MAIN DISHES ---

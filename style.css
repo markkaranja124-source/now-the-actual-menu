@@ -613,12 +613,25 @@ img {
    5. METRICS & HERITAGE BAR
    -------------------------------------------------------------------------- */
 .metrics-bar-section {
-    background: var(--color-dark-surface);
+    background: linear-gradient(180deg, rgba(17, 17, 20, 0.95) 0%, rgba(14, 14, 17, 0.65) 60%, rgba(8, 8, 10, 0) 100%);
     border-top: 1px solid var(--color-border-gold);
-    border-bottom: 1px solid var(--color-border-dark);
-    padding: 32px 24px;
+    border-bottom: none;
+    padding: 36px 24px 50px 24px;
     position: relative;
     z-index: 3;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.metrics-bar-section::after {
+    content: '';
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(180deg, rgba(8, 8, 10, 0.4) 0%, var(--color-black) 100%);
+    pointer-events: none;
 }
 
 .metrics-container {

@@ -2754,8 +2754,368 @@ img {
 }
 
 /* ==========================================================================
-   ARTISTIC HERO BANNER & CULINARY THUMBNAILS FOR order.html
+   19. LUXURY STEAKHOUSE DESIGN SYSTEM FOR order.html
    ========================================================================== */
+
+.order-page-body {
+    background: linear-gradient(180deg, #08080A 0%, #121014 30%, #161218 60%, #08080A 100%);
+    min-height: 100vh;
+    color: var(--color-text-main);
+}
+
+.order-luxury-wrapper {
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 50px 24px 100px 24px;
+}
+
+.order-section-badge-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.order-section-tag {
+    font-size: 0.725rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    text-shadow: 0 0 10px rgba(197, 160, 89, 0.4);
+    white-space: nowrap;
+}
+
+.order-gold-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-border-gold) 0%, transparent 100%);
+}
+
+/* Luxury Food Item Card */
+.order-item-row-luxury {
+    background: linear-gradient(135deg, rgba(26, 22, 30, 0.65) 0%, rgba(14, 12, 18, 0.8) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    border-radius: 16px;
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    width: 100%;
+    margin-bottom: 20px;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.order-item-row-luxury:hover {
+    background: linear-gradient(135deg, rgba(34, 28, 40, 0.8) 0%, rgba(18, 15, 24, 0.9) 100%);
+    border-color: var(--color-gold-bright);
+    box-shadow: 0 16px 45px rgba(197, 160, 89, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-4px) scale(1.005);
+}
+
+.order-item-main-info {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex: 1;
+}
+
+.order-dish-image-frame {
+    width: 90px;
+    height: 90px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--color-border-gold);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+    flex-shrink: 0;
+    position: relative;
+    background: #0E0D12;
+}
+
+.dish-row-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.order-item-row-luxury:hover .dish-row-thumbnail {
+    transform: scale(1.08);
+}
+
+.order-dish-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.order-dish-title {
+    font-family: var(--font-serif);
+    font-size: 1.45rem;
+    color: var(--color-cream);
+    letter-spacing: 0.5px;
+}
+
+.order-dish-desc {
+    font-size: 0.825rem;
+    color: var(--color-text-muted);
+    line-height: 1.45;
+}
+
+.order-dish-price-tag {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+.order-dish-price-tag strong {
+    color: var(--color-gold);
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+}
+
+/* Actions & Quantity Controls Block */
+.order-item-actions-block {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.quantity-controls-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(8, 8, 10, 0.8);
+    border: 1px solid rgba(197, 160, 89, 0.35);
+    padding: 6px 14px;
+    border-radius: 30px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.qty-pill-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+.btn-qty-round {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(197, 160, 89, 0.15);
+    border: 1px solid var(--color-gold);
+    color: var(--color-gold);
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-qty-round:hover {
+    background: var(--color-gold);
+    color: var(--color-black);
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(229, 193, 88, 0.5);
+}
+
+.btn-remove-pill {
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    color: #F87171;
+    padding: 10px 18px;
+    font-size: 0.725rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-remove-pill:hover {
+    background: #EF4444;
+    color: #FFFFFF;
+    border-color: #EF4444;
+    box-shadow: 0 0 18px rgba(239, 68, 68, 0.5);
+    transform: translateY(-1px);
+}
+
+/* Redesigned In-Flow Order Summary Luxury Card */
+.order-summary-luxury-card {
+    background: linear-gradient(145deg, rgba(22, 18, 26, 0.85) 0%, rgba(12, 10, 16, 0.95) 100%);
+    backdrop-filter: blur(24px) saturate(200%);
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
+    border: 1px solid var(--color-border-gold);
+    border-radius: 20px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    padding: 40px;
+    margin-top: 45px;
+    width: 100%;
+}
+
+.summary-top-tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    display: block;
+    text-align: center;
+    margin-bottom: 6px;
+    text-shadow: 0 0 8px rgba(197, 160, 89, 0.4);
+}
+
+.summary-main-heading {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    color: var(--color-cream);
+    text-align: center;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.summary-subtext {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+/* Info Cards Grid inside Order Summary */
+.summary-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.summary-stat-card {
+    background: rgba(10, 10, 14, 0.6);
+    border: 1px solid rgba(197, 160, 89, 0.25);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    transition: var(--transition-fast);
+}
+
+.summary-stat-card:hover {
+    border-color: var(--color-gold);
+    background: rgba(18, 16, 24, 0.8);
+}
+
+.stat-card-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+.stat-card-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-cream);
+}
+
+.stat-card-value.gold-text {
+    color: var(--color-gold);
+    font-family: var(--font-serif);
+}
+
+/* Grand Total Banner */
+.summary-total-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--color-border-gold);
+    border-bottom: 1px solid var(--color-border-gold);
+    padding: 20px 0;
+    margin-bottom: 32px;
+}
+
+.summary-total-title {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-cream);
+}
+
+.summary-grand-total {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--color-gold);
+    font-weight: 800;
+    text-shadow: 0 0 15px rgba(229, 193, 88, 0.4);
+}
+
+/* High-Impact Gold Gradient Checkout Button */
+.btn-checkout-gold-gradient {
+    display: block;
+    width: 100%;
+    background: linear-gradient(135deg, #E5C158 0%, #C5A059 50%, #9A7B3E 100%);
+    color: #08080A;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.35s ease;
+    box-shadow: 0 8px 25px rgba(197, 160, 89, 0.35);
+    border: none;
+}
+
+.btn-checkout-gold-gradient:hover {
+    background: linear-gradient(135deg, #FFF0A8 0%, #E5C158 50%, #C5A059 100%);
+    box-shadow: 0 12px 35px rgba(229, 193, 88, 0.6);
+    transform: translateY(-3px);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 850px) {
+    .order-item-row-luxury {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    .order-item-actions-block {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .summary-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
 
 .order-hero-banner-section {
     position: relative;

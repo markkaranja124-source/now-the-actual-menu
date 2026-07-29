@@ -564,36 +564,36 @@ function renderSelectedOrderPage() {
         }
 
         html += `
-            <div class="order-item-row-vertical" data-id="${item.id}">
-                <div class="order-item-left">
-                    <div class="order-dish-badge-container">
+            <div class="order-item-row-luxury" data-id="${item.id}">
+                <div class="order-item-main-info">
+                    <div class="order-dish-image-frame">
                         <img src="${dishImg}" alt="${item.name}" class="dish-row-thumbnail">
-                    </div>
-                    <div class="order-dish-info">
                         <span class="order-badge-pill">${categoryBadge}</span>
+                    </div>
+                    <div class="order-dish-text-block">
                         <h3 class="order-dish-title">${item.name}</h3>
                         ${item.desc ? `<p class="order-dish-desc">${item.desc}</p>` : ''}
                         <div class="order-dish-price-tag">Unit Price: <strong>KSh ${item.price}</strong></div>
                     </div>
                 </div>
 
-                <div class="order-item-right">
-                    <div class="quantity-controls-box">
-                        <span class="qty-label">Quantity:</span>
+                <div class="order-item-actions-block">
+                    <div class="quantity-controls-pill">
+                        <span class="qty-pill-label">Qty</span>
                         <div class="quantity-controls">
-                            <button class="btn-qty" onclick="changeCartItemQty('${item.id}', -1)">&minus;</button>
+                            <button class="btn-qty-round" onclick="changeCartItemQty('${item.id}', -1)" aria-label="Decrease quantity">&minus;</button>
                             <span class="qty-number">${item.qty}</span>
-                            <button class="btn-qty" onclick="changeCartItemQty('${item.id}', 1)">&plus;</button>
+                            <button class="btn-qty-round" onclick="changeCartItemQty('${item.id}', 1)" aria-label="Increase quantity">&plus;</button>
                         </div>
                     </div>
 
                     <div class="order-subtotal-box">
-                        <span class="subtotal-label">Subtotal:</span>
+                        <span class="subtotal-label">Subtotal</span>
                         <span class="order-subtotal-amount">KSh ${itemSubtotal}/=</span>
                     </div>
 
-                    <button class="btn-remove-row" onclick="removeCartItem('${item.id}')" title="Remove Dish">
-                        🗑 Remove
+                    <button class="btn-remove-pill" onclick="removeCartItem('${item.id}')" title="Remove Dish">
+                        <span>Remove Item</span>
                     </button>
                 </div>
             </div>

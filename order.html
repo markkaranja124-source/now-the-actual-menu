@@ -15,7 +15,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="logo.png">
 
-    <link rel="stylesheet" href="style.css?v=20260729_order3">
+    <link rel="stylesheet" href="style.css?v=20260729_order4">
 </head>
 
 <body class="order-page-body">
@@ -55,47 +55,55 @@
         </div>
     </section>
 
-    <main class="order-page-wrapper" style="padding-top: 40px;">
+    <!-- Seamless Luxury Main Section -->
+    <main class="order-luxury-wrapper">
         <div class="order-vertical-container">
+
+            <!-- Section Label Banner -->
+            <div class="order-section-badge-bar">
+                <span class="order-section-tag">SELECTED COURSES</span>
+                <div class="order-gold-line"></div>
+            </div>
 
             <!-- Single Vertical Stacked Food Items List -->
             <div id="selected-order-items-list" class="order-vertical-list">
                 <!-- Dynamically populated via app.js -->
-                <p style="color: var(--color-text-muted); font-size: 0.9rem; padding: 40px 0; text-align: center;">
+                <p style="color: var(--color-text-muted); font-size: 0.95rem; padding: 50px 0; text-align: center;">
                     Loading your selected dishes...
                 </p>
             </div>
 
-            <!-- In-Flow Order Summary Card (Appears after last selected food item) -->
-            <div class="summary-box-card order-inflow-summary">
+            <!-- In-Flow Luxury Order Summary Card -->
+            <div class="order-summary-luxury-card" id="order-summary-card">
                 <div class="summary-card-header">
-                    <h2 class="order-section-title" style="font-size: 1.6rem; margin-bottom: 4px; text-align: center; border: none; padding: 0;">ORDER SUMMARY</h2>
-                    <p style="color: var(--color-gold); font-size: 0.8rem; text-align: center; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px;">Ready for Preparation</p>
+                    <span class="summary-top-tag">RESERVATION & ORDER REVIEW</span>
+                    <h2 class="summary-main-heading">ORDER SUMMARY</h2>
+                    <p class="summary-subtext">All prices are inclusive of taxes and freshly prepared to order</p>
                 </div>
 
-                <div class="summary-grid-row">
-                    <div class="summary-stat-item">
-                        <span>Selected Dishes</span>
-                        <strong id="summary-items-count">0 Dishes</strong>
+                <div class="summary-stats-grid">
+                    <div class="summary-stat-card">
+                        <span class="stat-card-label">Selected Dishes</span>
+                        <strong class="stat-card-value" id="summary-items-count">0 Dishes</strong>
                     </div>
 
-                    <div class="summary-stat-item">
-                        <span>Total Quantity</span>
-                        <strong id="summary-total-qty">0 Items</strong>
+                    <div class="summary-stat-card">
+                        <span class="stat-card-label">Total Quantity</span>
+                        <strong class="stat-card-value" id="summary-total-qty">0 Items</strong>
                     </div>
 
-                    <div class="summary-stat-item">
-                        <span>Estimated Prep Time</span>
-                        <strong style="color: var(--color-gold);">15 &ndash; 25 mins</strong>
+                    <div class="summary-stat-card">
+                        <span class="stat-card-label">Estimated Prep Time</span>
+                        <strong class="stat-card-value gold-text">15 &ndash; 25 mins</strong>
                     </div>
                 </div>
 
-                <div class="summary-total-row" style="margin-top: 20px; padding-top: 20px;">
-                    <span class="summary-total-label" style="font-size: 1.2rem;">TOTAL AMOUNT:</span>
-                    <span class="summary-total-amount" id="summary-total-amount" style="font-size: 2.2rem;">KSh 0/=</span>
+                <div class="summary-total-banner">
+                    <span class="summary-total-title">GRAND TOTAL COST</span>
+                    <span class="summary-grand-total" id="summary-total-amount">KSh 0/=</span>
                 </div>
 
-                <a href="checkout.html" class="btn-proceed-checkout" id="btn-proceed-checkout">
+                <a href="checkout.html" class="btn-checkout-gold-gradient" id="btn-proceed-checkout">
                     <span>PROCEED TO CHECKOUT &rarr;</span>
                 </a>
             </div>
@@ -103,7 +111,7 @@
         </div>
     </main>
 
-    <script src="app.js?v=20260729_order3"></script>
+    <script src="app.js?v=20260729_order4"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof renderSelectedOrderPage === 'function') {

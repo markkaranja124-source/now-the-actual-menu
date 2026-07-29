@@ -183,14 +183,26 @@ function initMenuAIAssistant() {
         { name: "House Coffee White", price: "150/=", category: "hot-drinks", desc: "Rich brewed hot white coffee", targetId: "bk-hot" },
         { name: "House Coffee Black", price: "100/=", category: "hot-drinks", desc: "Pure black coffee brew", targetId: "bk-hot" },
         { name: "Black Coffee w Lemon", price: "110/=", category: "hot-drinks", desc: "Black coffee with fresh lemon slice", targetId: "bk-hot" },
+        { name: "Americano", price: "150/=", category: "hot-drinks", desc: "Classic rich espresso diluting with hot water", targetId: "bk-hot" },
+        { name: "Coffee Latte", price: "150/=", category: "hot-drinks", desc: "Espresso with steamed milk", targetId: "bk-hot" },
         { name: "Latte Machiatto", price: "180/=", category: "hot-drinks", desc: "Espresso with velvety steamed milk foam", targetId: "bk-hot" },
+        { name: "Lemon Tea", price: "100/=", category: "hot-drinks", desc: "Fresh hot lemon infusion tea", targetId: "bk-hot" },
         { name: "Lemon Tea w Honey", price: "150/=", category: "hot-drinks", desc: "Hot lemon tea sweetened with natural honey", targetId: "bk-hot" },
-        { name: "Dawa", price: "200/=", category: "hot-drinks", desc: "Traditional immunity remedy brew (Lemon, Ginger & Honey)", targetId: "bk-hot" },
+        { name: "Lemon Water", price: "70/=", category: "hot-drinks", desc: "Refreshing warm lemon water", targetId: "bk-hot" },
+        { name: "Tea Special", price: "100/=", category: "hot-drinks", desc: "Signature spiced house tea", targetId: "bk-hot" },
         { name: "Tea Masala White", price: "130/=", category: "hot-drinks", desc: "Spiced Kenya milk tea", targetId: "bk-hot" },
+        { name: "Tea Masala Black", price: "100/=", category: "hot-drinks", desc: "Black tea spiced with masala", targetId: "bk-hot" },
         { name: "Ginger Tea", price: "130/=", category: "hot-drinks", desc: "Warm infused ginger brew", targetId: "bk-hot" },
+        { name: "Dawa", price: "200/=", category: "hot-drinks", desc: "Traditional immunity remedy brew (Lemon, Ginger & Honey)", targetId: "bk-hot" },
+        { name: "Honey Espresso", price: "110/=", category: "hot-drinks", desc: "Rich espresso shot with natural honey", targetId: "bk-hot" },
+        { name: "Hot Milk", price: "100/=", category: "hot-drinks", desc: "Steamed fresh hot milk", targetId: "bk-hot" },
+        { name: "Honey Cone", price: "50/=", category: "hot-drinks", desc: "Sweet honey waffle cone treat", targetId: "bk-hot" },
+        { name: "Cappuccino (Single)", price: "150/=", category: "hot-drinks", desc: "Single shot cappuccino with foam", targetId: "bk-hot" },
+        { name: "Espresso (Single)", price: "120/=", category: "hot-drinks", desc: "Single shot concentrated coffee espresso", targetId: "bk-hot" },
 
         // Cold Drinks & Shakes
         { name: "Milkshake (Flavored)", price: "250/=", category: "cold-drinks", desc: "Creamy thick milkshake", targetId: "bk-cold" },
+        { name: "Lemonade (Flavor)", price: "100/=", category: "cold-drinks", desc: "Chilled flavored lemonade", targetId: "bk-cold" },
         { name: "Oreo Shake", price: "300/=", category: "cold-drinks", desc: "Rich crushed Oreo chocolate shake", targetId: "bk-cold" },
         { name: "Smoothies (Tropical)", price: "200/=", category: "cold-drinks", desc: "Fresh blended tropical fruits", targetId: "bk-cold" },
         { name: "Ice Cream Scoops", price: "150/=", category: "cold-drinks", desc: "Chilled gourmet ice cream", targetId: "bk-cold" },
@@ -231,22 +243,31 @@ function initMenuAIAssistant() {
             };
         }
 
-        // 3. Price Filter queries (e.g. "under 400", "under 500", "cheap", "budget")
-        if (q.includes("under") || q.includes("cheap") || q.includes("budget") || q.includes("less than") || q.includes("400") || q.includes("500") || q.includes("300")) {
-            let maxPrice = 500;
-            if (q.includes("400")) maxPrice = 400;
-            if (q.includes("300")) maxPrice = 300;
-            if (q.includes("200")) maxPrice = 200;
+        // 3. Dynamic Price & Budget Filter (handles any number like "150", "budget of 200", "under 400 shillings")
+        const numberMatch = q.match(/(\d+)/);
+        const isBudgetQuery = q.includes("budget") || q.includes("under") || q.includes("cheap") || q.includes("less than") || q.includes("shilling") || q.includes("ksh") || q.includes("kes") || q.includes("price") || numberMatch;
 
-            const matches = KNOWLEDGE.filter(item => {
-                const num = parseInt(item.price.replace(/[^0-9]/g, ''), 10);
-                return num && num <= maxPrice;
-            }).slice(0, 4);
+        if (isBudgetQuery && numberMatch) {
+            const userBudget = parseInt(numberMatch[1], 10);
+            
+            if (userBudget >= 30 && userBudget <= 5000) {
+                const matches = KNOWLEDGE.filter(item => {
+                    const priceNum = parseInt(item.price.replace(/[^0-9]/g, ''), 10);
+                    return priceNum && priceNum <= userBudget;
+                }).slice(0, 5);
 
-            return {
-                text: `Here are top delicious recommendations for your budget (**under ${maxPrice}/=**):`,
-                cards: matches
-            };
+                if (matches.length > 0) {
+                    return {
+                        text: `Here are delicious items available for your budget of **${userBudget}/=** or less:`,
+                        cards: matches
+                    };
+                } else {
+                    return {
+                        text: `Sorry, we don't have items under **${userBudget}/=**. Our lowest priced item is **50/=** (Honey Cone) followed by **70/=** (Lemon Water) and **100/=** (House Coffee Black, Lemon Tea, Hot Milk, etc.).`,
+                        cards: KNOWLEDGE.filter(i => parseInt(i.price.replace(/[^0-9]/g, ''), 10) <= 150).slice(0, 3)
+                    };
+                }
+            }
         }
 
         // 4. Group / Family Platter queries

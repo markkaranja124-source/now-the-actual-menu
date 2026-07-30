@@ -3802,28 +3802,17 @@ img {
     visibility: visible;
 }
 
-.admin-auth-modal {
-    background: #0D0A12;
-    border: 1px solid var(--color-gold);
-    border-radius: 16px;
-    width: 360px;
-    max-width: 100%;
-    padding: 28px 24px;
-    text-align: center;
-    box-shadow: 0 0 35px rgba(255, 127, 0, 0.4);
-}
-
-/* Secret Owner Emblem Styling & Glow */
+/* Restaurant Secret Chef Image Styling */
 .auth-emblem-container {
-    width: 96px;
-    height: 96px;
-    margin: 0 auto 16px auto;
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 14px auto;
     border-radius: 50%;
     background: #000;
     border: 2px solid var(--color-gold);
-    padding: 3px;
-    box-shadow: 0 0 25px rgba(197, 160, 89, 0.5), 0 0 45px rgba(0, 0, 0, 0.9);
-    animation: secretEmblemPulse 3s ease-in-out infinite alternate;
+    padding: 2px;
+    box-shadow: 0 0 20px rgba(197, 160, 89, 0.4);
+    overflow: hidden;
 }
 
 .auth-emblem-img {
@@ -3832,15 +3821,14 @@ img {
     object-fit: cover;
     object-position: center top;
     border-radius: 50%;
-    filter: contrast(1.15) brightness(0.95);
 }
 
 .owner-emblem-badge {
-    width: 46px;
-    height: 46px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     border: 1px solid var(--color-gold);
-    box-shadow: 0 0 15px rgba(197, 160, 89, 0.4);
+    box-shadow: 0 0 12px rgba(197, 160, 89, 0.3);
     overflow: hidden;
     flex-shrink: 0;
     background: #000;
@@ -3851,33 +3839,27 @@ img {
     height: 100%;
     object-fit: cover;
     object-position: center top;
-    filter: contrast(1.15);
 }
 
-@keyframes secretEmblemPulse {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 0 20px rgba(255, 127, 0, 0.5);
-    }
-    100% {
-        transform: scale(1.06);
-        box-shadow: 0 0 35px rgba(255, 127, 0, 0.85), 0 0 50px rgba(197, 160, 89, 0.5);
-    }
+.admin-auth-modal {
+    background: #110F17;
+    border: 1px solid rgba(197, 160, 89, 0.4);
+    border-radius: 14px;
+    width: 340px;
+    max-width: 100%;
+    padding: 24px 20px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
 }
 
-.auth-icon {
-    font-size: 2.4rem;
-    margin-bottom: 8px;
-}
-
-.admin-auth-modal h3 {
+.admin-auth-title {
     font-family: var(--font-serif);
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     color: var(--color-cream);
     margin-bottom: 4px;
 }
 
-.admin-auth-modal p {
+.admin-auth-sub {
     font-size: 0.78rem;
     color: var(--color-text-muted);
     margin-bottom: 16px;
@@ -3886,15 +3868,21 @@ img {
 .pin-input {
     width: 100%;
     text-align: center;
-    font-size: 1.4rem;
+    font-size: 1.25rem;
     letter-spacing: 4px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--color-gold);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(197, 160, 89, 0.35);
     border-radius: 8px;
-    padding: 10px;
+    padding: 10px 12px;
     color: var(--color-gold);
     outline: none;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    transition: var(--transition-fast);
+}
+
+.pin-input:focus {
+    border-color: var(--color-gold);
+    background: rgba(255, 255, 255, 0.07);
 }
 
 .pin-error-text {

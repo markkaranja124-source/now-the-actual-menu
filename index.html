@@ -1527,9 +1527,11 @@
     <!-- Secret Admin Authentication Modal -->
     <div class="admin-auth-overlay" id="admin-auth-overlay">
         <div class="admin-auth-modal">
-            <div class="auth-icon">🔒</div>
-            <h3>Secret Owner Portal</h3>
-            <p>Enter security PIN to view private customer feedback & AI stats.</p>
+            <div class="auth-emblem-container">
+                <img src="secret_owner_emblem.png" alt="Secret Owner Emblem" class="auth-emblem-img">
+            </div>
+            <h3 style="font-family: var(--font-serif); letter-spacing: 1px; color: var(--color-gold);">SECRET OWNER PORTAL 🕶️</h3>
+            <p>Enter security PIN to access private intelligence & customer analytics.</p>
             <form id="admin-pin-form">
                 <input type="password" id="admin-pin-input" class="pin-input" placeholder="Enter PIN (Default: 1234)" maxlength="8" autocomplete="off" required>
                 <p id="pin-error-text" class="pin-error-text"></p>
@@ -1545,9 +1547,14 @@
     <div class="admin-drawer-overlay" id="admin-drawer-overlay"></div>
     <aside class="admin-drawer" id="admin-drawer">
         <div class="admin-drawer-header">
-            <div>
-                <h3 class="admin-drawer-title">OWNER DASHBOARD</h3>
-                <span class="admin-drawer-subtitle">Private Customer Reviews & AI Intelligence</span>
+            <div style="display: flex; align-items: center; gap: 14px;">
+                <div class="owner-emblem-badge">
+                    <img src="secret_owner_emblem.png" alt="Owner Emblem" class="owner-emblem-img">
+                </div>
+                <div>
+                    <h3 class="admin-drawer-title">SECRET OWNER PORTAL 🕶️</h3>
+                    <span class="admin-drawer-subtitle">Private Customer Reviews & AI Intelligence</span>
+                </div>
             </div>
             <button class="admin-close-btn" id="admin-close-btn">&times;</button>
         </div>

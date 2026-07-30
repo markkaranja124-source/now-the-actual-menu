@@ -366,7 +366,7 @@ function initMenuAIAssistant() {
 
             if (itemCalculations.length >= 2) {
                 let grandTotal = 0;
-                let textBreakdown = "🤖 **Richi's Calculation Breakdown:**\n\n";
+                let textBreakdown = "🧮 **Calculation Breakdown:**\n\n";
                 itemCalculations.forEach(calc => {
                     grandTotal += calc.subtotal;
                     textBreakdown += `• **${calc.qty}x** ${calc.item.name} @ KSh ${calc.unitPrice.toLocaleString()} = **KSh ${calc.subtotal.toLocaleString()}/=**\n`;
@@ -382,7 +382,7 @@ function initMenuAIAssistant() {
 
         if (q.match(/^(hi|hello|hey|habari|mambo|sasa|good morning|good afternoon|richi|richie)/)) {
             return {
-                text: "Habari! 😊 I am **Richi**, your Rib House AI Culinary Assistant. Ask me to calculate costs for multiple dishes (e.g. *\"Richi, how much is 2 Goat Choma and 3 Ugali with Managu?\"*), find budget meals, or recommend drinks!",
+                text: "Habari! 😊 I am your Rib House AI Culinary Assistant. Ask me to calculate costs for multiple dishes (e.g. *\"How much is 2 Goat Choma and 3 Ugali with Managu?\"*), find budget meals, or recommend drinks!",
                 cards: []
             };
         }

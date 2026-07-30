@@ -159,11 +159,11 @@ function initMenuAIAssistant() {
     let teaserInterval = setInterval(() => {
         if (teaser && !teaser.classList.contains('hidden')) {
             teaserIndex = (teaserIndex + 1) % teaserPrompts.length;
-            teaserText.style.opacity = '0';
+            teaserText.classList.add('text-transitioning');
             setTimeout(() => {
                 teaserText.textContent = teaserPrompts[teaserIndex];
-                teaserText.style.opacity = '1';
-            }, 300);
+                teaserText.classList.remove('text-transitioning');
+            }, 450);
         }
     }, 4500);
 

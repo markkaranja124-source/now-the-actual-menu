@@ -1268,5 +1268,140 @@ function initCustomerFeedbackSystem() {
             }
         });
     }
+
+    // I. DAILY SUMMARY REPORT MODAL & PRINT/PDF EXPORT
+    const btnOpenReport = document.getElementById('btn-open-report');
+    const reportOverlay = document.getElementById('daily-report-overlay');
+    const reportCloseBtn = document.getElementById('daily-report-close-btn');
+    const reportDatePicker = document.getElementById('report-date-picker');
+    const btnPrintReport = document.getElementById('btn-print-report');
+
+    if (btnOpenReport && reportOverlay) {
+        btnOpenReport.addEventListener('click', () => {
+            reportOverlay.classList.add('active');
+            
+            // Set date picker to today (YYYY-MM-DD)
+            const todayStr = new Date().toISOString().split('T')[0];
+            if (reportDatePicker) {
+                reportDatePicker.value = todayStr;
+            }
+            generateDailyReport(todayStr);
+        });
+    }
+
+    if (reportCloseBtn && reportOverlay) {
+        reportCloseBtn.addEventListener('click', () => {
+            reportOverlay.classList.remove('active');
+        });
+        reportOverlay.addEventListener('click', (e) => {
+            if (e.target === reportOverlay) reportOverlay.classList.remove('active');
+        });
+    }
+
+    if (reportDatePicker) {
+        reportDatePicker.addEventListener('change', () => {
+            generateDailyReport(reportDatePicker.value);
+        });
+    }
+
+    if (btnPrintReport) {
+        btnPrintReport.addEventListener('click', () => {
+            window.print();
+        });
+    }
+
+    function generateDailyReport(selectedDateISO) {
+        const feedbacks = JSON.parse(localStorage.getItem('ribhouse_customer_feedback') || '[]');
+        
+        // Format target date for display e.g. "Jul 31, 2026"
+        let displayDate = selectedDateISO;
+        if (selectedDateISO) {
+            const parts = selectedDateISO.split('-');
+            if (parts.length === 3) {
+                const d = new Date(parts[0], parts[1] - 1, parts[2]);
+                displayDate = d.toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' });
+            }
+        }
+
+        const sheetDateEl = document.getElementById('report-sheet-date');
+        if (sheetDateEl) sheetDateEl.textContent = displayDate;
+
+        // Filter feedbacks matching selected date
+        const filtered = feedbacks.filter(f => {
+            if (!f.date) return false;
+            if (!selectedDateISO) return true;
+            
+            const itemDateLower = f.date.toLowerCase();
+            const dateObj = new Date(selectedDateISO);
+            const monthShort = dateObj.toLocaleDateString('en-KE', { month: 'short' }).toLowerCase();
+            const dayNum = dateObj.getDate();
+            const yearNum = dateObj.getFullYear();
+
+            return itemDateLower.includes(monthShort) && itemDateLower.includes(dayNum.toString()) && itemDateLower.includes(yearNum.toString());
+        });
+
+        // Summary KPI Elements
+        const rptTotal = document.getElementById('rpt-total-reviews');
+        const rptAvg = document.getElementById('rpt-avg-rating');
+        const rptDish = document.getElementById('rpt-top-dish');
+        const rptGroup = document.getElementById('rpt-top-group');
+        const tbody = document.getElementById('report-table-body');
+
+        if (rptTotal) rptTotal.textContent = filtered.length;
+
+        if (filtered.length === 0) {
+            if (rptAvg) rptAvg.textContent = '-';
+            if (rptDish) rptDish.textContent = 'N/A';
+            if (rptGroup) rptGroup.textContent = 'N/A';
+            if (tbody) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #64748B; padding: 24px;">No customer feedback submissions recorded on ${displayDate}.</td></tr>`;
+            }
+            return;
+        }
+
+        // Calculate KPI values
+        const avgRating = (filtered.reduce((acc, curr) => acc + curr.rating, 0) / filtered.length).toFixed(1);
+        if (rptAvg) rptAvg.textContent = `${avgRating} ★`;
+
+        const dishCounts = {};
+        const groupCounts = {};
+
+        filtered.forEach(f => {
+            if (f.dish && f.dish !== 'General Experience') {
+                dishCounts[f.dish] = (dishCounts[f.dish] || 0) + 1;
+            }
+            if (f.group) {
+                groupCounts[f.group] = (groupCounts[f.group] || 0) + 1;
+            }
+        });
+
+        const sortedDishes = Object.keys(dishCounts).sort((a, b) => dishCounts[b] - dishCounts[a]);
+        const sortedGroups = Object.keys(groupCounts).sort((a, b) => groupCounts[b] - groupCounts[a]);
+
+        if (rptDish) rptDish.textContent = sortedDishes[0] || 'General';
+        if (rptGroup) rptGroup.textContent = sortedGroups[0] || 'Solo';
+
+        // Render Table Rows
+        if (tbody) {
+            let html = '';
+            filtered.forEach(item => {
+                const stars = '★'.repeat(item.rating) + '☆'.repeat(5 - item.rating);
+                const timeParts = item.date.split(',');
+                const timeStr = timeParts.length > 1 ? timeParts[1].trim() : item.date;
+
+                html += `
+                    <tr>
+                        <td style="font-weight: 500;">${timeStr}</td>
+                        <td style="font-weight: 600;">${escapeHTML(item.author)}</td>
+                        <td style="color: #0F172A; font-weight: 500;">${escapeHTML(item.dish)}</td>
+                        <td>${escapeHTML(item.group)}</td>
+                        <td style="color: #D97706; font-weight: bold;">${stars}</td>
+                        <td style="font-style: italic;">${item.comments ? `"${escapeHTML(item.comments)}"` : '<span style="color: #94A3B8;">No comment</span>'}</td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+    }
 }
 

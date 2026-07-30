@@ -4082,5 +4082,184 @@ img {
     border-radius: 6px;
 }
 
+/* ==========================================================================
+   22. DAILY FEEDBACK SUMMARY REPORT MODAL & PRINT ENGINE
+   ========================================================================== */
+
+.daily-report-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(10px);
+    z-index: 3200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-smooth);
+}
+
+.daily-report-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.daily-report-modal {
+    background: #0E0C12;
+    border: 1px solid var(--color-gold);
+    border-radius: 16px;
+    width: 820px;
+    max-width: 100%;
+    max-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(197, 160, 89, 0.3);
+}
+
+.daily-report-header-bar {
+    padding: 16px 24px;
+    background: rgba(18, 14, 24, 0.8);
+    border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.daily-report-close-btn {
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.daily-report-close-btn:hover {
+    color: var(--color-gold);
+}
+
+.daily-report-controls {
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Report Printable Paper Sheet */
+.report-paper-sheet {
+    background: #FFFFFF;
+    color: #111111;
+    padding: 30px;
+    margin: 20px;
+    border-radius: 8px;
+    overflow-y: auto;
+    flex: 1;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.report-paper-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #111;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+}
+
+.report-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.report-card {
+    background: #F8F9FA;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    padding: 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.report-card-val {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #1E293B;
+}
+
+.report-card-lbl {
+    font-size: 0.68rem;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    margin-top: 8px;
+}
+
+.report-table th {
+    background: #0F172A;
+    color: #FFFFFF;
+    padding: 8px 10px;
+    text-align: left;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.report-table td {
+    padding: 10px;
+    border-bottom: 1px solid #E2E8F0;
+    color: #334155;
+    vertical-align: top;
+}
+
+.report-table tr:nth-child(even) td {
+    background: #F8FAFC;
+}
+
+.report-paper-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+    padding-top: 12px;
+    border-top: 1px solid #E2E8F0;
+    font-size: 0.7rem;
+    color: #64748B;
+}
+
+/* Printable PDF Styling Overrides */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #report-paper-sheet, #report-paper-sheet * {
+        visibility: visible;
+    }
+    #report-paper-sheet {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        box-shadow: none;
+        border-radius: 0;
+    }
+}
+
 
 

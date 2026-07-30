@@ -1568,8 +1568,9 @@
 
             <!-- Dashboard Actions -->
             <div class="admin-actions-bar">
-                <button class="admin-action-btn" id="btn-export-csv">📥 Export to CSV</button>
-                <button class="admin-action-btn danger" id="btn-clear-reviews">🗑️ Clear All Feedback</button>
+                <button class="admin-action-btn" id="btn-open-report" style="background: var(--color-gold); color: var(--color-black); font-weight: bold;">📄 Export Daily Summary Report</button>
+                <button class="admin-action-btn" id="btn-export-csv">📥 Export Raw CSV</button>
+                <button class="admin-action-btn danger" id="btn-clear-reviews">🗑️ Clear Feedback</button>
             </div>
 
             <!-- Feedback List Stream -->
@@ -1579,6 +1580,89 @@
             </div>
         </div>
     </aside>
+
+    <!-- Daily Feedback Summary Report Modal -->
+    <div class="daily-report-overlay" id="daily-report-overlay">
+        <div class="daily-report-modal">
+            <div class="daily-report-header-bar">
+                <div>
+                    <h3 style="margin: 0; color: var(--color-gold); font-family: var(--font-serif); font-size: 1.25rem;">📄 Daily Feedback Summary Report</h3>
+                    <p style="margin: 0; font-size: 0.75rem; color: var(--color-text-muted);">Executive daily customer insights & feedback report.</p>
+                </div>
+                <button class="daily-report-close-btn" id="daily-report-close-btn">&times;</button>
+            </div>
+
+            <div class="daily-report-controls">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <label style="font-size: 0.8rem; color: var(--color-cream);">Select Date:</label>
+                    <input type="date" id="report-date-picker" class="form-input" style="width: auto; padding: 6px 12px;">
+                </div>
+                <button class="admin-action-btn" id="btn-print-report" style="background: var(--color-gold); color: #000; font-weight: bold; flex: initial; padding: 8px 18px;">🖨️ Print / Save as PDF</button>
+            </div>
+
+            <!-- Report Printable Paper Sheet -->
+            <div class="report-paper-sheet" id="report-paper-sheet">
+                <div class="report-paper-header">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <img src="logo.png" alt="Rib House Logo" style="width: 44px; height: 44px; object-fit: contain;">
+                        <div>
+                            <h2 style="font-family: var(--font-serif); font-size: 1.3rem; color: #111; margin: 0; text-transform: uppercase; letter-spacing: 1px;">RIB HOUSE RESTAURANT</h2>
+                            <p style="font-size: 0.78rem; color: #555; margin: 0;">Daily Customer Feedback & Performance Summary Report</p>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 0.7rem; color: #666; font-weight: bold;">REPORT DATE</div>
+                        <div style="font-size: 0.95rem; font-weight: bold; color: #111;" id="report-sheet-date">Today</div>
+                    </div>
+                </div>
+
+                <!-- Executive Summary Cards -->
+                <div class="report-summary-grid">
+                    <div class="report-card">
+                        <span class="report-card-val" id="rpt-total-reviews">0</span>
+                        <span class="report-card-lbl">Submissions Today</span>
+                    </div>
+                    <div class="report-card">
+                        <span class="report-card-val" id="rpt-avg-rating">5.0 ★</span>
+                        <span class="report-card-lbl">Average Rating</span>
+                    </div>
+                    <div class="report-card">
+                        <span class="report-card-val" id="rpt-top-dish">-</span>
+                        <span class="report-card-lbl">#1 Preferred Dish</span>
+                    </div>
+                    <div class="report-card">
+                        <span class="report-card-val" id="rpt-top-group">-</span>
+                        <span class="report-card-lbl">Primary Dining Group</span>
+                    </div>
+                </div>
+
+                <!-- Detailed Feedback Table -->
+                <h4 style="font-size: 0.9rem; color: #111; margin-top: 18px; margin-bottom: 8px; border-bottom: 2px solid #111; padding-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">Customer Comments & Ratings Breakdown</h4>
+                <div id="report-table-wrapper">
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 15%;">Time</th>
+                                <th style="width: 15%;">Customer</th>
+                                <th style="width: 22%;">Favorite Dish</th>
+                                <th style="width: 14%;">Group</th>
+                                <th style="width: 10%;">Rating</th>
+                                <th style="width: 24%;">Comments & Suggestions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="report-table-body">
+                            <!-- Dynamic rows -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="report-paper-footer">
+                    <span>Generated by Rib House Management System</span>
+                    <span>Confidential Executive Owner Summary</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="app.js?v=20260729_nores1"></script>
 </body>

@@ -321,9 +321,68 @@ function initMenuAIAssistant() {
     function generateAIReply(rawQuery) {
         const q = rawQuery.toLowerCase().trim();
 
-        if (q.match(/^(hi|hello|hey|habari|mambo|sasa|good morning|good afternoon)/)) {
+        // --- 1. RICHI MULTI-ITEM CALCULATION ENGINE (Multiplication & Addition) ---
+        const isCalculationQuery = q.includes("richi") || q.includes("richie") || q.includes("how much") || q.includes("cost") || q.includes("total") || q.includes("price") || q.includes("and") || q.includes("+") || q.includes("plus");
+
+        if (isCalculationQuery) {
+            const itemCalculations = [];
+
+            KNOWLEDGE.forEach(item => {
+                const itemNameLower = item.name.toLowerCase();
+                const terms = itemNameLower.split(/\s+/).filter(w => w.length >= 3 && !['with', 'from', 'whole', 'spicy', 'dry', 'wet'].includes(w));
+                
+                const matchesItem = terms.length > 0 && terms.some(term => q.includes(term));
+
+                if (matchesItem) {
+                    let qty = 1;
+                    const primaryTerm = terms[0];
+                    
+                    const regexBefore = new RegExp(`(\\d+)\\s*(?:x|of|order|portion|kg|pieces?)?\\s*(?:[a-z\\s]*)\\b${primaryTerm}\\b`, 'i');
+                    const regexAfter = new RegExp(`\\b${primaryTerm}\\b\\s*(?:x|of|order|portion|kg|pieces?)?\\s*(\\d+)`, 'i');
+                    
+                    const matchBefore = q.match(regexBefore);
+                    const matchAfter = q.match(regexAfter);
+                    
+                    if (matchBefore && matchBefore[1]) {
+                        qty = parseInt(matchBefore[1], 10);
+                    } else if (matchAfter && matchAfter[1]) {
+                        qty = parseInt(matchAfter[1], 10);
+                    }
+
+                    const numericPrice = parseInt(item.price.replace(/[^0-9]/g, ''), 10) || 0;
+                    if (numericPrice > 0) {
+                        if (!itemCalculations.some(c => c.item.name === item.name)) {
+                            const subtotal = numericPrice * qty;
+                            itemCalculations.push({
+                                item: item,
+                                qty: qty,
+                                unitPrice: numericPrice,
+                                subtotal: subtotal
+                            });
+                        }
+                    }
+                }
+            });
+
+            if (itemCalculations.length >= 2) {
+                let grandTotal = 0;
+                let textBreakdown = "🤖 **Richi's Calculation Breakdown:**\n\n";
+                itemCalculations.forEach(calc => {
+                    grandTotal += calc.subtotal;
+                    textBreakdown += `• **${calc.qty}x** ${calc.item.name} @ KSh ${calc.unitPrice.toLocaleString()} = **KSh ${calc.subtotal.toLocaleString()}/=**\n`;
+                });
+                textBreakdown += `\n💵 **Grand Total Cost:** **KSh ${grandTotal.toLocaleString()}/=**`;
+
+                return {
+                    text: textBreakdown,
+                    cards: itemCalculations.map(c => c.item)
+                };
+            }
+        }
+
+        if (q.match(/^(hi|hello|hey|habari|mambo|sasa|good morning|good afternoon|richi|richie)/)) {
             return {
-                text: "Habari! 😊 I am ready to help you choose the best meal. Ask me about **everything under a budget**, **chicken dishes**, **spicy foods**, **vegetarian meals**, **desserts**, or **drinks**!",
+                text: "Habari! 😊 I am **Richi**, your Rib House AI Culinary Assistant. Ask me to calculate costs for multiple dishes (e.g. *\"Richi, how much is 2 Goat Choma and 3 Ugali with Managu?\"*), find budget meals, or recommend drinks!",
                 cards: []
             };
         }

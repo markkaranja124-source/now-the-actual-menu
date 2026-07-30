@@ -995,6 +995,22 @@ function initCustomerFeedbackSystem() {
     const btnExportCSV = document.getElementById('btn-export-csv');
     const btnClearReviews = document.getElementById('btn-clear-reviews');
 
+    // A. TRACK DAILY UNIQUE VISITORS
+    function trackDailyUniqueVisitor() {
+        const todayISO = new Date().toISOString().split('T')[0];
+        const sessionKey = `ribhouse_visited_day_${todayISO}`;
+
+        if (!sessionStorage.getItem(sessionKey)) {
+            sessionStorage.setItem(sessionKey, 'true');
+
+            const visitorData = JSON.parse(localStorage.getItem('ribhouse_daily_unique_visitors') || '{}');
+            visitorData[todayISO] = (visitorData[todayISO] || 0) + 1;
+            localStorage.setItem('ribhouse_daily_unique_visitors', JSON.stringify(visitorData));
+        }
+    }
+
+    trackDailyUniqueVisitor();
+
     // A. CUSTOMER FEEDBACK MODAL OPEN / CLOSE
     if (feedbackTrigger && feedbackModalOverlay) {
         feedbackTrigger.addEventListener('click', () => {
@@ -1174,12 +1190,17 @@ function initCustomerFeedbackSystem() {
 
     function renderAdminDashboard() {
         const feedbacks = JSON.parse(localStorage.getItem('ribhouse_customer_feedback') || '[]');
-        
+        const todayISO = new Date().toISOString().split('T')[0];
+        const visitorData = JSON.parse(localStorage.getItem('ribhouse_daily_unique_visitors') || '{}');
+        const uniqueToday = visitorData[todayISO] || 1;
+
+        const uniqueEl = document.getElementById('stat-unique-visitors');
         const totalEl = document.getElementById('stat-total-reviews');
         const avgEl = document.getElementById('stat-avg-rating');
         const topDishEl = document.getElementById('stat-top-dish');
         const feedContainer = document.getElementById('admin-feedback-feed');
 
+        if (uniqueEl) uniqueEl.textContent = uniqueToday;
         if (totalEl) totalEl.textContent = feedbacks.length;
 
         if (feedbacks.length === 0) {
@@ -1341,12 +1362,18 @@ function initCustomerFeedbackSystem() {
         });
 
         // Summary KPI Elements
+        const rptUnique = document.getElementById('rpt-unique-visitors');
         const rptTotal = document.getElementById('rpt-total-reviews');
         const rptAvg = document.getElementById('rpt-avg-rating');
         const rptDish = document.getElementById('rpt-top-dish');
         const rptGroup = document.getElementById('rpt-top-group');
         const tbody = document.getElementById('report-table-body');
 
+        const visitorData = JSON.parse(localStorage.getItem('ribhouse_daily_unique_visitors') || '{}');
+        const todayISO = new Date().toISOString().split('T')[0];
+        const uniqueCount = visitorData[selectedDateISO] || (selectedDateISO === todayISO ? 1 : 0);
+
+        if (rptUnique) rptUnique.textContent = uniqueCount;
         if (rptTotal) rptTotal.textContent = filtered.length;
 
         if (filtered.length === 0) {

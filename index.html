@@ -1554,7 +1554,11 @@
 
         <div class="admin-drawer-body">
             <!-- Analytics Bar -->
-            <div class="admin-stats-grid">
+            <div class="admin-stats-grid" style="grid-template-columns: repeat(4, 1fr);">
+                <div class="admin-stat-card">
+                    <span class="stat-num" id="stat-unique-visitors">0</span>
+                    <span class="stat-label">Unique Visitors</span>
+                </div>
                 <div class="admin-stat-card">
                     <span class="stat-num" id="stat-total-reviews">0</span>
                     <span class="stat-label">Total Reviews</span>
@@ -1565,7 +1569,7 @@
                 </div>
                 <div class="admin-stat-card">
                     <span class="stat-num" id="stat-top-dish">-</span>
-                    <span class="stat-label">Top Favorite Meal</span>
+                    <span class="stat-label">Top Favorite Dish</span>
                 </div>
             </div>
 
@@ -1620,7 +1624,11 @@
                 </div>
 
                 <!-- Executive Summary Cards -->
-                <div class="report-summary-grid">
+                <div class="report-summary-grid" style="grid-template-columns: repeat(5, 1fr);">
+                    <div class="report-card">
+                        <span class="report-card-val" id="rpt-unique-visitors">0</span>
+                        <span class="report-card-lbl">Unique Visitors</span>
+                    </div>
                     <div class="report-card">
                         <span class="report-card-val" id="rpt-total-reviews">0</span>
                         <span class="report-card-lbl">Submissions Today</span>
@@ -1635,7 +1643,7 @@
                     </div>
                     <div class="report-card">
                         <span class="report-card-val" id="rpt-top-group">-</span>
-                        <span class="report-card-lbl">Primary Dining Group</span>
+                        <span class="report-card-lbl">Primary Group</span>
                     </div>
                 </div>
 

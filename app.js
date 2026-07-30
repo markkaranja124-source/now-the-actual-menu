@@ -3,7 +3,17 @@
    OFFLINE RIB HOUSE MENU AI ASSISTANT & KNOWLEDGE BASE
    ========================================================================== */
 
+// --- FORCE SCROLL TO TOP ON PAGE LOAD & REFRESH ---
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+
+window.addEventListener('beforeunload', () => {
+    window.scrollTo(0, 0);
+});
+
 document.addEventListener('DOMContentLoaded', () => {
+    window.scrollTo(0, 0);
     initScrollNavbar();
     initSectionSlideshows();
     initMenuAIAssistant();
@@ -12,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('pageshow', () => {
+    window.scrollTo(0, 0);
     updateSelectionBarUI();
 });
 

@@ -200,60 +200,145 @@ function initMenuAIAssistant() {
         processUserQuery(userText);
     });
 
-    function processUserQuery(userText) {
-        appendMessage(userText, 'user');
+    const typingCaptions = [
+        "Thinking...",
+        "Searching Rib House menu...",
+        "Checking prices & specials...",
+        "Consulting chef recommendations...",
+        "Calculating dish combinations..."
+    ];
 
-        const typingEl = document.createElement('div');
-        typingEl.className = 'ai-msg ai-msg-bot';
-        typingEl.innerHTML = `<div class="ai-msg-bubble"><p style="opacity: 0.7;"><em>Analyzing menu recommendations...</em></p></div>`;
-        messagesFeed.appendChild(typingEl);
+    function showTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'ai-msg ai-msg-bot ai-msg-typing';
+        
+        const randomCaption = typingCaptions[Math.floor(Math.random() * typingCaptions.length)];
+        
+        typingDiv.innerHTML = `
+            <div class="ai-msg-bubble">
+                <div class="ai-typing-container">
+                    <div class="ai-typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <span class="ai-typing-caption">${randomCaption}</span>
+                </div>
+            </div>
+        `;
+        messagesFeed.appendChild(typingDiv);
         messagesFeed.scrollTop = messagesFeed.scrollHeight;
-
-        setTimeout(() => {
-            typingEl.remove();
-            const replyData = generateAIReply(userText);
-            appendMessage(replyData.text, 'bot', replyData.cards);
-        }, 350);
+        return typingDiv;
     }
 
-    function appendMessage(text, sender, cards = []) {
+    function processUserQuery(userText) {
+        appendUserMessage(userText);
+
+        const typingIndicator = showTypingIndicator();
+        const prepDelay = Math.floor(Math.random() * 250) + 450;
+
+        setTimeout(() => {
+            if (typingIndicator) typingIndicator.remove();
+            const replyData = generateAIReply(userText);
+            streamBotMessage(replyData.text, replyData.cards);
+        }, prepDelay);
+    }
+
+    function appendUserMessage(text) {
         const msgDiv = document.createElement('div');
-        msgDiv.className = `ai-msg ai-msg-${sender}`;
-
-        let html = `<div class="ai-msg-bubble">${formatMarkdownText(text)}</div>`;
-
-        if (cards && cards.length > 0) {
-            cards.forEach(card => {
-                const isSel = isDishSelected(card.name);
-                const encodedData = encodeURIComponent(JSON.stringify(card));
-                const encodedName = encodeURIComponent(card.name);
-
-                html += `
-                    <div class="ai-dish-card">
-                        <div class="ai-dish-header">
-                            <span class="ai-dish-name">${card.name}</span>
-                            <span class="ai-dish-price">${card.price}</span>
-                        </div>
-                        ${card.desc ? `<p class="ai-dish-desc">${card.desc}</p>` : ''}
-                        <div class="ai-card-actions">
-                            <button class="btn-select-dish ${isSel ? 'active' : ''}" data-dish-name="${encodedName}" onclick="toggleSelectItem('${encodedData}')">
-                                ${isSel ? '✓ Added to Order' : '+ Add to Order'}
-                            </button>
-                            ${card.targetId ? `<button class="ai-dish-link-btn" onclick="scrollToDishSection('${card.targetId}')">View in Menu &darr;</button>` : ''}
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        msgDiv.innerHTML = html;
+        msgDiv.className = 'ai-msg ai-msg-user';
+        msgDiv.innerHTML = `<div class="ai-msg-bubble">${escapeHTML(text)}</div>`;
         messagesFeed.appendChild(msgDiv);
+        messagesFeed.scrollTop = messagesFeed.scrollHeight;
+    }
 
-        if (sender === 'bot') {
-            msgDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-            messagesFeed.scrollTop = messagesFeed.scrollHeight;
-        }
+    function streamBotMessage(text, cards = []) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'ai-msg ai-msg-bot';
+
+        const bubbleDiv = document.createElement('div');
+        bubbleDiv.className = 'ai-msg-bubble';
+
+        const textSpan = document.createElement('span');
+        const cursorSpan = document.createElement('span');
+        cursorSpan.className = 'ai-streaming-cursor';
+
+        bubbleDiv.appendChild(textSpan);
+        bubbleDiv.appendChild(cursorSpan);
+        msgDiv.appendChild(bubbleDiv);
+
+        messagesFeed.appendChild(msgDiv);
+        messagesFeed.scrollTop = messagesFeed.scrollHeight;
+
+        const formattedHtml = formatMarkdownText(text);
+        const tokens = tokenizeHTML(formattedHtml);
+
+        let tokenIndex = 0;
+        const typingSpeed = 22; // Natural, rapid streaming speed
+
+        const streamInterval = setInterval(() => {
+            if (tokenIndex < tokens.length) {
+                textSpan.innerHTML += tokens[tokenIndex];
+                tokenIndex++;
+                messagesFeed.scrollTop = messagesFeed.scrollHeight;
+            } else {
+                clearInterval(streamInterval);
+                cursorSpan.remove();
+
+                if (cards && cards.length > 0) {
+                    cards.forEach((card, idx) => {
+                        setTimeout(() => {
+                            const cardDiv = document.createElement('div');
+                            cardDiv.className = 'ai-dish-card ai-dish-card-animated';
+                            const isSel = isDishSelected(card.name);
+                            const encodedData = encodeURIComponent(JSON.stringify(card));
+                            const encodedName = encodeURIComponent(card.name);
+
+                            cardDiv.innerHTML = `
+                                <div class="ai-dish-header">
+                                    <span class="ai-dish-name">${card.name}</span>
+                                    <span class="ai-dish-price">${card.price}</span>
+                                </div>
+                                ${card.desc ? `<p class="ai-dish-desc">${card.desc}</p>` : ''}
+                                <div class="ai-card-actions">
+                                    <button class="btn-select-dish ${isSel ? 'active' : ''}" data-dish-name="${encodedName}" onclick="toggleSelectItem('${encodedData}')">
+                                        ${isSel ? '✓ Added to Order' : '+ Add to Order'}
+                                    </button>
+                                    ${card.targetId ? `<button class="ai-dish-link-btn" onclick="scrollToDishSection('${card.targetId}')">View in Menu &darr;</button>` : ''}
+                                </div>
+                            `;
+                            msgDiv.appendChild(cardDiv);
+                            messagesFeed.scrollTop = messagesFeed.scrollHeight;
+                        }, (idx + 1) * 140);
+                    });
+                }
+            }
+        }, typingSpeed);
+    }
+
+    function escapeHTML(str) {
+        const p = document.createElement('p');
+        p.textContent = str;
+        return p.innerHTML;
+    }
+
+    function tokenizeHTML(html) {
+        const tokens = [];
+        const tagRegex = /(<[^>]+>)/g;
+        const parts = html.split(tagRegex);
+
+        parts.forEach(part => {
+            if (!part) return;
+            if (part.startsWith('<') && part.endsWith('>')) {
+                tokens.push(part);
+            } else {
+                const words = part.split(/(\s+)/);
+                words.forEach(w => {
+                    if (w) tokens.push(w);
+                });
+            }
+        });
+        return tokens;
     }
 
     function formatMarkdownText(str) {
@@ -366,9 +451,22 @@ function initMenuAIAssistant() {
 
             if (itemCalculations.length >= 2) {
                 let grandTotal = 0;
-                let textBreakdown = "🧮 **Calculation Breakdown:**\n\n";
+                const namesArr = [];
+                const subtotalArr = [];
+
                 itemCalculations.forEach(calc => {
                     grandTotal += calc.subtotal;
+                    const label = calc.qty > 1 ? `${calc.qty}x ${calc.item.name}` : calc.item.name;
+                    namesArr.push(label);
+                    subtotalArr.push(`KSh ${calc.subtotal.toLocaleString()}`);
+                });
+
+                const mealsSentence = namesArr.slice(0, -1).join(', ') + ' and ' + namesArr[namesArr.length - 1];
+                const pricesFormula = subtotalArr.join(' + ');
+
+                let textBreakdown = `🍽️ **${mealsSentence} will cost you ${pricesFormula} = KSh ${grandTotal.toLocaleString()}/=!**\n\n`;
+                textBreakdown += "🧮 **Calculation Breakdown:**\n";
+                itemCalculations.forEach(calc => {
                     textBreakdown += `• **${calc.qty}x** ${calc.item.name} @ KSh ${calc.unitPrice.toLocaleString()} = **KSh ${calc.subtotal.toLocaleString()}/=**\n`;
                 });
                 textBreakdown += `\n💵 **Grand Total Cost:** **KSh ${grandTotal.toLocaleString()}/=**`;

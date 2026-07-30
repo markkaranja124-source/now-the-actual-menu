@@ -2136,6 +2136,104 @@ img {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
+/* Animated 3-Dot Typing Indicator & Status Captions */
+.ai-msg-typing .ai-msg-bubble {
+    background: rgba(18, 14, 24, 0.45);
+    border: 1px solid rgba(197, 160, 89, 0.4);
+    padding: 10px 16px;
+}
+
+.ai-typing-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ai-typing-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.ai-typing-dots span {
+    width: 7px;
+    height: 7px;
+    background-color: var(--color-gold);
+    border-radius: 50%;
+    display: inline-block;
+    animation: typingBouncing 1.4s infinite ease-in-out both;
+    box-shadow: 0 0 8px rgba(197, 160, 89, 0.6);
+}
+
+.ai-typing-dots span:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.ai-typing-dots span:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+.ai-typing-dots span:nth-child(3) {
+    animation-delay: 0s;
+}
+
+@keyframes typingBouncing {
+    0%, 80%, 100% {
+        transform: scale(0.4);
+        opacity: 0.35;
+    }
+    40% {
+        transform: scale(1.15);
+        opacity: 1;
+        box-shadow: 0 0 12px rgba(255, 127, 0, 0.9);
+    }
+}
+
+.ai-typing-caption {
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    letter-spacing: 0.3px;
+    animation: fadeInOutCaption 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes fadeInOutCaption {
+    0% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+/* Streaming Cursor Effect */
+.ai-streaming-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.1em;
+    background-color: var(--color-gold);
+    margin-left: 3px;
+    vertical-align: middle;
+    animation: blinkCursor 0.7s infinite;
+}
+
+@keyframes blinkCursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Staggered Entrance for Dish Recommendation Cards */
+.ai-dish-card-animated {
+    animation: slideUpFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUpFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Rich Dish Recommendation Card in Chat */
 .ai-dish-card {
     margin-top: 10px;

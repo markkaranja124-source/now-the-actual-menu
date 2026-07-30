@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollNavbar();
     initSectionSlideshows();
     initMenuAIAssistant();
+    initCustomerFeedbackSystem();
     updateSelectionBarUI();
 });
 
@@ -492,6 +493,30 @@ function initMenuAIAssistant() {
             };
         }
 
+        // --- DYNAMIC AI LEARNING FROM CUSTOMER REVIEWS ---
+        if (q.includes("popular") || q.includes("recommended") || q.includes("review") || q.includes("feedback") || q.includes("top dish") || q.includes("what do people love")) {
+            const feedbacks = JSON.parse(localStorage.getItem('ribhouse_customer_feedback') || '[]');
+            if (feedbacks.length > 0) {
+                const dishCounts = {};
+                feedbacks.forEach(f => {
+                    if (f.dish && f.dish !== 'General Experience') {
+                        dishCounts[f.dish] = (dishCounts[f.dish] || 0) + 1;
+                    }
+                });
+                const topDishes = Object.keys(dishCounts).sort((a, b) => dishCounts[b] - dishCounts[a]);
+                if (topDishes.length > 0) {
+                    const topName = topDishes[0];
+                    const count = dishCounts[topName];
+                    const matchedItem = KNOWLEDGE.find(k => k.name.toLowerCase().includes(topName.toLowerCase()));
+                    
+                    return {
+                        text: `🔥 **Top Customer Recommendation!**\n\nBased on **${feedbacks.length}** recent guest reviews, our #1 most loved dish is **${topName}** (chosen by ${count} guests)!\n\nEvery meal is prepared fresh to order at Rib House.`,
+                        cards: matchedItem ? [matchedItem] : []
+                    };
+                }
+            }
+        }
+
         const numberMatches = q.match(/\d+/g);
         const isBudgetQuery = q.includes("budget") || q.includes("under") || q.includes("below") || q.includes("cheap") || q.includes("less than") || q.includes("between") || q.includes("buy with") || q.includes("shilling") || q.includes("ksh") || q.includes("kes") || q.includes("price") || numberMatches;
 
@@ -942,5 +967,306 @@ function renderOrderSummaryPage() {
     if (dishesCountEl) dishesCountEl.textContent = `${totalDishes} ${totalDishes === 1 ? 'Dish' : 'Dishes'}`;
     if (totalQtyEl) totalQtyEl.textContent = `${totalQuantity} ${totalQuantity === 1 ? 'Item' : 'Items'}`;
     if (grandTotalEl) grandTotalEl.textContent = `KSh ${totalPrice.toLocaleString()}/=`;
+}
+
+// --- 4. CUSTOMER FEEDBACK SYSTEM & SECRET OWNER ADMIN DASHBOARD ---
+function initCustomerFeedbackSystem() {
+    const feedbackTrigger = document.getElementById('feedback-trigger-btn');
+    const feedbackModalOverlay = document.getElementById('feedback-modal-overlay');
+    const feedbackCloseBtn = document.getElementById('feedback-close-btn');
+    const feedbackForm = document.getElementById('customer-feedback-form');
+    const dishSelect = document.getElementById('fb-dish-select');
+    const customDishInput = document.getElementById('fb-custom-dish');
+    const starRatingContainer = document.getElementById('star-rating-input');
+    const ratingValInput = document.getElementById('fb-rating-val');
+    const successMsgContainer = document.getElementById('feedback-success-msg');
+    const closeSuccessBtn = document.getElementById('btn-close-success');
+
+    // Secret Admin Authentication & Drawer
+    const adminAuthOverlay = document.getElementById('admin-auth-overlay');
+    const adminPinForm = document.getElementById('admin-pin-form');
+    const adminPinInput = document.getElementById('admin-pin-input');
+    const pinErrorText = document.getElementById('pin-error-text');
+    const btnCancelAuth = document.getElementById('btn-cancel-auth');
+
+    const adminDrawerOverlay = document.getElementById('admin-drawer-overlay');
+    const adminDrawer = document.getElementById('admin-drawer');
+    const adminCloseBtn = document.getElementById('admin-close-btn');
+    const btnExportCSV = document.getElementById('btn-export-csv');
+    const btnClearReviews = document.getElementById('btn-clear-reviews');
+
+    // A. CUSTOMER FEEDBACK MODAL OPEN / CLOSE
+    if (feedbackTrigger && feedbackModalOverlay) {
+        feedbackTrigger.addEventListener('click', () => {
+            feedbackModalOverlay.classList.add('active');
+            if (feedbackForm) feedbackForm.style.display = 'flex';
+            if (successMsgContainer) successMsgContainer.style.display = 'none';
+        });
+    }
+
+    if (feedbackCloseBtn && feedbackModalOverlay) {
+        feedbackCloseBtn.addEventListener('click', () => {
+            feedbackModalOverlay.classList.remove('active');
+        });
+        feedbackModalOverlay.addEventListener('click', (e) => {
+            if (e.target === feedbackModalOverlay) feedbackModalOverlay.classList.remove('active');
+        });
+    }
+
+    if (closeSuccessBtn && feedbackModalOverlay) {
+        closeSuccessBtn.addEventListener('click', () => {
+            feedbackModalOverlay.classList.remove('active');
+        });
+    }
+
+    // B. CUSTOM DISH INPUT TOGGLE
+    if (dishSelect && customDishInput) {
+        dishSelect.addEventListener('change', () => {
+            if (dishSelect.value === 'Other / Custom') {
+                customDishInput.style.display = 'block';
+                customDishInput.focus();
+            } else {
+                customDishInput.style.display = 'none';
+            }
+        });
+    }
+
+    // C. STAR RATING INTERACTION
+    if (starRatingContainer && ratingValInput) {
+        const stars = starRatingContainer.querySelectorAll('.star');
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const rating = parseInt(star.getAttribute('data-rating'), 10) || 5;
+                ratingValInput.value = rating;
+                stars.forEach((s, idx) => {
+                    if (idx < rating) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+            });
+        });
+    }
+
+    // D. SUBMIT FEEDBACK FORM
+    if (feedbackForm) {
+        feedbackForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            let chosenDish = dishSelect ? dishSelect.value : '';
+            if (chosenDish === 'Other / Custom' && customDishInput && customDishInput.value.trim()) {
+                chosenDish = customDishInput.value.trim();
+            }
+
+            const selectedGroupEl = document.querySelector('input[name="dining_group"]:checked');
+            const diningGroup = selectedGroupEl ? selectedGroupEl.value : 'Solo Diners';
+            const rating = parseInt(ratingValInput ? ratingValInput.value : '5', 10);
+            const comments = document.getElementById('fb-comments') ? document.getElementById('fb-comments').value.trim() : '';
+            const customerName = document.getElementById('fb-customer-name') ? document.getElementById('fb-customer-name').value.trim() : 'Anonymous';
+
+            const newFeedback = {
+                id: Date.now(),
+                date: new Date().toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+                dish: chosenDish || 'General Experience',
+                group: diningGroup,
+                rating: rating,
+                comments: comments,
+                author: customerName || 'Guest'
+            };
+
+            const existingFeedbacks = JSON.parse(localStorage.getItem('ribhouse_customer_feedback') || '[]');
+            existingFeedbacks.unshift(newFeedback);
+            localStorage.setItem('ribhouse_customer_feedback', JSON.stringify(existingFeedbacks));
+
+            // Reset Form & Show Success Message
+            feedbackForm.reset();
+            if (customDishInput) customDishInput.style.display = 'none';
+            if (ratingValInput) ratingValInput.value = '5';
+            if (starRatingContainer) {
+                starRatingContainer.querySelectorAll('.star').forEach(s => s.classList.add('active'));
+            }
+
+            feedbackForm.style.display = 'none';
+            if (successMsgContainer) successMsgContainer.style.display = 'block';
+        });
+    }
+
+    // E. SECRET TRIPLE-TAP LOGO LISTENER FOR ADMIN ACCESS
+    let emblemTapCount = 0;
+    let emblemTapTimer = null;
+
+    function handleSecretTripleTap() {
+        emblemTapCount++;
+        if (emblemTapTimer) clearTimeout(emblemTapTimer);
+
+        if (emblemTapCount >= 3) {
+            emblemTapCount = 0;
+            openAdminAuthModal();
+        } else {
+            emblemTapTimer = setTimeout(() => {
+                emblemTapCount = 0;
+            }, 800);
+        }
+    }
+
+    // Attach triple tap to all logo images / emblem boxes
+    const emblems = document.querySelectorAll('.ai-avatar-flame, .flaming-logo-box, .nav-logo-box, img[alt*="Emblem"], img[alt*="Logo"], img[src*="logo.png"]');
+    emblems.forEach(el => {
+        el.addEventListener('click', handleSecretTripleTap);
+    });
+
+    // F. SECRET PIN AUTHENTICATION
+    function openAdminAuthModal() {
+        if (adminAuthOverlay) {
+            adminAuthOverlay.classList.add('active');
+            if (adminPinInput) {
+                adminPinInput.value = '';
+                adminPinInput.focus();
+            }
+            if (pinErrorText) pinErrorText.textContent = '';
+        }
+    }
+
+    function closeAdminAuthModal() {
+        if (adminAuthOverlay) adminAuthOverlay.classList.remove('active');
+    }
+
+    if (btnCancelAuth) btnCancelAuth.addEventListener('click', closeAdminAuthModal);
+
+    if (adminPinForm) {
+        adminPinForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const enteredPin = adminPinInput ? adminPinInput.value.trim() : '';
+
+            // Security check (Default PIN: 1234)
+            if (enteredPin === '1234') {
+                closeAdminAuthModal();
+                openAdminDrawer();
+            } else {
+                if (pinErrorText) pinErrorText.textContent = '❌ Incorrect PIN code. Access denied.';
+                if (adminPinInput) {
+                    adminPinInput.style.borderColor = '#EF4444';
+                    setTimeout(() => { adminPinInput.style.borderColor = 'var(--color-gold)'; }, 1500);
+                }
+            }
+        });
+    }
+
+    // G. ADMIN DRAWER OPEN / CLOSE & RENDER
+    function openAdminDrawer() {
+        if (adminDrawer && adminDrawerOverlay) {
+            adminDrawer.classList.add('active');
+            adminDrawerOverlay.classList.add('active');
+            renderAdminDashboard();
+        }
+    }
+
+    function closeAdminDrawer() {
+        if (adminDrawer && adminDrawerOverlay) {
+            adminDrawer.classList.remove('active');
+            adminDrawerOverlay.classList.remove('active');
+        }
+    }
+
+    if (adminCloseBtn) adminCloseBtn.addEventListener('click', closeAdminDrawer);
+    if (adminDrawerOverlay) adminDrawerOverlay.addEventListener('click', closeAdminDrawer);
+
+    function renderAdminDashboard() {
+        const feedbacks = JSON.parse(localStorage.getItem('ribhouse_customer_feedback') || '[]');
+        
+        const totalEl = document.getElementById('stat-total-reviews');
+        const avgEl = document.getElementById('stat-avg-rating');
+        const topDishEl = document.getElementById('stat-top-dish');
+        const feedContainer = document.getElementById('admin-feedback-feed');
+
+        if (totalEl) totalEl.textContent = feedbacks.length;
+
+        if (feedbacks.length === 0) {
+            if (avgEl) avgEl.textContent = '5.0 ⭐';
+            if (topDishEl) topDishEl.textContent = 'N/A';
+            if (feedContainer) feedContainer.innerHTML = '<p style="color: var(--color-text-muted); font-size: 0.8rem; text-align: center; padding: 20px;">No customer feedback submitted yet.</p>';
+            return;
+        }
+
+        // Calculate Stats
+        const avgRating = (feedbacks.reduce((acc, curr) => acc + curr.rating, 0) / feedbacks.length).toFixed(1);
+        if (avgEl) avgEl.textContent = `${avgRating} ⭐`;
+
+        // Calculate Top Favorite Dish
+        const dishCounts = {};
+        feedbacks.forEach(f => {
+            if (f.dish && f.dish !== 'General Experience') {
+                dishCounts[f.dish] = (dishCounts[f.dish] || 0) + 1;
+            }
+        });
+        const sortedDishes = Object.keys(dishCounts).sort((a, b) => dishCounts[b] - dishCounts[a]);
+        if (topDishEl) topDishEl.textContent = sortedDishes[0] || 'Choma Goat';
+
+        // Render Feed Items
+        if (feedContainer) {
+            let html = '';
+            feedbacks.forEach(item => {
+                const stars = '★'.repeat(item.rating) + '☆'.repeat(5 - item.rating);
+                html += `
+                    <div class="feedback-card-item">
+                        <div class="feedback-card-header">
+                            <span class="feedback-card-author">👤 ${escapeHTML(item.author)}</span>
+                            <span class="feedback-card-date">${item.date}</span>
+                        </div>
+                        <div class="feedback-card-stars">${stars} (${item.rating}/5)</div>
+                        <div class="feedback-card-tags">
+                            ${item.dish ? `<span class="feedback-tag">😋 ${escapeHTML(item.dish)}</span>` : ''}
+                            <span class="feedback-tag">👨‍👩‍👧‍👦 ${escapeHTML(item.group)}</span>
+                        </div>
+                        ${item.comments ? `<div class="feedback-card-text">💬 "${escapeHTML(item.comments)}"</div>` : ''}
+                    </div>
+                `;
+            });
+            feedContainer.innerHTML = html;
+        }
+    }
+
+    // H. EXPORT CSV & CLEAR REVIEWS
+    if (btnExportCSV) {
+        btnExportCSV.addEventListener('click', () => {
+            const feedbacks = JSON.parse(localStorage.getItem('ribhouse_customer_feedback') || '[]');
+            if (feedbacks.length === 0) {
+                alert('No feedback entries to export.');
+                return;
+            }
+
+            let csvContent = 'data:text/csv;charset=utf-8,ID,Date,Author,Dish,Group,Rating,Comments\n';
+            feedbacks.forEach(f => {
+                const row = [
+                    f.id,
+                    `"${f.date}"`,
+                    `"${(f.author || '').replace(/"/g, '""')}"`,
+                    `"${(f.dish || '').replace(/"/g, '""')}"`,
+                    `"${(f.group || '').replace(/"/g, '""')}"`,
+                    f.rating,
+                    `"${(f.comments || '').replace(/"/g, '""')}"`
+                ].join(',');
+                csvContent += row + '\n';
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', `ribhouse_customer_feedback_${Date.now()}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    }
+
+    if (btnClearReviews) {
+        btnClearReviews.addEventListener('click', () => {
+            if (confirm('Are you sure you want to clear all stored customer reviews?')) {
+                localStorage.removeItem('ribhouse_customer_feedback');
+                renderAdminDashboard();
+            }
+        });
+    }
 }
 

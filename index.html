@@ -1418,6 +1418,168 @@
         </div>
     </aside>
 
+    <!-- Floating Share Feedback Button -->
+    <button class="feedback-trigger-btn" id="feedback-trigger-btn" aria-label="Share Feedback">
+        <span class="feedback-icon">💬</span>
+        <span class="feedback-label">Share Feedback</span>
+    </button>
+
+    <!-- Customer Feedback / Survey Modal -->
+    <div class="feedback-modal-overlay" id="feedback-modal-overlay">
+        <div class="feedback-modal-container" id="feedback-modal-container">
+            <div class="feedback-modal-header">
+                <div>
+                    <h3 class="feedback-modal-title">Rib House Dining Feedback 💬</h3>
+                    <p class="feedback-modal-sub">Help us serve you better & train our AI assistant!</p>
+                </div>
+                <button class="feedback-close-btn" id="feedback-close-btn">&times;</button>
+            </div>
+            
+            <form id="customer-feedback-form" class="feedback-form">
+                <!-- Question 1: Favorite Meal -->
+                <div class="form-group">
+                    <label class="form-label">1. What was the best meal you enjoyed today? 😋</label>
+                    <select id="fb-dish-select" class="form-select">
+                        <option value="">-- Select a dish from our menu --</option>
+                        <option value="CHOMA GOAT (1 KG)">Choma Goat (1 KG)</option>
+                        <option value="CHOMA BEEF (1 KG)">Choma Beef (1 KG)</option>
+                        <option value="CHICKEN PLATTER FOR 4">Chicken Platter for 4</option>
+                        <option value="PANCAKE BREAKFAST">Pancake Breakfast</option>
+                        <option value="UGALI WITH SUKUMA / CABBAGE">Ugali with Sukuma / Cabbage</option>
+                        <option value="UGALI WITH MANAGU">Ugali with Managu</option>
+                        <option value="BEEF STEAK GRILLED">Beef Steak Grilled</option>
+                        <option value="CHICKEN WET / DRY FRY">Chicken Wet / Dry Fry</option>
+                        <option value="MATUMBO FRY">Matumbo Fry</option>
+                        <option value="TILAPIA FRY WHOLE">Tilapia Fry Whole</option>
+                        <option value="Other / Custom">Other (Custom item below)</option>
+                    </select>
+                    <input type="text" id="fb-custom-dish" class="form-input" placeholder="Or type dish name if not listed..." style="margin-top: 6px; display: none;">
+                </div>
+
+                <!-- Question 2: Dining Group -->
+                <div class="form-group">
+                    <label class="form-label">2. Who were you dining with today? 👨‍👩‍👧‍👦</label>
+                    <div class="group-options-grid">
+                        <label class="group-radio-card">
+                            <input type="radio" name="dining_group" value="Solo Diners" checked>
+                            <span>👤 Solo</span>
+                        </label>
+                        <label class="group-radio-card">
+                            <input type="radio" name="dining_group" value="Couples">
+                            <span>💑 Couple</span>
+                        </label>
+                        <label class="group-radio-card">
+                            <input type="radio" name="dining_group" value="Families">
+                            <span>👨‍👩‍👧‍👦 Family</span>
+                        </label>
+                        <label class="group-radio-card">
+                            <input type="radio" name="dining_group" value="Friends Group">
+                            <span>🍻 Friends</span>
+                        </label>
+                        <label class="group-radio-card">
+                            <input type="radio" name="dining_group" value="Business / Work">
+                            <span>💼 Work Team</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 3: Star Rating -->
+                <div class="form-group">
+                    <label class="form-label">3. How would you rate your overall experience? ⭐</label>
+                    <div class="star-rating-input" id="star-rating-input">
+                        <span data-rating="1" class="star">★</span>
+                        <span data-rating="2" class="star">★</span>
+                        <span data-rating="3" class="star">★</span>
+                        <span data-rating="4" class="star">★</span>
+                        <span data-rating="5" class="star active">★</span>
+                    </div>
+                    <input type="hidden" id="fb-rating-val" value="5">
+                </div>
+
+                <!-- Question 4: Suggestions / Comments -->
+                <div class="form-group">
+                    <label class="form-label">4. Any comments or new dishes/drinks you'd love to see? 💡</label>
+                    <textarea id="fb-comments" class="form-textarea" rows="3" placeholder="Tell us your suggestions, favorite flavors, or feedback..."></textarea>
+                </div>
+
+                <!-- Customer Name / Contact (Optional) -->
+                <div class="form-group">
+                    <label class="form-label">Your Name or Phone (Optional)</label>
+                    <input type="text" id="fb-customer-name" class="form-input" placeholder="e.g. John, 0712345678">
+                </div>
+
+                <button type="submit" class="btn-submit-feedback">Submit Feedback &rarr;</button>
+            </form>
+
+            <!-- Success Message Container -->
+            <div id="feedback-success-msg" class="feedback-success-msg" style="display: none;">
+                <div class="success-icon">🎉</div>
+                <h3>Asante Sana!</h3>
+                <p>Your feedback has been received privately and will help train our Rib House AI Assistant to better recommend dishes!</p>
+                <button class="btn-close-success" id="btn-close-success">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Secret Admin Authentication Modal -->
+    <div class="admin-auth-overlay" id="admin-auth-overlay">
+        <div class="admin-auth-modal">
+            <div class="auth-icon">🔒</div>
+            <h3>Secret Owner Portal</h3>
+            <p>Enter security PIN to view private customer feedback & AI stats.</p>
+            <form id="admin-pin-form">
+                <input type="password" id="admin-pin-input" class="pin-input" placeholder="Enter PIN (Default: 1234)" maxlength="8" autocomplete="off" required>
+                <p id="pin-error-text" class="pin-error-text"></p>
+                <div class="auth-btn-row">
+                    <button type="button" class="btn-cancel-auth" id="btn-cancel-auth">Cancel</button>
+                    <button type="submit" class="btn-unlock-auth">Unlock Portal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Secret Owner Admin Dashboard Drawer -->
+    <div class="admin-drawer-overlay" id="admin-drawer-overlay"></div>
+    <aside class="admin-drawer" id="admin-drawer">
+        <div class="admin-drawer-header">
+            <div>
+                <h3 class="admin-drawer-title">👑 OWNER DASHBOARD</h3>
+                <span class="admin-drawer-subtitle">Private Customer Reviews & AI Intelligence</span>
+            </div>
+            <button class="admin-close-btn" id="admin-close-btn">&times;</button>
+        </div>
+
+        <div class="admin-drawer-body">
+            <!-- Analytics Bar -->
+            <div class="admin-stats-grid">
+                <div class="admin-stat-card">
+                    <span class="stat-num" id="stat-total-reviews">0</span>
+                    <span class="stat-label">Total Reviews</span>
+                </div>
+                <div class="admin-stat-card">
+                    <span class="stat-num" id="stat-avg-rating">5.0 ⭐</span>
+                    <span class="stat-label">Avg Rating</span>
+                </div>
+                <div class="admin-stat-card">
+                    <span class="stat-num" id="stat-top-dish">-</span>
+                    <span class="stat-label">Top Favorite Meal</span>
+                </div>
+            </div>
+
+            <!-- Dashboard Actions -->
+            <div class="admin-actions-bar">
+                <button class="admin-action-btn" id="btn-export-csv">📥 Export to CSV</button>
+                <button class="admin-action-btn danger" id="btn-clear-reviews">🗑️ Clear All Feedback</button>
+            </div>
+
+            <!-- Feedback List Stream -->
+            <h4 class="admin-section-title">Customer Feedback Feed</h4>
+            <div class="admin-feedback-feed" id="admin-feedback-feed">
+                <!-- Dynamically rendered feedback cards -->
+            </div>
+        </div>
+    </aside>
+
     <script src="app.js?v=20260729_nores1"></script>
 </body>
 

@@ -147,6 +147,36 @@ function initMenuAIAssistant() {
 
     if (!triggerBtn || !drawer) return;
 
+    // --- LIVE NAIROBI WEATHER & TIME-OF-DAY ENGINE ---
+    let currentNairobiWeather = { temp: 19, condition: "Partly Cloudy", isCold: true, isRainy: false, icon: "🌤️" };
+
+    async function fetchNairobiWeather() {
+        try {
+            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-1.286389&longitude=36.817223&current_weather=true');
+            if (res.ok) {
+                const data = await res.json();
+                const temp = Math.round(data.current_weather.temperature);
+                const code = data.current_weather.weathercode;
+                const isRainy = [51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code);
+                const isCold = temp < 21;
+                
+                let icon = isRainy ? '🌧️' : (temp >= 24 ? '☀️' : '🌤️');
+                let conditionStr = isRainy ? 'Rainy' : (temp >= 24 ? 'Sunny' : 'Partly Cloudy');
+
+                currentNairobiWeather = { temp, condition: conditionStr, isCold, isRainy, icon };
+
+                const badge = document.getElementById('nairobi-weather-badge');
+                if (badge) {
+                    badge.innerHTML = `📍 Nairobi ${temp}°C ${icon}`;
+                }
+            }
+        } catch (e) {
+            console.log('Using default Nairobi weather fallback');
+        }
+    }
+
+    fetchNairobiWeather();
+
     // --- A. ROTATING SPEECH TEASER BUBBLE ---
     const teaserPrompts = [
         '💡 Ask me: "Dishes under 400/="',
@@ -490,10 +520,28 @@ function initMenuAIAssistant() {
             }
         }
 
-        if (q.match(/^(hi|hello|hey|habari|mambo|sasa|good morning|good afternoon|richi|richie)/)) {
+        if (q.match(/^(hi|hello|hey|habari|mambo|sasa|good morning|good afternoon|good evening|weather|recommend|suggest|richi|richie)/)) {
+            const hour = new Date().getHours();
+            const isMorning = hour >= 0 && hour < 12;
+            const timeGreeting = isMorning ? "Good Morning ☕" : (hour < 17 ? "Good Afternoon ☀️" : "Good Evening 🌙");
+
+            let weatherRec = "";
+            let recommendedCards = [];
+
+            if (isMorning) {
+                weatherRec = `\n\n🌅 **Morning Recommendation:** Try our hot **PANCAKE BREAKFAST (400/=)**, **GOAT SOUP BREAKFAST (300/=)**, or **HOT LEMON DAWA TEA (1200/=)** to start your day!`;
+                recommendedCards = KNOWLEDGE.filter(k => k.category === 'breakfast' || k.name.includes('SOUP'));
+            } else if (currentNairobiWeather.isRainy || currentNairobiWeather.isCold) {
+                weatherRec = `\n\n🌧️ **Nairobi Weather Alert (${currentNairobiWeather.temp}°C Chilly):** I highly recommend our steaming **GOAT TUMBUKIZA (1400/=)**, **MATUMBO FRY (400/=)**, or **BEEF STEAK GRILLED (580/=)** to keep you warm!`;
+                recommendedCards = KNOWLEDGE.filter(k => k.tags.includes('tumbukiza') || k.tags.includes('spicy') || k.name.includes('MATUMBO'));
+            } else {
+                weatherRec = `\n\n☀️ **Nairobi Weather Alert (${currentNairobiWeather.temp}°C Sunny/Warm):** Cool down with our chilled **OREO MILKSHAKE (300/=)**, **TROPICAL SMOOTHIES (200/=)**, or juicy **CHOMA GOAT (1 KG)**!`;
+                recommendedCards = KNOWLEDGE.filter(k => k.category === 'cold-drinks' || k.category === 'choma');
+            }
+
             return {
-                text: "Habari! 😊 I am your Rib House AI Culinary Assistant. Ask me to calculate costs for multiple dishes (e.g. *\"How much is 2 Goat Choma and 3 Ugali with Managu?\"*), find budget meals, or recommend drinks!",
-                cards: []
+                text: `${timeGreeting}! 😊 Welcome to **Rib House**. I am synced with live **Nairobi Weather (${currentNairobiWeather.temp}°C ${currentNairobiWeather.icon})**.${weatherRec}`,
+                cards: recommendedCards.slice(0, 3)
             };
         }
 

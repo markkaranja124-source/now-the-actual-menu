@@ -3965,11 +3965,26 @@ img {
     align-items: center;
 }
 
-.admin-drawer-title {
+.ai-header-title {
     font-family: var(--font-serif);
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     color: var(--color-gold);
-    letter-spacing: 1px;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.weather-badge {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--color-gold);
+    background: rgba(197, 160, 89, 0.15);
+    border: 1px solid rgba(197, 160, 89, 0.4);
+    border-radius: 20px;
+    padding: 2px 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    letter-spacing: 0.2px;
 }
 
 .admin-drawer-subtitle {

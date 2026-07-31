@@ -540,7 +540,7 @@ function initMenuAIAssistant() {
             }
 
             return {
-                text: `${timeGreeting}! 😊 Welcome to **Rib House**. I am synced with live **Nairobi Weather (${currentNairobiWeather.temp}°C ${currentNairobiWeather.icon})**.${weatherRec}`,
+                text: `${timeGreeting}! 😊 Welcome to **Rib House**. The weather today is **${currentNairobiWeather.temp}°C ${currentNairobiWeather.icon}**.${weatherRec}`,
                 cards: recommendedCards.slice(0, 3)
             };
         }

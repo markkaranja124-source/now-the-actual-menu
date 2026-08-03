@@ -683,20 +683,46 @@ img {
     z-index: 3;
 }
 
-/* Translucent Glassmorphism strictly for Food Item Boxes */
+/* White Food Item Boxes & High Contrast Menu Cards */
 .menu-grid > div {
-    background: rgba(20, 20, 26, 0.65) !important;
+    background: #FFFFFF !important;
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(230, 126, 34, 0.4) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    color: #111114 !important;
     transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .menu-grid > div:hover {
-    background: rgba(28, 28, 36, 0.8) !important;
+    background: #FFFFFF !important;
     border-color: var(--color-gold) !important;
-    box-shadow: 0 12px 35px rgba(230, 126, 34, 0.25) !important;
+    box-shadow: 0 14px 40px rgba(230, 126, 34, 0.4) !important;
+    transform: translateY(-3px);
+}
+
+.menu-grid > div h3,
+.menu-grid > div h4 {
+    color: #111114 !important;
+    font-weight: 700 !important;
+}
+
+.menu-grid > div p {
+    color: #44444A !important;
+}
+
+.menu-grid > div span {
+    color: #111114 !important;
+}
+
+.menu-grid > div span[style*="color: var(--color-gold)"],
+.menu-grid > div span[style*="color:var(--color-gold)"] {
+    color: #D35400 !important;
+    font-weight: 800 !important;
+}
+
+.menu-grid > div div[style*="border-bottom"] {
+    border-bottom-color: rgba(0, 0, 0, 0.15) !important;
 }
 
 .brand-title {

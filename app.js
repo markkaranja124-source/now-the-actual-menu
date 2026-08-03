@@ -20,11 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
     initSectionSlideshows();
     initMenuAIAssistant();
     initCustomerFeedbackSystem();
+    initClickableMenuDishes();
     updateSelectionBarUI();
 });
 
 window.addEventListener('pageshow', () => {
     window.scrollTo(0, 0);
+    initClickableMenuDishes();
     updateSelectionBarUI();
 });
 
@@ -293,27 +295,165 @@ function toggleSelectItem(dishDataStr) {
 }
 
 function updateSelectionBarUI() {
-    const bar = document.getElementById('ai-selection-bar');
-    const countEl = document.getElementById('ai-selected-count');
-    const totalEl = document.getElementById('ai-selected-total');
-    if (!bar) return;
-
     const cart = getSelectedCart();
     const totalDishes = cart.length;
     const totalQuantity = cart.reduce((sum, item) => sum + item.qty, 0);
     const totalPrice = cart.reduce((sum, item) => sum + (item.numericPrice * item.qty), 0);
 
-    if (totalDishes > 0) {
-        bar.style.display = 'flex';
-        if (countEl) {
-            countEl.textContent = `${totalDishes} ${totalDishes === 1 ? 'Dish' : 'Dishes'} (${totalQuantity} ${totalQuantity === 1 ? 'Item' : 'Items'}) Selected`;
+    // Floating View Your Order Button (Bottom Right)
+    const floatingBtn = document.getElementById('floating-order-btn');
+    const floatingText = document.getElementById('floating-order-text');
+    if (floatingBtn) {
+        if (totalDishes > 0) {
+            floatingBtn.style.display = 'inline-flex';
+            if (floatingText) {
+                floatingText.innerHTML = `Your Order (${totalDishes}) &bull; KSh ${totalPrice.toLocaleString()}/= &rarr;`;
+            }
+        } else {
+            floatingBtn.style.display = 'none';
         }
-        if (totalEl) {
-            totalEl.textContent = `Total: KSh ${totalPrice.toLocaleString()}/=`;
-        }
-    } else {
-        bar.style.display = 'none';
     }
+
+    // AI Selection Bar (if present)
+    const bar = document.getElementById('ai-selection-bar');
+    const countEl = document.getElementById('ai-selected-count');
+    const totalEl = document.getElementById('ai-selected-total');
+    if (bar) {
+        if (totalDishes > 0) {
+            bar.style.display = 'flex';
+            if (countEl) {
+                countEl.textContent = `${totalDishes} ${totalDishes === 1 ? 'Dish' : 'Dishes'} (${totalQuantity} ${totalQuantity === 1 ? 'Item' : 'Items'}) Selected`;
+            }
+            if (totalEl) {
+                totalEl.textContent = `Total: KSh ${totalPrice.toLocaleString()}/=`;
+            }
+        } else {
+            bar.style.display = 'none';
+        }
+    }
+}
+
+// --- 4. CLICKABLE DISH CARDS & ADD TO ORDER SYSTEM ---
+function initClickableMenuDishes() {
+    const getDishContainers = () => {
+        const cardList = [];
+        const allDivs = document.querySelectorAll('.menu-grid > div');
+        allDivs.forEach(div => {
+            if ((div.querySelector('h3') || div.querySelector('h4')) && !div.querySelector('.menu-grid')) {
+                if (!cardList.includes(div)) cardList.push(div);
+            }
+        });
+        return cardList;
+    };
+
+    const cards = getDishContainers();
+
+    cards.forEach(card => {
+        const subRows = card.querySelectorAll('div[style*="justify-content: space-between"], div[style*="justify-content:space-between"]');
+
+        if (subRows && subRows.length > 0) {
+            const mainTitleEl = card.querySelector('h3, h4');
+            const mainTitle = mainTitleEl ? mainTitleEl.innerText.trim() : 'Dish Option';
+
+            subRows.forEach(row => {
+                row.style.cursor = 'pointer';
+                row.style.borderRadius = '6px';
+                row.style.padding = '6px 8px';
+                row.style.transition = 'all 0.2s ease';
+
+                const nameEl = row.querySelector('span:first-child');
+                const priceEl = row.querySelector('span:last-child');
+                if (!nameEl || !priceEl) return;
+
+                const fullDishName = `${mainTitle} (${nameEl.innerText.trim()})`;
+                const priceText = priceEl.innerText.trim();
+
+                const isSel = isDishSelected(fullDishName);
+                if (isSel) {
+                    row.style.background = 'rgba(230, 126, 34, 0.15)';
+                    priceEl.style.color = '#E67E22';
+                } else {
+                    row.style.background = 'transparent';
+                    priceEl.style.color = '#D35400';
+                }
+
+                if (!row.dataset.hasClickListener) {
+                    row.dataset.hasClickListener = 'true';
+                    row.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const dishObj = {
+                            name: fullDishName,
+                            price: priceText,
+                            desc: mainTitle,
+                            category: 'main'
+                        };
+                        toggleSelectItem(JSON.stringify(dishObj));
+                        refreshAllDishCardsUI();
+                    });
+                }
+            });
+        } else {
+            const titleEl = card.querySelector('h3, h4');
+            const priceEl = card.querySelector('span');
+            const descEl = card.querySelector('p');
+
+            if (!titleEl || !priceEl) return;
+
+            const dishName = titleEl.innerText.trim();
+            const priceText = priceEl.innerText.trim();
+            const descText = descEl ? descEl.innerText.trim() : '';
+
+            card.style.cursor = 'pointer';
+
+            let orderBtn = card.querySelector('.card-order-action-btn');
+            if (!orderBtn) {
+                orderBtn = document.createElement('button');
+                orderBtn.className = 'card-order-action-btn';
+                orderBtn.style.marginTop = '14px';
+                orderBtn.style.width = '100%';
+                orderBtn.style.padding = '8px 12px';
+                orderBtn.style.borderRadius = '6px';
+                orderBtn.style.fontSize = '0.8rem';
+                orderBtn.style.fontWeight = '700';
+                orderBtn.style.border = '1px solid #E67E22';
+                orderBtn.style.cursor = 'pointer';
+                orderBtn.style.transition = 'all 0.2s ease';
+                card.appendChild(orderBtn);
+            }
+
+            const selected = isDishSelected(dishName);
+            if (selected) {
+                orderBtn.innerHTML = '✓ Added to Order';
+                orderBtn.style.background = '#E67E22';
+                orderBtn.style.color = '#FFFFFF';
+                card.style.borderColor = '#E67E22';
+            } else {
+                orderBtn.innerHTML = '+ Add to Order';
+                orderBtn.style.background = 'transparent';
+                orderBtn.style.color = '#E67E22';
+                card.style.borderColor = 'rgba(230, 126, 34, 0.4)';
+            }
+
+            if (!card.dataset.hasClickListener) {
+                card.dataset.hasClickListener = 'true';
+                card.addEventListener('click', (e) => {
+                    const dishObj = {
+                        name: dishName,
+                        price: priceText,
+                        desc: descText,
+                        category: 'main'
+                    };
+                    toggleSelectItem(JSON.stringify(dishObj));
+                    refreshAllDishCardsUI();
+                });
+            }
+        }
+    });
+}
+
+function refreshAllDishCardsUI() {
+    initClickableMenuDishes();
+    updateSelectionBarUI();
 }
 
 function initMenuAIAssistant() {

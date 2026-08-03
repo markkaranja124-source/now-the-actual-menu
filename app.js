@@ -1405,7 +1405,7 @@ function initCustomerFeedbackSystem() {
                 closeAdminAuthModal();
                 openAdminDrawer();
             } else {
-                if (pinErrorText) pinErrorText.textContent = '❌ Incorrect PIN code. Access denied.';
+                if (pinErrorText) pinErrorText.textContent = 'Incorrect PIN code. Access denied.';
                 if (adminPinInput) {
                     adminPinInput.style.borderColor = '#EF4444';
                     setTimeout(() => { adminPinInput.style.borderColor = 'var(--color-gold)'; }, 1500);
@@ -1449,7 +1449,7 @@ function initCustomerFeedbackSystem() {
         if (totalEl) totalEl.textContent = feedbacks.length;
 
         if (feedbacks.length === 0) {
-            if (avgEl) avgEl.textContent = '5.0 ⭐';
+            if (avgEl) avgEl.textContent = '5.0 ★';
             if (topDishEl) topDishEl.textContent = 'N/A';
             if (feedContainer) feedContainer.innerHTML = '<p style="color: var(--color-text-muted); font-size: 0.8rem; text-align: center; padding: 20px;">No customer feedback submitted yet.</p>';
             return;
@@ -1457,7 +1457,7 @@ function initCustomerFeedbackSystem() {
 
         // Calculate Stats
         const avgRating = (feedbacks.reduce((acc, curr) => acc + curr.rating, 0) / feedbacks.length).toFixed(1);
-        if (avgEl) avgEl.textContent = `${avgRating} ⭐`;
+        if (avgEl) avgEl.textContent = `${avgRating} ★`;
 
         // Calculate Top Favorite Dish
         const dishCounts = {};
@@ -1477,15 +1477,15 @@ function initCustomerFeedbackSystem() {
                 html += `
                     <div class="feedback-card-item">
                         <div class="feedback-card-header">
-                            <span class="feedback-card-author">👤 ${escapeHTML(item.author)}</span>
+                            <span class="feedback-card-author">${escapeHTML(item.author)}</span>
                             <span class="feedback-card-date">${item.date}</span>
                         </div>
                         <div class="feedback-card-stars">${stars} (${item.rating}/5)</div>
                         <div class="feedback-card-tags">
-                            ${item.dish ? `<span class="feedback-tag">😋 ${escapeHTML(item.dish)}</span>` : ''}
-                            <span class="feedback-tag">👨‍👩‍👧‍👦 ${escapeHTML(item.group)}</span>
+                            ${item.dish ? `<span class="feedback-tag">${escapeHTML(item.dish)}</span>` : ''}
+                            <span class="feedback-tag">${escapeHTML(item.group)}</span>
                         </div>
-                        ${item.comments ? `<div class="feedback-card-text">💬 "${escapeHTML(item.comments)}"</div>` : ''}
+                        ${item.comments ? `<div class="feedback-card-text">"${escapeHTML(item.comments)}"</div>` : ''}
                     </div>
                 `;
             });

@@ -129,7 +129,7 @@ function initMenuDishSearch() {
 
         if (!query) {
             if (clearBtn) clearBtn.style.display = 'none';
-            if (countText) countText.textContent = 'Showing All Dishes';
+            if (countText) countText.textContent = 'All Dishes';
             
             cards.forEach(card => {
                 card.classList.remove('dish-card-hidden', 'dish-card-search-match');
@@ -174,9 +174,9 @@ function initMenuDishSearch() {
 
         if (countText) {
             if (matchCount === 0) {
-                countText.textContent = `No dishes found for "${searchInput.value.trim()}"`;
+                countText.textContent = '0 Found';
             } else {
-                countText.textContent = `${matchCount} Dish${matchCount === 1 ? '' : 'es'} Found for "${searchInput.value.trim()}"`;
+                countText.textContent = `${matchCount} Found`;
             }
         }
 

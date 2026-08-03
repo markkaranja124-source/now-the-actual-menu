@@ -335,46 +335,57 @@ function updateSelectionBarUI() {
 
 // --- 4. CLICKABLE DISH CARDS & ADD TO ORDER SYSTEM ---
 function initClickableMenuDishes() {
-    const getDishContainers = () => {
-        const cardList = [];
-        const allDivs = document.querySelectorAll('.menu-grid > div');
-        allDivs.forEach(div => {
-            if ((div.querySelector('h3') || div.querySelector('h4')) && !div.querySelector('.menu-grid')) {
-                if (!cardList.includes(div)) cardList.push(div);
+    const allCards = document.querySelectorAll('.menu-grid > div');
+
+    allCards.forEach(card => {
+        const h3Header = card.querySelector('h3, h4');
+        const mainTitle = h3Header ? h3Header.innerText.trim() : 'Dish';
+
+        // Detect if this card has sub-item option rows (like Matumbo Fry with sides)
+        const subContainers = card.querySelectorAll('div > div');
+        const optionRows = [];
+
+        subContainers.forEach(div => {
+            const spans = div.querySelectorAll('span');
+            if (spans.length === 2 && !div.querySelector('h3, h4')) {
+                optionRows.push(div);
             }
         });
-        return cardList;
-    };
 
-    const cards = getDishContainers();
+        // Also check direct child divs if not nested
+        if (optionRows.length === 0) {
+            const directDivs = card.querySelectorAll(':scope > div > div, :scope > div');
+            directDivs.forEach(div => {
+                const spans = div.querySelectorAll('span');
+                if (spans.length === 2 && !div.querySelector('h3, h4')) {
+                    if (!optionRows.includes(div)) optionRows.push(div);
+                }
+            });
+        }
 
-    cards.forEach(card => {
-        const subRows = card.querySelectorAll('div[style*="justify-content: space-between"], div[style*="justify-content:space-between"]');
+        if (optionRows.length >= 2) {
+            // MULTI-OPTION CARD (e.g., Matumbo Fry, Beef Stew, etc.)
+            optionRows.forEach(row => {
+                const spans = row.querySelectorAll('span');
+                if (spans.length < 2) return;
 
-        if (subRows && subRows.length > 0) {
-            const mainTitleEl = card.querySelector('h3, h4');
-            const mainTitle = mainTitleEl ? mainTitleEl.innerText.trim() : 'Dish Option';
+                const sideName = spans[0].innerText.trim();
+                const sidePrice = spans[1].innerText.trim();
 
-            subRows.forEach(row => {
+                if (!sideName || !sidePrice) return;
+                const fullDishName = `${mainTitle} (${sideName})`;
+
                 row.style.cursor = 'pointer';
-                row.style.borderRadius = '6px';
-                row.style.padding = '6px 8px';
                 row.style.transition = 'all 0.2s ease';
-
-                const nameEl = row.querySelector('span:first-child');
-                const priceEl = row.querySelector('span:last-child');
-                if (!nameEl || !priceEl) return;
-
-                const fullDishName = `${mainTitle} (${nameEl.innerText.trim()})`;
-                const priceText = priceEl.innerText.trim();
 
                 const isSel = isDishSelected(fullDishName);
                 if (isSel) {
-                    row.style.background = 'rgba(230, 126, 34, 0.15)';
-                    priceEl.style.color = '#E67E22';
+                    row.style.background = 'rgba(230, 126, 34, 0.2)';
+                    spans[1].style.color = '#E67E22';
+                    spans[1].style.fontWeight = 'bold';
                 } else {
                     row.style.background = 'transparent';
-                    priceEl.style.color = '#D35400';
+                    spans[1].style.color = '#D35400';
                 }
 
                 if (!row.dataset.hasClickListener) {
@@ -383,7 +394,7 @@ function initClickableMenuDishes() {
                         e.stopPropagation();
                         const dishObj = {
                             name: fullDishName,
-                            price: priceText,
+                            price: sidePrice,
                             desc: mainTitle,
                             category: 'main'
                         };
@@ -393,15 +404,15 @@ function initClickableMenuDishes() {
                 }
             });
         } else {
-            const titleEl = card.querySelector('h3, h4');
-            const priceEl = card.querySelector('span');
-            const descEl = card.querySelector('p');
+            // SINGLE DISH CARD (e.g., Pancake Breakfast, Mini Breakfast, Beverages)
+            const priceSpan = card.querySelector('span');
+            const descP = card.querySelector('p');
 
-            if (!titleEl || !priceEl) return;
+            if (!h3Header || !priceSpan) return;
 
-            const dishName = titleEl.innerText.trim();
-            const priceText = priceEl.innerText.trim();
-            const descText = descEl ? descEl.innerText.trim() : '';
+            const dishName = mainTitle;
+            const priceText = priceSpan.innerText.trim();
+            const descText = descP ? descP.innerText.trim() : '';
 
             card.style.cursor = 'pointer';
 

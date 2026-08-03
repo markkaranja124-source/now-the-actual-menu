@@ -14,6 +14,7 @@ window.addEventListener('beforeunload', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo(0, 0);
+    initSideDrawerNavigation();
     initScrollNavbar();
     initSectionSlideshows();
     initMenuAIAssistant();
@@ -26,7 +27,75 @@ window.addEventListener('pageshow', () => {
     updateSelectionBarUI();
 });
 
-// --- 1. NAVBAR SCROLL OBSERVER ---
+// --- 1. LUXURY SIDE DRAWER NAVIGATION LOGIC ---
+function initSideDrawerNavigation() {
+    const toggleBtn = document.getElementById('side-drawer-toggle');
+    const closeBtn = document.getElementById('drawer-close-btn');
+    const backdrop = document.getElementById('drawer-backdrop');
+    const drawer = document.getElementById('side-drawer');
+    const drawerLinks = document.querySelectorAll('.drawer-link');
+    const aiDrawerLink = document.getElementById('drawer-ai-helper-link');
+
+    if (!toggleBtn || !drawer || !backdrop) return;
+
+    function openDrawer() {
+        drawer.classList.add('active');
+        backdrop.classList.add('active');
+        drawer.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden'; // Lock body scroll when drawer is open
+    }
+
+    function closeDrawer() {
+        drawer.classList.remove('active');
+        backdrop.classList.remove('active');
+        drawer.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    toggleBtn.addEventListener('click', openDrawer);
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+
+    // Escape key listener
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && drawer.classList.contains('active')) {
+            closeDrawer();
+        }
+    });
+
+    // Drawer links auto-close & smooth scroll
+    drawerLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            
+            if (link === aiDrawerLink) {
+                e.preventDefault();
+                closeDrawer();
+                // Open AI drawer if AI chat trigger exists
+                const aiFabBtn = document.getElementById('ai-fab-btn') || document.querySelector('.ai-fab-container button');
+                if (aiFabBtn) {
+                    setTimeout(() => aiFabBtn.click(), 200);
+                }
+                return;
+            }
+
+            if (href && href.startsWith('#')) {
+                const targetSec = document.querySelector(href);
+                if (targetSec) {
+                    e.preventDefault();
+                    closeDrawer();
+                    setTimeout(() => {
+                        targetSec.scrollIntoView({ behavior: 'smooth' });
+                    }, 250);
+                }
+            } else {
+                closeDrawer();
+            }
+        });
+    });
+}
+
+// --- 2. NAVBAR SCROLL OBSERVER ---
 function initScrollNavbar() {
     // Navbar moves naturally with scroll
 }

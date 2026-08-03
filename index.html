@@ -215,18 +215,20 @@
                         fresh.</p>
                 </div>
 
-                <!-- Navigation Quick Pills for Breakfast & Barista Subsections -->
-                <div class="catalog-controls" style="margin-bottom: 40px;">
-                    <div class="category-tabs-wrapper">
-                        <a href="#bk-combos" class="category-pill active" style="text-decoration: none;">
-                            <span>☕ BREAKFAST COMBOS & SPECIALS</span>
-                        </a>
-                        <a href="#bk-hot" class="category-pill" style="text-decoration: none;">
-                            <span>🔥 HOT BEVERAGES & BARISTA</span>
-                        </a>
-                        <a href="#bk-cold" class="category-pill" style="text-decoration: none;">
-                            <span>🥤 COLD BEVERAGES & SHAKES</span>
-                        </a>
+                <!-- Live Interactive Dish Search Bar -->
+                <div class="catalog-controls search-bar-container" style="margin-bottom: 40px;">
+                    <div class="dish-search-wrapper">
+                        <div class="dish-search-input-box">
+                            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <input type="text" id="menu-dish-search-input" class="dish-search-input" placeholder="Search any dish (e.g. Pancake, Choma, Beef, Latte, Juice)..." autocomplete="off">
+                            <button class="search-clear-btn" id="search-clear-btn" aria-label="Clear Search" style="display: none;">&times;</button>
+                        </div>
+                        <div class="search-results-badge" id="search-results-badge">
+                            <span id="search-count-text">Showing All Dishes</span>
+                        </div>
                     </div>
                 </div>
 

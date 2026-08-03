@@ -15,6 +15,7 @@ window.addEventListener('beforeunload', () => {
 document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo(0, 0);
     initSideDrawerNavigation();
+    initMenuDishSearch();
     initScrollNavbar();
     initSectionSlideshows();
     initMenuAIAssistant();
@@ -95,7 +96,82 @@ function initSideDrawerNavigation() {
     });
 }
 
-// --- 2. NAVBAR SCROLL OBSERVER ---
+// --- 2. LIVE INTERACTIVE DISH SEARCH & FILTER LOGIC ---
+function initMenuDishSearch() {
+    const searchInput = document.getElementById('menu-dish-search-input');
+    const clearBtn = document.getElementById('search-clear-btn');
+    const countText = document.getElementById('search-count-text');
+
+    if (!searchInput) return;
+
+    // Collect all dish card items across all menu grids
+    const getDishCards = () => {
+        return document.querySelectorAll('.menu-grid > div, .dish-card, .menu-card, .menu-item-card');
+    };
+
+    const performSearch = () => {
+        const query = searchInput.value.trim().toLowerCase();
+        const cards = getDishCards();
+        let matchCount = 0;
+        let firstMatchCard = null;
+
+        if (!query) {
+            if (clearBtn) clearBtn.style.display = 'none';
+            if (countText) countText.textContent = 'Showing All Dishes';
+            
+            cards.forEach(card => {
+                card.classList.remove('dish-card-hidden', 'dish-card-search-match');
+            });
+            return;
+        }
+
+        if (clearBtn) clearBtn.style.display = 'inline-flex';
+
+        cards.forEach(card => {
+            const content = card.innerText.toLowerCase();
+            if (content.includes(query)) {
+                card.classList.remove('dish-card-hidden');
+                card.classList.add('dish-card-search-match');
+                matchCount++;
+                if (!firstMatchCard) firstMatchCard = card;
+            } else {
+                card.classList.add('dish-card-hidden');
+                card.classList.remove('dish-card-search-match');
+            }
+        });
+
+        if (countText) {
+            if (matchCount === 0) {
+                countText.textContent = 'No matching dishes found';
+            } else {
+                countText.textContent = `${matchCount} Dish${matchCount === 1 ? '' : 'es'} Found`;
+            }
+        }
+    };
+
+    searchInput.addEventListener('input', performSearch);
+
+    // Pressing Enter jumps / scrolls to the first matching dish
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const firstMatch = document.querySelector('.dish-card-search-match');
+            if (firstMatch) {
+                firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    });
+
+    if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            performSearch();
+            searchInput.focus();
+        });
+    }
+}
+
+// --- 3. NAVBAR SCROLL OBSERVER ---
 function initScrollNavbar() {
     // Navbar moves naturally with scroll
 }

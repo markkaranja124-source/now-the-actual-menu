@@ -3515,48 +3515,160 @@ img {
     transform: translateY(-1px);
 }
 
-/* Redesigned In-Flow Transparent Glassmorphic Order Summary Card */
+/* White Theme Overrides for order.html Header, Dish Item Cards, and Summary Box */
+.page-header-bar {
+    background: #FFFFFF !important;
+    border-bottom: 1px solid rgba(230, 126, 34, 0.3) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.btn-back-menu {
+    color: #111114 !important;
+    font-weight: 700 !important;
+}
+
+.btn-back-menu:hover {
+    color: #E67E22 !important;
+}
+
+.nav-link-btn {
+    background: #FFFFFF !important;
+    color: #111114 !important;
+    border: 1px solid rgba(230, 126, 34, 0.4) !important;
+    font-weight: 700 !important;
+}
+
+.nav-link-btn:hover,
+.nav-link-btn.active {
+    background: #E67E22 !important;
+    color: #FFFFFF !important;
+    border-color: #E67E22 !important;
+    box-shadow: 0 4px 15px rgba(230, 126, 34, 0.35) !important;
+}
+
+.nav-link-btn.btn-coming-soon {
+    background: #FFFFFF !important;
+    border-color: rgba(230, 126, 34, 0.4) !important;
+    color: #D35400 !important;
+}
+
+.nav-link-btn.btn-coming-soon:hover,
+.nav-link-btn.btn-coming-soon.active {
+    background: #E67E22 !important;
+    color: #FFFFFF !important;
+}
+
+/* White Selected Food Item Cards */
+.order-item-row-luxury,
+.order-item-row-vertical {
+    background: #FFFFFF !important;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(230, 126, 34, 0.4) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    transition: all 0.35s ease;
+}
+
+.order-item-row-luxury:hover,
+.order-item-row-vertical:hover {
+    background: #FFFFFF !important;
+    border-color: #E67E22 !important;
+    box-shadow: 0 14px 40px rgba(230, 126, 34, 0.35) !important;
+    transform: translateY(-3px);
+}
+
+.order-dish-title {
+    color: #111114 !important;
+    font-weight: 700 !important;
+}
+
+.order-dish-desc {
+    color: #44444A !important;
+}
+
+.order-dish-price-tag,
+.qty-pill-label,
+.qty-label,
+.subtotal-label {
+    color: #222226 !important;
+    font-weight: 600 !important;
+}
+
+.order-dish-price-tag strong,
+.order-subtotal-amount {
+    color: #D35400 !important;
+    font-weight: 800 !important;
+}
+
+.quantity-controls-pill,
+.quantity-controls-box {
+    background: #F8F8FA !important;
+    border: 1px solid rgba(230, 126, 34, 0.35) !important;
+}
+
+.qty-number,
+.qty-pill-val {
+    color: #111114 !important;
+    font-weight: 800 !important;
+}
+
+.btn-qty-round,
+.btn-qty {
+    color: #D35400 !important;
+    border-color: #E67E22 !important;
+    background: rgba(230, 126, 34, 0.12) !important;
+}
+
+.btn-qty-round:hover,
+.btn-qty:hover {
+    background: #E67E22 !important;
+    color: #FFFFFF !important;
+}
+
+.btn-remove-pill,
+.btn-remove-item {
+    background: #FFFFFF !important;
+    border: 1px solid #E74C3C !important;
+    color: #E74C3C !important;
+    font-weight: 700 !important;
+}
+
+.btn-remove-pill:hover,
+.btn-remove-item:hover {
+    background: #E74C3C !important;
+    color: #FFFFFF !important;
+}
+
+/* White Order Summary Card */
 .order-summary-luxury-card {
-    background: rgba(14, 12, 18, 0.35);
-    backdrop-filter: blur(24px) saturate(200%);
-    -webkit-backdrop-filter: blur(24px) saturate(200%);
-    border: 1px solid rgba(197, 160, 89, 0.45);
+    background: #FFFFFF !important;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(230, 126, 34, 0.4) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25) !important;
     border-radius: 20px;
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     padding: 40px;
     margin-top: 45px;
     width: 100%;
 }
 
 .summary-top-tag {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--color-gold);
-    display: block;
-    text-align: center;
-    margin-bottom: 6px;
-    text-shadow: 0 0 8px rgba(197, 160, 89, 0.4);
+    color: #E67E22 !important;
+    font-weight: 800 !important;
 }
 
 .summary-main-heading {
-    font-family: var(--font-serif);
-    font-size: 2.2rem;
-    color: var(--color-cream);
-    text-align: center;
-    letter-spacing: 1px;
-    margin-bottom: 4px;
+    color: #111114 !important;
+    font-weight: 700 !important;
 }
 
 .summary-subtext {
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
-    text-align: center;
-    margin-bottom: 32px;
+    color: #44444A !important;
 }
 
-/* Info Cards Grid inside Order Summary */
 .summary-stats-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -3565,10 +3677,8 @@ img {
 }
 
 .summary-stat-card {
-    background: rgba(8, 6, 12, 0.3);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(197, 160, 89, 0.25);
+    background: #F8F8FA !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
     border-radius: 12px;
     padding: 20px;
     display: flex;
@@ -3576,77 +3686,46 @@ img {
     align-items: center;
     text-align: center;
     gap: 8px;
-    transition: var(--transition-fast);
 }
 
 .summary-stat-card:hover {
-    border-color: var(--color-gold);
-    background: rgba(18, 16, 24, 0.8);
+    border-color: #E67E22 !important;
+    background: #FFFFFF !important;
 }
 
 .stat-card-label {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--color-text-muted);
-    font-weight: 600;
+    color: #55555C !important;
+    font-weight: 700 !important;
 }
 
 .stat-card-value {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--color-cream);
+    color: #111114 !important;
+    font-weight: 800 !important;
 }
 
-.stat-card-value.gold-text {
-    color: var(--color-gold);
-    font-family: var(--font-serif);
-}
-
-/* Grand Total Banner */
 .summary-total-banner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid var(--color-border-gold);
-    border-bottom: 1px solid var(--color-border-gold);
+    border-top: 1px solid rgba(0, 0, 0, 0.15) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15) !important;
     padding: 20px 0;
     margin-bottom: 32px;
 }
 
 .summary-total-title {
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--color-cream);
+    color: #111114 !important;
+    font-weight: 800 !important;
 }
 
 .summary-grand-total {
-    font-family: var(--font-serif);
-    font-size: 2.5rem;
-    color: var(--color-gold);
-    font-weight: 800;
-    text-shadow: 0 0 15px rgba(229, 193, 88, 0.4);
+    color: #D35400 !important;
+    font-weight: 800 !important;
+    text-shadow: none !important;
 }
 
-/* High-Impact Gold Gradient Checkout Button */
 .btn-checkout-gold-gradient {
-    display: block;
-    width: 100%;
-    background: linear-gradient(135deg, #E5C158 0%, #C5A059 50%, #9A7B3E 100%);
-    color: #08080A;
-    text-align: center;
-    padding: 20px;
-    font-size: 0.9rem;
-    font-weight: 800;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    border-radius: 10px;
-    text-decoration: none;
-    transition: all 0.35s ease;
-    box-shadow: 0 8px 25px rgba(197, 160, 89, 0.35);
-    border: none;
+    background: linear-gradient(135deg, #E67E22 0%, #D35400 100%) !important;
+    color: #FFFFFF !important;
+    font-weight: 800 !important;
+    box-shadow: 0 8px 25px rgba(230, 126, 34, 0.4) !important;
 }
 
 .btn-checkout-gold-gradient:hover {

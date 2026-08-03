@@ -3940,12 +3940,13 @@ img {
     -webkit-backdrop-filter: blur(12px);
     color: var(--color-cream);
     padding: 10px 18px;
-    border-radius: 30px;
+    border-radius: 8px;
     font-size: 0.82rem;
     font-weight: 600;
     letter-spacing: 0.5px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     cursor: pointer;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(197, 160, 89, 0.25);

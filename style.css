@@ -4081,14 +4081,21 @@ img {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(197, 160, 89, 0.25);
     border-radius: 8px;
-    padding: 8px 10px;
-    font-size: 0.75rem;
+    padding: 10px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
     color: var(--color-cream);
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
+    text-align: center;
     transition: var(--transition-fast);
+}
+
+.group-radio-card input[type="radio"] {
+    display: none;
 }
 
 .group-radio-card:hover, .group-radio-card:has(input:checked) {

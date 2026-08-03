@@ -96,7 +96,7 @@ function initSideDrawerNavigation() {
     });
 }
 
-// --- 2. LIVE INTERACTIVE DISH SEARCH & FILTER LOGIC ---
+// --- 2. LIVE INTERACTIVE DISH SEARCH & FILTER LOGIC (ENTIRE PAGE) ---
 function initMenuDishSearch() {
     const searchInput = document.getElementById('menu-dish-search-input');
     const clearBtn = document.getElementById('search-clear-btn');
@@ -104,10 +104,22 @@ function initMenuDishSearch() {
 
     if (!searchInput) return;
 
-    // Collect all dish card items across all menu grids
+    // Collect all dish cards across all sections in the entire page
     const getDishCards = () => {
-        return document.querySelectorAll('.menu-grid > div, .dish-card, .menu-card, .menu-item-card');
+        const cardList = [];
+        const allDivs = document.querySelectorAll('.menu-grid > div, section div[style*="background"], div[style*="var(--color-card-bg)"]');
+        allDivs.forEach(div => {
+            // Ensure this is a dish card (has h3 or h4 title) and not a wrapper grid
+            if ((div.querySelector('h3') || div.querySelector('h4')) && !div.querySelector('.menu-grid')) {
+                if (!cardList.includes(div)) {
+                    cardList.push(div);
+                }
+            }
+        });
+        return cardList;
     };
+
+    let scrollTimeout = null;
 
     const performSearch = () => {
         const query = searchInput.value.trim().toLowerCase();
@@ -122,14 +134,24 @@ function initMenuDishSearch() {
             cards.forEach(card => {
                 card.classList.remove('dish-card-hidden', 'dish-card-search-match');
             });
+
+            // Show all section grids & subsection headers
+            document.querySelectorAll('.menu-grid, [id^="bk-"], [id$="-section"]').forEach(el => {
+                el.style.display = '';
+            });
             return;
         }
 
         if (clearBtn) clearBtn.style.display = 'inline-flex';
 
+        // Multi-word matching (e.g., "beef choma" matches cards containing both "beef" and "choma")
+        const queryTokens = query.split(/\s+/).filter(t => t.length > 0);
+
         cards.forEach(card => {
             const content = card.innerText.toLowerCase();
-            if (content.includes(query)) {
+            const isMatch = queryTokens.every(token => content.includes(token));
+
+            if (isMatch) {
                 card.classList.remove('dish-card-hidden');
                 card.classList.add('dish-card-search-match');
                 matchCount++;
@@ -140,18 +162,36 @@ function initMenuDishSearch() {
             }
         });
 
+        // Hide empty section grids where 0 items match
+        document.querySelectorAll('.menu-grid').forEach(grid => {
+            const visibleItems = grid.querySelectorAll('> div:not(.dish-card-hidden)');
+            if (visibleItems.length === 0) {
+                grid.style.display = 'none';
+            } else {
+                grid.style.display = '';
+            }
+        });
+
         if (countText) {
             if (matchCount === 0) {
-                countText.textContent = 'No matching dishes found';
+                countText.textContent = `No dishes found for "${searchInput.value.trim()}"`;
             } else {
-                countText.textContent = `${matchCount} Dish${matchCount === 1 ? '' : 'es'} Found`;
+                countText.textContent = `${matchCount} Dish${matchCount === 1 ? '' : 'es'} Found for "${searchInput.value.trim()}"`;
             }
+        }
+
+        // Auto-scroll page to the first matching dish after user types
+        if (firstMatchCard) {
+            if (scrollTimeout) clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                firstMatchCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
         }
     };
 
     searchInput.addEventListener('input', performSearch);
 
-    // Pressing Enter jumps / scrolls to the first matching dish
+    // Hitting Enter jumps immediately to the first matching dish card
     searchInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -167,6 +207,7 @@ function initMenuDishSearch() {
             searchInput.value = '';
             performSearch();
             searchInput.focus();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
 }

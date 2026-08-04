@@ -162,10 +162,10 @@ img {
     gap: 20px;
 }
 
-.nav-left {
+.nav-top-row {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 16px;
 }
 
 /* Header Navbar Search Box next to MENU Button */
@@ -4941,43 +4941,49 @@ img {
 
     .nav-container {
         display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
+        flex-direction: column;
+        gap: 10px;
         width: 100%;
         padding: 0;
     }
 
-    .nav-left {
+    .nav-top-row {
         display: flex;
         align-items: center;
-        gap: 10px;
+        justify-content: space-between;
+        width: 100%;
     }
 
     .menu-box-btn {
-        padding: 6px 12px;
-        border-radius: 6px;
-        background: rgba(197, 160, 89, 0.2) !important;
+        padding: 8px 14px !important;
+        border-radius: 6px !important;
+        background: rgba(197, 160, 89, 0.25) !important;
         border: 1px solid var(--color-gold) !important;
-        flex-shrink: 0;
+        flex-shrink: 0 !important;
     }
 
     .menu-box-text {
-        font-size: 0.75rem;
-        letter-spacing: 2px;
+        font-size: 0.8rem !important;
+        letter-spacing: 2px !important;
         color: #FFFFFF !important;
     }
 
     .nav-search-box {
-        flex: 1;
-        max-width: 180px;
-        padding: 4px 10px;
-        border-radius: 6px;
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        background: rgba(21, 21, 26, 0.95) !important;
+        border: 1px solid var(--color-gold) !important;
+        padding: 8px 14px !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
     }
 
     .nav-search-input {
         width: 100% !important;
-        font-size: 0.75rem;
+        font-size: 0.85rem !important;
+        color: #FFFFFF !important;
     }
 
     .brand-logo {
@@ -4988,11 +4994,11 @@ img {
     }
 
     .nav-logo-img {
-        height: 32px;
+        height: 34px;
     }
 
     .brand-title {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
         letter-spacing: 2px;
     }
 

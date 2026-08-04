@@ -401,8 +401,12 @@ function initClickableMenuDishes() {
                 }
 
                 const isSel = isDishSelected(fullDishName);
+                spans[0].style.fontFamily = 'var(--font-serif)';
+                spans[0].style.fontSize = '1.05rem';
+                spans[0].style.color = '#111114';
+
                 spans[1].style.fontFamily = 'var(--font-serif)';
-                spans[1].style.fontSize = '1.2rem';
+                spans[1].style.fontSize = '1.25rem';
                 spans[1].style.fontWeight = 'bold';
                 spans[1].style.color = '#D35400';
 

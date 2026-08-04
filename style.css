@@ -699,13 +699,15 @@ img {
     color: #44444A !important;
 }
 
-.menu-grid > div span {
-    color: #111114 !important;
+.menu-grid > div span:first-child {
+    font-family: var(--font-serif);
+    color: #111114;
 }
 
+.menu-grid > div span:last-child,
+.menu-grid > div div > span:last-child,
 .menu-grid > div span[style*="color: var(--color-gold)"],
-.menu-grid > div span[style*="color:var(--color-gold)"],
-.menu-grid > div div > span:last-child {
+.menu-grid > div span[style*="color:var(--color-gold)"] {
     font-family: var(--font-serif) !important;
     font-size: 1.25rem !important;
     color: #D35400 !important;

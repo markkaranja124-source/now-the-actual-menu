@@ -104,8 +104,8 @@
     <!-- Floating Transparent Navbar over Hero -->
     <header class="navbar" id="navbar">
         <div class="nav-container">
-            <!-- Top Header Row (MENU Trigger Button & Brand Logo) -->
-            <div class="nav-top-row">
+            <!-- Left Controls: MENU Button & Search Sign Icon Button -->
+            <div class="nav-left">
                 <button class="menu-box-btn" id="side-drawer-toggle" aria-label="Open Navigation Menu">
                     <span class="menu-box-text">MENU</span>
                     <span class="menu-box-icon">
@@ -115,23 +115,27 @@
                     </span>
                 </button>
 
-                <!-- Centered Luxury Logo Emblem -->
-                <a href="#hero" class="brand-logo" aria-label="Rib House Homepage">
-                    <img src="logo.png" alt="Rib House Logo" class="nav-logo-img">
-                    <span class="brand-title">RIB HOUSE</span>
-                    <span class="brand-subtitle">BEST QUALITY GRILLED MEAT</span>
-                </a>
+                <div class="nav-search-container" id="nav-search-container">
+                    <button class="nav-search-toggle-btn" id="search-toggle-btn" aria-label="Search Dishes">
+                        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+
+                    <div class="nav-search-input-wrapper" id="nav-search-input-wrapper">
+                        <input type="text" id="menu-dish-search-input" class="nav-search-input" placeholder="Search any dish..." autocomplete="off">
+                        <button class="search-clear-btn" id="search-clear-btn" aria-label="Clear Search" style="display: none;">&times;</button>
+                    </div>
+                </div>
             </div>
 
-            <!-- Full Width Search Bar Container -->
-            <div class="nav-search-box">
-                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <input type="text" id="menu-dish-search-input" class="nav-search-input" placeholder="Search any dish..." autocomplete="off">
-                <button class="search-clear-btn" id="search-clear-btn" aria-label="Clear Search" style="display: none;">&times;</button>
-            </div>
+            <!-- Centered Luxury Logo Emblem -->
+            <a href="#hero" class="brand-logo" aria-label="Rib House Homepage">
+                <img src="logo.png" alt="Rib House Logo" class="nav-logo-img">
+                <span class="brand-title">RIB HOUSE</span>
+                <span class="brand-subtitle">BEST QUALITY GRILLED MEAT</span>
+            </a>
         </div>
     </header>
 

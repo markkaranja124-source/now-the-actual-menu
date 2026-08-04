@@ -364,6 +364,10 @@ function initClickableMenuDishes() {
 
         if (optionRows.length >= 2) {
             // MULTI-OPTION CARD (e.g. Matumbo Fry, Beef Stew, Goat Stew, etc.)
+            // Remove any bottom card button if present so only neat inline option pills show
+            const existingCardBtn = card.querySelector('.card-order-action-btn');
+            if (existingCardBtn) existingCardBtn.remove();
+
             optionRows.forEach(row => {
                 const spans = row.querySelectorAll('span');
                 if (spans.length < 2) return;

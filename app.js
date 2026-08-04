@@ -307,7 +307,7 @@ function updateSelectionBarUI() {
         if (totalDishes > 0) {
             floatingBtn.style.display = 'inline-flex';
             if (floatingText) {
-                floatingText.innerHTML = `Your Order (${totalDishes}) &bull; KSh ${totalPrice.toLocaleString()}/= &rarr;`;
+                floatingText.innerHTML = `Your Order &rarr;`;
             }
         } else {
             floatingBtn.style.display = 'none';

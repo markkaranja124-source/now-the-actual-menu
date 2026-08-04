@@ -159,13 +159,13 @@ img {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap: 24px;
 }
 
 .nav-top-row {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 36px;
 }
 
 /* Header Navbar Search Box next to MENU Button */

@@ -347,24 +347,23 @@ function initClickableMenuDishes() {
 
         subContainers.forEach(div => {
             const spans = div.querySelectorAll('span');
-            if (spans.length === 2 && !div.querySelector('h3, h4')) {
+            if (spans.length >= 2 && !div.querySelector('h3, h4')) {
                 optionRows.push(div);
             }
         });
 
-        // Also check direct child divs if not nested
         if (optionRows.length === 0) {
             const directDivs = card.querySelectorAll(':scope > div > div, :scope > div');
             directDivs.forEach(div => {
                 const spans = div.querySelectorAll('span');
-                if (spans.length === 2 && !div.querySelector('h3, h4')) {
+                if (spans.length >= 2 && !div.querySelector('h3, h4')) {
                     if (!optionRows.includes(div)) optionRows.push(div);
                 }
             });
         }
 
         if (optionRows.length >= 2) {
-            // MULTI-OPTION CARD (e.g., Matumbo Fry, Beef Stew, etc.)
+            // MULTI-OPTION CARD (e.g. Matumbo Fry, Beef Stew, Goat Stew, etc.)
             optionRows.forEach(row => {
                 const spans = row.querySelectorAll('span');
                 if (spans.length < 2) return;
@@ -377,15 +376,41 @@ function initClickableMenuDishes() {
 
                 row.style.cursor = 'pointer';
                 row.style.transition = 'all 0.2s ease';
+                row.style.borderRadius = '6px';
+                row.style.padding = '6px 8px';
+
+                // Find or create neat inline action pill button inside the row
+                let rowPill = row.querySelector('.row-order-pill');
+                if (!rowPill) {
+                    rowPill = document.createElement('button');
+                    rowPill.className = 'row-order-pill';
+                    rowPill.style.marginLeft = '10px';
+                    rowPill.style.padding = '3px 8px';
+                    rowPill.style.borderRadius = '4px';
+                    rowPill.style.fontSize = '0.725rem';
+                    rowPill.style.fontWeight = '700';
+                    rowPill.style.border = '1px solid #E67E22';
+                    rowPill.style.cursor = 'pointer';
+                    rowPill.style.transition = 'all 0.2s ease';
+                    rowPill.style.flexShrink = '0';
+                    row.appendChild(rowPill);
+                }
 
                 const isSel = isDishSelected(fullDishName);
                 if (isSel) {
-                    row.style.background = 'rgba(230, 126, 34, 0.2)';
-                    spans[1].style.color = '#E67E22';
+                    row.style.background = 'rgba(230, 126, 34, 0.12)';
+                    rowPill.innerHTML = '✓ Added';
+                    rowPill.style.background = '#E67E22';
+                    rowPill.style.color = '#FFFFFF';
+                    spans[1].style.color = '#D35400';
                     spans[1].style.fontWeight = 'bold';
                 } else {
                     row.style.background = 'transparent';
+                    rowPill.innerHTML = '+ Add';
+                    rowPill.style.background = 'transparent';
+                    rowPill.style.color = '#E67E22';
                     spans[1].style.color = '#D35400';
+                    spans[1].style.fontWeight = 'bold';
                 }
 
                 if (!row.dataset.hasClickListener) {

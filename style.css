@@ -186,7 +186,7 @@ img {
     background: rgba(21, 21, 26, 0.75);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--color-border-gold);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     padding: 6px 14px;
     border-radius: 4px;
     transition: var(--transition-fast);
@@ -195,8 +195,8 @@ img {
 
 .nav-search-box:focus-within {
     background: rgba(21, 21, 26, 0.95);
-    border-color: var(--color-gold-bright);
-    box-shadow: 0 0 15px var(--color-gold-glow);
+    border-color: #FFFFFF;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
     max-width: 340px;
 }
 
@@ -204,7 +204,7 @@ img {
     background: transparent;
     border: none;
     outline: none;
-    color: var(--color-cream);
+    color: #FFFFFF;
     font-family: var(--font-sans);
     font-size: 0.8rem;
     padding: 2px 6px;
@@ -217,7 +217,7 @@ img {
 }
 
 .nav-search-input::placeholder {
-    color: rgba(244, 239, 234, 0.45);
+    color: rgba(255, 255, 255, 0.65);
     font-size: 0.775rem;
 }
 
@@ -231,7 +231,7 @@ img {
     background: rgba(21, 21, 26, 0.75);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--color-border-gold);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     padding: 8px 18px;
     border-radius: 4px;
     cursor: pointer;
@@ -239,9 +239,9 @@ img {
 }
 
 .menu-box-btn:hover {
-    background: rgba(197, 160, 89, 0.15);
-    border-color: var(--color-gold);
-    box-shadow: 0 0 15px var(--color-gold-glow);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #FFFFFF;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
     transform: translateY(-1px);
 }
 
@@ -249,12 +249,12 @@ img {
     font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 2.5px;
-    color: var(--color-cream);
+    color: #FFFFFF;
     text-transform: uppercase;
 }
 
 .menu-box-btn:hover .menu-box-text {
-    color: var(--color-gold-bright);
+    color: #FFFFFF;
 }
 
 .menu-box-icon {
@@ -268,13 +268,13 @@ img {
     display: block;
     width: 100%;
     height: 1.5px;
-    background-color: var(--color-gold);
+    background-color: #FFFFFF;
     border-radius: 1px;
     transition: var(--transition-fast);
 }
 
 .menu-box-btn:hover .menu-box-icon span {
-    background-color: var(--color-gold-bright);
+    background-color: #FFFFFF;
 }
 
 /* ==========================================================================
@@ -521,7 +521,7 @@ img {
 }
 
 .search-icon {
-    color: var(--color-gold);
+    color: #FFFFFF;
     margin-right: 12px;
     flex-shrink: 0;
     transition: transform 0.3s ease;
@@ -529,7 +529,7 @@ img {
 
 .dish-search-input-box:focus-within .search-icon {
     transform: scale(1.1);
-    color: var(--color-gold-bright);
+    color: #FFFFFF;
 }
 
 .dish-search-input {
@@ -942,8 +942,8 @@ img {
 }
 
 .btn-hero-outline {
-    border: 1px solid var(--color-gold);
-    color: var(--color-cream);
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
     padding: 16px 36px;
     font-size: 0.8rem;
     font-weight: 600;
@@ -966,15 +966,15 @@ img {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: var(--color-gold);
+    background: #FFFFFF;
     transition: var(--transition-smooth);
     z-index: -1;
 }
 
 .btn-hero-outline:hover {
     color: var(--color-black);
-    border-color: var(--color-gold-bright);
-    box-shadow: var(--shadow-gold);
+    border-color: #FFFFFF;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
 .btn-hero-outline:hover::before {
@@ -982,8 +982,8 @@ img {
 }
 
 .btn-hero-secondary {
-    border: 1px solid var(--color-border-dark);
-    color: var(--color-cream);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    color: #FFFFFF;
     padding: 16px 36px;
     font-size: 0.8rem;
     font-weight: 500;
@@ -995,8 +995,8 @@ img {
 }
 
 .btn-hero-secondary:hover {
-    border-color: var(--color-cream);
-    background: rgba(255, 255, 255, 0.1);
+    border-color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .hero-scroll-indicator {
@@ -1009,11 +1009,11 @@ img {
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    color: var(--color-gold);
+    color: #FFFFFF;
     font-size: 0.65rem;
     letter-spacing: 3px;
     text-transform: uppercase;
-    opacity: 0.8;
+    opacity: 0.95;
     transition: var(--transition-fast);
 }
 
@@ -1022,9 +1022,9 @@ img {
 }
 
 .scroll-line {
-    width: 1px;
+    width: 1.5px;
     height: 40px;
-    background: linear-gradient(180deg, var(--color-gold) 0%, rgba(197, 160, 89, 0) 100%);
+    background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
     animation: scrollLine 2s ease-in-out infinite;
 }
 
@@ -4097,10 +4097,10 @@ img {
     left: 24px;
     z-index: 1004;
     background: rgba(12, 10, 16, 0.88);
-    border: 1px solid #FF8400;
+    border: 1px solid #FFFFFF;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    color: var(--color-cream);
+    color: #FFFFFF;
     padding: 10px 18px;
     border-radius: 8px;
     font-size: 0.82rem;
@@ -4111,15 +4111,15 @@ img {
     justify-content: center;
     gap: 8px;
     cursor: pointer;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 132, 0, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 255, 255, 0.3);
     transition: var(--transition-smooth);
 }
 
 .feedback-trigger-btn:hover {
     transform: translateY(-3px) scale(1.03);
-    background: #FF8400;
-    color: #FFFFFF;
-    box-shadow: 0 10px 25px rgba(255, 132, 0, 0.5);
+    background: #FFFFFF;
+    color: #000000;
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.5);
 }
 
 /* Floating View Your Order Button (Bottom Right) */
@@ -4984,8 +4984,8 @@ img {
         transform: none !important;
         padding: 7px 12px !important;
         border-radius: 6px !important;
-        background: rgba(197, 160, 89, 0.25) !important;
-        border: 1px solid var(--color-gold) !important;
+        background: rgba(255, 255, 255, 0.15) !important;
+        border: 1px solid #FFFFFF !important;
         flex-shrink: 0 !important;
     }
 
@@ -5004,7 +5004,7 @@ img {
         display: flex !important;
         align-items: center !important;
         background: rgba(21, 21, 26, 0.95) !important;
-        border: 1px solid var(--color-gold) !important;
+        border: 1px solid #FFFFFF !important;
         padding: 8px 14px !important;
         border-radius: 8px !important;
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;

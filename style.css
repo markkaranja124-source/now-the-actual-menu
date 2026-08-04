@@ -3530,6 +3530,13 @@ img {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
 }
 
+.page-header-bar .brand-title,
+.page-header-bar .brand-logo span,
+.page-header-bar .brand-logo {
+    color: #111114 !important;
+    font-weight: 700 !important;
+}
+
 .btn-back-menu {
     color: #111114 !important;
     font-weight: 700 !important;

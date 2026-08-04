@@ -156,15 +156,16 @@ img {
     max-width: 1440px;
     margin: 0 auto;
     padding: 0 32px;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-}
-
-.nav-left {
     display: flex;
     align-items: center;
-    gap: 14px;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.nav-top-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
 }
 
 /* Header Navbar Search Box next to MENU Button */
@@ -4946,12 +4947,11 @@ img {
         padding: 0 4px;
     }
 
-    .nav-left {
+    .nav-top-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
         width: 100%;
-        gap: 10px;
     }
 
     .menu-box-btn {
@@ -4969,18 +4969,20 @@ img {
     }
 
     .nav-search-box {
-        flex: 1;
-        width: 100%;
+        width: 100% !important;
         max-width: 100% !important;
-        padding: 6px 12px;
-        border-radius: 6px;
-        background: rgba(21, 21, 26, 0.95);
-        border: 1px solid var(--color-gold);
+        display: flex !important;
+        align-items: center !important;
+        background: rgba(21, 21, 26, 0.95) !important;
+        border: 1px solid var(--color-gold) !important;
+        padding: 8px 12px !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
     }
 
     .nav-search-input {
         width: 100% !important;
-        font-size: 0.8rem;
+        font-size: 0.85rem !important;
         color: #FFFFFF !important;
     }
 

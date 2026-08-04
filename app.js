@@ -103,26 +103,8 @@ function initMenuDishSearch() {
     const searchInput = document.getElementById('menu-dish-search-input');
     const clearBtn = document.getElementById('search-clear-btn');
     const countText = document.getElementById('search-count-text');
-    const searchToggleBtn = document.getElementById('search-toggle-btn');
-    const searchContainer = document.getElementById('nav-search-container');
 
     if (!searchInput) return;
-
-    if (searchToggleBtn && searchContainer) {
-        searchToggleBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            searchContainer.classList.toggle('active');
-            if (searchContainer.classList.contains('active')) {
-                setTimeout(() => searchInput.focus(), 150);
-            }
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!searchContainer.contains(e.target) && !searchInput.value) {
-                searchContainer.classList.remove('active');
-            }
-        });
-    }
 
     // Collect all dish cards across all sections in the entire page
     const getDishCards = () => {

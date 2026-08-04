@@ -401,20 +401,21 @@ function initClickableMenuDishes() {
                 }
 
                 const isSel = isDishSelected(fullDishName);
+                spans[1].style.fontFamily = 'var(--font-serif)';
+                spans[1].style.fontSize = '1.2rem';
+                spans[1].style.fontWeight = 'bold';
+                spans[1].style.color = '#D35400';
+
                 if (isSel) {
                     row.style.background = 'rgba(230, 126, 34, 0.12)';
                     rowPill.innerHTML = '✓ Added';
                     rowPill.style.background = '#E67E22';
                     rowPill.style.color = '#FFFFFF';
-                    spans[1].style.color = '#D35400';
-                    spans[1].style.fontWeight = 'bold';
                 } else {
                     row.style.background = 'transparent';
                     rowPill.innerHTML = '+ Add';
                     rowPill.style.background = 'transparent';
                     rowPill.style.color = '#E67E22';
-                    spans[1].style.color = '#D35400';
-                    spans[1].style.fontWeight = 'bold';
                 }
 
                 if (!row.dataset.hasClickListener) {

@@ -704,7 +704,10 @@ img {
 }
 
 .menu-grid > div span[style*="color: var(--color-gold)"],
-.menu-grid > div span[style*="color:var(--color-gold)"] {
+.menu-grid > div span[style*="color:var(--color-gold)"],
+.menu-grid > div div > span:last-child {
+    font-family: var(--font-serif) !important;
+    font-size: 1.25rem !important;
     color: #D35400 !important;
     font-weight: 800 !important;
 }

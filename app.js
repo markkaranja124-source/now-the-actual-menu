@@ -429,7 +429,7 @@ function initClickableMenuDishes() {
                 }
             });
         } else {
-            // SINGLE DISH CARD (e.g., Pancake Breakfast, Mini Breakfast, Beverages)
+            // SINGLE DISH CARD (e.g., Pancake Breakfast, Barista Hot & Cold Drinks)
             const priceSpan = card.querySelector('span');
             const descP = card.querySelector('p');
 
@@ -440,12 +440,34 @@ function initClickableMenuDishes() {
             const descText = descP ? descP.innerText.trim() : '';
 
             card.style.cursor = 'pointer';
+            card.style.display = 'flex';
+            card.style.flexDirection = 'column';
+            card.style.justifyContent = 'space-between';
+
+            // Wrap title and price in card-top-header flex container
+            let topHeader = card.querySelector('.card-top-header');
+            if (!topHeader) {
+                topHeader = document.createElement('div');
+                topHeader.className = 'card-top-header';
+                topHeader.style.display = 'flex';
+                topHeader.style.justifyContent = 'space-between';
+                topHeader.style.alignItems = 'flex-start';
+                topHeader.style.width = '100%';
+                topHeader.style.gap = '10px';
+                topHeader.style.marginBottom = descP ? '8px' : '14px';
+
+                if (h3Header.parentNode === card && priceSpan.parentNode === card) {
+                    card.insertBefore(topHeader, card.firstChild);
+                    topHeader.appendChild(h3Header);
+                    topHeader.appendChild(priceSpan);
+                }
+            }
 
             let orderBtn = card.querySelector('.card-order-action-btn');
             if (!orderBtn) {
                 orderBtn = document.createElement('button');
                 orderBtn.className = 'card-order-action-btn';
-                orderBtn.style.marginTop = '14px';
+                orderBtn.style.marginTop = '12px';
                 orderBtn.style.width = '100%';
                 orderBtn.style.padding = '8px 12px';
                 orderBtn.style.borderRadius = '6px';

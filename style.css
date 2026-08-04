@@ -713,6 +713,15 @@ img {
     border-bottom-color: rgba(0, 0, 0, 0.15) !important;
 }
 
+.menu-grid > div .card-top-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+    gap: 10px !important;
+    margin-bottom: 12px !important;
+}
+
 .brand-title {
     font-family: var(--font-serif);
     font-size: 1.85rem;

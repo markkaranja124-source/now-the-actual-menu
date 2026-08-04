@@ -163,9 +163,27 @@ img {
 }
 
 .nav-top-row {
+    position: relative;
+    width: 100%;
     display: flex;
     align-items: center;
-    gap: 36px;
+    justify-content: center;
+    min-height: 54px;
+}
+
+.nav-top-row .menu-box-btn {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.brand-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
 }
 
 /* Header Navbar Search Box next to MENU Button */
@@ -4948,14 +4966,20 @@ img {
     }
 
     .nav-top-row {
+        position: relative;
+        width: 100%;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        width: 100%;
+        justify-content: center;
+        min-height: 44px;
     }
 
     .menu-box-btn {
-        padding: 8px 14px !important;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 7px 12px !important;
         border-radius: 6px !important;
         background: rgba(197, 160, 89, 0.25) !important;
         border: 1px solid var(--color-gold) !important;
@@ -4963,7 +4987,7 @@ img {
     }
 
     .menu-box-text {
-        font-size: 0.8rem !important;
+        font-size: 0.775rem !important;
         letter-spacing: 2px !important;
         color: #FFFFFF !important;
     }
@@ -4988,17 +5012,18 @@ img {
 
     .brand-logo {
         display: flex;
-        flex-direction: row;
-        gap: 8px;
+        flex-direction: column;
         align-items: center;
+        text-align: center;
+        margin: 0 auto;
     }
 
     .nav-logo-img {
-        height: 34px;
+        height: 36px;
     }
 
     .brand-title {
-        font-size: 1.15rem;
+        font-size: 1.25rem;
         letter-spacing: 2px;
     }
 

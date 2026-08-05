@@ -845,7 +845,7 @@ function initMenuAIAssistant() {
         { name: "CHICKEN WET / DRY FRY", price: "From 500/=", category: "main", tags: ["chicken", "fry", "spicy"], desc: "Pan fried chicken with your choice of side dish", targetId: "main-dishes-grid" },
         { name: "TILAPIA FRY WHOLE", price: "From 570/=", category: "main", tags: ["fish", "tilapia", "fry"], desc: "Crispy whole fried tilapia with side", targetId: "main-dishes-grid" },
         { name: "UGALI WITH SUKUMA / CABBAGE", price: "170/=", category: "main", tags: ["ugali", "sukuma", "cabbage", "veges", "vegetarian", "cheap", "budget"], desc: "Fresh white ugali served with Sukuma Wiki or Cabbage", targetId: "main-dishes-grid" },
-        { name: "UGALI WITH MANAGU", price: "100/=", category: "main", tags: ["ugali", "managu", "veges", "traditional", "vegetarian", "budget"], desc: "Traditional white ugali served with fresh Managu greens", targetId: "main-dishes-grid" },
+        { name: "UGALI WITH MANAGU", price: "220/=", category: "main", tags: ["ugali", "managu", "veges", "traditional", "vegetarian", "budget"], desc: "Traditional white ugali served with fresh Managu greens", targetId: "main-dishes-grid" },
         { name: "CHOMA BEEF (1 KG)", price: "1100/=", category: "choma", tags: ["beef", "choma", "grilled", "popular"], desc: "Slow roasted tender beef choma per KG", targetId: "meat-portions-grid" },
         { name: "CHOMA GOAT (1 KG)", price: "1200/=", category: "choma", tags: ["goat", "choma", "grilled", "popular", "spicy"], desc: "Juicy grilled goat choma per KG", targetId: "meat-portions-grid" },
         { name: "CHEMSHA GOAT (1 KG)", price: "1300/=", category: "choma", tags: ["goat", "chemsha", "soup"], desc: "Boiled flavorful goat stew/soup per KG", targetId: "meat-portions-grid" },

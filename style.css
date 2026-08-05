@@ -741,9 +741,9 @@ img {
 .brand-title {
     font-family: var(--font-serif);
     font-size: 1.85rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 4px;
-    color: var(--color-cream);
+    color: #111114 !important;
     line-height: 1;
     transition: var(--transition-fast);
 }
@@ -751,8 +751,8 @@ img {
 .brand-subtitle {
     font-size: 0.55rem;
     letter-spacing: 4px;
-    color: var(--color-gold);
-    font-weight: 600;
+    color: #D35400 !important;
+    font-weight: 700;
     margin-top: 3px;
 }
 
@@ -5094,6 +5094,8 @@ img {
     .brand-title {
         font-size: 1.25rem;
         letter-spacing: 2px;
+        color: #111114 !important;
+        font-weight: 700 !important;
     }
 
     .brand-subtitle {

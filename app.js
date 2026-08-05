@@ -8,12 +8,23 @@ if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
 }
 
-window.addEventListener('beforeunload', () => {
+function forceScrollToTop() {
     window.scrollTo(0, 0);
+    if (document.documentElement) document.documentElement.scrollTop = 0;
+    if (document.body) document.body.scrollTop = 0;
+}
+
+// Ensure instant scroll to top before unload
+window.addEventListener('beforeunload', () => {
+    forceScrollToTop();
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    window.scrollTo(0, 0);
+    forceScrollToTop();
+    // Microtask delays to prevent mobile Safari/Chrome anchor jumping on load
+    setTimeout(forceScrollToTop, 10);
+    setTimeout(forceScrollToTop, 150);
+
     initSideDrawerNavigation();
     initMenuDishSearch();
     initScrollNavbar();
@@ -24,8 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSelectionBarUI();
 });
 
+window.addEventListener('load', () => {
+    forceScrollToTop();
+});
+
 window.addEventListener('pageshow', () => {
-    window.scrollTo(0, 0);
+    forceScrollToTop();
     initClickableMenuDishes();
     updateSelectionBarUI();
 });

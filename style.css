@@ -4939,11 +4939,78 @@ img {
         box-shadow: none;
         border-radius: 0;
     }
+}
+
 /* ==========================================================================
    23. MOBILE & PHONE RESPONSIVE HEADER, SEARCH BAR & FLOATING BUTTONS FIX
    ========================================================================== */
 
 @media (max-width: 768px) {
+    /* Phone First-Page Landing Hero Optimization */
+    .hero-landing {
+        height: 100vh;
+        height: 100dvh;
+        min-height: 100dvh;
+        max-height: 100dvh;
+        background-attachment: scroll !important;
+        padding: 60px 16px 20px 16px;
+        box-sizing: border-box;
+    }
+
+    .hero-content {
+        margin-top: 0;
+        padding: 0 12px;
+        max-width: 100%;
+    }
+
+    .hero-logo-container {
+        margin-bottom: 10px;
+    }
+
+    .hero-logo-img {
+        width: 110px;
+        max-height: 70px;
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 8vw, 3rem);
+        margin-bottom: 10px;
+        line-height: 1.1;
+    }
+
+    .hero-description {
+        font-size: 0.875rem;
+        line-height: 1.45;
+        margin: 0 auto 16px auto;
+        max-width: 90%;
+    }
+
+    .hero-cta-group {
+        gap: 8px;
+        flex-direction: column;
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
+    .btn-hero-outline, .btn-hero-secondary {
+        padding: 12px 18px;
+        font-size: 0.725rem;
+        letter-spacing: 2px;
+        width: 100%;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+    .hero-scroll-indicator {
+        bottom: 12px;
+        font-size: 0.55rem;
+    }
+
+    .scroll-line {
+        height: 25px;
+    }
+
     .top-right-open-daily {
         display: none !important;
     }

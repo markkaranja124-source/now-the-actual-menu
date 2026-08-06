@@ -882,7 +882,7 @@ img {
 .hero-landing {
     position: relative;
     width: 100%;
-    min-height: 90vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -890,7 +890,10 @@ img {
     text-align: center;
     background: #FFFFFF !important;
     background-image: none !important;
-    padding: 10px 24px 40px 24px;
+    padding-top: 110px;
+    padding-bottom: 40px;
+    padding-left: 24px;
+    padding-right: 24px;
     box-sizing: border-box;
 }
 
@@ -902,14 +905,16 @@ img {
 .hero-dishes-strip {
     width: 100%;
     max-width: 1200px;
-    margin: 0 auto 20px auto;
+    margin: 0 auto 24px auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 24px;
     flex-wrap: wrap;
     padding: 10px 16px;
     box-sizing: border-box;
+    position: relative;
+    z-index: 10;
 }
 
 .hero-dish-thumb {
@@ -5053,7 +5058,7 @@ img {
         height: auto;
         min-height: 100dvh;
         background-attachment: scroll !important;
-        padding: 20px 14px 40px 14px;
+        padding: 100px 12px 30px 12px;
         box-sizing: border-box;
     }
 

@@ -901,25 +901,48 @@ img {
     display: none !important;
 }
 
-/* Horizontal Showcase Strip of User's 5 Dish Images */
+/* Horizontal Showcase Strip - Continuous Infinite Gliding Loop */
 .hero-dishes-strip {
     width: 100%;
-    max-width: 1200px;
+    max-width: 100%;
+    overflow: hidden;
     margin: 0 auto 24px auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
-    flex-wrap: wrap;
-    padding: 10px 16px;
+    padding: 10px 0;
     box-sizing: border-box;
     position: relative;
     z-index: 10;
 }
 
+.hero-dishes-track {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    width: max-content;
+    animation: continuousGlide 25s linear infinite;
+    -webkit-animation: continuousGlide 25s linear infinite;
+    will-change: transform;
+}
+
+.hero-dishes-track:hover {
+    animation-play-state: paused;
+    -webkit-animation-play-state: paused;
+}
+
+@keyframes continuousGlide {
+    0% {
+        transform: translate3d(0, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-50%, 0, 0);
+        -webkit-transform: translate3d(-50%, 0, 0);
+    }
+}
+
 .hero-dish-thumb {
-    width: clamp(120px, 15vw, 190px);
-    height: clamp(100px, 12vw, 150px);
+    width: clamp(160px, 20vw, 220px);
+    height: clamp(130px, 16vw, 170px);
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -928,14 +951,14 @@ img {
 }
 
 .hero-dish-thumb:hover {
-    transform: translateY(-6px) scale(1.06);
+    transform: translateY(-6px) scale(1.08);
 }
 
 .hero-dish-img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.12));
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.12));
     transition: filter 0.3s ease;
 }
 
@@ -5063,15 +5086,19 @@ img {
     }
 
     .hero-dishes-strip {
-        gap: 10px;
-        margin-bottom: 12px;
-        justify-content: center;
-        padding: 4px;
+        margin-bottom: 16px;
+        padding: 6px 0;
+    }
+
+    .hero-dishes-track {
+        gap: 20px;
+        animation-duration: 20s;
+        -webkit-animation-duration: 20s;
     }
 
     .hero-dish-thumb {
-        width: clamp(85px, 25vw, 130px);
-        height: clamp(70px, 20vw, 105px);
+        width: 175px;
+        height: 140px;
     }
 
     .hero-content {

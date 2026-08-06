@@ -663,9 +663,13 @@ img {
     background-position: center;
     background-repeat: no-repeat;
     opacity: 0;
-    transition: opacity 2s ease-in-out;
-    transform: scale(1);
-    filter: contrast(1.06) saturate(1.12);
+    transition: opacity 1.8s ease-in-out;
+    transform: translateZ(0) scale(1);
+    -webkit-transform: translateZ(0) scale(1);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: opacity, transform;
+    filter: contrast(1.05) saturate(1.1);
 }
 
 .bg-slide.active {
@@ -674,8 +678,8 @@ img {
 }
 
 @keyframes kenBurnsZoom {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.08); }
+    0% { transform: translateZ(0) scale(1); }
+    100% { transform: translateZ(0) scale(1.06); }
 }
 
 .bg-slide-overlay {
@@ -4990,6 +4994,14 @@ img {
    ========================================================================== */
 
 @media (max-width: 768px) {
+    /* Phone Crisp Background Slideshow Fix */
+    .bg-slide {
+        animation: none !important;
+        transform: translateZ(0) scale(1) !important;
+        -webkit-transform: translateZ(0) scale(1) !important;
+        will-change: opacity;
+    }
+
     /* Phone First-Page Landing Hero Optimization */
     .hero-landing {
         height: 100vh;

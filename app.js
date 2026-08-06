@@ -241,6 +241,15 @@ function initSectionSlideshows() {
         const slides = container.querySelectorAll('.bg-slide');
         if (slides.length <= 1) return;
 
+        // Preload all slide images to prevent blank loading delays while gliding
+        slides.forEach(slide => {
+            const bgUrlMatch = slide.style.backgroundImage.match(/url\(['"]?(.*?)['"]?\)/);
+            if (bgUrlMatch && bgUrlMatch[1]) {
+                const img = new Image();
+                img.src = bgUrlMatch[1];
+            }
+        });
+
         let currentIndex = 0;
         setInterval(() => {
             slides[currentIndex].classList.remove('active');

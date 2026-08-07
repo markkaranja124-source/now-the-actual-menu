@@ -76,6 +76,10 @@
             <div class="drawer-section">
                 <span class="drawer-section-title">CLIENT SERVICES & ORDERS</span>
                 <nav class="drawer-nav">
+                    <a href="#location-section" class="drawer-link">
+                        <span class="drawer-link-text">LOCATION & DIRECTIONS</span>
+                        <span class="drawer-link-arrow">&rsaquo;</span>
+                    </a>
                     <a href="tel:0724594204" class="drawer-link">
                         <span class="drawer-link-text">CALL HOTLINE: 0724 594 204</span>
                         <span class="drawer-link-arrow">&rsaquo;</span>
@@ -1383,6 +1387,96 @@
                 </div>
             </div>
         </section>
+
+        <!-- VISIT RIB HOUSE - LOCATION, LIVE DIRECTIONS & SHARING -->
+        <section class="location-section" id="location-section">
+            <div class="location-container">
+                <div class="location-header">
+                    <span class="location-eyebrow">VISIT US IN NAIROBI</span>
+                    <h2 class="location-title">RIB HOUSE <span class="gold-gradient">LOCATION & DIRECTIONS</span></h2>
+                    <p class="location-subtitle">Freshly prepared choma, sizzling steaks, and barista brews daily in the heart of Nairobi CBD.</p>
+                </div>
+
+                <div class="location-grid">
+                    <!-- Left: Location Details & Action Buttons -->
+                    <div class="location-info-card">
+                        <div class="location-card-header">
+                            <div class="location-pin-indicator">
+                                <span class="pin-ring"></span>
+                                <span class="pin-core"></span>
+                            </div>
+                            <div>
+                                <h3 class="location-place-name">Rib House Restaurant</h3>
+                                <span class="location-place-area">Nairobi CBD</span>
+                            </div>
+                        </div>
+
+                        <div class="location-meta-row">
+                            <div class="location-meta-item">
+                                <span class="meta-label">PHYSICAL ADDRESS</span>
+                                <p class="meta-val">Development House, Opposite Naivas Supermarket, Nairobi</p>
+                            </div>
+
+                            <div class="location-meta-item">
+                                <span class="meta-label">OPERATING HOURS</span>
+                                <div class="hours-badge-wrapper">
+                                    <span class="hours-val">Daily: 5:30 AM – 11:00 PM</span>
+                                    <span class="hours-status-badge" id="location-live-status">
+                                        <span class="status-dot"></span>
+                                        <span id="location-status-text">Open Now</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Toolbar (Strictly No Emojis) -->
+                        <div class="location-actions-grid">
+                            <a href="https://maps.app.goo.gl/QfEwSbmx5faAciNN6" target="_blank" rel="noopener noreferrer" class="btn-location-primary" id="btn-live-directions">
+                                <span>Get Live Directions</span>
+                            </a>
+
+                            <button type="button" class="btn-location-secondary" id="btn-share-location">
+                                <span>Share Location</span>
+                            </button>
+
+                            <a href="https://api.whatsapp.com/send?text=Meet%20me%20at%20Rib%20House%20Restaurant%20at%20Development%20House%2C%20Opposite%20Naivas%20Supermarket%2C%20Nairobi.%20Location%3A%20https%3A%2F%2Fmaps.app.goo.gl%2FQfEwSbmx5faAciNN6" target="_blank" rel="noopener noreferrer" class="btn-location-secondary" id="btn-whatsapp-share">
+                                <span>Share via WhatsApp</span>
+                            </a>
+
+                            <button type="button" class="btn-location-secondary" id="btn-copy-address">
+                                <span id="copy-btn-label">Copy Address</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right: Embedded Interactive Map -->
+                    <div class="location-map-card">
+                        <div class="map-iframe-wrapper">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8102365702466!2d36.8246207!3d-1.2880079!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f11f6f2addad9%3A0x4d889d4263efe02b!2sRib%20House%20Restaurant!5e0!3m2!1sen!2ske!4v1723078800000!5m2!1sen!2ske" 
+                                width="100%" 
+                                height="100%" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade"
+                                title="Rib House Restaurant Map Location">
+                            </iframe>
+                        </div>
+                        <div class="map-card-bar">
+                            <span class="map-bar-text">Development House &bull; Moi Avenue Area</span>
+                            <a href="https://maps.app.goo.gl/QfEwSbmx5faAciNN6" target="_blank" rel="noopener noreferrer" class="map-bar-link">Open in Google Maps &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toast Notification for Copy Address Confirmation -->
+            <div class="location-toast" id="location-toast" aria-live="polite">
+                <span class="toast-indicator"></span>
+                <span class="toast-message" id="location-toast-msg">Address copied to clipboard</span>
+            </div>
+        </section>
     </main>
 
     <!-- LUXURY FOOTER -->
@@ -1396,6 +1490,7 @@
             <div class="footer-col">
                 <h4>NAVIGATION</h4>
                 <a href="#hero">Landing</a>
+                <a href="#location-section">Location & Directions</a>
                 <a href="#bk-combos">Breakfast Combos</a>
                 <a href="#bk-hot">Hot Drinks</a>
                 <a href="#bk-cold">Cold Drinks</a>

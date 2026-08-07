@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCustomerFeedbackSystem();
     initClickableMenuDishes();
     updateSelectionBarUI();
+    initLocationSection();
 });
 
 window.addEventListener('load', () => {
@@ -43,6 +44,7 @@ window.addEventListener('pageshow', () => {
     forceScrollToTop();
     initClickableMenuDishes();
     updateSelectionBarUI();
+    initLocationSection();
 });
 
 // --- 1. LUXURY SIDE DRAWER NAVIGATION LOGIC ---
@@ -1949,4 +1951,117 @@ function initCustomerFeedbackSystem() {
         }
     }
 }
+
+// ==========================================================================
+// VISIT RIB HOUSE - LOCATION, LIVE DIRECTIONS & SHARING LOGIC
+// ==========================================================================
+function initLocationSection() {
+    const statusBadge = document.getElementById('location-live-status');
+    const statusText = document.getElementById('location-status-text');
+    const shareBtn = document.getElementById('btn-share-location');
+    const copyBtn = document.getElementById('btn-copy-address');
+    const toast = document.getElementById('location-toast');
+    const toastMsg = document.getElementById('location-toast-msg');
+
+    // 1. Operating Hours Live Status Check (5:30 AM to 11:00 PM)
+    function updateLocationStatus() {
+        if (!statusBadge || !statusText) return;
+        const now = new Date();
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+        const totalMinutes = hour * 60 + minute;
+        
+        const openMinutes = 5 * 60 + 30; // 5:30 AM
+        const closeMinutes = 23 * 60;    // 11:00 PM
+
+        const isOpen = totalMinutes >= openMinutes && totalMinutes < closeMinutes;
+
+        if (isOpen) {
+            statusBadge.className = 'hours-status-badge open';
+            statusText.textContent = 'Open Now';
+        } else {
+            statusBadge.className = 'hours-status-badge closed';
+            statusText.textContent = 'Opens at 5:30 AM';
+        }
+    }
+
+    updateLocationStatus();
+
+    // 2. Toast Notification Controller
+    let toastTimer = null;
+    function showLocationToast(message) {
+        if (!toast) return;
+        if (toastMsg) toastMsg.textContent = message;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 2500);
+    }
+
+    // 3. Copy Address Helper
+    const addressFullText = 'Rib House Restaurant, Development House, Opposite Naivas Supermarket, Nairobi - https://maps.app.goo.gl/QfEwSbmx5faAciNN6';
+
+    function copyAddress() {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(addressFullText).then(() => {
+                showLocationToast('Address copied to clipboard');
+            }).catch(() => {
+                fallbackCopy(addressFullText);
+            });
+        } else {
+            fallbackCopy(addressFullText);
+        }
+    }
+
+    function fallbackCopy(text) {
+        try {
+            const tempInput = document.createElement('textarea');
+            tempInput.value = text;
+            tempInput.style.position = 'fixed';
+            tempInput.style.left = '-9999px';
+            tempInput.style.opacity = '0';
+            document.body.appendChild(tempInput);
+            tempInput.focus();
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showLocationToast('Address copied to clipboard');
+        } catch (e) {
+            showLocationToast('Address: Development House, Nairobi');
+        }
+    }
+
+    // 4. Native Device Share Sheet / Fallback
+    if (shareBtn) {
+        shareBtn.onclick = async function(e) {
+            e.preventDefault();
+            const shareData = {
+                title: 'Rib House Restaurant',
+                text: 'Meet me at Rib House Restaurant at Development House, Opposite Naivas Supermarket, Nairobi.',
+                url: 'https://maps.app.goo.gl/QfEwSbmx5faAciNN6'
+            };
+
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                } catch (err) {
+                    // User canceled or closed share sheet
+                }
+            } else {
+                // Fallback: Copy address to clipboard
+                copyAddress();
+            }
+        };
+    }
+
+    // 5. Copy Address Button Event
+    if (copyBtn) {
+        copyBtn.onclick = function(e) {
+            e.preventDefault();
+            copyAddress();
+        };
+    }
+}
+
 

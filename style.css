@@ -782,84 +782,139 @@ img {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 20px;
+    gap: 16px;
 }
 
-.nav-search-btn {
-    color: var(--color-cream);
-    display: flex;
+.nav-order-btn {
+    display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.75rem;
-    letter-spacing: 1.5px;
-    opacity: 0.85;
-    transition: var(--transition-fast);
-}
-
-.nav-search-btn:hover {
-    opacity: 1;
-    color: var(--color-gold);
-}
-
-.btn-nav-reserve {
-    border: 1px solid var(--color-gold);
-    color: var(--color-gold);
-    padding: 8px 18px;
-    font-size: 0.725rem;
-    letter-spacing: 2px;
+    background: #FEF3C7;
+    border: 1.5px solid #B8860B;
+    color: #92400E !important;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
-    transition: var(--transition-smooth);
-    position: relative;
-    overflow: hidden;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    box-shadow: 0 2px 8px rgba(184, 134, 11, 0.15);
+    text-decoration: none !important;
+    white-space: nowrap;
 }
 
-.btn-nav-reserve::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: var(--color-gold);
-    transition: var(--transition-smooth);
-    z-index: -1;
+.nav-order-btn:hover {
+    background: #B8860B;
+    color: #FFFFFF !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(184, 134, 11, 0.3);
 }
 
-.btn-nav-reserve:hover {
-    color: var(--color-black);
+.nav-cart-badge {
+    background: #DC2626;
+    color: #FFFFFF;
+    font-size: 0.7rem;
+    font-weight: 800;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.btn-nav-reserve:hover::before {
-    left: 0;
-}
-
-.cart-trigger-btn {
+/* Floating Bottom-Right Luxury Your Order Button */
+.floating-order-btn {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 999;
     display: flex;
     align-items: center;
-    gap: 10px;
-    color: var(--color-cream);
-    padding: 8px 14px;
-    border: 1px solid var(--color-border-dark);
-    transition: var(--transition-fast);
+    gap: 14px;
+    background: #0F172A;
+    color: #FFFFFF !important;
+    border: 2px solid #B8860B;
+    padding: 12px 20px;
+    border-radius: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 0 0 15px rgba(184, 134, 11, 0.3);
+    text-decoration: none !important;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-order-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+
+.floating-order-btn:hover {
+    background: #B8860B;
+    border-color: #FEF3C7;
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 14px 35px rgba(184, 134, 11, 0.4);
+}
+
+.floating-order-icon {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FEF3C7;
 }
 
-.cart-trigger-btn:hover {
-    border-color: var(--color-gold);
-    color: var(--color-gold);
-}
-
-.cart-badge-count {
-    background: var(--color-gold);
-    color: var(--color-black);
+.floating-order-badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background: #DC2626;
+    color: #FFFFFF;
     font-size: 0.65rem;
-    font-weight: 700;
+    font-weight: 800;
     width: 18px;
     height: 18px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1.5px solid #0F172A;
+}
+
+.floating-order-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.floating-order-title {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+}
+
+.floating-order-amount {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #FEF3C7;
+}
+
+.floating-order-arrow {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #FEF3C7;
+    transition: transform 0.2s ease;
+}
+
+.floating-order-btn:hover .floating-order-arrow {
+    transform: translateX(3px);
 }
 
 .mobile-menu-toggle {
@@ -5994,6 +6049,25 @@ img {
         flex-direction: column;
         gap: 12px;
         text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 0 16px;
+        gap: 12px;
+    }
+    
+    .nav-order-btn {
+        padding: 6px 12px;
+        font-size: 0.72rem;
+    }
+
+    .floating-order-btn {
+        bottom: 20px;
+        right: 16px;
+        padding: 10px 16px;
+        gap: 10px;
     }
 }
 

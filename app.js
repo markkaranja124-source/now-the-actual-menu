@@ -1190,6 +1190,152 @@ window.scrollToDishSection = function(sectionId) {
     }
 };
 
+// SessionStorage Cart Helper Functions (Resets to 0 on fresh page run)
+function getSelectedCart() {
+    try {
+        return JSON.parse(sessionStorage.getItem('ribhouse_selected_cart')) || [];
+    } catch(e) {
+        return [];
+    }
+}
+
+function saveSelectedCart(cart) {
+    try {
+        sessionStorage.setItem('ribhouse_selected_cart', JSON.stringify(cart));
+    } catch(e) {}
+    updateSelectionBarUI();
+}
+
+function isDishSelected(dishName) {
+    const cart = getSelectedCart();
+    return cart.some(item => item.name === dishName);
+}
+
+function toggleSelectItem(dishDataStr) {
+    try {
+        const dish = JSON.parse(decodeURIComponent(dishDataStr));
+        let cart = getSelectedCart();
+        const existingIndex = cart.findIndex(item => item.name === dish.name);
+        
+        if (existingIndex > -1) {
+            cart.splice(existingIndex, 1);
+        } else {
+            const numericPrice = parseInt(dish.price.toString().replace(/[^0-9]/g, ''), 10) || 0;
+            const nameLower = dish.name.toLowerCase();
+
+            // Default side and pairing selections
+            let selectedSide = null;
+            let selectedPrep = null;
+            let selectedPairing = null;
+
+            if (nameLower.includes('ugali / chapati') || nameLower.includes('kienyeji') || nameLower.includes('stew') || nameLower.includes('fry')) {
+                selectedSide = 'Ugali';
+            }
+            if (nameLower.includes('tilapia') || nameLower.includes('fish')) {
+                selectedPrep = 'Wet Fry';
+            }
+            if (nameLower.includes('choma') || nameLower.includes('chemsha') || nameLower.includes('tumbukiza')) {
+                selectedPairing = 'none';
+            }
+
+            cart.push({
+                id: 'dish_' + Math.random().toString(36).substring(2, 9),
+                name: dish.name,
+                basePrice: numericPrice,
+                price: dish.price,
+                numericPrice: numericPrice,
+                desc: dish.desc || '',
+                category: dish.category || 'main',
+                selectedSide: selectedSide,
+                selectedPrep: selectedPrep,
+                selectedPairing: selectedPairing,
+                qty: 1
+            });
+        }
+        saveSelectedCart(cart);
+
+        // Update button UI in AI drawer
+        const encodedName = encodeURIComponent(dish.name);
+        document.querySelectorAll(`button[data-dish-name="${encodedName}"]`).forEach(btn => {
+            const isSel = isDishSelected(dish.name);
+            btn.classList.toggle('active', isSel);
+            btn.innerHTML = isSel ? '✓ Selected' : '+ Select Item';
+        });
+    } catch(e) {
+        console.error("Selection error:", e);
+    }
+}
+
+// Global Customization Option Setters
+window.setDishSideOption = function(id, side) {
+    let cart = getSelectedCart();
+    const item = cart.find(i => i.id === id);
+    if (item) {
+        item.selectedSide = side;
+        saveSelectedCart(cart);
+        renderSelectedOrderPage();
+    }
+};
+
+window.setDishPrepOption = function(id, prep) {
+    let cart = getSelectedCart();
+    const item = cart.find(i => i.id === id);
+    if (item) {
+        item.selectedPrep = prep;
+        saveSelectedCart(cart);
+        renderSelectedOrderPage();
+    }
+};
+
+window.setChomaPairingOption = function(id, pairingKey) {
+    let cart = getSelectedCart();
+    const item = cart.find(i => i.id === id);
+    if (item) {
+        item.selectedPairing = pairingKey;
+        if (!item.basePrice) {
+            item.basePrice = parseInt(item.price.toString().replace(/[^0-9]/g, ''), 10) || 500;
+        }
+        let extra = 0;
+        if (pairingKey === 'ugali_managu') extra = 100;
+        else if (pairingKey === 'ugali_sukuma') extra = 70;
+        else if (pairingKey === 'ugali_cabbage') extra = 70;
+
+        item.numericPrice = item.basePrice + extra;
+        item.price = item.numericPrice.toString();
+        saveSelectedCart(cart);
+        renderSelectedOrderPage();
+    }
+};
+
+function updateSelectionBarUI() {
+    const cart = getSelectedCart();
+    const totalDishes = cart.length;
+    const totalQuantity = cart.reduce((sum, item) => sum + item.qty, 0);
+    const totalPrice = cart.reduce((sum, item) => sum + (item.numericPrice * item.qty), 0);
+
+    // Floating View Your Order Button (Bottom Right)
+    const floatingBtn = document.getElementById('floating-order-btn');
+    const floatingCount = document.getElementById('floating-order-count');
+    const floatingAmount = document.getElementById('floating-order-amount');
+
+    if (floatingBtn) {
+        if (totalDishes > 0) {
+            floatingBtn.classList.add('visible');
+            if (floatingCount) floatingCount.textContent = `${totalQuantity} ${totalQuantity === 1 ? 'item' : 'items'}`;
+            if (floatingAmount) floatingAmount.textContent = `KSh ${totalPrice.toLocaleString()}/=`;
+        } else {
+            floatingBtn.classList.remove('visible');
+        }
+    }
+
+    // Top Navigation Cart Count Badge
+    const navCartBadge = document.getElementById('nav-cart-badge');
+    if (navCartBadge) {
+        navCartBadge.textContent = totalQuantity;
+        navCartBadge.style.display = totalQuantity > 0 ? 'flex' : 'none';
+    }
+}
+
 // ==========================================================================
 // 4. "YOUR SELECTED ORDER" PAGE LOGIC (order.html) - SINGLE VERTICAL COLUMN
 // ==========================================================================
@@ -1207,9 +1353,9 @@ function renderSelectedOrderPage() {
     if (cart.length === 0) {
         listContainer.innerHTML = `
             <div style="text-align: center; padding: 60px 20px;">
-                <p style="font-size: 1.2rem; color: var(--color-cream); margin-bottom: 12px;">Your order selection is currently empty!</p>
-                <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 24px;">Use our AI Dish Helper or browse the menu to add delicious meals.</p>
-                <a href="index.html" class="btn-continue-order" style="display: inline-block;">&larr; Return to Menu</a>
+                <p style="font-size: 1.2rem; color: #0F172A; margin-bottom: 12px; font-weight: 700;">Your order selection is currently empty!</p>
+                <p style="font-size: 0.9rem; color: #475569; margin-bottom: 24px;">Browse the menu to add your favorite wood-fired dishes and brews.</p>
+                <a href="index.html" class="btn-hero-secondary" style="display: inline-flex; padding: 14px 28px;">&larr; Return to Menu</a>
             </div>
         `;
         if (itemsCountEl) itemsCountEl.textContent = "0 Dishes";
@@ -1256,6 +1402,67 @@ function renderSelectedOrderPage() {
             categoryBadge = '🐟 Fresh Tilapia';
         }
 
+        // 1. Build Side Choice Selector (for Chicken Kienyeji, Fries/Salad, Ugali/Chapati dishes)
+        let choicesHtml = '';
+        if (nameLower.includes('ugali / chapati') || nameLower.includes('kienyeji') || nameLower.includes('quarter') || nameLower.includes('stew')) {
+            const currentSide = item.selectedSide || 'Ugali';
+            choicesHtml += `
+                <div class="custom-choice-group">
+                    <span class="custom-choice-title">Side Choice (Included in price):</span>
+                    <div class="custom-choice-pills">
+                        <button type="button" class="choice-pill ${currentSide === 'Ugali' ? 'active' : ''}" onclick="setDishSideOption('${item.id}', 'Ugali')">
+                            <span class="pill-radio">${currentSide === 'Ugali' ? '◉' : '○'}</span> Ugali
+                        </button>
+                        <button type="button" class="choice-pill ${currentSide === 'Chapati' ? 'active' : ''}" onclick="setDishSideOption('${item.id}', 'Chapati')">
+                            <span class="pill-radio">${currentSide === 'Chapati' ? '◉' : '○'}</span> Chapati
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 2. Build Preparation Style Selector (for Tilapia Wet Fry vs Dry Fry)
+        if (nameLower.includes('tilapia') || nameLower.includes('fish')) {
+            const currentPrep = item.selectedPrep || 'Wet Fry';
+            choicesHtml += `
+                <div class="custom-choice-group">
+                    <span class="custom-choice-title">Preparation Style:</span>
+                    <div class="custom-choice-pills">
+                        <button type="button" class="choice-pill ${currentPrep === 'Wet Fry' ? 'active' : ''}" onclick="setDishPrepOption('${item.id}', 'Wet Fry')">
+                            <span class="pill-radio">${currentPrep === 'Wet Fry' ? '◉' : '○'}</span> Wet Fry
+                        </button>
+                        <button type="button" class="choice-pill ${currentPrep === 'Dry Fry' ? 'active' : ''}" onclick="setDishPrepOption('${item.id}', 'Dry Fry')">
+                            <span class="pill-radio">${currentPrep === 'Dry Fry' ? '◉' : '○'}</span> Dry Fry
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 3. Build Choma & Chemsha Pairing & Greens Selector (Ugali + Managu vs Ugali + Sukuma / Cabbage)
+        if (nameLower.includes('choma') || nameLower.includes('chemsha') || nameLower.includes('tumbukiza')) {
+            const currentPairing = item.selectedPairing || 'none';
+            choicesHtml += `
+                <div class="custom-choice-group">
+                    <span class="custom-choice-title">Pairing & Greens (Optional):</span>
+                    <div class="custom-choice-pills">
+                        <button type="button" class="choice-pill ${currentPairing === 'none' ? 'active' : ''}" onclick="setChomaPairingOption('${item.id}', 'none')">
+                            <span class="pill-radio">${currentPairing === 'none' ? '◉' : '○'}</span> Meat Only
+                        </button>
+                        <button type="button" class="choice-pill ${currentPairing === 'ugali_managu' ? 'active' : ''}" onclick="setChomaPairingOption('${item.id}', 'ugali_managu')">
+                            <span class="pill-radio">${currentPairing === 'ugali_managu' ? '◉' : '○'}</span> Ugali + Managu (+100/=)
+                        </button>
+                        <button type="button" class="choice-pill ${currentPairing === 'ugali_sukuma' ? 'active' : ''}" onclick="setChomaPairingOption('${item.id}', 'ugali_sukuma')">
+                            <span class="pill-radio">${currentPairing === 'ugali_sukuma' ? '◉' : '○'}</span> Ugali + Sukuma Wiki (+70/=)
+                        </button>
+                        <button type="button" class="choice-pill ${currentPairing === 'ugali_cabbage' ? 'active' : ''}" onclick="setChomaPairingOption('${item.id}', 'ugali_cabbage')">
+                            <span class="pill-radio">${currentPairing === 'ugali_cabbage' ? '◉' : '○'}</span> Ugali + Cabbage (+70/=)
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
         html += `
             <div class="order-item-row-luxury" data-id="${item.id}">
                 <div class="order-item-main-info">
@@ -1266,7 +1473,8 @@ function renderSelectedOrderPage() {
                     <div class="order-dish-text-block">
                         <h3 class="order-dish-title">${item.name}</h3>
                         ${item.desc ? `<p class="order-dish-desc">${item.desc}</p>` : ''}
-                        <div class="order-dish-price-tag">Unit Price: <strong>KSh ${item.price}</strong></div>
+                        <div class="order-dish-price-tag">Unit Price: <strong>KSh ${item.numericPrice.toLocaleString()}/=</strong></div>
+                        ${choicesHtml}
                     </div>
                 </div>
 
@@ -1274,18 +1482,18 @@ function renderSelectedOrderPage() {
                     <div class="quantity-controls-pill">
                         <span class="qty-pill-label">Qty</span>
                         <div class="quantity-controls">
-                            <button class="btn-qty-round" onclick="changeCartItemQty('${item.id}', -1)" aria-label="Decrease quantity">&minus;</button>
+                            <button type="button" class="btn-qty-round" onclick="changeCartItemQty('${item.id}', -1)" aria-label="Decrease quantity">&minus;</button>
                             <span class="qty-number">${item.qty}</span>
-                            <button class="btn-qty-round" onclick="changeCartItemQty('${item.id}', 1)" aria-label="Increase quantity">&plus;</button>
+                            <button type="button" class="btn-qty-round" onclick="changeCartItemQty('${item.id}', 1)" aria-label="Increase quantity">&plus;</button>
                         </div>
                     </div>
 
                     <div class="order-subtotal-box">
                         <span class="subtotal-label">Subtotal</span>
-                        <span class="order-subtotal-amount">KSh ${itemSubtotal}/=</span>
+                        <span class="order-subtotal-amount">KSh ${itemSubtotal.toLocaleString()}/=</span>
                     </div>
 
-                    <button class="btn-remove-pill" onclick="removeCartItem('${item.id}')" title="Remove Dish">
+                    <button type="button" class="btn-remove-pill" onclick="removeCartItem('${item.id}')" title="Remove Dish">
                         <span>Remove Item</span>
                     </button>
                 </div>
@@ -1297,7 +1505,7 @@ function renderSelectedOrderPage() {
 
     if (itemsCountEl) itemsCountEl.textContent = `${totalDishes} ${totalDishes === 1 ? 'Dish' : 'Dishes'}`;
     if (totalQtyEl) totalQtyEl.textContent = `${totalQuantity} ${totalQuantity === 1 ? 'Item' : 'Items'}`;
-    if (totalAmountEl) totalAmountEl.textContent = `KSh ${totalPrice}/=`;
+    if (totalAmountEl) totalAmountEl.textContent = `KSh ${totalPrice.toLocaleString()}/=`;
 }
 
 // Global Quantity & Remove Handlers for order.html
@@ -1333,7 +1541,7 @@ function renderCheckoutPage() {
     const cart = getSelectedCart();
 
     if (cart.length === 0) {
-        summaryItemsEl.innerHTML = `<p style="color: var(--color-text-muted);">No items selected. <a href="index.html" class="text-gold">Return to Menu</a></p>`;
+        summaryItemsEl.innerHTML = `<p style="color: #475569;">No items selected. <a href="index.html" class="text-gold">Return to Menu</a></p>`;
         if (totalAmountEl) totalAmountEl.textContent = "KSh 0/=";
         return;
     }
@@ -1347,13 +1555,13 @@ function renderCheckoutPage() {
         html += `
             <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
                 <span>${item.qty}x ${item.name}</span>
-                <strong style="color: var(--color-cream);">KSh ${itemSubtotal}/=</strong>
+                <strong style="color: #0F172A;">KSh ${itemSubtotal.toLocaleString()}/=</strong>
             </div>
         `;
     });
 
     summaryItemsEl.innerHTML = html;
-    if (totalAmountEl) totalAmountEl.textContent = `KSh ${totalPrice}/=`;
+    if (totalAmountEl) totalAmountEl.textContent = `KSh ${totalPrice.toLocaleString()}/=`;
 }
 
 // ==========================================================================
@@ -1372,8 +1580,8 @@ function renderOrderSummaryPage() {
     if (cart.length === 0) {
         listContainer.innerHTML = `
             <div style="text-align: center; padding: 60px 20px;">
-                <p style="font-size: 1.25rem; color: var(--color-cream); margin-bottom: 12px;">Your order is currently empty.</p>
-                <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 24px;">Explore our menu and add your favorite meals to view your order summary.</p>
+                <p style="font-size: 1.25rem; color: #0F172A; margin-bottom: 12px; font-weight: 700;">Your order is currently empty.</p>
+                <p style="font-size: 0.9rem; color: #475569; margin-bottom: 24px;">Explore our menu and add your favorite meals to view your order summary.</p>
                 <a href="index.html" class="btn-hero-secondary" style="display: inline-flex; align-items: center; justify-content: center; padding: 14px 28px;">
                     <span>Browse Menu</span>
                 </a>
@@ -1414,6 +1622,22 @@ function renderOrderSummaryPage() {
             categoryBadge = '🐟 Fresh Tilapia';
         }
 
+        // Summary Choice Badge details
+        let choiceBadges = '';
+        if (item.selectedSide) {
+            choiceBadges += `<span class="summary-choice-badge">Side: ${item.selectedSide}</span> `;
+        }
+        if (item.selectedPrep) {
+            choiceBadges += `<span class="summary-choice-badge">Style: ${item.selectedPrep}</span> `;
+        }
+        if (item.selectedPairing && item.selectedPairing !== 'none') {
+            let pairingLabel = '';
+            if (item.selectedPairing === 'ugali_managu') pairingLabel = 'Pairing: Ugali + Managu (+KSh 100/=)';
+            else if (item.selectedPairing === 'ugali_sukuma') pairingLabel = 'Pairing: Ugali + Sukuma Wiki (+KSh 70/=)';
+            else if (item.selectedPairing === 'ugali_cabbage') pairingLabel = 'Pairing: Ugali + Cabbage (+KSh 70/=)';
+            choiceBadges += `<span class="summary-choice-badge">${pairingLabel}</span> `;
+        }
+
         html += `
             <div class="order-item-row-luxury" style="pointer-events: none;">
                 <div class="order-item-main-info">
@@ -1423,10 +1647,11 @@ function renderOrderSummaryPage() {
                     </div>
                     <div class="order-dish-text-block">
                         <h3 class="order-dish-title">${item.name}</h3>
-                        <div style="font-size: 0.85rem; color: var(--color-text-muted);">
-                            Quantity Selected: <strong style="color: var(--color-gold); font-size: 0.95rem;">${item.qty}</strong>
+                        <div style="font-size: 0.85rem; color: #475569;">
+                            Quantity Selected: <strong style="color: #B8860B; font-size: 0.95rem;">${item.qty}</strong>
                         </div>
-                        <div class="order-dish-price-tag">Unit Price: <strong>KSh ${item.price}</strong></div>
+                        <div class="order-dish-price-tag">Unit Price: <strong>KSh ${item.numericPrice.toLocaleString()}/=</strong></div>
+                        ${choiceBadges ? `<div style="margin-top: 6px;">${choiceBadges}</div>` : ''}
                     </div>
                 </div>
 

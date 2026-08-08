@@ -5709,6 +5709,141 @@ img {
     }
 }
 
+/* ==========================================================================
+   RIB HOUSE ORDERS & PAYMENT (OFFICIAL DETAILS - CRISP WHITE THEME)
+   ========================================================================== */
+#location.section-wrapper {
+    background: #FFFFFF !important;
+    color: #111116 !important;
+    padding: 85px 20px 80px !important;
+    border-top: 1px solid #E5E7EB;
+    border-bottom: 1px solid #E5E7EB;
+    position: relative;
+    overflow: hidden;
+}
+
+#location .location-wrapper {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 36px;
+    align-items: center;
+    background: #FFFFFF;
+}
+
+#location .location-info {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 18px;
+    padding: 40px 36px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06), 0 3px 10px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+}
+
+#location .section-tag {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #B8860B;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+#location h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    color: #0F172A !important;
+    letter-spacing: 1.5px;
+    margin: 0 0 12px;
+    text-transform: uppercase;
+}
+
+#location .location-info > p {
+    font-size: 0.95rem;
+    color: #4B5563 !important;
+    line-height: 1.6;
+    margin-bottom: 28px;
+}
+
+#location .location-details-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+#location .loc-detail-item {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 16px 20px;
+    transition: var(--transition-smooth);
+}
+
+#location .loc-detail-item:hover {
+    border-color: #CBD5E1;
+    background: #F1F5F9;
+}
+
+#location .loc-detail-item strong {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #926600;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+#location .loc-detail-item p {
+    font-size: 0.95rem;
+    color: #1E293B !important;
+    font-weight: 600;
+    margin: 0;
+}
+
+#location .loc-detail-item p.text-gold {
+    color: #B8860B !important;
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+#location .featured-img-frame {
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+    border: 1px solid #E5E7EB;
+    background: #FFFFFF;
+    height: 100%;
+    min-height: 380px;
+    display: flex;
+}
+
+#location .featured-img-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+@media (max-width: 900px) {
+    #location .location-wrapper {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+    
+    #location .location-info {
+        padding: 28px 20px;
+    }
+
+    #location .featured-img-frame {
+        min-height: 280px;
+    }
+}
+
+
 
 
 

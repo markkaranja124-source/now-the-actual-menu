@@ -3669,6 +3669,73 @@ img {
     margin-top: 4px;
 }
 
+/* Multi-portion Custom Selection per Plate / Portion */
+.multi-portion-container {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed #E2E8F0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.multi-portion-header {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #B8860B;
+}
+
+.portion-selector-card {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.portion-badge {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #0F172A;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.summary-portion-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.summary-portion-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: #334155;
+}
+
+.summary-portion-tag {
+    font-weight: 700;
+    color: #64748B;
+    font-size: 0.74rem;
+}
+
+.summary-portion-val {
+    font-weight: 600;
+    color: #0F172A;
+    background: #FEF3C7;
+    border: 1px solid #FDE68A;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 0.74rem;
+}
+
 /* Actions & Quantity Controls Block */
 .order-item-actions-block {
     display: flex;

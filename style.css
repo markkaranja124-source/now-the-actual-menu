@@ -3921,6 +3921,58 @@ img {
     text-shadow: none !important;
 }
 
+/* Order Summary CTA Action Buttons */
+.btn-view-order-summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #B8860B 0%, #D97706 100%);
+    color: #FFFFFF !important;
+    padding: 16px 32px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(184, 134, 11, 0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+}
+
+.btn-view-order-summary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(184, 134, 11, 0.45);
+    background: linear-gradient(135deg, #D97706 0%, #B8860B 100%);
+}
+
+.btn-add-more-dishes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #FFFFFF;
+    color: #0F172A !important;
+    border: 1.5px solid #CBD5E1;
+    padding: 13px 24px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none !important;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    width: 100%;
+}
+
+.btn-add-more-dishes:hover {
+    border-color: #B8860B;
+    color: #B8860B !important;
+    background: #F8FAFC;
+    transform: translateY(-1px);
+}
+
 /* Order Page Hero Banner - Pure White Clean Header */
 .order-hero-banner-section {
     position: relative;

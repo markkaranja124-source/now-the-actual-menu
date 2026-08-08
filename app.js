@@ -1344,8 +1344,7 @@ function renderSelectedOrderPage() {
     const listContainer = document.getElementById('selected-order-items-list');
     const itemsCountEl = document.getElementById('summary-items-count');
     const totalQtyEl = document.getElementById('summary-total-qty');
-    const totalAmountEl = document.getElementById('summary-total-amount');
-    const checkoutBtn = document.getElementById('btn-proceed-checkout');
+    const checkoutBtn = document.getElementById('btn-proceed-order-summary') || document.getElementById('btn-proceed-checkout');
 
     if (!listContainer) return;
 

@@ -1318,17 +1318,14 @@ function updateSelectionBarUI() {
     const totalPrice = cart.reduce((sum, item) => sum + calculateItemSubtotal(item), 0);
 
     // Floating View Your Order Button (Bottom Right)
-    const floatingBtn = document.getElementById('floating-order-btn');
     const floatingCount = document.getElementById('floating-order-count');
-    const floatingAmount = document.getElementById('floating-order-amount');
 
-    if (floatingBtn) {
-        if (totalDishes > 0) {
-            floatingBtn.classList.add('visible');
-            if (floatingCount) floatingCount.textContent = `${totalQuantity} ${totalQuantity === 1 ? 'item' : 'items'}`;
-            if (floatingAmount) floatingAmount.textContent = `KSh ${totalPrice.toLocaleString()}/=`;
+    if (floatingCount) {
+        if (totalQuantity > 0) {
+            floatingCount.textContent = totalQuantity;
+            floatingCount.style.display = 'inline-flex';
         } else {
-            floatingBtn.classList.remove('visible');
+            floatingCount.style.display = 'none';
         }
     }
 
@@ -1336,7 +1333,7 @@ function updateSelectionBarUI() {
     const navCartBadge = document.getElementById('nav-cart-badge');
     if (navCartBadge) {
         navCartBadge.textContent = totalQuantity;
-        navCartBadge.style.display = totalQuantity > 0 ? 'flex' : 'none';
+        navCartBadge.style.display = totalQuantity > 0 ? 'inline-flex' : 'none';
     }
 }
 

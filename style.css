@@ -4247,7 +4247,7 @@ img {
    21. CUSTOMER FEEDBACK & SECRET OWNER ADMIN DASHBOARD
    ========================================================================== */
 
-/* Floating Share Feedback Trigger Button */
+/* Floating Share Feedback Trigger Button (Bottom Left) */
 .feedback-trigger-btn {
     position: fixed;
     bottom: 24px;
@@ -4270,6 +4270,7 @@ img {
     cursor: pointer;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 255, 255, 0.3);
     transition: var(--transition-smooth);
+    text-decoration: none;
 }
 
 .feedback-trigger-btn:hover {
@@ -4279,13 +4280,13 @@ img {
     box-shadow: 0 10px 25px rgba(255, 255, 255, 0.5);
 }
 
-/* Floating View Your Order Button (Bottom Right) */
+/* Floating View Your Order Button (Bottom Right - Exactly Mirroring Share Feedback) */
 .floating-order-btn {
     position: fixed;
     bottom: 24px;
     right: 24px;
     z-index: 1004;
-    background: rgba(12, 10, 16, 0.92);
+    background: rgba(12, 10, 16, 0.88);
     border: 1px solid #FFFFFF;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -4295,7 +4296,7 @@ img {
     font-size: 0.82rem;
     font-weight: 600;
     letter-spacing: 0.5px;
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
@@ -4310,6 +4311,19 @@ img {
     background: #FFFFFF;
     color: #000000;
     box-shadow: 0 10px 25px rgba(255, 255, 255, 0.5);
+}
+
+.floating-order-badge {
+    background: #E67E22;
+    color: #FFFFFF;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 1px 7px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 /* Customer Feedback Modal (Bright Theme - White Inputs & Solid Black Text with Logo Orange Accents) */

@@ -2000,7 +2000,7 @@ function initLocationSection() {
     }
 
     // 3. Copy Address Helper
-    const addressFullText = 'Rib House Restaurant, Development House, Opposite Naivas Supermarket, Nairobi - https://maps.app.goo.gl/QfEwSbmx5faAciNN6';
+    const addressFullText = 'Rib House Restaurant, Development House along Moi Avenue, Opposite Naivas Supermarket, Nairobi - https://maps.app.goo.gl/QfEwSbmx5faAciNN6';
 
     function copyAddress() {
         if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -2028,7 +2028,7 @@ function initLocationSection() {
             document.body.removeChild(tempInput);
             showLocationToast('Address copied to clipboard');
         } catch (e) {
-            showLocationToast('Address: Development House, Nairobi');
+            showLocationToast('Address: Development House along Moi Avenue, Nairobi');
         }
     }
 
@@ -2038,7 +2038,7 @@ function initLocationSection() {
             e.preventDefault();
             const shareData = {
                 title: 'Rib House Restaurant',
-                text: 'Meet me at Rib House Restaurant at Development House, Opposite Naivas Supermarket, Nairobi.',
+                text: 'Meet me at Rib House Restaurant at Development House along Moi Avenue, Opposite Naivas Supermarket, Nairobi.',
                 url: 'https://maps.app.goo.gl/QfEwSbmx5faAciNN6'
             };
 

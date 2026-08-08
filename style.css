@@ -3471,16 +3471,18 @@ img {
 }
 
 /* ==========================================================================
-   19. LUXURY STEAKHOUSE DESIGN SYSTEM FOR order.html (100% TRANSPARENT GLASSMORPHISM)
+   19. LUXURY DESIGN SYSTEM FOR order.html & order-summary.html (CLEAN WHITE THEME)
    ========================================================================== */
 
 .order-page-body {
-    background: linear-gradient(180deg, rgba(8, 8, 10, 0.45) 0%, rgba(8, 8, 10, 0.7) 40%, rgba(8, 8, 10, 0.88) 100%), url('order_hero_banner.png') center/cover no-repeat fixed;
+    background: #FFFFFF !important;
+    background-image: none !important;
     min-height: 100vh;
-    color: var(--color-text-main);
+    color: #1E293B !important;
 }
 
 .order-luxury-wrapper {
+    background: #FFFFFF !important;
     max-width: 1050px;
     margin: 0 auto;
     padding: 50px 24px 100px 24px;
@@ -3498,23 +3500,21 @@ img {
     font-weight: 800;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--color-gold);
-    text-shadow: 0 0 10px rgba(197, 160, 89, 0.4);
+    color: #B8860B !important;
+    text-shadow: none !important;
     white-space: nowrap;
 }
 
 .order-gold-line {
     flex: 1;
     height: 1px;
-    background: linear-gradient(90deg, var(--color-border-gold) 0%, transparent 100%);
+    background: #E5E7EB !important;
 }
 
-/* Luxury Transparent Glassmorphic Food Item Card */
+/* Crisp White Selected Food Item Card */
 .order-item-row-luxury {
-    background: rgba(18, 14, 22, 0.25);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    border: 1px solid rgba(197, 160, 89, 0.35);
+    background: #FFFFFF !important;
+    border: 1px solid #E5E7EB !important;
     border-radius: 16px;
     padding: 24px 28px;
     display: flex;
@@ -3524,15 +3524,15 @@ img {
     width: 100%;
     margin-bottom: 20px;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
     animation: fadeInUp 0.5s ease-out forwards;
 }
 
 .order-item-row-luxury:hover {
-    background: rgba(28, 22, 34, 0.45);
-    border-color: var(--color-gold-bright);
-    box-shadow: 0 16px 45px rgba(197, 160, 89, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    transform: translateY(-4px) scale(1.005);
+    background: #FFFFFF !important;
+    border-color: #B8860B !important;
+    box-shadow: 0 10px 30px rgba(184, 134, 11, 0.15) !important;
+    transform: translateY(-3px);
 }
 
 .order-item-main-info {
@@ -3547,11 +3547,11 @@ img {
     height: 90px;
     border-radius: 14px;
     overflow: hidden;
-    border: 1px solid var(--color-border-gold);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     flex-shrink: 0;
     position: relative;
-    background: rgba(14, 13, 18, 0.5);
+    background: #F8FAFC;
 }
 
 .dish-row-thumbnail {
@@ -3574,25 +3574,27 @@ img {
 .order-dish-title {
     font-family: var(--font-serif);
     font-size: 1.45rem;
-    color: var(--color-cream);
+    color: #0F172A !important;
     letter-spacing: 0.5px;
+    font-weight: 700;
 }
 
 .order-dish-desc {
-    font-size: 0.825rem;
-    color: var(--color-text-muted);
-    line-height: 1.45;
+    font-size: 0.85rem;
+    color: #475569 !important;
+    line-height: 1.5;
 }
 
 .order-dish-price-tag {
     font-size: 0.85rem;
-    color: var(--color-text-muted);
+    color: #64748B !important;
 }
 
 .order-dish-price-tag strong {
-    color: var(--color-gold);
+    color: #B8860B !important;
     font-family: var(--font-serif);
     font-size: 1.15rem;
+    font-weight: 700;
 }
 
 /* Actions & Quantity Controls Block */
@@ -3606,30 +3608,33 @@ img {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: rgba(8, 6, 12, 0.4);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(197, 160, 89, 0.35);
+    background: #F8FAFC !important;
+    border: 1px solid #CBD5E1 !important;
     padding: 6px 14px;
     border-radius: 30px;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: none !important;
 }
 
 .qty-pill-label {
     font-size: 0.65rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--color-text-muted);
-    font-weight: 600;
+    color: #64748B !important;
+    font-weight: 700;
+}
+
+.qty-number {
+    color: #0F172A !important;
+    font-weight: 800;
 }
 
 .btn-qty-round {
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: rgba(197, 160, 89, 0.15);
-    border: 1px solid var(--color-gold);
-    color: var(--color-gold);
+    background: #FFFFFF !important;
+    border: 1px solid #CBD5E1 !important;
+    color: #B8860B !important;
     font-size: 1.1rem;
     font-weight: bold;
     display: flex;
@@ -3640,20 +3645,20 @@ img {
 }
 
 .btn-qty-round:hover {
-    background: var(--color-gold);
-    color: var(--color-black);
+    background: #B8860B !important;
+    color: #FFFFFF !important;
+    border-color: #B8860B !important;
     transform: scale(1.1);
-    box-shadow: 0 0 10px rgba(229, 193, 88, 0.5);
 }
 
 .btn-remove-pill {
-    background: rgba(239, 68, 68, 0.08);
-    border: 1px solid rgba(239, 68, 68, 0.35);
-    color: #F87171;
-    padding: 10px 18px;
+    background: #FFFFFF !important;
+    border: 1.5px solid #EF4444 !important;
+    color: #EF4444 !important;
+    padding: 9px 18px;
     font-size: 0.725rem;
     font-weight: 700;
-    letter-spacing: 1.5px;
+    letter-spacing: 1px;
     text-transform: uppercase;
     border-radius: 20px;
     cursor: pointer;
@@ -3664,154 +3669,55 @@ img {
 }
 
 .btn-remove-pill:hover {
-    background: #EF4444;
-    color: #FFFFFF;
-    border-color: #EF4444;
-    box-shadow: 0 0 18px rgba(239, 68, 68, 0.5);
+    background: #EF4444 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
     transform: translateY(-1px);
 }
 
-/* White Theme Overrides for order.html Header, Dish Item Cards, and Summary Box */
+/* White Theme Overrides for Header, Dishes, and Summary */
 .page-header-bar {
     background: #FFFFFF !important;
-    border-bottom: 1px solid rgba(230, 126, 34, 0.3) !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    border-bottom: 1px solid #E5E7EB !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
 }
 
 .page-header-bar .brand-title,
 .page-header-bar .brand-logo span,
 .page-header-bar .brand-logo {
-    color: #111114 !important;
+    color: #0F172A !important;
     font-weight: 700 !important;
 }
 
 .btn-back-menu {
-    color: #111114 !important;
+    color: #0F172A !important;
     font-weight: 700 !important;
 }
 
 .btn-back-menu:hover {
-    color: #E67E22 !important;
+    color: #B8860B !important;
 }
 
 .nav-link-btn {
     background: #FFFFFF !important;
-    color: #111114 !important;
-    border: 1px solid rgba(230, 126, 34, 0.4) !important;
+    color: #0F172A !important;
+    border: 1px solid #CBD5E1 !important;
     font-weight: 700 !important;
 }
 
 .nav-link-btn:hover,
 .nav-link-btn.active {
-    background: #E67E22 !important;
+    background: #B8860B !important;
     color: #FFFFFF !important;
-    border-color: #E67E22 !important;
-    box-shadow: 0 4px 15px rgba(230, 126, 34, 0.35) !important;
-}
-
-.nav-link-btn.btn-coming-soon {
-    background: #FFFFFF !important;
-    border-color: rgba(230, 126, 34, 0.4) !important;
-    color: #D35400 !important;
-}
-
-.nav-link-btn.btn-coming-soon:hover,
-.nav-link-btn.btn-coming-soon.active {
-    background: #E67E22 !important;
-    color: #FFFFFF !important;
-}
-
-/* White Selected Food Item Cards */
-.order-item-row-luxury,
-.order-item-row-vertical {
-    background: #FFFFFF !important;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(230, 126, 34, 0.4) !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
-    border-radius: 16px;
-    padding: 24px 28px;
-    margin-bottom: 20px;
-    transition: all 0.35s ease;
-}
-
-.order-item-row-luxury:hover,
-.order-item-row-vertical:hover {
-    background: #FFFFFF !important;
-    border-color: #E67E22 !important;
-    box-shadow: 0 14px 40px rgba(230, 126, 34, 0.35) !important;
-    transform: translateY(-3px);
-}
-
-.order-dish-title {
-    color: #111114 !important;
-    font-weight: 700 !important;
-}
-
-.order-dish-desc {
-    color: #44444A !important;
-}
-
-.order-dish-price-tag,
-.qty-pill-label,
-.qty-label,
-.subtotal-label {
-    color: #222226 !important;
-    font-weight: 600 !important;
-}
-
-.order-dish-price-tag strong,
-.order-subtotal-amount {
-    color: #D35400 !important;
-    font-weight: 800 !important;
-}
-
-.quantity-controls-pill,
-.quantity-controls-box {
-    background: #F8F8FA !important;
-    border: 1px solid rgba(230, 126, 34, 0.35) !important;
-}
-
-.qty-number,
-.qty-pill-val {
-    color: #111114 !important;
-    font-weight: 800 !important;
-}
-
-.btn-qty-round,
-.btn-qty {
-    color: #D35400 !important;
-    border-color: #E67E22 !important;
-    background: rgba(230, 126, 34, 0.12) !important;
-}
-
-.btn-qty-round:hover,
-.btn-qty:hover {
-    background: #E67E22 !important;
-    color: #FFFFFF !important;
-}
-
-.btn-remove-pill,
-.btn-remove-item {
-    background: #FFFFFF !important;
-    border: 1px solid #E74C3C !important;
-    color: #E74C3C !important;
-    font-weight: 700 !important;
-}
-
-.btn-remove-pill:hover,
-.btn-remove-item:hover {
-    background: #E74C3C !important;
-    color: #FFFFFF !important;
+    border-color: #B8860B !important;
+    box-shadow: 0 4px 15px rgba(184, 134, 11, 0.25) !important;
 }
 
 /* White Order Summary Card */
 .order-summary-luxury-card {
     background: #FFFFFF !important;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(230, 126, 34, 0.4) !important;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25) !important;
+    border: 1px solid #E5E7EB !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
     border-radius: 20px;
     padding: 40px;
     margin-top: 45px;
@@ -3819,17 +3725,17 @@ img {
 }
 
 .summary-top-tag {
-    color: #E67E22 !important;
+    color: #B8860B !important;
     font-weight: 800 !important;
 }
 
 .summary-main-heading {
-    color: #111114 !important;
+    color: #0F172A !important;
     font-weight: 700 !important;
 }
 
 .summary-subtext {
-    color: #44444A !important;
+    color: #475569 !important;
 }
 
 .summary-stats-grid {
@@ -3840,8 +3746,8 @@ img {
 }
 
 .summary-stat-card {
-    background: #F8F8FA !important;
-    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    background: #F8FAFC !important;
+    border: 1px solid #E2E8F0 !important;
     border-radius: 12px;
     padding: 20px;
     display: flex;
@@ -3852,127 +3758,60 @@ img {
 }
 
 .summary-stat-card:hover {
-    border-color: #E67E22 !important;
+    border-color: #B8860B !important;
     background: #FFFFFF !important;
 }
 
 .stat-card-label {
-    color: #55555C !important;
+    color: #64748B !important;
     font-weight: 700 !important;
 }
 
 .stat-card-value {
-    color: #111114 !important;
+    color: #0F172A !important;
     font-weight: 800 !important;
 }
 
 .summary-total-banner {
-    border-top: 1px solid rgba(0, 0, 0, 0.15) !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.15) !important;
+    border-top: 1px solid #E2E8F0 !important;
+    border-bottom: 1px solid #E2E8F0 !important;
     padding: 20px 0;
     margin-bottom: 32px;
 }
 
 .summary-total-title {
-    color: #111114 !important;
+    color: #0F172A !important;
     font-weight: 800 !important;
 }
 
 .summary-grand-total {
-    color: #D35400 !important;
+    color: #B8860B !important;
     font-weight: 800 !important;
     text-shadow: none !important;
 }
 
-.btn-checkout-gold-gradient {
-    background: linear-gradient(135deg, #E67E22 0%, #D35400 100%) !important;
-    color: #FFFFFF !important;
-    font-weight: 800 !important;
-    box-shadow: 0 8px 25px rgba(230, 126, 34, 0.4) !important;
-}
-
-.btn-checkout-gold-gradient:hover {
-    background: linear-gradient(135deg, #FFF0A8 0%, #E5C158 50%, #C5A059 100%);
-    box-shadow: 0 12px 35px rgba(229, 193, 88, 0.6);
-    transform: translateY(-3px);
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@media (max-width: 850px) {
-    .order-item-row-luxury {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-    }
-    .order-item-actions-block {
-        width: 100%;
-        justify-content: space-between;
-    }
-    .summary-stats-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-}
-
+/* Order Page Hero Banner - Pure White Clean Header */
 .order-hero-banner-section {
     position: relative;
     width: 100%;
-    height: 300px;
-    background: url('order_hero_banner.png') center/cover no-repeat;
+    background: #FFFFFF !important;
+    background-image: none !important;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     overflow: hidden;
-    border-bottom: 2px solid var(--color-border-gold);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    border-bottom: 1px solid #E5E7EB !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+    padding: 50px 24px 40px 24px;
 }
 
 .order-hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(8, 8, 10, 0.4) 0%, rgba(8, 8, 10, 0.85) 80%, #08080A 100%);
-    z-index: 1;
+    display: none !important;
 }
 
 .embers-container {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 2;
-}
-
-.ember-particle {
-    position: absolute;
-    bottom: -10px;
-    width: 6px;
-    height: 6px;
-    background: #FF7F00;
-    border-radius: 50%;
-    box-shadow: 0 0 10px #FF7F00, 0 0 20px #E5C158;
-    opacity: 0.8;
-    animation: emberFloat 5s infinite linear;
-}
-
-@keyframes emberFloat {
-    0% {
-        transform: translateY(0) scale(1);
-        opacity: 0.9;
-    }
-    100% {
-        transform: translateY(-300px) scale(0.2);
-        opacity: 0;
-    }
+    display: none !important;
 }
 
 .order-hero-content {
@@ -3984,30 +3823,31 @@ img {
 
 .order-hero-subtitle {
     font-size: 0.775rem;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--color-gold);
+    color: #B8860B !important;
     display: block;
     margin-bottom: 8px;
-    text-shadow: 0 0 10px rgba(197, 160, 89, 0.5);
+    text-shadow: none !important;
 }
 
 .order-hero-title {
     font-family: var(--font-serif);
     font-size: 2.8rem;
-    color: var(--color-cream);
+    color: #0F172A !important;
     letter-spacing: 2px;
     text-transform: uppercase;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+    text-shadow: none !important;
     margin-bottom: 12px;
 }
 
 .order-hero-desc {
     font-size: 0.95rem;
-    color: var(--color-text-muted);
-    font-weight: 300;
+    color: #475569 !important;
+    font-weight: 400;
     letter-spacing: 0.5px;
+    text-shadow: none !important;
 }
 
 /* Culinary Dish Artwork Thumbnail & Badges */

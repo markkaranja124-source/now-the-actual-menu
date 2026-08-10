@@ -3503,11 +3503,11 @@ img {
     background: #E5E7EB !important;
 }
 
-/* Crisp White Selected Food Item Card */
+/* Crisp White Selected Food Item Card (Sharp Corners) */
 .order-item-row-luxury {
     background: #FFFFFF !important;
     border: 1px solid #E5E7EB !important;
-    border-radius: 16px;
+    border-radius: 0 !important;
     padding: 24px 28px;
     display: flex;
     align-items: center;
@@ -3518,13 +3518,30 @@ img {
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
     animation: fadeInUp 0.5s ease-out forwards;
+    position: relative;
+}
+
+.order-item-row-luxury::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--color-gold);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .order-item-row-luxury:hover {
     background: #FFFFFF !important;
     border-color: #B8860B !important;
     box-shadow: 0 10px 30px rgba(184, 134, 11, 0.15) !important;
-    transform: translateY(-3px);
+    transform: translateY(-2px);
+}
+
+.order-item-row-luxury:hover::before {
+    opacity: 1;
 }
 
 .order-item-main-info {
@@ -3537,24 +3554,72 @@ img {
 .order-dish-image-frame {
     width: 90px;
     height: 90px;
-    border-radius: 14px;
+    border-radius: 0 !important;
     overflow: hidden;
-    border: 1px solid #E5E7EB;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1.5px solid #E5E7EB;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     flex-shrink: 0;
     position: relative;
     background: #F8FAFC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dish-placeholder-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F8FAFC;
+    border: 1px dashed #CBD5E1;
+    transition: all 0.25s ease;
+}
+
+.dish-placeholder-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #94A3B8;
+    text-transform: uppercase;
+}
+
+.order-dish-image-frame:hover .dish-placeholder-box {
+    border-color: #B8860B;
+    background: #FFFFFF;
+}
+
+.order-dish-image-frame:hover .dish-placeholder-label {
+    color: #B8860B;
+}
+
+.order-badge-pill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(15, 23, 42, 0.88);
+    color: #FEF3C7;
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-align: center;
+    padding: 3px 4px;
+    text-transform: uppercase;
+    border-radius: 0 !important;
 }
 
 .dish-row-thumbnail {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 0 !important;
     transition: transform 0.5s ease;
 }
 
 .order-item-row-luxury:hover .dish-row-thumbnail {
-    transform: scale(1.08);
+    transform: scale(1.06);
 }
 
 .order-dish-text-block {
@@ -3570,6 +3635,7 @@ img {
     color: #0F172A !important;
     letter-spacing: 0.5px;
     font-weight: 700;
+    text-transform: uppercase;
 }
 
 .order-dish-desc {
@@ -3590,7 +3656,7 @@ img {
     font-weight: 700;
 }
 
-/* Interactive Option & Pairing Choice Selector Pills */
+/* Interactive Option & Pairing Choice Selector Pills (Sharp) */
 .custom-choice-group {
     margin-top: 10px;
     padding-top: 10px;
@@ -3620,7 +3686,7 @@ img {
     align-items: center;
     gap: 6px;
     padding: 6px 14px;
-    border-radius: 20px;
+    border-radius: 0 !important;
     font-size: 0.78rem;
     font-weight: 700;
     background: #F8FAFC;
@@ -3628,6 +3694,7 @@ img {
     color: #334155;
     cursor: pointer;
     transition: var(--transition-fast);
+    text-transform: uppercase;
 }
 
 .choice-pill:hover {
@@ -3644,7 +3711,7 @@ img {
 }
 
 .pill-radio {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: #B8860B;
 }
 
@@ -3655,13 +3722,13 @@ img {
     border: 1px solid #FDE68A;
     color: #92400E;
     padding: 3px 10px;
-    border-radius: 12px;
+    border-radius: 0 !important;
     font-size: 0.74rem;
     font-weight: 700;
     margin-top: 4px;
 }
 
-/* Multi-portion Custom Selection per Plate / Portion */
+/* Multi-portion Custom Selection per Plate / Portion (Sharp) */
 .multi-portion-container {
     margin-top: 12px;
     padding-top: 10px;
@@ -3682,7 +3749,7 @@ img {
 .portion-selector-card {
     background: #F8FAFC;
     border: 1px solid #E2E8F0;
-    border-radius: 12px;
+    border-radius: 0 !important;
     padding: 10px 14px;
     display: flex;
     flex-direction: column;
@@ -3716,6 +3783,7 @@ img {
     font-weight: 700;
     color: #64748B;
     font-size: 0.74rem;
+    text-transform: uppercase;
 }
 
 .summary-portion-val {
@@ -3724,11 +3792,11 @@ img {
     background: #FEF3C7;
     border: 1px solid #FDE68A;
     padding: 2px 8px;
-    border-radius: 8px;
+    border-radius: 0 !important;
     font-size: 0.74rem;
 }
 
-/* Actions & Quantity Controls Block */
+/* Actions & Quantity Controls Block (Sharp) */
 .order-item-actions-block {
     display: flex;
     align-items: center;
@@ -3742,7 +3810,7 @@ img {
     background: #F8FAFC !important;
     border: 1px solid #CBD5E1 !important;
     padding: 6px 14px;
-    border-radius: 30px;
+    border-radius: 0 !important;
     box-shadow: none !important;
 }
 
@@ -3762,7 +3830,7 @@ img {
 .btn-qty-round {
     width: 28px;
     height: 28px;
-    border-radius: 50%;
+    border-radius: 0 !important;
     background: #FFFFFF !important;
     border: 1px solid #CBD5E1 !important;
     color: #B8860B !important;
@@ -3779,7 +3847,6 @@ img {
     background: #B8860B !important;
     color: #FFFFFF !important;
     border-color: #B8860B !important;
-    transform: scale(1.1);
 }
 
 .btn-remove-pill {
@@ -3791,7 +3858,7 @@ img {
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
-    border-radius: 20px;
+    border-radius: 0 !important;
     cursor: pointer;
     transition: all 0.3s ease;
     display: inline-flex;
@@ -3844,12 +3911,12 @@ img {
     box-shadow: 0 4px 15px rgba(184, 134, 11, 0.25) !important;
 }
 
-/* White Order Summary Card */
+/* White Order Summary Card (Sharp Corners) */
 .order-summary-luxury-card {
     background: #FFFFFF !important;
     border: 1px solid #E5E7EB !important;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
-    border-radius: 20px;
+    border-radius: 0 !important;
     padding: 40px;
     margin-top: 45px;
     width: 100%;
@@ -3858,11 +3925,13 @@ img {
 .summary-top-tag {
     color: #B8860B !important;
     font-weight: 800 !important;
+    text-transform: uppercase;
 }
 
 .summary-main-heading {
     color: #0F172A !important;
     font-weight: 700 !important;
+    text-transform: uppercase;
 }
 
 .summary-subtext {
@@ -3879,7 +3948,7 @@ img {
 .summary-stat-card {
     background: #F8FAFC !important;
     border: 1px solid #E2E8F0 !important;
-    border-radius: 12px;
+    border-radius: 0 !important;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -3896,6 +3965,7 @@ img {
 .stat-card-label {
     color: #64748B !important;
     font-weight: 700 !important;
+    text-transform: uppercase;
 }
 
 .stat-card-value {
@@ -3913,6 +3983,7 @@ img {
 .summary-total-title {
     color: #0F172A !important;
     font-weight: 800 !important;
+    text-transform: uppercase;
 }
 
 .summary-grand-total {
@@ -3921,7 +3992,7 @@ img {
     text-shadow: none !important;
 }
 
-/* Order Summary CTA Action Buttons */
+/* Order Summary CTA Action Buttons (Sharp) */
 .btn-view-order-summary {
     display: flex;
     align-items: center;
@@ -3930,7 +4001,7 @@ img {
     background: linear-gradient(135deg, #B8860B 0%, #D97706 100%);
     color: #FFFFFF !important;
     padding: 16px 32px;
-    border-radius: 30px;
+    border-radius: 0 !important;
     font-size: 0.95rem;
     font-weight: 700;
     letter-spacing: 1px;
@@ -3957,7 +4028,7 @@ img {
     color: #0F172A !important;
     border: 1.5px solid #CBD5E1;
     padding: 13px 24px;
-    border-radius: 30px;
+    border-radius: 0 !important;
     font-size: 0.85rem;
     font-weight: 700;
     text-decoration: none !important;

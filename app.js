@@ -1386,23 +1386,18 @@ function renderSelectedOrderPage() {
             item.portions.pop();
         }
 
-        // Determine Dish Artwork Thumbnail & Category Badge
+        // Determine Category Badge (Clean, No Emojis)
         const nameLower = item.name.toLowerCase();
-        let dishImg = 'logo.png';
-        let categoryBadge = '🥩 Main Dish';
+        let categoryBadge = 'Main Dish';
 
         if (nameLower.includes('choma') || nameLower.includes('beef') || nameLower.includes('goat') || nameLower.includes('steak') || nameLower.includes('platter') || nameLower.includes('tumbukiza') || nameLower.includes('chemsha')) {
-            dishImg = 'order_dish_choma.png';
-            categoryBadge = '🔥 Wood-Fired Choma';
+            categoryBadge = 'Wood-Fired Choma';
         } else if (nameLower.includes('breakfast') || nameLower.includes('pancake') || nameLower.includes('egg') || nameLower.includes('toast') || nameLower.includes('bite') || nameLower.includes('samosa') || nameLower.includes('combo')) {
-            dishImg = 'order_dish_breakfast.png';
-            categoryBadge = '🥞 Gourmet Breakfast';
+            categoryBadge = 'Gourmet Breakfast';
         } else if (nameLower.includes('coffee') || nameLower.includes('tea') || nameLower.includes('shake') || nameLower.includes('drink') || nameLower.includes('dawa') || nameLower.includes('lemonade') || nameLower.includes('smoothie')) {
-            dishImg = 'logo.png';
-            categoryBadge = '🥤 Barista Brew & Shake';
+            categoryBadge = 'Barista Brew';
         } else if (nameLower.includes('tilapia') || nameLower.includes('fish')) {
-            dishImg = 'order_dish_choma.png';
-            categoryBadge = '🐟 Fresh Tilapia';
+            categoryBadge = 'Fresh Tilapia';
         }
 
         // Build Custom Option UI for each individual portion (Plate 1, Plate 2, etc.)
@@ -1424,10 +1419,10 @@ function renderSelectedOrderPage() {
                     pControls += `
                         <div class="custom-choice-pills">
                             <button type="button" class="choice-pill ${currentSide === 'Ugali' ? 'active' : ''}" onclick="setPortionSideOption('${item.id}', ${pIdx}, 'Ugali')">
-                                <span class="pill-radio">${currentSide === 'Ugali' ? '◉' : '○'}</span> Ugali
+                                <span class="pill-radio">${currentSide === 'Ugali' ? '■' : '□'}</span> Ugali
                             </button>
                             <button type="button" class="choice-pill ${currentSide === 'Chapati' ? 'active' : ''}" onclick="setPortionSideOption('${item.id}', ${pIdx}, 'Chapati')">
-                                <span class="pill-radio">${currentSide === 'Chapati' ? '◉' : '○'}</span> Chapati
+                                <span class="pill-radio">${currentSide === 'Chapati' ? '■' : '□'}</span> Chapati
                             </button>
                         </div>
                     `;
@@ -1439,10 +1434,10 @@ function renderSelectedOrderPage() {
                     pControls += `
                         <div class="custom-choice-pills">
                             <button type="button" class="choice-pill ${currentPrep === 'Wet Fry' ? 'active' : ''}" onclick="setPortionPrepOption('${item.id}', ${pIdx}, 'Wet Fry')">
-                                <span class="pill-radio">${currentPrep === 'Wet Fry' ? '◉' : '○'}</span> Wet Fry
+                                <span class="pill-radio">${currentPrep === 'Wet Fry' ? '■' : '□'}</span> Wet Fry
                             </button>
                             <button type="button" class="choice-pill ${currentPrep === 'Dry Fry' ? 'active' : ''}" onclick="setPortionPrepOption('${item.id}', ${pIdx}, 'Dry Fry')">
-                                <span class="pill-radio">${currentPrep === 'Dry Fry' ? '◉' : '○'}</span> Dry Fry
+                                <span class="pill-radio">${currentPrep === 'Dry Fry' ? '■' : '□'}</span> Dry Fry
                             </button>
                         </div>
                     `;
@@ -1454,16 +1449,16 @@ function renderSelectedOrderPage() {
                     pControls += `
                         <div class="custom-choice-pills">
                             <button type="button" class="choice-pill ${currentPairing === 'none' ? 'active' : ''}" onclick="setPortionPairingOption('${item.id}', ${pIdx}, 'none')">
-                                <span class="pill-radio">${currentPairing === 'none' ? '◉' : '○'}</span> Meat Only
+                                <span class="pill-radio">${currentPairing === 'none' ? '■' : '□'}</span> Meat Only
                             </button>
                             <button type="button" class="choice-pill ${currentPairing === 'ugali_managu' ? 'active' : ''}" onclick="setPortionPairingOption('${item.id}', ${pIdx}, 'ugali_managu')">
-                                <span class="pill-radio">${currentPairing === 'ugali_managu' ? '◉' : '○'}</span> Ugali + Managu (+100/=)
+                                <span class="pill-radio">${currentPairing === 'ugali_managu' ? '■' : '□'}</span> Ugali + Managu (+100/=)
                             </button>
                             <button type="button" class="choice-pill ${currentPairing === 'ugali_sukuma' ? 'active' : ''}" onclick="setPortionPairingOption('${item.id}', ${pIdx}, 'ugali_sukuma')">
-                                <span class="pill-radio">${currentPairing === 'ugali_sukuma' ? '◉' : '○'}</span> Ugali + Sukuma Wiki (+70/=)
+                                <span class="pill-radio">${currentPairing === 'ugali_sukuma' ? '■' : '□'}</span> Ugali + Sukuma Wiki (+70/=)
                             </button>
                             <button type="button" class="choice-pill ${currentPairing === 'ugali_cabbage' ? 'active' : ''}" onclick="setPortionPairingOption('${item.id}', ${pIdx}, 'ugali_cabbage')">
-                                <span class="pill-radio">${currentPairing === 'ugali_cabbage' ? '◉' : '○'}</span> Ugali + Cabbage (+70/=)
+                                <span class="pill-radio">${currentPairing === 'ugali_cabbage' ? '■' : '□'}</span> Ugali + Cabbage (+70/=)
                             </button>
                         </div>
                     `;
@@ -1484,7 +1479,9 @@ function renderSelectedOrderPage() {
             <div class="order-item-row-luxury" data-id="${item.id}">
                 <div class="order-item-main-info">
                     <div class="order-dish-image-frame">
-                        <img src="${dishImg}" alt="${item.name}" class="dish-row-thumbnail">
+                        <div class="dish-placeholder-box">
+                            <span class="dish-placeholder-label">PHOTO</span>
+                        </div>
                         <span class="order-badge-pill">${categoryBadge}</span>
                     </div>
                     <div class="order-dish-text-block">
@@ -1638,23 +1635,18 @@ function renderOrderSummaryPage() {
         totalQuantity += item.qty;
         totalPrice += itemSubtotal;
 
-        // Determine Dish Artwork Thumbnail & Category Badge
+        // Determine Category Badge (Clean, No Emojis)
         const nameLower = item.name.toLowerCase();
-        let dishImg = 'logo.png';
-        let categoryBadge = '🥩 Main Dish';
+        let categoryBadge = 'Main Dish';
 
         if (nameLower.includes('choma') || nameLower.includes('beef') || nameLower.includes('goat') || nameLower.includes('steak') || nameLower.includes('platter') || nameLower.includes('tumbukiza') || nameLower.includes('chemsha')) {
-            dishImg = 'order_dish_choma.png';
-            categoryBadge = '🔥 Wood-Fired Choma';
+            categoryBadge = 'Wood-Fired Choma';
         } else if (nameLower.includes('breakfast') || nameLower.includes('pancake') || nameLower.includes('egg') || nameLower.includes('toast') || nameLower.includes('bite') || nameLower.includes('samosa') || nameLower.includes('combo')) {
-            dishImg = 'order_dish_breakfast.png';
-            categoryBadge = '🥞 Gourmet Breakfast';
+            categoryBadge = 'Gourmet Breakfast';
         } else if (nameLower.includes('coffee') || nameLower.includes('tea') || nameLower.includes('shake') || nameLower.includes('drink') || nameLower.includes('dawa') || nameLower.includes('lemonade') || nameLower.includes('smoothie')) {
-            dishImg = 'logo.png';
-            categoryBadge = '🥤 Barista Brew & Shake';
+            categoryBadge = 'Barista Brew';
         } else if (nameLower.includes('tilapia') || nameLower.includes('fish')) {
-            dishImg = 'order_dish_choma.png';
-            categoryBadge = '🐟 Fresh Tilapia';
+            categoryBadge = 'Fresh Tilapia';
         }
 
         // Render portion breakdowns
@@ -1687,7 +1679,9 @@ function renderOrderSummaryPage() {
             <div class="order-item-row-luxury" style="pointer-events: none;">
                 <div class="order-item-main-info">
                     <div class="order-dish-image-frame">
-                        <img src="${dishImg}" alt="${item.name}" class="dish-row-thumbnail">
+                        <div class="dish-placeholder-box">
+                            <span class="dish-placeholder-label">PHOTO</span>
+                        </div>
                         <span class="order-badge-pill">${categoryBadge}</span>
                     </div>
                     <div class="order-dish-text-block">

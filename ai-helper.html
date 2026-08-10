@@ -18,11 +18,11 @@
     <link rel="apple-touch-icon" href="logo.png">
     <meta property="og:image" content="logo.png">
 
-    <link rel="stylesheet" href="style.css?v=20260810_order_checkout1">
+    <link rel="stylesheet" href="style.css?v=20260810_order_sharp1">
 
     <style>
         /* ==========================================================================
-           STANDALONE ALL-WHITE & VIBRANT ORANGE ORDER CHECKOUT THEME
+           SHARP LUXURY ARCHITECTURAL THEME (ALL-WHITE, SHARP CORNERS & ORANGE)
            ========================================================================== */
         :root {
             --orange-primary: #FF6A00;
@@ -30,21 +30,22 @@
             --orange-dark: #D95300;
             --orange-glow: rgba(255, 106, 0, 0.25);
             --orange-subtle: rgba(255, 106, 0, 0.08);
-            --orange-border: rgba(255, 106, 0, 0.3);
+            --orange-border: rgba(255, 106, 0, 0.35);
             --pure-white: #FFFFFF;
             --off-white: #F8FAFC;
             --dark-text: #0F172A;
             --slate-text: #334155;
             --muted-text: #64748B;
             --light-border: #E2E8F0;
-            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            --card-hover-shadow: 0 16px 40px rgba(255, 106, 0, 0.12);
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            --card-hover-shadow: 0 16px 40px rgba(255, 106, 0, 0.1);
         }
 
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            border-radius: 0 !important; /* STRICT SHARP CORNERS ACROSS ALL ELEMENTS */
         }
 
         body.order-checkout-body {
@@ -84,14 +85,15 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 9px 18px;
+            padding: 10px 20px;
             background: var(--off-white);
             border: 1px solid var(--light-border);
-            border-radius: 9999px;
             color: var(--dark-text);
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-size: 0.82rem;
+            font-weight: 700;
             text-decoration: none;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             transition: all 0.25s ease;
             white-space: nowrap;
         }
@@ -100,27 +102,26 @@
             background: var(--orange-primary);
             color: #FFFFFF;
             border-color: var(--orange-primary);
-            transform: translateX(-3px);
             box-shadow: 0 4px 15px var(--orange-glow);
         }
 
         .order-brand-center {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             text-decoration: none;
             color: var(--dark-text);
         }
 
         .order-brand-logo-img {
-            height: 44px;
+            height: 42px;
             width: auto;
             object-fit: contain;
             transition: transform 0.3s ease;
         }
 
         .order-brand-center:hover .order-brand-logo-img {
-            transform: scale(1.06);
+            transform: scale(1.04);
         }
 
         .order-brand-title-wrap {
@@ -131,9 +132,9 @@
 
         .order-brand-main-title {
             font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 1.4rem;
+            font-size: 1.45rem;
             font-weight: 700;
-            letter-spacing: 2px;
+            letter-spacing: 2.5px;
             line-height: 1.1;
             color: var(--dark-text);
         }
@@ -141,7 +142,7 @@
         .order-brand-sub-title {
             font-size: 0.65rem;
             font-weight: 700;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             color: var(--orange-primary);
             text-transform: uppercase;
         }
@@ -153,10 +154,11 @@
         }
 
         .order-nav-pill {
-            padding: 8px 16px;
-            border-radius: 9999px;
-            font-size: 0.82rem;
-            font-weight: 600;
+            padding: 8px 18px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
             text-decoration: none;
             color: var(--muted-text);
             background: transparent;
@@ -172,7 +174,7 @@
         }
 
         .order-nav-pill.active {
-            background: linear-gradient(135deg, var(--orange-bright) 0%, var(--orange-primary) 100%);
+            background: var(--orange-primary);
             color: #FFFFFF;
             border-color: var(--orange-primary);
             box-shadow: 0 4px 12px var(--orange-glow);
@@ -212,17 +214,14 @@
         }
 
         .order-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 7px 18px;
+            display: inline-block;
+            padding: 6px 16px;
             background: var(--orange-subtle);
             border: 1.5px solid var(--orange-border);
-            border-radius: 9999px;
             color: var(--orange-primary);
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 2px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
             margin-bottom: 14px;
         }
@@ -265,16 +264,14 @@
             align-items: start;
         }
 
-        /* Card Container (Clean White with Soft Border) */
+        /* Sharp Card Container */
         .order-card {
             background: #FFFFFF;
             border: 1px solid var(--light-border);
-            border-radius: 20px;
             padding: 32px 28px;
             box-shadow: var(--card-shadow);
             transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
         }
 
         .order-card::before {
@@ -289,43 +286,27 @@
 
         .order-card:hover {
             box-shadow: var(--card-hover-shadow);
-            border-color: rgba(255, 106, 0, 0.3);
+            border-color: rgba(255, 106, 0, 0.4);
         }
 
         .card-header-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
             margin-bottom: 24px;
             padding-bottom: 16px;
             border-bottom: 1px solid var(--light-border);
         }
 
-        .card-header-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: var(--orange-subtle);
-            color: var(--orange-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            flex-shrink: 0;
-        }
-
         .card-header-title h2 {
             font-size: 1.25rem;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--dark-text);
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             text-transform: uppercase;
         }
 
         .card-header-title p {
             font-size: 0.8rem;
             color: var(--muted-text);
-            margin-top: 2px;
+            margin-top: 3px;
         }
 
         /* Form Inputs */
@@ -335,7 +316,7 @@
 
         .form-label {
             display: block;
-            font-size: 0.84rem;
+            font-size: 0.82rem;
             font-weight: 700;
             color: var(--slate-text);
             letter-spacing: 0.5px;
@@ -348,30 +329,14 @@
             margin-left: 2px;
         }
 
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 16px;
-            color: var(--muted-text);
-            font-size: 1rem;
-            pointer-events: none;
-            transition: color 0.2s ease;
-        }
-
         .form-control {
             width: 100%;
-            padding: 13px 16px 13px 44px;
+            padding: 13px 16px;
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 0.95rem;
             color: var(--dark-text);
             background: #FFFFFF;
             border: 1.5px solid var(--light-border);
-            border-radius: 12px;
             outline: none;
             transition: all 0.25s ease;
         }
@@ -384,15 +349,10 @@
         .form-control:focus {
             border-color: var(--orange-primary);
             background: #FFFFFF;
-            box-shadow: 0 0 0 4px var(--orange-subtle);
+            box-shadow: 0 0 0 3px var(--orange-subtle);
         }
 
-        .form-control:focus + .input-icon,
-        .input-wrapper:focus-within .input-icon {
-            color: var(--orange-primary);
-        }
-
-        /* Dining Option Selector (Pills) */
+        /* Dining Option Selector (Sharp Boxes) */
         .dining-type-options {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -403,28 +363,24 @@
         .dining-option-btn {
             background: var(--off-white);
             border: 1.5px solid var(--light-border);
-            border-radius: 12px;
             padding: 12px 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 4px;
             cursor: pointer;
             transition: all 0.25s ease;
             text-align: center;
             font-family: inherit;
         }
 
-        .dining-option-btn .opt-icon {
-            font-size: 1.3rem;
-            line-height: 1;
-        }
-
         .dining-option-btn .opt-title {
-            font-size: 0.82rem;
-            font-weight: 700;
+            font-size: 0.85rem;
+            font-weight: 800;
             color: var(--slate-text);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .dining-option-btn:hover {
@@ -443,11 +399,10 @@
             color: var(--orange-primary);
         }
 
-        /* M-Pesa Instructions Box */
+        /* M-Pesa Instructions Box (Sharp Card) */
         .mpesa-instruction-box {
             background: #FAFAF9;
             border: 1.5px solid var(--orange-border);
-            border-radius: 14px;
             padding: 18px 20px;
             margin-top: 24px;
             position: relative;
@@ -461,9 +416,7 @@
         }
 
         .mpesa-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+            display: inline-block;
             font-size: 0.75rem;
             font-weight: 800;
             letter-spacing: 1px;
@@ -471,7 +424,6 @@
             background: #ECFDF5;
             border: 1px solid #A7F3D0;
             padding: 4px 10px;
-            border-radius: 6px;
             text-transform: uppercase;
         }
 
@@ -484,7 +436,6 @@
         .mpesa-detail-card {
             background: #FFFFFF;
             border: 1px solid var(--light-border);
-            border-radius: 10px;
             padding: 10px 14px;
             display: flex;
             flex-direction: column;
@@ -493,7 +444,7 @@
 
         .mpesa-detail-card .label {
             font-size: 0.7rem;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--muted-text);
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -508,19 +459,17 @@
 
         .btn-copy-till {
             align-self: flex-start;
-            margin-top: 10px;
+            margin-top: 12px;
             background: var(--off-white);
             border: 1px solid var(--light-border);
             color: var(--dark-text);
-            padding: 6px 14px;
-            border-radius: 8px;
+            padding: 8px 16px;
             font-size: 0.75rem;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             cursor: pointer;
             transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .btn-copy-till:hover {
@@ -541,23 +490,20 @@
         }
 
         .order-items-scroll-list::-webkit-scrollbar {
-            width: 5px;
+            width: 4px;
         }
 
         .order-items-scroll-list::-webkit-scrollbar-track {
             background: var(--off-white);
-            border-radius: 4px;
         }
 
         .order-items-scroll-list::-webkit-scrollbar-thumb {
             background: #CBD5E1;
-            border-radius: 4px;
         }
 
         .order-dish-row {
             background: var(--off-white);
             border: 1px solid var(--light-border);
-            border-radius: 12px;
             padding: 12px 16px;
             display: flex;
             align-items: center;
@@ -587,6 +533,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            text-transform: uppercase;
         }
 
         .dish-portion-subtext {
@@ -609,7 +556,6 @@
             background: #FFFFFF;
             border: 1px solid var(--light-border);
             padding: 2px 8px;
-            border-radius: 6px;
             color: var(--slate-text);
         }
 
@@ -644,6 +590,7 @@
             border-top: 1px solid var(--light-border);
             margin-top: 10px;
             margin-bottom: 0;
+            letter-spacing: 0.5px;
         }
 
         .grand-total-amount {
@@ -652,7 +599,7 @@
             font-weight: 800;
         }
 
-        /* Submit Action Button */
+        /* Submit Action Button (Sharp) */
         .btn-confirm-order {
             width: 100%;
             margin-top: 24px;
@@ -660,11 +607,10 @@
             background: linear-gradient(135deg, var(--orange-bright) 0%, var(--orange-primary) 100%);
             color: #FFFFFF;
             border: none;
-            border-radius: 9999px;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 800;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             cursor: pointer;
             display: flex;
@@ -676,13 +622,13 @@
         }
 
         .btn-confirm-order:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             box-shadow: 0 15px 35px rgba(255, 106, 0, 0.45);
             background: linear-gradient(135deg, #FFA040 0%, #FF6A00 100%);
         }
 
         .btn-confirm-order:active {
-            transform: translateY(-1px);
+            transform: translateY(0);
         }
 
         .btn-confirm-order:disabled {
@@ -698,17 +644,12 @@
             padding: 40px 20px;
         }
 
-        .empty-order-icon {
-            font-size: 2.5rem;
-            margin-bottom: 12px;
-            color: var(--orange-primary);
-        }
-
         .empty-order-title {
             font-size: 1.1rem;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--dark-text);
             margin-bottom: 6px;
+            text-transform: uppercase;
         }
 
         .empty-order-desc {
@@ -718,16 +659,15 @@
         }
 
         .btn-browse-menu {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            display: inline-block;
             padding: 10px 24px;
             background: var(--off-white);
             border: 1.5px solid var(--orange-border);
             color: var(--orange-primary);
-            border-radius: 9999px;
-            font-size: 0.85rem;
-            font-weight: 700;
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             text-decoration: none;
             transition: all 0.25s ease;
         }
@@ -739,7 +679,7 @@
             box-shadow: 0 4px 15px var(--orange-glow);
         }
 
-        /* Modal Order Confirmation */
+        /* Modal Order Confirmation (Sharp Box) */
         .order-modal-backdrop {
             position: fixed;
             top: 0;
@@ -766,13 +706,13 @@
 
         .order-modal-box {
             background: #FFFFFF;
-            border-radius: 24px;
             max-width: 520px;
             width: 100%;
             padding: 36px 30px;
             text-align: center;
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
-            transform: scale(0.92);
+            border-top: 4px solid var(--orange-primary);
+            transform: scale(0.95);
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
         }
@@ -781,31 +721,12 @@
             transform: scale(1);
         }
 
-        .modal-success-icon {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            background: #ECFDF5;
-            border: 2px solid #A7F3D0;
-            color: #059669;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            margin-bottom: 18px;
-            animation: bounceIn 0.6s ease;
-        }
-
-        @keyframes bounceIn {
-            0% { transform: scale(0.3); opacity: 0; }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
         .modal-title {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 1.6rem;
             font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
             color: var(--dark-text);
             margin-bottom: 8px;
         }
@@ -815,17 +736,17 @@
             background: var(--orange-subtle);
             color: var(--orange-primary);
             font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 1px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
             padding: 4px 14px;
-            border-radius: 20px;
+            border: 1px solid var(--orange-border);
             margin-bottom: 18px;
+            text-transform: uppercase;
         }
 
         .modal-summary-list {
             background: var(--off-white);
             border: 1px solid var(--light-border);
-            border-radius: 14px;
             padding: 16px 20px;
             text-align: left;
             margin-bottom: 24px;
@@ -842,6 +763,9 @@
 
         .modal-summary-row .label {
             color: var(--muted-text);
+            text-transform: uppercase;
+            font-size: 0.76rem;
+            font-weight: 700;
         }
 
         .modal-summary-row .val {
@@ -859,14 +783,14 @@
             background: #25D366;
             color: #FFFFFF;
             padding: 14px 24px;
-            border-radius: 9999px;
-            font-size: 0.92rem;
-            font-weight: 700;
+            font-size: 0.88rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
             transition: all 0.25s ease;
             box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
         }
@@ -882,9 +806,10 @@
             border: 1.5px solid var(--light-border);
             color: var(--dark-text);
             padding: 12px 24px;
-            border-radius: 9999px;
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             cursor: pointer;
             transition: all 0.2s ease;
         }
@@ -893,9 +818,7 @@
             background: #E2E8F0;
         }
 
-        /* ==========================================================================
-           RESPONSIVE MOBILE BREAKPOINTS (TECNO / ANDROID SAFE)
-           ========================================================================== */
+        /* Responsive */
         @media (max-width: 960px) {
             .order-form-grid {
                 grid-template-columns: 1fr;
@@ -910,7 +833,7 @@
 
             .order-brand-main-title {
                 font-size: 1.15rem;
-                letter-spacing: 1px;
+                letter-spacing: 1.5px;
             }
 
             .order-brand-sub-title {
@@ -924,7 +847,6 @@
 
             .order-card {
                 padding: 24px 18px;
-                border-radius: 16px;
             }
 
             .dining-type-options {
@@ -951,7 +873,6 @@
 
             .order-modal-box {
                 padding: 26px 20px;
-                border-radius: 20px;
             }
         }
     </style>
@@ -991,7 +912,7 @@
             <!-- Hero Intro -->
             <div class="order-hero-intro">
                 <div class="order-badge">
-                    <span>✦ FAST & SEAMLESS DINING ✦</span>
+                    <span>FAST & SEAMLESS DINING</span>
                 </div>
                 <h1 class="order-main-heading">PLACE YOUR ORDER</h1>
                 <p class="order-subheading">From our open flame grill straight to your table or home</p>
@@ -1004,11 +925,8 @@
                 <!-- Left Column: Customer Details Form -->
                 <div class="order-card">
                     <div class="card-header-title">
-                        <div class="card-header-icon">📝</div>
-                        <div>
-                            <h2>DINING DETAILS</h2>
-                            <p>Fill in your contact and table info</p>
-                        </div>
+                        <h2>DINING DETAILS</h2>
+                        <p>Fill in your contact and table information</p>
                     </div>
 
                     <form id="order-placement-form" onsubmit="handlePlaceOrderSubmit(event)">
@@ -1016,19 +934,13 @@
                         <!-- Full Name -->
                         <div class="form-group">
                             <label for="cust-name" class="form-label">Your Full Name <span class="req">*</span></label>
-                            <div class="input-wrapper">
-                                <span class="input-icon">👤</span>
-                                <input type="text" id="cust-name" class="form-control" placeholder="e.g. Kelvin Mwangi" required autocomplete="name">
-                            </div>
+                            <input type="text" id="cust-name" class="form-control" placeholder="e.g. Kelvin Mwangi" required autocomplete="name">
                         </div>
 
                         <!-- Phone Number -->
                         <div class="form-group">
                             <label for="cust-phone" class="form-label">Phone Number <span class="req">*</span></label>
-                            <div class="input-wrapper">
-                                <span class="input-icon">📞</span>
-                                <input type="tel" id="cust-phone" class="form-control" placeholder="e.g. 0724 594 204" required autocomplete="tel">
-                            </div>
+                            <input type="tel" id="cust-phone" class="form-control" placeholder="e.g. 0724 594 204" required autocomplete="tel">
                         </div>
 
                         <!-- Dining Option Selector -->
@@ -1036,15 +948,12 @@
                             <label class="form-label">Dining Option <span class="req">*</span></label>
                             <div class="dining-type-options">
                                 <button type="button" class="dining-option-btn active" data-type="dine-in" onclick="selectDiningOption('dine-in')">
-                                    <span class="opt-icon">🍽️</span>
                                     <span class="opt-title">Dine-In</span>
                                 </button>
                                 <button type="button" class="dining-option-btn" data-type="takeaway" onclick="selectDiningOption('takeaway')">
-                                    <span class="opt-icon">🥡</span>
                                     <span class="opt-title">Takeaway</span>
                                 </button>
                                 <button type="button" class="dining-option-btn" data-type="delivery" onclick="selectDiningOption('delivery')">
-                                    <span class="opt-icon">🛵</span>
                                     <span class="opt-title">Delivery</span>
                                 </button>
                             </div>
@@ -1056,26 +965,20 @@
                             <label for="cust-table-location" class="form-label" id="table-location-label">
                                 Table Number <span class="req">*</span>
                             </label>
-                            <div class="input-wrapper">
-                                <span class="input-icon" id="table-location-icon">🪑</span>
-                                <input type="text" id="cust-table-location" class="form-control" placeholder="e.g. Table 4 (Inside / Terrace)" required>
-                            </div>
+                            <input type="text" id="cust-table-location" class="form-control" placeholder="e.g. Table 4 (Inside or Terrace)" required>
                         </div>
 
                         <!-- Special Cooking Instructions -->
                         <div class="form-group">
                             <label for="cust-notes" class="form-label">Special Kitchen Instructions (Optional)</label>
-                            <div class="input-wrapper">
-                                <span class="input-icon">🔥</span>
-                                <input type="text" id="cust-notes" class="form-control" placeholder="e.g. Extra kachumbari, mild pepper, hot coffee">
-                            </div>
+                            <input type="text" id="cust-notes" class="form-control" placeholder="e.g. Extra kachumbari, mild pepper, hot coffee">
                         </div>
 
                         <!-- M-Pesa Payment Card -->
                         <div class="mpesa-instruction-box">
                             <div class="mpesa-header">
-                                <span class="mpesa-badge">✓ M-PESA BUY GOODS</span>
-                                <span style="font-size: 0.78rem; color: var(--muted-text);">Instant Payment</span>
+                                <span class="mpesa-badge">M-PESA BUY GOODS</span>
+                                <span style="font-size: 0.78rem; color: var(--muted-text); text-transform: uppercase; font-weight: 700;">Instant Payment</span>
                             </div>
                             <div class="mpesa-details-grid">
                                 <div class="mpesa-detail-card">
@@ -1088,7 +991,7 @@
                                 </div>
                             </div>
                             <button type="button" class="btn-copy-till" onclick="copyTillNumber()">
-                                <span>📋 Copy Till (4977556)</span>
+                                <span>Copy Till (4977556)</span>
                             </button>
                         </div>
 
@@ -1103,20 +1006,16 @@
                 <!-- Right Column: Live Order Review & Total -->
                 <div class="order-card">
                     <div class="card-header-title">
-                        <div class="card-header-icon">🛒</div>
-                        <div>
-                            <h2>YOUR SELECTED FEAST</h2>
-                            <p id="review-dish-count">Reviewing your order items</p>
-                        </div>
+                        <h2>YOUR SELECTED FEAST</h2>
+                        <p id="review-dish-count">Reviewing your order items</p>
                     </div>
 
                     <!-- Scrollable Dish List -->
                     <div class="order-items-scroll-list" id="checkout-order-items-list">
                         <!-- Populated dynamically via JS -->
                         <div class="empty-order-box">
-                            <div class="empty-order-icon">🍽️</div>
                             <div class="empty-order-title">No Dishes Selected Yet</div>
-                            <p class="empty-order-desc">Add delicious grilled choma, platters, or drinks to submit your order.</p>
+                            <p class="empty-order-desc">Select your favorite grilled meats or barista brews from our menu to place your order.</p>
                             <a href="index.html" class="btn-browse-menu">+ Browse Full Menu</a>
                         </div>
                     </div>
@@ -1124,15 +1023,15 @@
                     <!-- Totals Breakdown -->
                     <div class="order-totals-card">
                         <div class="totals-row">
-                            <span>Dishes Count:</span>
+                            <span style="font-weight: 600; text-transform: uppercase; font-size: 0.8rem;">Dishes Count:</span>
                             <strong id="totals-dishes-count" style="color: var(--dark-text);">0 Dishes</strong>
                         </div>
                         <div class="totals-row">
-                            <span>Total Quantity:</span>
+                            <span style="font-weight: 600; text-transform: uppercase; font-size: 0.8rem;">Total Quantity:</span>
                             <strong id="totals-items-qty" style="color: var(--dark-text);">0 Items</strong>
                         </div>
                         <div class="totals-row">
-                            <span>Dining Service:</span>
+                            <span style="font-weight: 600; text-transform: uppercase; font-size: 0.8rem;">Dining Service:</span>
                             <strong id="totals-service-type" style="color: #059669;">Dine-In (No Extra Fee)</strong>
                         </div>
                         <div class="totals-row grand-total">
@@ -1143,7 +1042,7 @@
 
                     <!-- Quick Add More Dishes Link -->
                     <div style="text-align: center; margin-top: 20px;">
-                        <a href="index.html" style="font-size: 0.82rem; color: var(--orange-primary); font-weight: 700; text-decoration: none;">
+                        <a href="index.html" style="font-size: 0.82rem; color: var(--orange-primary); font-weight: 800; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;">
                             + Add More Dishes From Menu
                         </a>
                     </div>
@@ -1157,11 +1056,10 @@
     <!-- Success Modal Popup -->
     <div class="order-modal-backdrop" id="order-success-modal">
         <div class="order-modal-box">
-            <div class="modal-success-icon">✓</div>
-            <h2 class="modal-title">ORDER PLACED!</h2>
+            <h2 class="modal-title">ORDER PLACED</h2>
             <div class="modal-order-ref" id="modal-order-id">REF: #RH-8942</div>
             <p style="font-size: 0.92rem; color: var(--slate-text); margin-bottom: 20px; line-height: 1.5;">
-                Thank you, <strong id="modal-customer-name">Valued Guest</strong>! Your order has been dispatched to the Rib House Kitchen & Grill team.
+                Thank you, <strong id="modal-customer-name">Valued Guest</strong>. Your order has been dispatched to the Rib House Kitchen & Grill team.
             </p>
 
             <div class="modal-summary-list">
@@ -1185,7 +1083,7 @@
 
             <div class="modal-actions">
                 <a href="#" id="modal-whatsapp-link" target="_blank" class="btn-modal-whatsapp">
-                    <span>💬 Send Order Details via WhatsApp</span>
+                    <span>Send Order Details via WhatsApp</span>
                 </a>
                 <button type="button" class="btn-modal-close" onclick="closeSuccessModal()">
                     Back to Menu
@@ -1195,7 +1093,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="app.js?v=20260810_order_checkout1"></script>
+    <script src="app.js?v=20260810_order_sharp1"></script>
     <script>
         // --- 1. LOCAL CART LOADER & CALCULATOR ---
         function getCartItems() {
@@ -1238,7 +1136,6 @@
             if (cart.length === 0) {
                 listEl.innerHTML = `
                     <div class="empty-order-box">
-                        <div class="empty-order-icon">🍽️</div>
                         <div class="empty-order-title">No Dishes Selected Yet</div>
                         <p class="empty-order-desc">Select your favorite grilled meats or barista brews from our menu to place your order.</p>
                         <a href="index.html" class="btn-browse-menu">+ Browse Full Menu</a>
@@ -1321,23 +1218,19 @@
             if (typeInput) typeInput.value = type;
 
             const label = document.getElementById('table-location-label');
-            const icon = document.getElementById('table-location-icon');
             const input = document.getElementById('cust-table-location');
             const serviceSummary = document.getElementById('totals-service-type');
 
             if (type === 'dine-in') {
                 if (label) label.innerHTML = 'Table Number <span class="req">*</span>';
-                if (icon) icon.textContent = '🪑';
                 if (input) input.placeholder = 'e.g. Table 4 (Inside or Terrace)';
                 if (serviceSummary) serviceSummary.textContent = 'Dine-In (Table Service)';
             } else if (type === 'takeaway') {
                 if (label) label.innerHTML = 'Pickup Name & Notes <span class="req">*</span>';
-                if (icon) icon.textContent = '🥡';
                 if (input) input.placeholder = 'e.g. Ready in 15 mins for Kelvin';
                 if (serviceSummary) serviceSummary.textContent = 'Takeaway (Counter Pickup)';
             } else if (type === 'delivery') {
                 if (label) label.innerHTML = 'Delivery Address & Landmark <span class="req">*</span>';
-                if (icon) icon.textContent = '🛵';
                 if (input) input.placeholder = 'e.g. Development House, 3rd Floor, Moi Ave';
                 if (serviceSummary) serviceSummary.textContent = 'Direct Delivery';
             }
@@ -1348,7 +1241,7 @@
             const till = '4977556';
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(till).then(() => {
-                    alert('✓ Till Number 4977556 copied to clipboard!');
+                    alert('Till Number 4977556 copied to clipboard.');
                 }).catch(() => {
                     prompt('Copy Rib House Till Number:', till);
                 });

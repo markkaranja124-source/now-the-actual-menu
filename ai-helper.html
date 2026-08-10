@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIB HOUSE | AI Dish Helper & Chat - Coming Soon</title>
+    <meta name="description" content="Rib House AI Dish Helper & Chat is coming soon. An intelligent wood-fired culinary assistant to help you discover dishes, customize orders, and explore Kenya grilled feasts.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Favicon / Tab Logo -->
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="shortcut icon" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <meta property="og:image" content="logo.png">
+
+    <link rel="stylesheet" href="style.css?v=20260810_aihelper1">
+
+    <style>
+        /* Standalone White Background Styles for AI Helper Page */
+        :root {
+            --logo-orange: #FF6A00;
+            --logo-orange-bright: #FF7F00;
+            --logo-orange-glow: rgba(255, 106, 0, 0.25);
+            --logo-orange-subtle: rgba(255, 106, 0, 0.08);
+            --logo-orange-border: rgba(255, 106, 0, 0.3);
+            --pure-white: #FFFFFF;
+            --dark-text: #1E293B;
+            --muted-text: #64748B;
+            --light-bg-card: #FFFFFF;
+            --border-light: #E2E8F0;
+        }
+
+        body.ai-helper-body {
+            background-color: #FFFFFF !important;
+            background: #FFFFFF !important;
+            color: #1E293B !important;
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Top Header Bar */
+        .ai-page-header {
+            background: #FFFFFF;
+            border-bottom: 1px solid #E2E8F0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 16px 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+        }
+
+        .ai-header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .ai-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 9999px;
+            color: #1E293B;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .ai-back-btn:hover {
+            background: #FF6A00;
+            color: #FFFFFF;
+            border-color: #FF6A00;
+            transform: translateX(-3px);
+            box-shadow: 0 4px 15px rgba(255, 106, 0, 0.25);
+        }
+
+        .ai-brand-center {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #1E293B;
+        }
+
+        .ai-brand-logo-img {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .ai-brand-center:hover .ai-brand-logo-img {
+            transform: scale(1.06);
+        }
+
+        .ai-brand-title-wrap {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .ai-brand-main-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            color: #1E293B;
+        }
+
+        .ai-brand-sub-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: #FF6A00;
+            text-transform: uppercase;
+        }
+
+        .ai-header-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ai-nav-pill {
+            padding: 8px 18px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #475569;
+            background: transparent;
+            border: 1px solid #E2E8F0;
+            transition: all 0.2s ease;
+        }
+
+        .ai-nav-pill:hover {
+            border-color: #FF6A00;
+            color: #FF6A00;
+            background: rgba(255, 106, 0, 0.05);
+        }
+
+        .ai-nav-pill.primary {
+            background: #1E293B;
+            color: #FFFFFF;
+            border-color: #1E293B;
+        }
+
+        .ai-nav-pill.primary:hover {
+            background: #FF6A00;
+            border-color: #FF6A00;
+        }
+
+        /* Main Container on Pure White Background */
+        .ai-coming-soon-main {
+            flex: 1;
+            background: #FFFFFF;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 24px 80px;
+            position: relative;
+        }
+
+        /* Subtle luxury background radial rings (pure white base with faint orange aura) */
+        .ai-bg-glow {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 106, 0, 0.06) 0%, rgba(255, 255, 255, 0) 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .ai-content-card {
+            position: relative;
+            z-index: 1;
+            max-width: 820px;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Logo Presentation */
+        .ai-logo-showcase {
+            position: relative;
+            margin-bottom: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ai-logo-circle {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            border: 2px solid rgba(255, 106, 0, 0.2);
+            box-shadow: 0 12px 40px rgba(255, 106, 0, 0.15), 0 2px 10px rgba(0, 0, 0, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: flamePulse 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes flamePulse {
+            0% {
+                box-shadow: 0 10px 30px rgba(255, 106, 0, 0.12), 0 0 0 0 rgba(255, 106, 0, 0.1);
+                transform: translateY(0);
+            }
+            100% {
+                box-shadow: 0 18px 50px rgba(255, 106, 0, 0.25), 0 0 0 12px rgba(255, 106, 0, 0.04);
+                transform: translateY(-4px);
+            }
+        }
+
+        .ai-main-logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 10px rgba(255, 106, 0, 0.2));
+        }
+
+        /* Badge */
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(255, 106, 0, 0.08);
+            border: 1.5px solid rgba(255, 106, 0, 0.35);
+            border-radius: 9999px;
+            color: #FF6A00;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .ai-badge-icon {
+            font-size: 1.1rem;
+        }
+
+        /* Big COMING SOON Heading in Logo Orange */
+        .ai-coming-soon-heading {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(2.8rem, 7vw, 4.8rem);
+            font-weight: 800;
+            color: #FF6A00;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin: 0 0 12px 0;
+            line-height: 1;
+            text-shadow: 0 4px 25px rgba(255, 106, 0, 0.3);
+            background: linear-gradient(135deg, #FF7F00 0%, #FF5500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ai-feature-subtitle {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            font-weight: 600;
+            font-style: italic;
+            color: #334155;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+        }
+
+        .ai-description-text {
+            color: #475569;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            max-width: 650px;
+            margin: 0 auto 36px;
+        }
+
+        /* Feature Highlight Cards */
+        .ai-features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .ai-feature-card {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 16px;
+            padding: 24px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #FF7F00, #FF5500);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .ai-feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 106, 0, 0.4);
+            box-shadow: 0 12px 30px rgba(255, 106, 0, 0.12);
+        }
+
+        .ai-feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .ai-feature-icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(255, 106, 0, 0.1);
+            color: #FF6A00;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 14px;
+        }
+
+        .ai-card-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 8px;
+        }
+
+        .ai-card-desc {
+            font-size: 0.88rem;
+            color: #64748B;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Action Buttons */
+        .ai-cta-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 36px;
+        }
+
+        .ai-btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #FF7F00 0%, #FF5500 100%);
+            color: #FFFFFF;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 9999px;
+            box-shadow: 0 8px 24px rgba(255, 106, 0, 0.35);
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .ai-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(255, 106, 0, 0.5);
+            color: #FFFFFF;
+        }
+
+        .ai-btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: #FFFFFF;
+            color: #1E293B;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 9999px;
+            border: 1.5px solid #CBD5E1;
+            transition: all 0.25s ease;
+        }
+
+        .ai-btn-secondary:hover {
+            border-color: #FF6A00;
+            color: #FF6A00;
+            background: rgba(255, 106, 0, 0.04);
+            transform: translateY(-2px);
+        }
+
+        /* Hotline & Till Footer Strip */
+        .ai-contact-strip {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 14px 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #334155;
+        }
+
+        .ai-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ai-contact-item strong {
+            color: #FF6A00;
+            font-weight: 700;
+        }
+
+        /* Footer */
+        .ai-page-footer {
+            background: #FFFFFF;
+            border-top: 1px solid #E2E8F0;
+            padding: 20px 24px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #64748B;
+        }
+
+        .ai-page-footer a {
+            color: #FF6A00;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .ai-page-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 820px) {
+            .ai-features-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .ai-logo-circle {
+                width: 140px;
+                height: 140px;
+                padding: 16px;
+            }
+
+            .ai-coming-soon-heading {
+                letter-spacing: 3px;
+            }
+
+            .ai-header-nav-links {
+                display: none;
+            }
+
+            .ai-contact-strip {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body class="ai-helper-body">
+
+    <!-- Sticky Top Header Navigation -->
+    <header class="ai-page-header">
+        <div class="ai-header-inner">
+            <a href="index.html" class="ai-back-btn">
+                <span>&larr; Back to Full Menu</span>
+            </a>
+
+            <a href="index.html" class="ai-brand-center" aria-label="Rib House Homepage">
+                <img src="logo.png" alt="Rib House Logo" class="ai-brand-logo-img">
+                <div class="ai-brand-title-wrap">
+                    <span class="ai-brand-main-title">RIB HOUSE</span>
+                    <span class="ai-brand-sub-title">WOOD-FIRED GRILL</span>
+                </div>
+            </a>
+
+            <div class="ai-header-nav-links">
+                <a href="order.html" class="ai-nav-pill">Your Order</a>
+                <a href="order-summary.html" class="ai-nav-pill">Order Summary</a>
+                <a href="index.html" class="ai-nav-pill primary">Explore Menu</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container with Fully White Background -->
+    <main class="ai-coming-soon-main">
+        <div class="ai-bg-glow"></div>
+
+        <div class="ai-content-card">
+            
+            <!-- Orange Rib House Logo Showcase -->
+            <div class="ai-logo-showcase">
+                <div class="ai-logo-circle">
+                    <img src="logo.png" alt="Rib House Flame Logo" class="ai-main-logo-img">
+                </div>
+            </div>
+
+            <!-- Badge -->
+            <div class="ai-badge">
+                <span class="ai-badge-icon">🔥</span>
+                <span>AI DISH HELPER & CHAT</span>
+            </div>
+
+            <!-- Big COMING SOON Heading in Logo Orange -->
+            <h1 class="ai-coming-soon-heading">COMING SOON</h1>
+
+            <!-- Subtitle -->
+            <p class="ai-feature-subtitle">An Intelligent Culinary Assistant Powered by Rib House</p>
+
+            <!-- Description -->
+            <p class="ai-description-text">
+                We are crafting an interactive AI Dish Helper to guide your wood-fired dining experience. 
+                Soon you will be able to get instant personalized dish recommendations, ask about secret Kenya marinades, 
+                filter by budget, and build your feast via natural conversation.
+            </p>
+
+            <!-- Features Highlights Grid -->
+            <div class="ai-features-grid">
+                <div class="ai-feature-card">
+                    <div class="ai-feature-icon-box">💬</div>
+                    <h2 class="ai-card-title">Smart Dish Matcher</h2>
+                    <p class="ai-card-desc">Ask for combos under 400/=, family meat platters, or refreshing drinks tailored to your taste.</p>
+                </div>
+
+                <div class="ai-feature-card">
+                    <div class="ai-feature-icon-box">🥩</div>
+                    <h2 class="ai-card-title">Smokehouse Guide</h2>
+                    <p class="ai-card-desc">Learn about tender Choma cuts, Wood-Fired Ribs, slow-cooked chemsha broth, and sides.</p>
+                </div>
+
+                <div class="ai-feature-card">
+                    <div class="ai-feature-icon-box">⚡</div>
+                    <h2 class="ai-card-title">Direct Chat-to-Order</h2>
+                    <p class="ai-card-desc">Add favorite dishes to your selected order summary seamlessly through chat interaction.</p>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="ai-cta-actions">
+                <a href="index.html" class="ai-btn-primary">
+                    <span>Explore Full Menu &rarr;</span>
+                </a>
+                <a href="order.html" class="ai-btn-secondary">
+                    <span>View Your Order</span>
+                </a>
+            </div>
+
+            <!-- Quick Info Strip -->
+            <div class="ai-contact-strip">
+                <div class="ai-contact-item">
+                    <span>📞 Hotline:</span>
+                    <strong><a href="tel:0724594204" style="color: #FF6A00; text-decoration: none;">0724 594 204</a></strong>
+                </div>
+                <div class="ai-contact-item">
+                    <span>💳 Till Number:</span>
+                    <strong>4977556</strong>
+                </div>
+                <div class="ai-contact-item">
+                    <span>📍 Rib House Wood-Fired Smokehouse</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="ai-page-footer">
+        <p>&copy; 2026 <strong>RIB HOUSE</strong>. All Rights Reserved. &bull; <a href="index.html">Back to Main Menu</a></p>
+    </footer>
+
+</body>
+
+</html>

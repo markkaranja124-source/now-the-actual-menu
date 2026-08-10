@@ -88,17 +88,6 @@ function initSideDrawerNavigation() {
         link.addEventListener('click', (e) => {
             const href = link.getAttribute('href');
             
-            if (link === aiDrawerLink) {
-                e.preventDefault();
-                closeDrawer();
-                // Open AI drawer if AI chat trigger exists
-                const aiFabBtn = document.getElementById('ai-fab-btn') || document.querySelector('.ai-fab-container button');
-                if (aiFabBtn) {
-                    setTimeout(() => aiFabBtn.click(), 200);
-                }
-                return;
-            }
-
             if (href && href.startsWith('#')) {
                 const targetSec = document.querySelector(href);
                 if (targetSec) {

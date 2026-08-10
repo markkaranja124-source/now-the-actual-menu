@@ -910,8 +910,8 @@ img {
     align-items: center;
     gap: 32px;
     width: max-content;
-    animation: continuousGlide 25s linear infinite;
-    -webkit-animation: continuousGlide 25s linear infinite;
+    animation: continuousGlide 40s linear infinite;
+    -webkit-animation: continuousGlide 40s linear infinite;
     will-change: transform;
 }
 
@@ -5200,8 +5200,8 @@ img {
 
     .hero-dishes-track {
         gap: 20px;
-        animation-duration: 20s;
-        -webkit-animation-duration: 20s;
+        animation-duration: 32s;
+        -webkit-animation-duration: 32s;
     }
 
     .hero-dish-thumb {

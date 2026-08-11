@@ -1508,7 +1508,7 @@ function renderSelectedOrderPage() {
                     </div>
 
                     <button type="button" class="btn-remove-pill" onclick="removeCartItem('${item.id}')" title="Remove Dish">
-                        <span>Remove Item</span>
+                        <span>&times; Remove Item</span>
                     </button>
                 </div>
             </div>

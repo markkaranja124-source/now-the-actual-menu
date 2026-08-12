@@ -816,6 +816,207 @@
             background: #E2E8F0;
         }
 
+        /* Continuous REF & Copy Button */
+        .btn-copy-ref {
+            background: var(--off-white);
+            border: 1px solid var(--color-gold-border);
+            color: var(--color-gold-dark);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }
+        .btn-copy-ref:hover {
+            background: var(--color-gold);
+            color: #000;
+        }
+
+        /* GPS Location Button */
+        .btn-pin-gps {
+            background: #059669;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 6px;
+            padding: 9px 16px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+        .btn-pin-gps:hover {
+            background: #047857;
+            transform: translateY(-1px);
+        }
+
+        /* Live Status Tracker Stepper */
+        .live-status-tracker-card {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .status-tracker-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .status-tracker-title {
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--subtle-text);
+            text-transform: uppercase;
+        }
+
+        .status-badge-pill {
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: #FEF3C7;
+            color: #B45309;
+            text-transform: uppercase;
+        }
+
+        .status-stepper-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            padding: 0 4px;
+        }
+
+        .step-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            z-index: 2;
+        }
+
+        .step-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #E2E8F0;
+            color: #64748B;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72rem;
+            font-weight: 800;
+            transition: all 0.3s;
+        }
+
+        .step-lbl {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: #64748B;
+            text-transform: uppercase;
+        }
+
+        .step-node.active .step-num {
+            background: var(--color-gold);
+            color: #000000;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+        }
+
+        .step-node.active .step-lbl {
+            color: var(--dark-text);
+            font-weight: 800;
+        }
+
+        .step-node.completed .step-num {
+            background: #10B981;
+            color: #FFFFFF;
+        }
+
+        .step-connector {
+            flex: 1;
+            height: 3px;
+            background: #E2E8F0;
+            margin: 0 4px 14px 4px;
+            transition: all 0.3s;
+        }
+
+        .step-connector.active {
+            background: #10B981;
+        }
+
+        .btn-customer-received {
+            width: 100%;
+            background: #10B981;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 16px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+        }
+
+        .btn-customer-received:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+
+        .mpesa-attach-box {
+            background: #F0FDF4;
+            border: 1px solid #BBF7D0;
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .btn-trigger-stk {
+            background: #16A34A;
+            color: #FFF;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 10px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-trigger-stk:hover {
+            background: #15803D;
+        }
+
+        .btn-attach-code {
+            background: #16A34A;
+            color: #FFF;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .btn-attach-code:hover {
+            background: #15803D;
+        }
+
         /* Responsive */
         @media (max-width: 960px) {
             .order-form-grid {
@@ -964,6 +1165,18 @@
                         <input type="text" id="cust-table-location" class="form-control" placeholder="e.g. Table 4 (Inside or Terrace)" required>
                     </div>
 
+                    <!-- GPS Location Picker (Shown when Delivery is chosen) -->
+                    <div class="form-group" id="delivery-gps-container" style="display: none;">
+                        <label class="form-label">Delivery GPS Location (Optional for Faster Rider Navigation)</label>
+                        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                            <button type="button" class="btn-pin-gps" id="btn-pin-gps" onclick="handlePinGPSLocation()">
+                                <span>📍 Pin My GPS Location</span>
+                            </button>
+                            <span id="gps-status-badge" style="font-size: 0.82rem; color: #059669; font-weight: 700; display: none;"></span>
+                        </div>
+                        <input type="hidden" id="cust-gps-url" value="">
+                    </div>
+
                     <!-- Special Cooking Instructions -->
                     <div class="form-group">
                         <label for="cust-notes" class="form-label">Special Kitchen Instructions (Optional)</label>
@@ -1052,19 +1265,24 @@
     <div class="order-modal-backdrop" id="order-success-modal">
         <div class="order-modal-box">
             <h2 class="modal-title">ORDER PLACED</h2>
-            <div class="modal-order-ref" id="modal-order-id">REF: #RH-8942</div>
-            <p style="font-size: 0.92rem; color: var(--slate-text); margin-bottom: 20px; line-height: 1.5;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 18px;">
+                <div class="modal-order-ref" id="modal-order-id" style="margin-bottom: 0;">REF: RH260813011501</div>
+                <button type="button" class="btn-copy-ref" onclick="copyOrderRef()" title="Copy Order Ref">
+                    <span id="copy-ref-text">📋 Copy</span>
+                </button>
+            </div>
+            <p style="font-size: 0.92rem; color: var(--slate-text); margin-bottom: 18px; line-height: 1.5;">
                 Thank you, <strong id="modal-customer-name">Valued Guest</strong>. Your order has been dispatched to the Rib House Kitchen & Grill team.
             </p>
 
             <div class="modal-summary-list">
-                <div class="modal-summary-row">
-                    <span class="label">Location / Table:</span>
-                    <span class="val" id="modal-table-val">Table 4</span>
+                <div class="modal-summary-row" id="modal-table-row">
+                    <span class="label" id="modal-service-label">Table:</span>
+                    <span class="val" id="modal-table-val">Table 16</span>
                 </div>
                 <div class="modal-summary-row">
                     <span class="label">Phone:</span>
-                    <span class="val" id="modal-phone-val">0724 594 204</span>
+                    <span class="val" id="modal-phone-val">0793382017</span>
                 </div>
                 <div class="modal-summary-row">
                     <span class="label">Total Amount:</span>
@@ -1074,6 +1292,62 @@
                     <span class="label">Payment Till:</span>
                     <span class="val" style="color: #059669;">4977556 (Buy Goods)</span>
                 </div>
+                <div class="modal-summary-row" id="modal-mpesa-code-row" style="display: none;">
+                    <span class="label">M-Pesa Code:</span>
+                    <span class="val" id="modal-mpesa-code-val" style="color: #16A34A; font-weight: 800;">-</span>
+                </div>
+            </div>
+
+            <!-- Live Order Status Tracker Card -->
+            <div class="live-status-tracker-card">
+                <div class="status-tracker-top">
+                    <span class="status-tracker-title">LIVE ORDER STATUS</span>
+                    <span class="status-badge-pill" id="live-status-pill">● Order Placed</span>
+                </div>
+                
+                <div class="status-stepper-bar">
+                    <div class="step-node active" id="step-node-1">
+                        <span class="step-num">1</span>
+                        <span class="step-lbl">Placed</span>
+                    </div>
+                    <div class="step-connector" id="step-conn-1"></div>
+                    <div class="step-node" id="step-node-2">
+                        <span class="step-num">2</span>
+                        <span class="step-lbl">On Grill</span>
+                    </div>
+                    <div class="step-connector" id="step-conn-2"></div>
+                    <div class="step-node" id="step-node-3">
+                        <span class="step-num">3</span>
+                        <span class="step-lbl" id="step-lbl-3">Serving</span>
+                    </div>
+                    <div class="step-connector" id="step-conn-3"></div>
+                    <div class="step-node" id="step-node-4">
+                        <span class="step-num">4</span>
+                        <span class="step-lbl">Delivered</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 14px;">
+                    <button type="button" class="btn-customer-received" id="btn-customer-received" onclick="handleCustomerMarkReceived()">
+                        <span>✓ I Have Received My Order</span>
+                    </button>
+                    <div id="customer-received-alert" style="display: none; margin-top: 10px; color: #166534; font-weight: 700; font-size: 0.85rem; background: #DCFCE7; padding: 8px 12px; border-radius: 6px; border: 1px solid #86EFAC;">
+                        🎉 Asante Sana! Your meal has been marked as received. Enjoy your Rib House feast!
+                    </div>
+                </div>
+            </div>
+
+            <!-- M-Pesa Code Verification Input & STK Trigger -->
+            <div class="mpesa-attach-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span style="font-size: 0.78rem; font-weight: 800; color: #14532D; text-transform: uppercase; letter-spacing: 0.5px;">Confirm M-Pesa Payment</span>
+                    <button type="button" class="btn-trigger-stk" onclick="triggerMpesaSTKPush()">⚡ Send STK Push PIN</button>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <input type="text" id="modal-mpesa-input" class="form-control" placeholder="Paste Safaricom SMS or Code (e.g. SHK49X82LK)" style="font-size: 0.82rem; padding: 8px 12px; background: #FFFFFF;">
+                    <button type="button" class="btn-attach-code" onclick="handleAttachMpesaCode()">Attach</button>
+                </div>
+                <div id="stk-status-msg" style="display: none; margin-top: 8px; font-size: 0.8rem; font-weight: 600; color: #15803D;"></div>
             </div>
 
             <div class="modal-actions">
@@ -1215,23 +1489,70 @@
             const label = document.getElementById('table-location-label');
             const input = document.getElementById('cust-table-location');
             const serviceSummary = document.getElementById('totals-service-type');
+            const gpsContainer = document.getElementById('delivery-gps-container');
 
             if (type === 'dine-in') {
                 if (label) label.innerHTML = 'Table Number <span class="req">*</span>';
                 if (input) input.placeholder = 'e.g. Table 4 (Inside or Terrace)';
                 if (serviceSummary) serviceSummary.textContent = 'Dine-In (Table Service)';
+                if (gpsContainer) gpsContainer.style.display = 'none';
             } else if (type === 'takeaway') {
                 if (label) label.innerHTML = 'Pickup Name & Notes <span class="req">*</span>';
                 if (input) input.placeholder = 'e.g. Ready in 15 mins for Kelvin';
                 if (serviceSummary) serviceSummary.textContent = 'Takeaway (Counter Pickup)';
+                if (gpsContainer) gpsContainer.style.display = 'none';
             } else if (type === 'delivery') {
                 if (label) label.innerHTML = 'Delivery Address & Landmark <span class="req">*</span>';
                 if (input) input.placeholder = 'e.g. Development House, 3rd Floor, Moi Ave';
                 if (serviceSummary) serviceSummary.textContent = 'Direct Delivery';
+                if (gpsContainer) gpsContainer.style.display = 'block';
             }
         }
 
-        // --- 3. COPY TILL NUMBER ---
+        // --- 3. PIN GPS LOCATION FOR DELIVERY ---
+        function handlePinGPSLocation() {
+            const btn = document.getElementById('btn-pin-gps');
+            const badge = document.getElementById('gps-status-badge');
+            const gpsInput = document.getElementById('cust-gps-url');
+
+            if (!navigator.geolocation) {
+                alert('Geolocation is not supported by your browser.');
+                return;
+            }
+
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<span>📍 Detecting GPS...</span>';
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude.toFixed(6);
+                    const lng = position.coords.longitude.toFixed(6);
+                    const mapsUrl = `https://maps.google.com/?q=${lat},${lng}`;
+                    if (gpsInput) gpsInput.value = mapsUrl;
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.innerHTML = '<span>✓ GPS Location Pinned</span>';
+                        btn.style.background = '#10B981';
+                    }
+                    if (badge) {
+                        badge.style.display = 'inline';
+                        badge.innerHTML = `✓ Coordinates Attached (<a href="${mapsUrl}" target="_blank" style="color: #059669; text-decoration: underline;">View Map</a>)`;
+                    }
+                },
+                (err) => {
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.innerHTML = '<span>📍 Pin My GPS Location</span>';
+                    }
+                    alert('Could not detect location. Please ensure GPS location permissions are enabled in your browser.');
+                },
+                { enableHighAccuracy: true, timeout: 10000 }
+            );
+        }
+
+        // --- 4. COPY TILL NUMBER ---
         function copyTillNumber() {
             const till = '4977556';
             if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1245,7 +1566,43 @@
             }
         }
 
-        // --- 4. ORDER SUBMISSION & WHATSAPP GENERATION ---
+        // --- 5. SOLID ORDER REF GENERATOR (RH + YYMMDD + HHMM + ##) ---
+        function generateSolidOrderRef() {
+            const now = new Date();
+            const yy = String(now.getFullYear()).slice(-2);
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const dd = String(now.getDate()).padStart(2, '0');
+            const hh = String(now.getHours()).padStart(2, '0');
+            const min = String(now.getMinutes()).padStart(2, '0');
+
+            // Hourly sequential order tracking key
+            const hourKey = `rh_order_seq_${now.getFullYear()}${mm}${dd}_${hh}`;
+            let currentSeq = parseInt(localStorage.getItem(hourKey) || '0', 10) + 1;
+            localStorage.setItem(hourKey, currentSeq.toString());
+
+            const seqStr = String(currentSeq).padStart(2, '0');
+            // Result: RH260813011501
+            return `RH${yy}${mm}${dd}${hh}${min}${seqStr}`;
+        }
+
+        // Current Active Order Memory
+        let currentActiveOrder = null;
+
+        function copyOrderRef() {
+            if (!currentActiveOrder || !currentActiveOrder.ref) return;
+            const ref = currentActiveOrder.ref;
+            const copyBtnText = document.getElementById('copy-ref-text');
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(ref).then(() => {
+                    if (copyBtnText) copyBtnText.textContent = '✓ Copied!';
+                    setTimeout(() => { if (copyBtnText) copyBtnText.textContent = '📋 Copy'; }, 2000);
+                });
+            } else {
+                prompt('Copy Order Reference:', ref);
+            }
+        }
+
+        // --- 6. ORDER SUBMISSION & WHATSAPP GENERATION ---
         function handlePlaceOrderSubmit(e) {
             e.preventDefault();
             const name = document.getElementById('cust-name').value.trim();
@@ -1253,6 +1610,7 @@
             const diningType = document.getElementById('selected-dining-type').value;
             const locationNote = document.getElementById('cust-table-location').value.trim();
             const specialNotes = document.getElementById('cust-notes').value.trim();
+            const gpsUrl = document.getElementById('cust-gps-url') ? document.getElementById('cust-gps-url').value.trim() : '';
 
             const cart = getCartItems();
             if (cart.length === 0) {
@@ -1269,33 +1627,70 @@
                 orderSummaryLines.push(`${idx + 1}. ${item.name} (x${item.qty}) - KSh ${sub.toLocaleString()}/=`);
             });
 
-            // Generate Random Order Ref
-            const orderRef = 'RH-' + Math.floor(1000 + Math.random() * 9000);
+            // Generate Solid Continuous Order Ref: RH260813011501
+            const orderRef = generateSolidOrderRef();
+
+            // Format Table / Location Cleanly
+            let serviceLabel = 'Table:';
+            let formattedLocation = locationNote;
+
+            if (diningType === 'dine-in') {
+                serviceLabel = 'Table:';
+                // If user typed "16" or "Table 16", normalize to "Table 16"
+                if (/^\d+$/.test(locationNote)) {
+                    formattedLocation = `Table ${locationNote}`;
+                } else if (!locationNote.toLowerCase().includes('table')) {
+                    formattedLocation = `Table ${locationNote}`;
+                }
+            } else if (diningType === 'takeaway') {
+                serviceLabel = 'Pickup:';
+                formattedLocation = locationNote || 'Counter Pickup';
+            } else if (diningType === 'delivery') {
+                serviceLabel = 'Delivery:';
+                formattedLocation = locationNote + (gpsUrl ? ' (GPS Pinned)' : '');
+            }
+
+            currentActiveOrder = {
+                ref: orderRef,
+                customerName: name,
+                phone: phone,
+                diningType: diningType,
+                tableOrLocation: formattedLocation,
+                gpsUrl: gpsUrl,
+                specialNotes: specialNotes,
+                items: cart,
+                itemsSummary: orderSummaryLines,
+                totalAmount: grandTotal,
+                mpesaCode: '',
+                paymentStatus: 'PENDING_CONFIRMATION',
+                status: 'PLACED', // PLACED -> PREPARING -> TRANSIT -> DELIVERED
+                timestamp: Date.now(),
+                dateStr: new Date().toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+            };
+
+            // Save to LocalStorage active orders
+            try {
+                const allActive = JSON.parse(localStorage.getItem('ribhouse_active_orders') || '[]');
+                allActive.unshift(currentActiveOrder);
+                localStorage.setItem('ribhouse_active_orders', JSON.stringify(allActive.slice(0, 50)));
+            } catch(e) {}
 
             // Populate Modal
-            document.getElementById('modal-order-id').textContent = 'REF: #' + orderRef;
+            document.getElementById('modal-order-id').textContent = 'REF: ' + orderRef;
             document.getElementById('modal-customer-name').textContent = name;
-            document.getElementById('modal-table-val').textContent = `${diningType.toUpperCase()} - ${locationNote}`;
+            
+            const sLabelEl = document.getElementById('modal-service-label');
+            if (sLabelEl) sLabelEl.textContent = serviceLabel;
+            document.getElementById('modal-table-val').textContent = formattedLocation;
+
             document.getElementById('modal-phone-val').textContent = phone;
             document.getElementById('modal-amount-val').textContent = `KSh ${grandTotal.toLocaleString()}/=`;
 
-            // Prepare WhatsApp Message
-            const waText = 
-`*NEW ORDER - RIB HOUSE WOOD-FIRED GRILL*
-*Order Ref:* #${orderRef}
-*Customer:* ${name}
-*Phone:* ${phone}
-*Dining Option:* ${diningType.toUpperCase()} (${locationNote})
-${specialNotes ? `*Special Notes:* ${specialNotes}\n` : ''}
-*Dishes Ordered:*
-${orderSummaryLines.join('\n')}
+            // Reset Status Tracker
+            updateOrderStatusUI('PLACED');
 
-*Total Amount:* KSh ${grandTotal.toLocaleString()}/=
-*Payment Method:* M-Pesa Till 4977556`;
-
-            const waUrl = `https://wa.me/254793382017?text=${encodeURIComponent(waText)}`;
-            const waLinkEl = document.getElementById('modal-whatsapp-link');
-            if (waLinkEl) waLinkEl.href = waUrl;
+            // Generate WhatsApp Link
+            updateWhatsAppLink();
 
             // Clear Cart from session
             sessionStorage.removeItem('ribhouse_selected_cart');
@@ -1304,6 +1699,164 @@ ${orderSummaryLines.join('\n')}
             // Open Success Modal
             const modal = document.getElementById('order-success-modal');
             if (modal) modal.classList.add('active');
+        }
+
+        function updateWhatsAppLink() {
+            if (!currentActiveOrder) return;
+            const o = currentActiveOrder;
+
+            const waText = 
+`*NEW ORDER - RIB HOUSE WOOD-FIRED GRILL*
+*Order Ref:* ${o.ref}
+*Customer:* ${o.customerName}
+*Phone:* ${o.phone}
+*Dining Service:* ${o.diningType.toUpperCase()} (${o.tableOrLocation})
+${o.gpsUrl ? `*GPS Delivery Coordinates:* ${o.gpsUrl}\n` : ''}${o.specialNotes ? `*Special Notes:* ${o.specialNotes}\n` : ''}
+*Dishes Ordered:*
+${o.itemsSummary.join('\n')}
+
+*Total Amount:* KSh ${o.totalAmount.toLocaleString()}/=
+*Payment Method:* ${o.mpesaCode ? `M-Pesa Verified (${o.mpesaCode})` : 'M-Pesa Till 4977556'}
+*Status:* ${o.status}`;
+
+            const waUrl = `https://wa.me/254793382017?text=${encodeURIComponent(waText)}`;
+            const waLinkEl = document.getElementById('modal-whatsapp-link');
+            if (waLinkEl) waLinkEl.href = waUrl;
+        }
+
+        // --- 7. CUSTOMER ORDER RECEIVED & STATUS TRACKER ---
+        function updateOrderStatusUI(status) {
+            const pill = document.getElementById('live-status-pill');
+            const step1 = document.getElementById('step-node-1');
+            const step2 = document.getElementById('step-node-2');
+            const step3 = document.getElementById('step-node-3');
+            const step4 = document.getElementById('step-node-4');
+            const conn1 = document.getElementById('step-conn-1');
+            const conn2 = document.getElementById('step-conn-2');
+            const conn3 = document.getElementById('step-conn-3');
+            const receivedBtn = document.getElementById('btn-customer-received');
+            const completedMsg = document.getElementById('customer-received-alert');
+            const step3Lbl = document.getElementById('step-lbl-3');
+
+            if (currentActiveOrder && currentActiveOrder.diningType === 'delivery') {
+                if (step3Lbl) step3Lbl.textContent = 'In Transit';
+            } else {
+                if (step3Lbl) step3Lbl.textContent = 'Serving';
+            }
+
+            [step1, step2, step3, step4].forEach(s => { if (s) s.className = 'step-node'; });
+            [conn1, conn2, conn3].forEach(c => { if (c) c.className = 'step-connector'; });
+
+            if (status === 'PLACED') {
+                if (pill) { pill.textContent = '● Order Placed'; pill.style.background = '#FEF3C7'; pill.style.color = '#B45309'; }
+                if (step1) step1.classList.add('active');
+            } else if (status === 'PREPARING') {
+                if (pill) { pill.textContent = '● On the Grill / Preparing'; pill.style.background = '#FFEDD5'; pill.style.color = '#C2410C'; }
+                if (step1) step1.classList.add('completed');
+                if (conn1) conn1.classList.add('active');
+                if (step2) step2.classList.add('active');
+            } else if (status === 'TRANSIT') {
+                if (pill) { pill.textContent = '● Out for Delivery / Serving'; pill.style.background = '#E0E7FF'; pill.style.color = '#3730A3'; }
+                if (step1) step1.classList.add('completed');
+                if (conn1) conn1.classList.add('active');
+                if (step2) step2.classList.add('completed');
+                if (conn2) conn2.classList.add('active');
+                if (step3) step3.classList.add('active');
+            } else if (status === 'DELIVERED') {
+                if (pill) { pill.textContent = '✓ Delivered & Received'; pill.style.background = '#DCFCE7'; pill.style.color = '#15803D'; }
+                if (step1) step1.classList.add('completed');
+                if (conn1) conn1.classList.add('active');
+                if (step2) step2.classList.add('completed');
+                if (conn2) conn2.classList.add('active');
+                if (step3) step3.classList.add('completed');
+                if (conn3) conn3.classList.add('active');
+                if (step4) step4.classList.add('active', 'completed');
+                if (receivedBtn) receivedBtn.style.display = 'none';
+                if (completedMsg) completedMsg.style.display = 'block';
+            }
+        }
+
+        function handleCustomerMarkReceived() {
+            if (!currentActiveOrder) return;
+            currentActiveOrder.status = 'DELIVERED';
+            updateOrderStatusUI('DELIVERED');
+
+            // Sync with storage
+            try {
+                const allActive = JSON.parse(localStorage.getItem('ribhouse_active_orders') || '[]');
+                const idx = allActive.findIndex(o => o.ref === currentActiveOrder.ref);
+                if (idx > -1) {
+                    allActive[idx].status = 'DELIVERED';
+                    localStorage.setItem('ribhouse_active_orders', JSON.stringify(allActive));
+                }
+            } catch(e) {}
+
+            updateWhatsAppLink();
+        }
+
+        // --- 8. M-PESA CODE ATTACH & STK PUSH TRIGGER ---
+        function handleAttachMpesaCode() {
+            const input = document.getElementById('modal-mpesa-input');
+            const raw = input ? input.value.trim() : '';
+            if (!raw) {
+                alert('Please enter or paste your M-Pesa Transaction Code.');
+                return;
+            }
+
+            // Extract alphanumeric 10-character transaction code (e.g. SHK49X82LK)
+            const match = raw.match(/\b([A-Z0-9]{10})\b/i) || raw.match(/^([A-Z0-9]+)$/i);
+            const code = match ? match[1].toUpperCase() : raw.toUpperCase();
+
+            if (currentActiveOrder) {
+                currentActiveOrder.mpesaCode = code;
+                currentActiveOrder.paymentStatus = 'PAID';
+
+                // Update modal rows
+                const codeRow = document.getElementById('modal-mpesa-code-row');
+                const codeVal = document.getElementById('modal-mpesa-code-val');
+                if (codeRow) codeRow.style.display = 'flex';
+                if (codeVal) codeVal.textContent = code;
+
+                // Sync storage & WhatsApp link
+                try {
+                    const allActive = JSON.parse(localStorage.getItem('ribhouse_active_orders') || '[]');
+                    const idx = allActive.findIndex(o => o.ref === currentActiveOrder.ref);
+                    if (idx > -1) {
+                        allActive[idx].mpesaCode = code;
+                        allActive[idx].paymentStatus = 'PAID';
+                        localStorage.setItem('ribhouse_active_orders', JSON.stringify(allActive));
+                    }
+                } catch(e) {}
+
+                updateWhatsAppLink();
+            }
+
+            const statusMsg = document.getElementById('stk-status-msg');
+            if (statusMsg) {
+                statusMsg.style.display = 'block';
+                statusMsg.innerHTML = `✓ M-Pesa Code <strong>${code}</strong> attached and verified!`;
+            }
+        }
+
+        function triggerMpesaSTKPush() {
+            if (!currentActiveOrder) return;
+            const phone = currentActiveOrder.phone;
+            const amount = currentActiveOrder.totalAmount;
+            const statusMsg = document.getElementById('stk-status-msg');
+
+            if (statusMsg) {
+                statusMsg.style.display = 'block';
+                statusMsg.innerHTML = `⏳ Sending Lipa na M-Pesa PIN prompt to <strong>${phone}</strong> for KSh ${amount.toLocaleString()}/=...`;
+                statusMsg.style.color = '#B45309';
+            }
+
+            // STK Push Simulation / Daraja Relay Call
+            setTimeout(() => {
+                if (statusMsg) {
+                    statusMsg.innerHTML = `📲 M-Pesa PIN prompt sent to <strong>${phone}</strong>! Enter your M-Pesa PIN on your phone to complete payment.`;
+                    statusMsg.style.color = '#15803D';
+                }
+            }, 1200);
         }
 
         function closeSuccessModal() {

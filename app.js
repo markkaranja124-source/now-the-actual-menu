@@ -1928,8 +1928,135 @@ function initCustomerFeedbackSystem() {
             adminDrawer.classList.add('active');
             adminDrawerOverlay.classList.add('active');
             renderAdminDashboard();
+            renderAdminActiveOrders();
         }
     }
+
+    window.switchAdminTab = function(tab) {
+        const ordersSec = document.getElementById('admin-orders-section');
+        const feedbackSec = document.getElementById('admin-feedback-section');
+        const btnOrders = document.getElementById('tab-btn-orders');
+        const btnFeedback = document.getElementById('tab-btn-feedback');
+
+        if (tab === 'orders') {
+            if (ordersSec) ordersSec.style.display = 'block';
+            if (feedbackSec) feedbackSec.style.display = 'none';
+            if (btnOrders) {
+                btnOrders.style.background = 'var(--color-gold)';
+                btnOrders.style.color = '#000';
+                btnOrders.style.border = 'none';
+            }
+            if (btnFeedback) {
+                btnFeedback.style.background = 'rgba(255,255,255,0.06)';
+                btnFeedback.style.color = 'var(--color-cream)';
+                btnFeedback.style.border = '1px solid var(--color-border-dark)';
+            }
+            renderAdminActiveOrders();
+        } else {
+            if (ordersSec) ordersSec.style.display = 'none';
+            if (feedbackSec) feedbackSec.style.display = 'block';
+            if (btnFeedback) {
+                btnFeedback.style.background = 'var(--color-gold)';
+                btnFeedback.style.color = '#000';
+                btnFeedback.style.border = 'none';
+            }
+            if (btnOrders) {
+                btnOrders.style.background = 'rgba(255,255,255,0.06)';
+                btnOrders.style.color = 'var(--color-cream)';
+                btnOrders.style.border = '1px solid var(--color-border-dark)';
+            }
+        }
+    };
+
+    window.renderAdminActiveOrders = function() {
+        const feed = document.getElementById('admin-orders-feed');
+        const countBadge = document.getElementById('admin-orders-count');
+        if (!feed) return;
+
+        const orders = JSON.parse(localStorage.getItem('ribhouse_active_orders') || '[]');
+        if (countBadge) countBadge.textContent = orders.length;
+
+        if (orders.length === 0) {
+            feed.innerHTML = `
+                <div style="text-align: center; padding: 30px; background: var(--color-card-bg); border: 1px dashed var(--color-border-dark);">
+                    <p style="color: var(--color-cream); font-size: 0.95rem; margin-bottom: 4px; font-weight: 700;">No active orders right now.</p>
+                    <p style="color: var(--color-text-muted); font-size: 0.8rem;">New orders placed via the menu will appear here in real-time.</p>
+                </div>
+            `;
+            return;
+        }
+
+        let html = '';
+        orders.forEach((order) => {
+            const statusColors = {
+                'PLACED': { bg: '#FEF3C7', color: '#B45309', text: 'Order Placed' },
+                'PREPARING': { bg: '#FFEDD5', color: '#C2410C', text: 'On Grill / Preparing' },
+                'TRANSIT': { bg: '#E0E7FF', color: '#3730A3', text: 'In Transit / Serving' },
+                'DELIVERED': { bg: '#DCFCE7', color: '#15803D', text: 'Delivered / Completed' }
+            };
+
+            const currentStatus = statusColors[order.status] || statusColors['PLACED'];
+            const isPaid = order.paymentStatus === 'PAID';
+
+            html += `
+                <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 16px; border-radius: 6px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                        <div>
+                            <span style="font-family: monospace; font-size: 0.9rem; font-weight: 800; color: var(--color-gold); letter-spacing: 1px;">REF: ${order.ref}</span>
+                            <div style="font-size: 0.8rem; color: var(--color-text-muted);">${order.dateStr || ''}</div>
+                        </div>
+                        <span style="font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: ${currentStatus.bg}; color: ${currentStatus.color}; text-transform: uppercase;">
+                            ${currentStatus.text}
+                        </span>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <span><strong>Customer:</strong> ${order.customerName} (<a href="tel:${order.phone}" style="color: var(--color-gold);">${order.phone}</a>)</span>
+                        <strong style="color: var(--color-gold); font-size: 0.95rem;">KSh ${order.totalAmount.toLocaleString()}/=</strong>
+                    </div>
+
+                    <div style="font-size: 0.82rem; color: var(--color-cream); margin-bottom: 8px;">
+                        <strong>Service:</strong> ${order.tableOrLocation}
+                        ${order.gpsUrl ? `<a href="${order.gpsUrl}" target="_blank" style="margin-left: 6px; color: #10B981; text-decoration: underline; font-weight: 700;">📍 Open Map</a>` : ''}
+                    </div>
+
+                    <div style="font-size: 0.8rem; color: var(--color-text-muted); background: rgba(0,0,0,0.25); padding: 8px; border-radius: 4px; margin-bottom: 10px;">
+                        ${order.itemsSummary ? order.itemsSummary.join('<br>') : ''}
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px dashed var(--color-border-dark);">
+                        <span style="font-size: 0.78rem; font-weight: 700; color: ${isPaid ? '#10B981' : '#F59E0B'};">
+                            ${isPaid ? `✓ M-Pesa Paid: ${order.mpesaCode}` : '⏳ Payment: Till 4977556'}
+                        </span>
+                        <div style="display: flex; gap: 6px;">
+                            <button type="button" onclick="setAdminOrderStatus('${order.ref}', 'PREPARING')" style="padding: 4px 8px; background: #C2410C; color: #FFF; border: none; border-radius: 4px; font-size: 0.7rem; font-weight: 700; cursor: pointer;">Grill</button>
+                            <button type="button" onclick="setAdminOrderStatus('${order.ref}', 'TRANSIT')" style="padding: 4px 8px; background: #3730A3; color: #FFF; border: none; border-radius: 4px; font-size: 0.7rem; font-weight: 700; cursor: pointer;">Transit</button>
+                            <button type="button" onclick="setAdminOrderStatus('${order.ref}', 'DELIVERED')" style="padding: 4px 8px; background: #15803D; color: #FFF; border: none; border-radius: 4px; font-size: 0.7rem; font-weight: 700; cursor: pointer;">✓ Delivered</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        feed.innerHTML = html;
+    };
+
+    window.setAdminOrderStatus = function(ref, newStatus) {
+        const orders = JSON.parse(localStorage.getItem('ribhouse_active_orders') || '[]');
+        const idx = orders.findIndex(o => o.ref === ref);
+        if (idx > -1) {
+            orders[idx].status = newStatus;
+            localStorage.setItem('ribhouse_active_orders', JSON.stringify(orders));
+            renderAdminActiveOrders();
+        }
+    };
+
+    window.clearAllOrdersAdmin = function() {
+        if (confirm('Clear all orders in active dashboard?')) {
+            localStorage.removeItem('ribhouse_active_orders');
+            renderAdminActiveOrders();
+        }
+    };
 
     function closeAdminDrawer() {
         if (adminDrawer && adminDrawerOverlay) {

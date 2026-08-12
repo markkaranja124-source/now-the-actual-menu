@@ -681,7 +681,7 @@
             box-shadow: 0 4px 15px var(--color-gold-glow);
         }
 
-        /* Modal Order Confirmation (Mobile-Optimized Luxury Gold-Themed Box) */
+        /* Modal Order Confirmation (Perfect Center Screen Luxury Gold-Themed Box) */
         .order-modal-backdrop {
             position: fixed;
             top: 0;
@@ -690,6 +690,7 @@
             bottom: 0;
             width: 100vw;
             height: 100vh;
+            height: 100dvh;
             background: rgba(10, 10, 14, 0.85);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -714,10 +715,11 @@
             background: #FFFFFF;
             max-width: 480px;
             width: 100%;
-            max-height: 90vh;
+            max-height: 88vh;
+            max-height: 88dvh;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
-            padding: 30px 24px;
+            padding: 28px 24px;
             margin: auto;
             text-align: center;
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(184, 134, 11, 0.15);
@@ -734,7 +736,7 @@
 
         .modal-title {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.5rem;
+            font-size: 1.45rem;
             font-weight: 800;
             letter-spacing: 1.5px;
             text-transform: uppercase;
@@ -858,7 +860,7 @@
             background: #059669;
             color: #FFFFFF;
             border: 1px solid #059669;
-            padding: 9px 14px;
+            padding: 10px 14px;
             font-size: 0.78rem;
             font-weight: 700;
             cursor: pointer;
@@ -892,6 +894,7 @@
             bottom: 0;
             width: 100vw;
             height: 100vh;
+            height: 100dvh;
             background: rgba(10, 10, 14, 0.85);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
@@ -903,6 +906,8 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         .map-modal-backdrop.active {
             opacity: 1;
@@ -912,6 +917,9 @@
             background: #FFFFFF;
             max-width: 560px;
             width: 100%;
+            max-height: 88vh;
+            max-height: 88dvh;
+            margin: auto;
             overflow: hidden;
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
             border-top: 4px solid var(--color-gold);
@@ -946,8 +954,8 @@
             background: #16A34A;
             color: #FFF;
             border: none;
-            padding: 5px 10px;
-            font-size: 0.72rem;
+            padding: 6px 12px;
+            font-size: 0.74rem;
             font-weight: 800;
             cursor: pointer;
             transition: all 0.2s;
@@ -975,11 +983,11 @@
             background: #15803D;
         }
 
-        /* Responsive Layouts */
+        /* Responsive Layouts for Mobile Phones */
         @media (max-width: 960px) {
             .order-form-grid {
                 grid-template-columns: 1fr;
-                gap: 28px;
+                gap: 24px;
             }
         }
 
@@ -993,7 +1001,7 @@
                 flex-direction: column;
                 align-items: center;
                 gap: 12px;
-                padding: 0 12px;
+                padding: 0 14px;
             }
 
             .brand-title {
@@ -1010,29 +1018,79 @@
             }
 
             .nav-link-btn {
-                font-size: 0.68rem;
+                font-size: 0.7rem;
                 padding: 6px 10px;
             }
 
+            .order-hero-banner-section {
+                padding: 28px 14px 22px 14px;
+            }
+
+            .order-hero-title {
+                font-size: 1.55rem;
+                letter-spacing: 1px;
+            }
+
+            .order-hero-desc {
+                font-size: 0.85rem;
+            }
+
             .order-luxury-wrapper {
-                padding: 16px 12px 60px 12px;
+                padding: 18px 12px 60px 12px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .order-form-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                width: 100%;
             }
 
             .order-card {
                 padding: 20px 14px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .card-header-title {
+                margin-bottom: 18px;
+                padding-bottom: 12px;
+            }
+
+            .card-header-title h2 {
+                font-size: 1.15rem;
+            }
+
+            .form-control {
+                font-size: 16px !important; /* Prevents iOS auto-zoom on mobile */
+                padding: 12px 14px;
             }
 
             .dining-type-options {
                 grid-template-columns: 1fr 1fr 1fr;
-                gap: 4px;
+                gap: 6px;
             }
 
             .dining-option-btn {
-                padding: 9px 4px;
+                padding: 10px 4px;
+                min-height: 48px;
             }
 
             .dining-option-btn .opt-title {
-                font-size: 0.68rem;
+                font-size: 0.72rem;
+            }
+
+            .btn-pin-action {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+                padding: 10px 12px;
+            }
+
+            .mpesa-instruction-box {
+                padding: 14px 12px;
             }
 
             .mpesa-details-grid {
@@ -1040,27 +1098,31 @@
                 gap: 8px;
             }
 
-            .order-hero-title {
-                font-size: 1.6rem;
+            .btn-confirm-order {
+                padding: 15px 18px;
+                font-size: 0.9rem;
+                min-height: 50px;
             }
 
-            /* Responsive Modal for Mobile Phone Screens */
+            /* Responsive Centered Modal for Mobile Phone Screens */
             .order-modal-backdrop {
-                padding: 10px;
-                align-items: flex-start;
-                padding-top: 15px;
-                padding-bottom: 25px;
+                padding: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
             .order-modal-box {
-                max-height: calc(100vh - 30px);
+                max-height: 85vh;
+                max-height: 85dvh;
                 padding: 20px 14px;
                 width: 100%;
+                margin: auto;
                 box-sizing: border-box;
             }
 
             .modal-title {
-                font-size: 1.3rem;
+                font-size: 1.25rem;
             }
 
             .modal-order-ref {
@@ -1071,24 +1133,6 @@
             .modal-summary-list {
                 padding: 10px 12px;
                 font-size: 0.8rem;
-            }
-
-            .live-status-tracker-card {
-                padding: 10px 8px;
-            }
-
-            .step-node {
-                min-width: 36px;
-            }
-
-            .step-num {
-                width: 20px;
-                height: 20px;
-                font-size: 0.65rem;
-            }
-
-            .step-lbl {
-                font-size: 0.58rem;
             }
 
             .mpesa-attach-box {

@@ -2018,7 +2018,7 @@ function initCustomerFeedbackSystem() {
 
                     <div style="font-size: 0.82rem; color: var(--color-cream); margin-bottom: 8px;">
                         <strong>Service:</strong> ${order.tableOrLocation}
-                        ${order.gpsUrl ? `<a href="${order.gpsUrl}" target="_blank" style="margin-left: 6px; color: #10B981; text-decoration: underline; font-weight: 700;">📍 Open Map</a>` : ''}
+                        ${order.gpsUrl ? `<a href="${order.gpsUrl}" target="_blank" style="margin-left: 6px; color: #10B981; text-decoration: underline; font-weight: 700;">Open Map</a>` : ''}
                     </div>
 
                     <div style="font-size: 0.8rem; color: var(--color-text-muted); background: rgba(0,0,0,0.25); padding: 8px; border-radius: 4px; margin-bottom: 10px;">
@@ -2027,12 +2027,12 @@ function initCustomerFeedbackSystem() {
 
                     <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px dashed var(--color-border-dark);">
                         <span style="font-size: 0.78rem; font-weight: 700; color: ${isPaid ? '#10B981' : '#F59E0B'};">
-                            ${isPaid ? `✓ M-Pesa Paid: ${order.mpesaCode}` : '⏳ Payment: Till 4977556'}
+                            ${isPaid ? `M-Pesa Paid: ${order.mpesaCode}` : 'Payment: Till 4977556'}
                         </span>
                         <div style="display: flex; gap: 6px;">
                             <button type="button" onclick="setAdminOrderStatus('${order.ref}', 'PREPARING')" style="padding: 4px 8px; background: #C2410C; color: #FFF; border: none; border-radius: 4px; font-size: 0.7rem; font-weight: 700; cursor: pointer;">Grill</button>
                             <button type="button" onclick="setAdminOrderStatus('${order.ref}', 'TRANSIT')" style="padding: 4px 8px; background: #3730A3; color: #FFF; border: none; border-radius: 4px; font-size: 0.7rem; font-weight: 700; cursor: pointer;">Transit</button>
-                            <button type="button" onclick="setAdminOrderStatus('${order.ref}', 'DELIVERED')" style="padding: 4px 8px; background: #15803D; color: #FFF; border: none; border-radius: 4px; font-size: 0.7rem; font-weight: 700; cursor: pointer;">✓ Delivered</button>
+                            <button type="button" onclick="setAdminOrderStatus('${order.ref}', 'DELIVERED')" style="padding: 4px 8px; background: #15803D; color: #FFF; border: none; border-radius: 4px; font-size: 0.7rem; font-weight: 700; cursor: pointer;">Delivered</button>
                         </div>
                     </div>
                 </div>

@@ -20,6 +20,10 @@
 
     <link rel="stylesheet" href="style.css?v=20260810_order_gold1">
 
+    <!-- Leaflet Interactive Map for Custom Pin Location -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <style>
         /* ==========================================================================
            MATCHED LUXURY GOLD & SLATE WHITE THEME (FROM order.html)
@@ -849,143 +853,85 @@
             color: #000;
         }
 
-        /* GPS Location Button */
-        .btn-pin-gps {
+        /* Dual Location Pin Buttons */
+        .btn-pin-action {
             background: #059669;
             color: #FFFFFF;
-            border: none;
-            padding: 9px 16px;
-            font-size: 0.82rem;
+            border: 1px solid #059669;
+            padding: 9px 14px;
+            font-size: 0.78rem;
             font-weight: 700;
             cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            transition: all 0.2s ease;
+            justify-content: center;
         }
-        .btn-pin-gps:hover {
+        .btn-pin-action:hover {
             background: #047857;
-            transform: translateY(-1px);
+        }
+        .btn-pin-action.outline {
+            background: #FFFFFF;
+            color: var(--dark-text);
+            border: 1px solid var(--light-border);
+        }
+        .btn-pin-action.outline:hover {
+            background: var(--off-white);
+            border-color: var(--color-gold);
+            color: var(--color-gold-dark);
         }
 
-        /* Live Status Tracker Stepper */
-        .live-status-tracker-card {
-            background: #F8FAFC;
-            border: 1px solid #E2E8F0;
-            padding: 14px 12px;
-            margin-bottom: 16px;
-            text-align: left;
-        }
-
-        .status-tracker-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .status-tracker-title {
-            font-size: 0.72rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            color: var(--subtle-text);
-            text-transform: uppercase;
-        }
-
-        .status-badge-pill {
-            font-size: 0.72rem;
-            font-weight: 800;
-            padding: 3px 8px;
-            background: #FEF3C7;
-            color: #B45309;
-            text-transform: uppercase;
-        }
-
-        .status-stepper-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-            padding: 0 2px;
-        }
-
-        .step-node {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-            z-index: 2;
-            min-width: 44px;
-        }
-
-        .step-num {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: #E2E8F0;
-            color: #64748B;
+        /* Interactive Map Modal */
+        .map-modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(10, 10, 14, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 10000;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
-            font-weight: 800;
-            transition: all 0.3s;
+            padding: 16px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
-        .step-lbl {
-            font-size: 0.62rem;
-            font-weight: 700;
-            color: #64748B;
-            text-transform: uppercase;
-            text-align: center;
+        .map-modal-backdrop.active {
+            opacity: 1;
+            visibility: visible;
         }
-
-        .step-node.active .step-num {
-            background: var(--color-gold);
-            color: #000000;
-            box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
-        }
-
-        .step-node.active .step-lbl {
-            color: var(--dark-text);
-            font-weight: 800;
-        }
-
-        .step-node.completed .step-num {
-            background: #10B981;
-            color: #FFFFFF;
-        }
-
-        .step-connector {
-            flex: 1;
-            height: 3px;
-            background: #E2E8F0;
-            margin: 0 2px 12px 2px;
-            transition: all 0.3s;
-        }
-
-        .step-connector.active {
-            background: #10B981;
-        }
-
-        .btn-customer-received {
+        .map-modal-box {
+            background: #FFFFFF;
+            max-width: 560px;
             width: 100%;
-            background: #10B981;
-            color: #FFFFFF;
-            border: none;
-            padding: 10px 14px;
-            font-size: 0.8rem;
-            font-weight: 800;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+            border-top: 4px solid var(--color-gold);
+            display: flex;
+            flex-direction: column;
         }
-
-        .btn-customer-received:hover {
-            background: #059669;
-            transform: translateY(-1px);
+        .map-modal-header {
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--light-border);
+        }
+        .map-modal-close {
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            line-height: 1;
+            color: var(--subtle-text);
+            cursor: pointer;
         }
 
         .mpesa-attach-box {
@@ -1000,11 +946,12 @@
             background: #16A34A;
             color: #FFF;
             border: none;
-            padding: 4px 8px;
+            padding: 5px 10px;
             font-size: 0.72rem;
             font-weight: 800;
             cursor: pointer;
             transition: all 0.2s;
+            text-transform: uppercase;
         }
 
         .btn-trigger-stk:hover {
@@ -1021,6 +968,7 @@
             cursor: pointer;
             white-space: nowrap;
             transition: all 0.2s;
+            text-transform: uppercase;
         }
 
         .btn-attach-code:hover {
@@ -1249,15 +1197,18 @@
                         <input type="text" id="cust-table-location" class="form-control" placeholder="e.g. Table 4 (Inside or Terrace)" required>
                     </div>
 
-                    <!-- GPS Location Picker (Shown when Delivery is chosen) -->
+                    <!-- Dual Location Selection (Shown when Delivery is chosen) -->
                     <div class="form-group" id="delivery-gps-container" style="display: none;">
-                        <label class="form-label">Delivery GPS Location (Optional for Faster Rider Navigation)</label>
-                        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                            <button type="button" class="btn-pin-gps" id="btn-pin-gps" onclick="handlePinGPSLocation()">
-                                <span>📍 Pin My GPS Location</span>
+                        <label class="form-label">Delivery Location Pin (Optional for Faster Rider Dispatch)</label>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
+                            <button type="button" class="btn-pin-action" id="btn-pin-current-gps" onclick="handlePinCurrentLocation()">
+                                <span>Use My Current Location</span>
                             </button>
-                            <span id="gps-status-badge" style="font-size: 0.82rem; color: #059669; font-weight: 700; display: none;"></span>
+                            <button type="button" class="btn-pin-action outline" id="btn-pin-custom-map" onclick="openMapPinModal()">
+                                <span>Pin Another Location on Map</span>
+                            </button>
                         </div>
+                        <div id="gps-status-badge" style="font-size: 0.82rem; color: #059669; font-weight: 700; display: none;"></div>
                         <input type="hidden" id="cust-gps-url" value="">
                     </div>
 
@@ -1352,7 +1303,7 @@
             <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 18px;">
                 <div class="modal-order-ref" id="modal-order-id" style="margin-bottom: 0;">REF: RH260813011501</div>
                 <button type="button" class="btn-copy-ref" onclick="copyOrderRef()" title="Copy Order Ref">
-                    <span id="copy-ref-text">📋 Copy</span>
+                    <span id="copy-ref-text">Copy</span>
                 </button>
             </div>
             <p style="font-size: 0.92rem; color: var(--slate-text); margin-bottom: 18px; line-height: 1.5;">
@@ -1382,50 +1333,11 @@
                 </div>
             </div>
 
-            <!-- Live Order Status Tracker Card -->
-            <div class="live-status-tracker-card">
-                <div class="status-tracker-top">
-                    <span class="status-tracker-title">LIVE ORDER STATUS</span>
-                    <span class="status-badge-pill" id="live-status-pill">● Order Placed</span>
-                </div>
-                
-                <div class="status-stepper-bar">
-                    <div class="step-node active" id="step-node-1">
-                        <span class="step-num">1</span>
-                        <span class="step-lbl">Placed</span>
-                    </div>
-                    <div class="step-connector" id="step-conn-1"></div>
-                    <div class="step-node" id="step-node-2">
-                        <span class="step-num">2</span>
-                        <span class="step-lbl">On Grill</span>
-                    </div>
-                    <div class="step-connector" id="step-conn-2"></div>
-                    <div class="step-node" id="step-node-3">
-                        <span class="step-num">3</span>
-                        <span class="step-lbl" id="step-lbl-3">Serving</span>
-                    </div>
-                    <div class="step-connector" id="step-conn-3"></div>
-                    <div class="step-node" id="step-node-4">
-                        <span class="step-num">4</span>
-                        <span class="step-lbl">Delivered</span>
-                    </div>
-                </div>
-
-                <div style="margin-top: 14px;">
-                    <button type="button" class="btn-customer-received" id="btn-customer-received" onclick="handleCustomerMarkReceived()">
-                        <span>✓ I Have Received My Order</span>
-                    </button>
-                    <div id="customer-received-alert" style="display: none; margin-top: 10px; color: #166534; font-weight: 700; font-size: 0.85rem; background: #DCFCE7; padding: 8px 12px; border-radius: 6px; border: 1px solid #86EFAC;">
-                        🎉 Asante Sana! Your meal has been marked as received. Enjoy your Rib House feast!
-                    </div>
-                </div>
-            </div>
-
             <!-- M-Pesa Code Verification Input & STK Trigger -->
             <div class="mpesa-attach-box">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                     <span style="font-size: 0.78rem; font-weight: 800; color: #14532D; text-transform: uppercase; letter-spacing: 0.5px;">Confirm M-Pesa Payment</span>
-                    <button type="button" class="btn-trigger-stk" onclick="triggerMpesaSTKPush()">⚡ Send STK Push PIN</button>
+                    <button type="button" class="btn-trigger-stk" onclick="triggerMpesaSTKPush()">Send STK Push PIN</button>
                 </div>
                 <div style="display: flex; gap: 8px;">
                     <input type="text" id="modal-mpesa-input" class="form-control" placeholder="Paste Safaricom SMS or Code (e.g. SHK49X82LK)" style="font-size: 0.82rem; padding: 8px 12px; background: #FFFFFF;">
@@ -1440,6 +1352,40 @@
                 </a>
                 <button type="button" class="btn-modal-close" onclick="closeSuccessModal()">
                     Back to Menu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Map Location Picker Modal -->
+    <div class="map-modal-backdrop" id="map-pin-modal">
+        <div class="map-modal-box">
+            <div class="map-modal-header">
+                <div>
+                    <h3 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.1rem; font-weight: 800; text-transform: uppercase; color: var(--dark-text); margin: 0;">
+                        Pick Delivery Location on Map
+                    </h3>
+                    <p style="font-size: 0.78rem; color: var(--subtle-text); margin: 0;">Tap anywhere or drag the pin to your exact delivery spot</p>
+                </div>
+                <button type="button" class="map-modal-close" onclick="closeMapPinModal()">&times;</button>
+            </div>
+
+            <div style="padding: 10px 14px; background: #F8FAFC; border-bottom: 1px solid var(--light-border); display: flex; gap: 8px;">
+                <input type="text" id="map-search-input" class="form-control" placeholder="Search area in Nairobi (e.g. Westlands, Kilimani, Upper Hill, CBD)..." style="font-size: 0.82rem; padding: 8px 12px; background: #FFFFFF;">
+                <button type="button" onclick="handleSearchMapLocation()" style="padding: 8px 14px; background: var(--color-gold); color: #000; border: none; font-weight: 700; font-size: 0.8rem; cursor: pointer; white-space: nowrap;">
+                    Search
+                </button>
+            </div>
+
+            <div id="interactive-delivery-map" style="width: 100%; height: 320px; background: #E2E8F0;"></div>
+
+            <div style="padding: 12px 16px; background: #FFFFFF; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--light-border); flex-wrap: wrap; gap: 8px;">
+                <div style="font-size: 0.8rem; color: var(--dark-text); font-weight: 700;">
+                    <span style="color: var(--subtle-text); font-weight: 600;">Selected Coordinates: </span>
+                    <span id="selected-map-coords-text">-1.286389, 36.817223</span>
+                </div>
+                <button type="button" onclick="confirmMapPinLocation()" style="padding: 9px 16px; background: #059669; color: #FFFFFF; border: none; font-weight: 800; font-size: 0.8rem; cursor: pointer; text-transform: uppercase;">
+                    Confirm Pinned Location
                 </button>
             </div>
         </div>
@@ -1593,9 +1539,14 @@
             }
         }
 
-        // --- 3. PIN GPS LOCATION FOR DELIVERY ---
-        function handlePinGPSLocation() {
-            const btn = document.getElementById('btn-pin-gps');
+        // --- 3. PIN CURRENT DEVICE GPS OR OPEN MAP PICKER ---
+        let deliveryMap = null;
+        let deliveryMarker = null;
+        let currentPinLat = -1.286389;
+        let currentPinLng = 36.817223;
+
+        function handlePinCurrentLocation() {
+            const btn = document.getElementById('btn-pin-current-gps');
             const badge = document.getElementById('gps-status-badge');
             const gpsInput = document.getElementById('cust-gps-url');
 
@@ -1606,7 +1557,7 @@
 
             if (btn) {
                 btn.disabled = true;
-                btn.innerHTML = '<span>📍 Detecting GPS...</span>';
+                btn.innerHTML = '<span>Detecting Location...</span>';
             }
 
             navigator.geolocation.getCurrentPosition(
@@ -1617,23 +1568,113 @@
                     if (gpsInput) gpsInput.value = mapsUrl;
                     if (btn) {
                         btn.disabled = false;
-                        btn.innerHTML = '<span>✓ GPS Location Pinned</span>';
+                        btn.innerHTML = '<span>Current Location Pinned</span>';
                         btn.style.background = '#10B981';
                     }
                     if (badge) {
-                        badge.style.display = 'inline';
-                        badge.innerHTML = `✓ Coordinates Attached (<a href="${mapsUrl}" target="_blank" style="color: #059669; text-decoration: underline;">View Map</a>)`;
+                        badge.style.display = 'block';
+                        badge.innerHTML = `Current Phone Location Attached (<a href="${mapsUrl}" target="_blank" style="color: #059669; text-decoration: underline;">View Map</a>)`;
                     }
                 },
                 (err) => {
                     if (btn) {
                         btn.disabled = false;
-                        btn.innerHTML = '<span>📍 Pin My GPS Location</span>';
+                        btn.innerHTML = '<span>Use My Current Location</span>';
                     }
-                    alert('Could not detect location. Please ensure GPS location permissions are enabled in your browser.');
+                    alert('Could not detect location. Please ensure location permissions are enabled or use "Pin Another Location on Map".');
                 },
                 { enableHighAccuracy: true, timeout: 10000 }
             );
+        }
+
+        function openMapPinModal() {
+            const modal = document.getElementById('map-pin-modal');
+            if (modal) modal.classList.add('active');
+
+            setTimeout(() => {
+                if (!deliveryMap) {
+                    deliveryMap = L.map('interactive-delivery-map').setView([currentPinLat, currentPinLng], 14);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                        attribution: '&copy; OpenStreetMap contributors'
+                    }).addTo(deliveryMap);
+
+                    deliveryMarker = L.marker([currentPinLat, currentPinLng], { draggable: true }).addTo(deliveryMap);
+
+                    deliveryMarker.on('dragend', (e) => {
+                        const pos = e.target.getLatLng();
+                        currentPinLat = pos.lat.toFixed(6);
+                        currentPinLng = pos.lng.toFixed(6);
+                        updateMapCoordDisplay();
+                    });
+
+                    deliveryMap.on('click', (e) => {
+                        currentPinLat = e.latlng.lat.toFixed(6);
+                        currentPinLng = e.latlng.lng.toFixed(6);
+                        deliveryMarker.setLatLng([currentPinLat, currentPinLng]);
+                        updateMapCoordDisplay();
+                    });
+                } else {
+                    deliveryMap.invalidateSize();
+                }
+            }, 200);
+        }
+
+        function closeMapPinModal() {
+            const modal = document.getElementById('map-pin-modal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        function updateMapCoordDisplay() {
+            const coordEl = document.getElementById('selected-map-coords-text');
+            if (coordEl) {
+                coordEl.textContent = `${currentPinLat}, ${currentPinLng}`;
+            }
+        }
+
+        function handleSearchMapLocation() {
+            const query = document.getElementById('map-search-input').value.trim();
+            if (!query) return;
+
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', Nairobi, Kenya')}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.length > 0) {
+                        const item = data[0];
+                        currentPinLat = parseFloat(item.lat).toFixed(6);
+                        currentPinLng = parseFloat(item.lon).toFixed(6);
+                        if (deliveryMap && deliveryMarker) {
+                            deliveryMap.setView([currentPinLat, currentPinLng], 15);
+                            deliveryMarker.setLatLng([currentPinLat, currentPinLng]);
+                            updateMapCoordDisplay();
+                        }
+                    } else {
+                        alert('Location not found. You can also drag the pin directly on the map.');
+                    }
+                })
+                .catch(() => {
+                    alert('Search error. You can tap or drag the pin directly on the map.');
+                });
+        }
+
+        function confirmMapPinLocation() {
+            const mapsUrl = `https://maps.google.com/?q=${currentPinLat},${currentPinLng}`;
+            const gpsInput = document.getElementById('cust-gps-url');
+            const badge = document.getElementById('gps-status-badge');
+            const btnCustom = document.getElementById('btn-pin-custom-map');
+
+            if (gpsInput) gpsInput.value = mapsUrl;
+            if (badge) {
+                badge.style.display = 'block';
+                badge.innerHTML = `Custom Map Pin Attached: ${currentPinLat}, ${currentPinLng} (<a href="${mapsUrl}" target="_blank" style="color: #059669; text-decoration: underline;">View Map</a>)`;
+            }
+            if (btnCustom) {
+                btnCustom.innerHTML = `<span>Map Location Pinned</span>`;
+                btnCustom.style.borderColor = '#059669';
+                btnCustom.style.color = '#059669';
+            }
+
+            closeMapPinModal();
         }
 
         // --- 4. COPY TILL NUMBER ---
@@ -1678,8 +1719,8 @@
             const copyBtnText = document.getElementById('copy-ref-text');
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(ref).then(() => {
-                    if (copyBtnText) copyBtnText.textContent = '✓ Copied!';
-                    setTimeout(() => { if (copyBtnText) copyBtnText.textContent = '📋 Copy'; }, 2000);
+                    if (copyBtnText) copyBtnText.textContent = 'Copied!';
+                    setTimeout(() => { if (copyBtnText) copyBtnText.textContent = 'Copy'; }, 2000);
                 });
             } else {
                 prompt('Copy Order Reference:', ref);
@@ -1720,7 +1761,6 @@
 
             if (diningType === 'dine-in') {
                 serviceLabel = 'Table:';
-                // If user typed "16" or "Table 16", normalize to "Table 16"
                 if (/^\d+$/.test(locationNote)) {
                     formattedLocation = `Table ${locationNote}`;
                 } else if (!locationNote.toLowerCase().includes('table')) {
@@ -1731,7 +1771,7 @@
                 formattedLocation = locationNote || 'Counter Pickup';
             } else if (diningType === 'delivery') {
                 serviceLabel = 'Delivery:';
-                formattedLocation = locationNote + (gpsUrl ? ' (GPS Pinned)' : '');
+                formattedLocation = locationNote + (gpsUrl ? ' (Location Pinned)' : '');
             }
 
             currentActiveOrder = {
@@ -1747,7 +1787,7 @@
                 totalAmount: grandTotal,
                 mpesaCode: '',
                 paymentStatus: 'PENDING_CONFIRMATION',
-                status: 'PLACED', // PLACED -> PREPARING -> TRANSIT -> DELIVERED
+                status: 'PLACED',
                 timestamp: Date.now(),
                 dateStr: new Date().toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
             };
@@ -1769,9 +1809,6 @@
 
             document.getElementById('modal-phone-val').textContent = phone;
             document.getElementById('modal-amount-val').textContent = `KSh ${grandTotal.toLocaleString()}/=`;
-
-            // Reset Status Tracker
-            updateOrderStatusUI('PLACED');
 
             // Generate WhatsApp Link
             updateWhatsAppLink();
@@ -1795,90 +1832,20 @@
 *Customer:* ${o.customerName}
 *Phone:* ${o.phone}
 *Dining Service:* ${o.diningType.toUpperCase()} (${o.tableOrLocation})
-${o.gpsUrl ? `*GPS Delivery Coordinates:* ${o.gpsUrl}\n` : ''}${o.specialNotes ? `*Special Notes:* ${o.specialNotes}\n` : ''}
+${o.gpsUrl ? `*Delivery Coordinates:* ${o.gpsUrl}\n` : ''}${o.specialNotes ? `*Special Notes:* ${o.specialNotes}\n` : ''}
 *Dishes Ordered:*
 ${o.itemsSummary.join('\n')}
 
 *Total Amount:* KSh ${o.totalAmount.toLocaleString()}/=
 *Payment Method:* ${o.mpesaCode ? `M-Pesa Verified (${o.mpesaCode})` : 'M-Pesa Till 4977556'}
-*Status:* ${o.status}`;
+*Status:* Order Placed`;
 
             const waUrl = `https://wa.me/254793382017?text=${encodeURIComponent(waText)}`;
             const waLinkEl = document.getElementById('modal-whatsapp-link');
             if (waLinkEl) waLinkEl.href = waUrl;
         }
 
-        // --- 7. CUSTOMER ORDER RECEIVED & STATUS TRACKER ---
-        function updateOrderStatusUI(status) {
-            const pill = document.getElementById('live-status-pill');
-            const step1 = document.getElementById('step-node-1');
-            const step2 = document.getElementById('step-node-2');
-            const step3 = document.getElementById('step-node-3');
-            const step4 = document.getElementById('step-node-4');
-            const conn1 = document.getElementById('step-conn-1');
-            const conn2 = document.getElementById('step-conn-2');
-            const conn3 = document.getElementById('step-conn-3');
-            const receivedBtn = document.getElementById('btn-customer-received');
-            const completedMsg = document.getElementById('customer-received-alert');
-            const step3Lbl = document.getElementById('step-lbl-3');
-
-            if (currentActiveOrder && currentActiveOrder.diningType === 'delivery') {
-                if (step3Lbl) step3Lbl.textContent = 'In Transit';
-            } else {
-                if (step3Lbl) step3Lbl.textContent = 'Serving';
-            }
-
-            [step1, step2, step3, step4].forEach(s => { if (s) s.className = 'step-node'; });
-            [conn1, conn2, conn3].forEach(c => { if (c) c.className = 'step-connector'; });
-
-            if (status === 'PLACED') {
-                if (pill) { pill.textContent = '● Order Placed'; pill.style.background = '#FEF3C7'; pill.style.color = '#B45309'; }
-                if (step1) step1.classList.add('active');
-            } else if (status === 'PREPARING') {
-                if (pill) { pill.textContent = '● On the Grill / Preparing'; pill.style.background = '#FFEDD5'; pill.style.color = '#C2410C'; }
-                if (step1) step1.classList.add('completed');
-                if (conn1) conn1.classList.add('active');
-                if (step2) step2.classList.add('active');
-            } else if (status === 'TRANSIT') {
-                if (pill) { pill.textContent = '● Out for Delivery / Serving'; pill.style.background = '#E0E7FF'; pill.style.color = '#3730A3'; }
-                if (step1) step1.classList.add('completed');
-                if (conn1) conn1.classList.add('active');
-                if (step2) step2.classList.add('completed');
-                if (conn2) conn2.classList.add('active');
-                if (step3) step3.classList.add('active');
-            } else if (status === 'DELIVERED') {
-                if (pill) { pill.textContent = '✓ Delivered & Received'; pill.style.background = '#DCFCE7'; pill.style.color = '#15803D'; }
-                if (step1) step1.classList.add('completed');
-                if (conn1) conn1.classList.add('active');
-                if (step2) step2.classList.add('completed');
-                if (conn2) conn2.classList.add('active');
-                if (step3) step3.classList.add('completed');
-                if (conn3) conn3.classList.add('active');
-                if (step4) step4.classList.add('active', 'completed');
-                if (receivedBtn) receivedBtn.style.display = 'none';
-                if (completedMsg) completedMsg.style.display = 'block';
-            }
-        }
-
-        function handleCustomerMarkReceived() {
-            if (!currentActiveOrder) return;
-            currentActiveOrder.status = 'DELIVERED';
-            updateOrderStatusUI('DELIVERED');
-
-            // Sync with storage
-            try {
-                const allActive = JSON.parse(localStorage.getItem('ribhouse_active_orders') || '[]');
-                const idx = allActive.findIndex(o => o.ref === currentActiveOrder.ref);
-                if (idx > -1) {
-                    allActive[idx].status = 'DELIVERED';
-                    localStorage.setItem('ribhouse_active_orders', JSON.stringify(allActive));
-                }
-            } catch(e) {}
-
-            updateWhatsAppLink();
-        }
-
-        // --- 8. M-PESA CODE ATTACH & STK PUSH TRIGGER ---
+        // --- 7. M-PESA CODE ATTACH & STK PUSH TRIGGER ---
         function handleAttachMpesaCode() {
             const input = document.getElementById('modal-mpesa-input');
             const raw = input ? input.value.trim() : '';
@@ -1887,7 +1854,6 @@ ${o.itemsSummary.join('\n')}
                 return;
             }
 
-            // Extract alphanumeric 10-character transaction code (e.g. SHK49X82LK)
             const match = raw.match(/\b([A-Z0-9]{10})\b/i) || raw.match(/^([A-Z0-9]+)$/i);
             const code = match ? match[1].toUpperCase() : raw.toUpperCase();
 
@@ -1895,13 +1861,11 @@ ${o.itemsSummary.join('\n')}
                 currentActiveOrder.mpesaCode = code;
                 currentActiveOrder.paymentStatus = 'PAID';
 
-                // Update modal rows
                 const codeRow = document.getElementById('modal-mpesa-code-row');
                 const codeVal = document.getElementById('modal-mpesa-code-val');
                 if (codeRow) codeRow.style.display = 'flex';
                 if (codeVal) codeVal.textContent = code;
 
-                // Sync storage & WhatsApp link
                 try {
                     const allActive = JSON.parse(localStorage.getItem('ribhouse_active_orders') || '[]');
                     const idx = allActive.findIndex(o => o.ref === currentActiveOrder.ref);
@@ -1918,7 +1882,7 @@ ${o.itemsSummary.join('\n')}
             const statusMsg = document.getElementById('stk-status-msg');
             if (statusMsg) {
                 statusMsg.style.display = 'block';
-                statusMsg.innerHTML = `✓ M-Pesa Code <strong>${code}</strong> attached and verified!`;
+                statusMsg.innerHTML = `M-Pesa Code <strong>${code}</strong> attached and verified!`;
             }
         }
 
@@ -1930,14 +1894,13 @@ ${o.itemsSummary.join('\n')}
 
             if (statusMsg) {
                 statusMsg.style.display = 'block';
-                statusMsg.innerHTML = `⏳ Sending Lipa na M-Pesa PIN prompt to <strong>${phone}</strong> for KSh ${amount.toLocaleString()}/=...`;
+                statusMsg.innerHTML = `Sending Lipa na M-Pesa PIN prompt to <strong>${phone}</strong> for KSh ${amount.toLocaleString()}/=...`;
                 statusMsg.style.color = '#B45309';
             }
 
-            // STK Push Simulation / Daraja Relay Call
             setTimeout(() => {
                 if (statusMsg) {
-                    statusMsg.innerHTML = `📲 M-Pesa PIN prompt sent to <strong>${phone}</strong>! Enter your M-Pesa PIN on your phone to complete payment.`;
+                    statusMsg.innerHTML = `M-Pesa PIN prompt sent to <strong>${phone}</strong>. Enter your M-Pesa PIN on your phone to complete payment.`;
                     statusMsg.style.color = '#15803D';
                 }
             }, 1200);

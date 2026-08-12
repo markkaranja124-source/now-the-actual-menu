@@ -944,7 +944,8 @@ function initMenuAIAssistant() {
         { name: "CHOMA GOAT (1 KG)", price: "1200/=", category: "choma", tags: ["goat", "choma", "grilled", "popular", "spicy"], desc: "Juicy grilled goat choma per KG", targetId: "meat-portions-grid" },
         { name: "CHEMSHA GOAT (1 KG)", price: "1300/=", category: "choma", tags: ["goat", "chemsha", "soup"], desc: "Boiled flavorful goat stew/soup per KG", targetId: "meat-portions-grid" },
         { name: "BEEF / GOAT TUMBUKIZA (1 KG)", price: "1300/= / 1400/=", category: "choma", tags: ["tumbukiza", "goat", "beef", "spicy"], desc: "Rich wood-fired meat tumbukiza on order", targetId: "meat-portions-grid" },
-        { name: "CHICKEN PLATTER FOR 4", price: "1900/=", category: "choma", tags: ["chicken", "platter", "group", "popular"], desc: "Includes 2 Chicken Wet Fry, 2 Beef Fry, 1 Chips, 2 Ugali/Chapati, 2 Veggies & 4 Juices", targetId: "meat-portions-grid" }
+        { name: "CHICKEN PLATTER FOR 4", price: "1900/=", category: "choma", tags: ["chicken", "platter", "group", "popular"], desc: "Includes 2 Chicken Wet Fry, 2 Beef Fry, 1 Chips, 2 Ugali/Chapati, 2 Veggies & 4 Juices", targetId: "meat-portions-grid" },
+        { name: "TEST DISH", price: "1/=", category: "main", tags: ["test", "dish", "cheap", "1", "testing"], desc: "Developer testing dish for 1 Shilling M-Pesa testing", targetId: "bk-combos" }
     ];
 
     function generateAIReply(rawQuery) {

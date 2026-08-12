@@ -1867,9 +1867,9 @@
 *Phone*        ❯  ${o.phone}
 *Service*      ❯  ${o.tableOrLocation}
 ${o.gpsUrl ? `*Delivery Pin* ❯  ${o.gpsUrl}\n` : ''}
-──────── Selected Dishes ────────
+*Selected Dishes:*
 ${itemBlocks.join('\n\n')}
-─────────────────────────────────
+
 *Grand Total*  ❯  *KSh ${o.totalAmount.toLocaleString()}/=*
 *Payment*      ❯  ${paymentDisplay}
 ${o.specialNotes ? `*Notes*        ❯  ${o.specialNotes}\n` : ''}*Status*       ❯  Order Placed`;

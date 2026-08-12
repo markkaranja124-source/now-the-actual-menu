@@ -1826,19 +1826,53 @@
             if (!currentActiveOrder) return;
             const o = currentActiveOrder;
 
-            const waText = 
-`*NEW ORDER - RIB HOUSE WOOD-FIRED GRILL*
-*Order Ref:* ${o.ref}
-*Customer:* ${o.customerName}
-*Phone:* ${o.phone}
-*Dining Service:* ${o.diningType.toUpperCase()} (${o.tableOrLocation})
-${o.gpsUrl ? `*Delivery Coordinates:* ${o.gpsUrl}\n` : ''}${o.specialNotes ? `*Special Notes:* ${o.specialNotes}\n` : ''}
-*Dishes Ordered:*
-${o.itemsSummary.join('\n')}
+            // Build neatly structured dish items (Option 2 layout)
+            const itemBlocks = [];
+            if (o.items && o.items.length > 0) {
+                o.items.forEach((item, idx) => {
+                    const sub = calculateSubtotal(item);
+                    let itemText = `${idx + 1}. *${item.name}* (x${item.qty})`;
 
-*Total Amount:* KSh ${o.totalAmount.toLocaleString()}/=
-*Payment Method:* ${o.mpesaCode ? `M-Pesa Verified (${o.mpesaCode})` : 'M-Pesa Till 4977556'}
-*Status:* Order Placed`;
+                    // Portions / Options details if present
+                    if (item.portions && item.portions.length > 0 && (item.hasSide || item.hasPrep || item.hasPairing)) {
+                        item.portions.forEach((p, pIdx) => {
+                            let opts = [];
+                            if (item.hasSide && p.side) opts.push(p.side);
+                            if (item.hasPrep && p.prep) opts.push(p.prep);
+                            if (item.hasPairing && p.pairing && p.pairing !== 'none') {
+                                opts.push(p.pairing.replace('_', ' + '));
+                            }
+                            if (opts.length > 0) {
+                                itemText += `\n   └ ${item.qty > 1 ? `Plate ${pIdx + 1}: ` : 'Options: '}${opts.join(', ')}`;
+                            }
+                        });
+                    }
+                    itemText += `\n   └ Subtotal: KSh ${sub.toLocaleString()}/=`;
+                    itemBlocks.push(itemText);
+                });
+            } else if (o.itemsSummary) {
+                itemBlocks.push(o.itemsSummary.join('\n'));
+            }
+
+            const paymentDisplay = o.mpesaCode 
+                ? `M-Pesa Verified (${o.mpesaCode})` 
+                : 'Till 4977556 (Buy Goods)';
+
+            const waText = 
+`*RIB HOUSE WOOD-FIRED GRILL*
+*Order Confirmation*
+
+*Ref Number*   ❯  ${o.ref}
+*Customer*     ❯  ${o.customerName}
+*Phone*        ❯  ${o.phone}
+*Service*      ❯  ${o.tableOrLocation}
+${o.gpsUrl ? `*Delivery Pin* ❯  ${o.gpsUrl}\n` : ''}
+──────── Selected Dishes ────────
+${itemBlocks.join('\n\n')}
+─────────────────────────────────
+*Grand Total*  ❯  *KSh ${o.totalAmount.toLocaleString()}/=*
+*Payment*      ❯  ${paymentDisplay}
+${o.specialNotes ? `*Notes*        ❯  ${o.specialNotes}\n` : ''}*Status*       ❯  Order Placed`;
 
             const waUrl = `https://wa.me/254793382017?text=${encodeURIComponent(waText)}`;
             const waLinkEl = document.getElementById('modal-whatsapp-link');

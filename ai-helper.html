@@ -677,24 +677,28 @@
             box-shadow: 0 4px 15px var(--color-gold-glow);
         }
 
-        /* Modal Order Confirmation (Sharp Gold-Themed Box) */
+        /* Modal Order Confirmation (Mobile-Optimized Luxury Gold-Themed Box) */
         .order-modal-backdrop {
             position: fixed;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 1000;
+            background: rgba(10, 10, 14, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 16px;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .order-modal-backdrop.active {
@@ -704,15 +708,20 @@
 
         .order-modal-box {
             background: #FFFFFF;
-            max-width: 520px;
+            max-width: 480px;
             width: 100%;
-            padding: 36px 30px;
+            max-height: 90vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 30px 24px;
+            margin: auto;
             text-align: center;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
-            border-top: 4px solid var(--color-gold);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(184, 134, 11, 0.15);
+            border-top: 5px solid var(--color-gold);
             transform: scale(0.95);
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
+            box-sizing: border-box;
         }
 
         .order-modal-backdrop.active .order-modal-box {
@@ -721,7 +730,7 @@
 
         .modal-title {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 800;
             letter-spacing: 1.5px;
             text-transform: uppercase;
@@ -733,57 +742,64 @@
             display: inline-block;
             background: var(--color-gold-light);
             color: var(--color-gold-dark);
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             font-weight: 800;
-            letter-spacing: 1.5px;
-            padding: 4px 14px;
-            border: 1px solid var(--color-gold-border);
-            margin-bottom: 18px;
+            font-family: monospace;
+            letter-spacing: 1px;
+            padding: 5px 12px;
+            border: 1.5px solid var(--color-gold-border);
             text-transform: uppercase;
         }
 
         .modal-summary-list {
             background: var(--off-white);
             border: 1px solid var(--light-border);
-            padding: 16px 20px;
+            padding: 14px 16px;
             text-align: left;
-            margin-bottom: 24px;
-            font-size: 0.88rem;
+            margin-bottom: 16px;
+            font-size: 0.85rem;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 7px;
         }
 
         .modal-summary-row {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
         }
 
         .modal-summary-row .label {
             color: var(--subtle-text);
             text-transform: uppercase;
-            font-size: 0.76rem;
+            font-size: 0.74rem;
             font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
         .modal-summary-row .val {
             font-weight: 700;
             color: var(--dark-text);
+            font-size: 0.88rem;
+            text-align: right;
+            word-break: break-word;
         }
 
         .modal-actions {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .btn-modal-whatsapp {
             background: #25D366;
             color: #FFFFFF;
-            padding: 14px 24px;
-            font-size: 0.88rem;
+            padding: 13px 20px;
+            font-size: 0.84rem;
             font-weight: 800;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
             text-decoration: none;
             display: flex;
@@ -803,10 +819,10 @@
             background: var(--off-white);
             border: 1.5px solid var(--light-border);
             color: var(--dark-text);
-            padding: 12px 24px;
-            font-size: 0.85rem;
+            padding: 11px 20px;
+            font-size: 0.82rem;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -823,8 +839,7 @@
             color: var(--color-gold-dark);
             font-size: 0.75rem;
             font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 4px;
+            padding: 5px 10px;
             cursor: pointer;
             transition: all 0.2s;
             text-transform: uppercase;
@@ -839,7 +854,6 @@
             background: #059669;
             color: #FFFFFF;
             border: none;
-            border-radius: 6px;
             padding: 9px 16px;
             font-size: 0.82rem;
             font-weight: 700;
@@ -858,9 +872,8 @@
         .live-status-tracker-card {
             background: #F8FAFC;
             border: 1px solid #E2E8F0;
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 18px;
+            padding: 14px 12px;
+            margin-bottom: 16px;
             text-align: left;
         }
 
@@ -868,22 +881,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .status-tracker-title {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 800;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             color: var(--subtle-text);
             text-transform: uppercase;
         }
 
         .status-badge-pill {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 800;
-            padding: 3px 10px;
-            border-radius: 20px;
+            padding: 3px 8px;
             background: #FEF3C7;
             color: #B45309;
             text-transform: uppercase;
@@ -894,42 +906,44 @@
             align-items: center;
             justify-content: space-between;
             position: relative;
-            padding: 0 4px;
+            padding: 0 2px;
         }
 
         .step-node {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             z-index: 2;
+            min-width: 44px;
         }
 
         .step-num {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             background: #E2E8F0;
             color: #64748B;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             font-weight: 800;
             transition: all 0.3s;
         }
 
         .step-lbl {
-            font-size: 0.68rem;
+            font-size: 0.62rem;
             font-weight: 700;
             color: #64748B;
             text-transform: uppercase;
+            text-align: center;
         }
 
         .step-node.active .step-num {
             background: var(--color-gold);
             color: #000000;
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
         }
 
         .step-node.active .step-lbl {
@@ -946,7 +960,7 @@
             flex: 1;
             height: 3px;
             background: #E2E8F0;
-            margin: 0 4px 14px 4px;
+            margin: 0 2px 12px 2px;
             transition: all 0.3s;
         }
 
@@ -959,9 +973,8 @@
             background: #10B981;
             color: #FFFFFF;
             border: none;
-            border-radius: 6px;
-            padding: 10px 16px;
-            font-size: 0.82rem;
+            padding: 10px 14px;
+            font-size: 0.8rem;
             font-weight: 800;
             cursor: pointer;
             text-transform: uppercase;
@@ -978,9 +991,8 @@
         .mpesa-attach-box {
             background: #F0FDF4;
             border: 1px solid #BBF7D0;
-            border-radius: 8px;
-            padding: 14px;
-            margin-bottom: 18px;
+            padding: 12px;
+            margin-bottom: 16px;
             text-align: left;
         }
 
@@ -988,8 +1000,7 @@
             background: #16A34A;
             color: #FFF;
             border: none;
-            border-radius: 4px;
-            padding: 4px 10px;
+            padding: 4px 8px;
             font-size: 0.72rem;
             font-weight: 800;
             cursor: pointer;
@@ -1004,8 +1015,7 @@
             background: #16A34A;
             color: #FFF;
             border: none;
-            border-radius: 6px;
-            padding: 8px 16px;
+            padding: 8px 14px;
             font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
@@ -1017,7 +1027,7 @@
             background: #15803D;
         }
 
-        /* Responsive */
+        /* Responsive Layouts */
         @media (max-width: 960px) {
             .order-form-grid {
                 grid-template-columns: 1fr;
@@ -1026,38 +1036,55 @@
         }
 
         @media (max-width: 600px) {
+            .page-header-bar {
+                padding: 12px 0;
+            }
+
             .header-bar-container {
-                padding: 0 14px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+                padding: 0 12px;
             }
 
             .brand-title {
-                font-size: 1.15rem;
+                font-size: 1.3rem;
                 letter-spacing: 1.5px;
             }
 
-            .nav-right-buttons .nav-link-btn:not(.active) {
-                display: none;
+            .nav-right-buttons {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 6px;
+                width: 100%;
+            }
+
+            .nav-link-btn {
+                font-size: 0.68rem;
+                padding: 6px 10px;
             }
 
             .order-luxury-wrapper {
-                padding: 24px 14px 60px 14px;
+                padding: 16px 12px 60px 12px;
             }
 
             .order-card {
-                padding: 24px 18px;
+                padding: 20px 14px;
             }
 
             .dining-type-options {
                 grid-template-columns: 1fr 1fr 1fr;
-                gap: 6px;
+                gap: 4px;
             }
 
             .dining-option-btn {
-                padding: 10px 6px;
+                padding: 9px 4px;
             }
 
             .dining-option-btn .opt-title {
-                font-size: 0.72rem;
+                font-size: 0.68rem;
             }
 
             .mpesa-details-grid {
@@ -1066,11 +1093,68 @@
             }
 
             .order-hero-title {
-                font-size: 1.85rem;
+                font-size: 1.6rem;
+            }
+
+            /* Responsive Modal for Mobile Phone Screens */
+            .order-modal-backdrop {
+                padding: 10px;
+                align-items: flex-start;
+                padding-top: 15px;
+                padding-bottom: 25px;
             }
 
             .order-modal-box {
-                padding: 26px 20px;
+                max-height: calc(100vh - 30px);
+                padding: 20px 14px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .modal-title {
+                font-size: 1.3rem;
+            }
+
+            .modal-order-ref {
+                font-size: 0.8rem;
+                padding: 4px 8px;
+            }
+
+            .modal-summary-list {
+                padding: 10px 12px;
+                font-size: 0.8rem;
+            }
+
+            .live-status-tracker-card {
+                padding: 10px 8px;
+            }
+
+            .step-node {
+                min-width: 36px;
+            }
+
+            .step-num {
+                width: 20px;
+                height: 20px;
+                font-size: 0.65rem;
+            }
+
+            .step-lbl {
+                font-size: 0.58rem;
+            }
+
+            .mpesa-attach-box {
+                padding: 10px 8px;
+            }
+
+            .btn-modal-whatsapp {
+                padding: 12px 14px;
+                font-size: 0.78rem;
+            }
+
+            .btn-modal-close {
+                padding: 10px 14px;
+                font-size: 0.78rem;
             }
         }
     </style>

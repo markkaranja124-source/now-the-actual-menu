@@ -18,18 +18,16 @@
 
     <style>
         :root {
-            --color-gold: #B8860B;
-            --color-gold-bright: #D4AF37;
-            --color-gold-light: #FEF3C7;
-            --color-gold-dark: #92400E;
-            --color-gold-border: rgba(212, 175, 55, 0.3);
-            --color-flame: #E67E22;
-            --dark-bg: #0A0D14;
-            --card-bg: rgba(19, 27, 46, 0.86);
-            --card-border: rgba(212, 175, 55, 0.22);
-            --light-border: rgba(255, 255, 255, 0.12);
-            --text-cream: #FDFBF7;
-            --text-muted: #94A3B8;
+            --color-orange: #E67E22;
+            --color-orange-dark: #D35400;
+            --color-orange-light: #FFF5EB;
+            --color-orange-border: rgba(230, 126, 34, 0.4);
+            --light-bg: #F8F9FA;
+            --card-bg: #FFFFFF;
+            --card-border: rgba(230, 126, 34, 0.35);
+            --light-border: #E2E8F0;
+            --text-dark: #111114;
+            --text-muted: #64748B;
             --color-ready: #10B981;
             --color-hold: #F59E0B;
             --color-unavail: #EF4444;
@@ -43,15 +41,15 @@
         }
 
         body {
-            background-color: var(--dark-bg);
+            background-color: var(--light-bg);
             background-image: 
-                radial-gradient(circle at center, rgba(13, 17, 26, 0.72) 0%, rgba(7, 9, 14, 0.95) 100%),
+                radial-gradient(circle at center, rgba(255, 255, 255, 0.90) 0%, rgba(248, 246, 240, 0.97) 100%),
                 url('logo.png');
             background-position: center center;
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: min(480px, 75vw) auto;
-            color: var(--text-cream);
+            color: var(--text-dark);
             font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
             min-height: 100vh;
             display: flex;
@@ -60,11 +58,11 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Top Luxury Admin Bar */
+        /* Top Luxury White & Orange Admin Bar */
         .admin-nav-bar {
-            background: rgba(7, 10, 16, 0.92);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--card-border);
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--color-orange-border);
+            box-shadow: 0 2px 14px rgba(230, 126, 34, 0.08);
             padding: 14px 24px;
             display: flex;
             align-items: center;
@@ -87,10 +85,10 @@
 
         .admin-nav-title {
             font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 1.4rem;
+            font-size: 1.45rem;
             font-weight: 700;
             letter-spacing: 1.5px;
-            color: var(--color-gold-bright);
+            color: var(--color-orange-dark);
             text-transform: uppercase;
         }
 
@@ -100,15 +98,15 @@
             padding: 4px 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            background: rgba(184, 134, 11, 0.2);
-            color: var(--color-gold-bright);
-            border: 1px solid var(--color-gold);
+            background: rgba(230, 126, 34, 0.12);
+            color: var(--color-orange-dark);
+            border: 1px solid var(--color-orange);
         }
 
         .btn-admin-logout {
-            background: transparent;
-            border: 1px solid var(--light-border);
-            color: var(--text-muted);
+            background: #FFFFFF;
+            border: 1px solid var(--color-orange);
+            color: var(--color-orange-dark);
             padding: 6px 14px;
             font-size: 0.75rem;
             font-weight: 700;
@@ -136,14 +134,14 @@
         .portal-tabs-bar {
             display: flex;
             gap: 8px;
-            border-bottom: 2px solid var(--card-border);
+            border-bottom: 2px solid var(--color-orange-border);
             margin-bottom: 24px;
             overflow-x: auto;
         }
 
         .portal-tab-btn {
-            background: transparent;
-            border: none;
+            background: #FFFFFF;
+            border: 1px solid var(--light-border);
             border-bottom: 3px solid transparent;
             color: var(--text-muted);
             padding: 12px 20px;
@@ -157,9 +155,10 @@
         }
 
         .portal-tab-btn.active {
-            color: var(--color-gold-bright);
-            border-bottom-color: var(--color-gold-bright);
-            background: rgba(212, 175, 55, 0.08);
+            color: var(--color-orange-dark);
+            border-bottom-color: var(--color-orange);
+            background: var(--color-orange-light);
+            border-color: var(--color-orange-border);
         }
 
         /* Category Filter Tabs Bar (Ordered Exactly as Main Menu) */
@@ -172,9 +171,9 @@
         }
 
         .btn-cat-filter {
-            background: rgba(19, 27, 46, 0.9);
+            background: #FFFFFF;
             border: 1px solid var(--card-border);
-            color: var(--text-muted);
+            color: #475569;
             padding: 8px 14px;
             font-size: 0.78rem;
             font-weight: 700;
@@ -182,13 +181,15 @@
             text-transform: uppercase;
             white-space: nowrap;
             transition: all 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
         }
 
         .btn-cat-filter.active, .btn-cat-filter:hover {
-            background: var(--color-gold-bright);
-            color: #0B0E14;
-            border-color: var(--color-gold-bright);
+            background: var(--color-orange);
+            color: #FFFFFF;
+            border-color: var(--color-orange);
             font-weight: 800;
+            box-shadow: 0 4px 12px rgba(230, 126, 34, 0.25);
         }
 
         /* Search & Info Bar */
@@ -202,18 +203,20 @@
         }
 
         .search-input-box {
-            background: rgba(19, 27, 46, 0.92);
-            border: 1px solid var(--card-border);
-            color: var(--text-cream);
+            background: #FFFFFF;
+            border: 1px solid var(--color-orange);
+            color: var(--text-dark);
             padding: 10px 16px;
             font-size: 0.85rem;
             width: 100%;
             max-width: 380px;
             outline: none;
+            box-shadow: 0 2px 8px rgba(230, 126, 34, 0.08);
         }
 
         .search-input-box:focus {
-            border-color: var(--color-gold-bright);
+            border-color: var(--color-orange-dark);
+            box-shadow: 0 2px 12px rgba(230, 126, 34, 0.2);
         }
 
         .status-legend-bar {
@@ -246,9 +249,9 @@
         }
 
         .inv-dish-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(14px);
+            background: #FFFFFF;
             border: 1px solid var(--card-border);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
             padding: 18px;
             display: flex;
             flex-direction: column;
@@ -257,18 +260,19 @@
         }
 
         .inv-dish-card:hover {
-            border-color: var(--color-gold-bright);
+            border-color: var(--color-orange);
+            box-shadow: 0 6px 20px rgba(230, 126, 34, 0.12);
         }
 
         .inv-dish-card.status-hold {
             border-color: var(--color-hold);
-            background: rgba(245, 158, 11, 0.08);
+            background: #FFFBEB;
         }
 
         .inv-dish-card.status-unavailable {
             border-color: var(--color-unavail);
-            background: rgba(239, 68, 68, 0.08);
-            opacity: 0.7;
+            background: #FEF2F2;
+            opacity: 0.75;
         }
 
         .inv-dish-info {
@@ -280,26 +284,26 @@
 
         .inv-dish-name {
             font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 1.22rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            color: var(--text-cream);
+            color: var(--text-dark);
             text-transform: uppercase;
             margin-bottom: 4px;
         }
 
         .inv-dish-category {
-            font-size: 0.7rem;
+            font-size: 0.72rem;
             font-weight: 700;
-            color: var(--color-gold-bright);
+            color: var(--color-orange);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .inv-dish-price {
             font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            color: var(--color-gold-bright);
+            color: var(--color-orange-dark);
             white-space: nowrap;
             margin-left: 8px;
         }
@@ -319,29 +323,36 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             cursor: pointer;
-            border: 1px solid transparent;
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-muted);
+            border: 1px solid #CBD5E1;
+            background: #F8FAFC;
+            color: #64748B;
             transition: all 0.15s;
             text-align: center;
+        }
+
+        .btn-inv-state:hover {
+            border-color: var(--color-orange);
         }
 
         .btn-inv-state.state-ready.active {
             background: var(--color-ready);
             color: #FFFFFF;
             border-color: var(--color-ready);
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
         }
 
         .btn-inv-state.state-hold.active {
             background: var(--color-hold);
             color: #000000;
             border-color: var(--color-hold);
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25);
         }
 
         .btn-inv-state.state-unavailable.active {
             background: var(--color-unavail);
             color: #FFFFFF;
             border-color: var(--color-unavail);
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25);
         }
 
         /* Orders Feed & Ticket Cards */
@@ -352,9 +363,9 @@
         }
 
         .order-ticket-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(14px);
+            background: #FFFFFF;
             border: 1px solid var(--card-border);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -373,7 +384,7 @@
         .order-id-badge {
             font-size: 0.82rem;
             font-weight: 800;
-            color: var(--color-gold-bright);
+            color: var(--color-orange-dark);
         }
 
         .order-timestamp {
@@ -394,11 +405,11 @@
 
         .order-item-name {
             font-weight: 600;
-            color: var(--text-cream);
+            color: var(--text-dark);
         }
 
         .order-item-qty {
-            color: var(--color-gold-bright);
+            color: var(--color-orange-dark);
             font-weight: 800;
         }
 
@@ -414,7 +425,7 @@
             font-family: 'Cormorant Garamond', Georgia, serif;
             font-size: 1.3rem;
             font-weight: 700;
-            color: var(--color-gold-bright);
+            color: var(--color-orange-dark);
         }
 
         .order-status-actions {
@@ -429,8 +440,8 @@
             text-transform: uppercase;
             cursor: pointer;
             border: 1px solid var(--light-border);
-            background: transparent;
-            color: var(--text-cream);
+            background: #F8FAFC;
+            color: var(--text-dark);
         }
 
         .btn-order-action.ready {
@@ -443,8 +454,8 @@
         .auth-gate-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(7, 10, 16, 0.95);
-            backdrop-filter: blur(20px);
+            background: rgba(17, 17, 20, 0.6);
+            backdrop-filter: blur(12px);
             z-index: 1000;
             display: flex;
             align-items: center;
@@ -453,20 +464,20 @@
         }
 
         .auth-gate-box {
-            background: rgba(19, 27, 46, 0.96);
-            border: 1px solid var(--card-border);
+            background: #FFFFFF;
+            border: 2px solid var(--color-orange);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
             max-width: 440px;
             width: 100%;
             padding: 36px 28px;
             text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         }
 
         .auth-title {
             font-family: 'Cormorant Garamond', Georgia, serif;
             font-size: 1.8rem;
             font-weight: 700;
-            color: var(--color-gold-bright);
+            color: var(--color-orange-dark);
             margin-bottom: 6px;
             text-transform: uppercase;
         }
@@ -485,7 +496,7 @@
         }
 
         .role-btn {
-            background: rgba(255, 255, 255, 0.05);
+            background: #F8FAFC;
             border: 1px solid var(--light-border);
             color: var(--text-muted);
             padding: 10px;
@@ -497,16 +508,16 @@
         }
 
         .role-btn.active {
-            background: var(--color-gold-bright);
-            color: #0B0E14;
-            border-color: var(--color-gold-bright);
+            background: var(--color-orange);
+            color: #FFFFFF;
+            border-color: var(--color-orange);
         }
 
         .auth-input {
             width: 100%;
-            background: rgba(11, 15, 25, 0.95);
-            border: 1px solid var(--card-border);
-            color: var(--text-cream);
+            background: #F8FAFC;
+            border: 1px solid #CBD5E1;
+            color: var(--text-dark);
             padding: 12px 16px;
             font-size: 0.95rem;
             text-align: center;
@@ -516,14 +527,15 @@
         }
 
         .auth-input:focus {
-            border-color: var(--color-gold-bright);
+            border-color: var(--color-orange);
+            background: #FFFFFF;
         }
 
         .btn-auth-submit {
             width: 100%;
-            background: var(--color-gold-bright);
-            border: 1px solid var(--color-gold-bright);
-            color: #0B0E14;
+            background: var(--color-orange);
+            border: 1px solid var(--color-orange);
+            color: #FFFFFF;
             padding: 12px;
             font-size: 0.85rem;
             font-weight: 800;
@@ -534,8 +546,8 @@
         }
 
         .btn-auth-submit:hover {
-            background: #FFFFFF;
-            border-color: #FFFFFF;
+            background: var(--color-orange-dark);
+            border-color: var(--color-orange-dark);
         }
 
         .auth-error-msg {
@@ -622,7 +634,7 @@
         <!-- TAB 3: ADMIN SETTINGS & SECURITY PIN CHANGE (MASTER ADMIN ONLY) -->
         <section id="section-settings" style="display: none;">
             <div style="max-width: 540px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px;">
-                <h3 style="font-size: 1.1rem; text-transform: uppercase; color: var(--color-gold-bright); margin-bottom: 16px;">Portal Security Settings</h3>
+                <h3 style="font-size: 1.1rem; text-transform: uppercase; color: var(--color-orange-dark); margin-bottom: 16px;">Portal Security Settings</h3>
                 
                 <form id="settings-form" onsubmit="handleSaveSettings(event)">
                     <div style="margin-bottom: 16px;">
@@ -870,15 +882,15 @@
             if (role === 'admin') {
                 if (badge) {
                     badge.textContent = 'MASTER ADMIN';
-                    badge.style.background = 'rgba(184, 134, 11, 0.25)';
-                    badge.style.color = '#D4AF37';
-                    badge.style.borderColor = '#D4AF37';
+                    badge.style.background = 'rgba(230, 126, 34, 0.15)';
+                    badge.style.color = '#D35400';
+                    badge.style.borderColor = '#E67E22';
                 }
                 if (settingsTabBtn) settingsTabBtn.style.display = 'block';
             } else {
                 if (badge) {
                     badge.textContent = 'KITCHEN CREW';
-                    badge.style.background = 'rgba(16, 185, 129, 0.2)';
+                    badge.style.background = 'rgba(16, 185, 129, 0.15)';
                     badge.style.color = '#10B981';
                     badge.style.borderColor = '#10B981';
                 }

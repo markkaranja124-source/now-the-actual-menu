@@ -695,7 +695,7 @@ function initClickableMenuDishes() {
 
     allCards.forEach(card => {
         const h3Header = card.querySelector('h3, h4');
-        const mainTitle = h3Header ? h3Header.innerText.trim() : 'Dish';
+        const mainTitle = h3Header ? h3Header.innerText.replace(/\s+/g, ' ').trim() : 'Dish';
 
         // Detect if this card has sub-item option rows (like Matumbo Fry with sides)
         const subContainers = card.querySelectorAll('div > div');
@@ -729,8 +729,8 @@ function initClickableMenuDishes() {
                 const spans = row.querySelectorAll('span');
                 if (spans.length < 2) return;
 
-                const sideName = spans[0].innerText.trim();
-                const sidePrice = spans[1].innerText.trim();
+                const sideName = spans[0].innerText.replace(/\s+/g, ' ').trim();
+                const sidePrice = spans[1].innerText.replace(/\s+/g, ' ').trim();
 
                 if (!sideName || !sidePrice) return;
                 const fullDishName = `${mainTitle} (${sideName})`;
@@ -786,9 +786,9 @@ function initClickableMenuDishes() {
                     row.style.cursor = 'not-allowed';
                     row.style.background = 'transparent';
                     rowPill.innerHTML = 'Hold';
-                    rowPill.style.background = '#334155';
-                    rowPill.style.color = '#94A3B8';
-                    rowPill.style.borderColor = '#475569';
+                    rowPill.style.background = '#F59E0B';
+                    rowPill.style.color = '#000000';
+                    rowPill.style.borderColor = '#D97706';
                     rowPill.style.cursor = 'not-allowed';
                     return;
                 }
@@ -835,15 +835,15 @@ function initClickableMenuDishes() {
             }
 
         } else {
-            // SINGLE DISH CARD (e.g., Pancake Breakfast, Barista Hot & Cold Drinks)
+            // SINGLE DISH CARD (e.g., Pancake Breakfast, Barista Hot & Cold Drinks, Extra Sides, Meat Portions)
             const priceSpan = card.querySelector('span');
             const descP = card.querySelector('p');
 
             if (!h3Header || !priceSpan) return;
 
             const dishName = mainTitle;
-            const priceText = priceSpan.innerText.trim();
-            const descText = descP ? descP.innerText.trim() : '';
+            const priceText = priceSpan.innerText.replace(/\s+/g, ' ').trim();
+            const descText = descP ? descP.innerText.replace(/\s+/g, ' ').trim() : '';
 
             // Check Inventory Status
             const itemStatus = getItemAvailability(dishName);
@@ -851,6 +851,7 @@ function initClickableMenuDishes() {
             card.style.display = 'flex';
             card.style.flexDirection = 'column';
             card.style.justifyContent = 'space-between';
+            card.style.alignItems = 'stretch';
 
             // Wrap title and price in card-top-header flex container
             let topHeader = card.querySelector('.card-top-header');
@@ -899,12 +900,12 @@ function initClickableMenuDishes() {
             if (itemStatus === 'hold') {
                 card.style.opacity = '0.75';
                 card.style.cursor = 'not-allowed';
-                card.style.borderColor = '#475569';
+                card.style.borderColor = '#F59E0B';
                 orderBtn.style.display = 'block';
                 orderBtn.innerHTML = 'Hold';
-                orderBtn.style.background = '#1E293B';
-                orderBtn.style.color = '#94A3B8';
-                orderBtn.style.borderColor = '#334155';
+                orderBtn.style.background = '#F59E0B';
+                orderBtn.style.color = '#000000';
+                orderBtn.style.borderColor = '#D97706';
                 orderBtn.style.cursor = 'not-allowed';
                 return;
             }

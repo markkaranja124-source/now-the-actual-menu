@@ -503,6 +503,8 @@ function resolveInventoryKey(name) {
     if (n.includes('smoothie')) return 'smoothies_tropical';
 
     return n.replace(/[^a-z0-9]/g, '_');
+}
+
 // --- LIVE CLOUD INVENTORY SYNC ENGINE ---
 const RIBHOUSE_CLOUD_SYNC_URL = 'https://ribhouse-digital-menu-default-rtdb.firebaseio.com/inventory.json';
 

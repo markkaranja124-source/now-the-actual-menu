@@ -8,10 +8,10 @@
     <!-- Prevent Search Engine Indexing for Hidden Page -->
     <meta name="robots" content="noindex, nofollow">
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts Matching Main Website -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="logo.png">
@@ -19,15 +19,16 @@
     <style>
         :root {
             --color-gold: #B8860B;
-            --color-gold-bright: #D97706;
+            --color-gold-bright: #D4AF37;
             --color-gold-light: #FEF3C7;
             --color-gold-dark: #92400E;
-            --color-gold-border: #FDE68A;
-            --dark-bg: #0B0F19;
-            --card-bg: #131B2E;
-            --card-border: #1E293B;
-            --light-border: #334155;
-            --text-main: #F8FAFC;
+            --color-gold-border: rgba(212, 175, 55, 0.3);
+            --color-flame: #E67E22;
+            --dark-bg: #0A0D14;
+            --card-bg: rgba(19, 27, 46, 0.86);
+            --card-border: rgba(212, 175, 55, 0.22);
+            --light-border: rgba(255, 255, 255, 0.12);
+            --text-cream: #FDFBF7;
             --text-muted: #94A3B8;
             --color-ready: #10B981;
             --color-hold: #F59E0B;
@@ -43,7 +44,14 @@
 
         body {
             background-color: var(--dark-bg);
-            color: var(--text-main);
+            background-image: 
+                radial-gradient(circle at center, rgba(13, 17, 26, 0.72) 0%, rgba(7, 9, 14, 0.95) 100%),
+                url('logo.png');
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: min(480px, 75vw) auto;
+            color: var(--text-cream);
             font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
             min-height: 100vh;
             display: flex;
@@ -52,11 +60,12 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Top Admin Bar */
+        /* Top Luxury Admin Bar */
         .admin-nav-bar {
-            background: #070A10;
+            background: rgba(7, 10, 16, 0.92);
+            backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--card-border);
-            padding: 14px 20px;
+            padding: 14px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -68,31 +77,31 @@
         .admin-nav-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
 
         .admin-nav-logo {
-            height: 36px;
+            height: 38px;
             width: auto;
         }
 
         .admin-nav-title {
             font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 1.35rem;
+            font-size: 1.4rem;
             font-weight: 700;
             letter-spacing: 1.5px;
-            color: var(--color-gold);
+            color: var(--color-gold-bright);
             text-transform: uppercase;
         }
 
         .admin-user-badge {
             font-size: 0.75rem;
             font-weight: 800;
-            padding: 4px 10px;
+            padding: 4px 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            background: rgba(184, 134, 11, 0.15);
-            color: var(--color-gold);
+            background: rgba(184, 134, 11, 0.2);
+            color: var(--color-gold-bright);
             border: 1px solid var(--color-gold);
         }
 
@@ -109,21 +118,21 @@
         }
 
         .btn-admin-logout:hover {
-            background: #EF4444;
+            background: var(--color-unavail);
             color: #FFFFFF;
-            border-color: #EF4444;
+            border-color: var(--color-unavail);
         }
 
         /* Main Container */
         .admin-main-wrapper {
-            max-width: 1200px;
+            max-width: 1240px;
             width: 100%;
             margin: 0 auto;
             padding: 24px 16px 80px 16px;
             flex: 1;
         }
 
-        /* Portal Tabs Header */
+        /* Portal Tabs Navigation */
         .portal-tabs-bar {
             display: flex;
             gap: 8px;
@@ -137,8 +146,8 @@
             border: none;
             border-bottom: 3px solid transparent;
             color: var(--text-muted);
-            padding: 12px 18px;
-            font-size: 0.82rem;
+            padding: 12px 20px;
+            font-size: 0.85rem;
             font-weight: 800;
             letter-spacing: 0.5px;
             text-transform: uppercase;
@@ -148,226 +157,295 @@
         }
 
         .portal-tab-btn.active {
-            color: var(--color-gold);
-            border-bottom-color: var(--color-gold);
-            background: rgba(184, 134, 11, 0.06);
+            color: var(--color-gold-bright);
+            border-bottom-color: var(--color-gold-bright);
+            background: rgba(212, 175, 55, 0.08);
         }
 
-        /* Search & Filter Controls */
-        .inventory-controls-bar {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            padding: 16px;
+        /* Category Filter Tabs Bar (Ordered Exactly as Main Menu) */
+        .category-filters-bar {
+            display: flex;
+            gap: 8px;
             margin-bottom: 20px;
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
+            overflow-x: auto;
+            padding-bottom: 6px;
         }
 
-        .inventory-search-input {
-            flex: 1;
-            min-width: 240px;
-            background: #0B0F19;
-            border: 1px solid var(--light-border);
-            color: var(--text-main);
-            padding: 10px 14px;
-            font-size: 0.88rem;
-            outline: none;
-        }
-
-        .inventory-search-input:focus {
-            border-color: var(--color-gold);
-        }
-
-        .category-filter-pills {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        .cat-pill {
-            background: #0B0F19;
-            border: 1px solid var(--light-border);
+        .btn-cat-filter {
+            background: rgba(19, 27, 46, 0.9);
+            border: 1px solid var(--card-border);
             color: var(--text-muted);
-            padding: 6px 12px;
-            font-size: 0.72rem;
+            padding: 8px 14px;
+            font-size: 0.78rem;
             font-weight: 700;
-            text-transform: uppercase;
             cursor: pointer;
+            text-transform: uppercase;
+            white-space: nowrap;
             transition: all 0.2s;
         }
 
-        .cat-pill.active, .cat-pill:hover {
-            background: var(--color-gold);
-            color: #000;
-            border-color: var(--color-gold);
+        .btn-cat-filter.active, .btn-cat-filter:hover {
+            background: var(--color-gold-bright);
+            color: #0B0E14;
+            border-color: var(--color-gold-bright);
+            font-weight: 800;
         }
 
-        /* Inventory Items Grid */
+        /* Search & Info Bar */
+        .search-info-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .search-input-box {
+            background: rgba(19, 27, 46, 0.92);
+            border: 1px solid var(--card-border);
+            color: var(--text-cream);
+            padding: 10px 16px;
+            font-size: 0.85rem;
+            width: 100%;
+            max-width: 380px;
+            outline: none;
+        }
+
+        .search-input-box:focus {
+            border-color: var(--color-gold-bright);
+        }
+
+        .status-legend-bar {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .legend-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            display: inline-block;
+        }
+
+        /* Dishes Inventory Grid */
         .inventory-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 14px;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 16px;
         }
 
         .inv-dish-card {
             background: var(--card-bg);
+            backdrop-filter: blur(14px);
             border: 1px solid var(--card-border);
-            padding: 16px;
+            padding: 18px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            gap: 12px;
             transition: all 0.2s;
-            position: relative;
+        }
+
+        .inv-dish-card:hover {
+            border-color: var(--color-gold-bright);
         }
 
         .inv-dish-card.status-hold {
-            border-left: 4px solid var(--color-hold);
+            border-color: var(--color-hold);
+            background: rgba(245, 158, 11, 0.08);
         }
 
         .inv-dish-card.status-unavailable {
-            border-left: 4px solid var(--color-unavail);
-            opacity: 0.75;
-        }
-
-        .inv-dish-card.status-ready {
-            border-left: 4px solid var(--color-ready);
+            border-color: var(--color-unavail);
+            background: rgba(239, 68, 68, 0.08);
+            opacity: 0.7;
         }
 
         .inv-dish-info {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            gap: 10px;
+            margin-bottom: 14px;
         }
 
         .inv-dish-name {
-            font-weight: 800;
-            font-size: 0.95rem;
-            color: var(--text-main);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.22rem;
+            font-weight: 700;
+            color: var(--text-cream);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .inv-dish-category {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--color-gold-bright);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .inv-dish-category {
-            font-size: 0.68rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-top: 2px;
-        }
-
         .inv-dish-price {
-            color: var(--color-gold);
-            font-weight: 800;
-            font-size: 0.95rem;
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-gold-bright);
             white-space: nowrap;
+            margin-left: 8px;
         }
 
-        /* 3-State Availability Buttons */
+        /* 3-Way Action Status Buttons */
         .inv-state-buttons {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1.2fr;
             gap: 6px;
+            margin-top: 10px;
         }
 
         .btn-inv-state {
-            background: #0B0F19;
-            border: 1px solid var(--light-border);
-            color: var(--text-muted);
-            padding: 8px 4px;
+            padding: 8px 6px;
             font-size: 0.72rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             cursor: pointer;
-            transition: all 0.2s;
+            border: 1px solid transparent;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            transition: all 0.15s;
             text-align: center;
         }
 
         .btn-inv-state.state-ready.active {
-            background: #064E3B;
-            color: #A7F3D0;
-            border-color: #10B981;
+            background: var(--color-ready);
+            color: #FFFFFF;
+            border-color: var(--color-ready);
         }
 
         .btn-inv-state.state-hold.active {
-            background: #78350F;
-            color: #FDE68A;
-            border-color: #F59E0B;
+            background: var(--color-hold);
+            color: #000000;
+            border-color: var(--color-hold);
         }
 
-        .btn-inv-state.state-unavail.active {
-            background: #7F1D1D;
-            color: #FECACA;
-            border-color: #EF4444;
+        .btn-inv-state.state-unavailable.active {
+            background: var(--color-unavail);
+            color: #FFFFFF;
+            border-color: var(--color-unavail);
         }
 
-        /* Active Orders Tab */
+        /* Orders Feed & Ticket Cards */
         .orders-feed-container {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
         }
 
-        .admin-order-item-card {
+        .order-ticket-card {
             background: var(--card-bg);
+            backdrop-filter: blur(14px);
             border: 1px solid var(--card-border);
-            padding: 18px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            justify-content: space-between;
         }
 
-        .admin-order-header {
+        .order-ticket-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
+            border-bottom: 1px dashed var(--light-border);
             padding-bottom: 10px;
-            border-bottom: 1px solid var(--card-border);
+            margin-bottom: 12px;
         }
 
-        .admin-order-ref {
-            font-size: 0.95rem;
+        .order-id-badge {
+            font-size: 0.82rem;
             font-weight: 800;
-            font-family: monospace;
-            color: var(--color-gold);
+            color: var(--color-gold-bright);
+        }
+
+        .order-timestamp {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .order-items-list {
+            margin-bottom: 14px;
+        }
+
+        .order-item-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+        }
+
+        .order-item-name {
+            font-weight: 600;
+            color: var(--text-cream);
+        }
+
+        .order-item-qty {
+            color: var(--color-gold-bright);
+            font-weight: 800;
+        }
+
+        .order-ticket-footer {
+            border-top: 1px solid var(--light-border);
+            padding-top: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-total-amount {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-gold-bright);
         }
 
         .order-status-actions {
             display: flex;
             gap: 6px;
-            flex-wrap: wrap;
         }
 
-        .btn-order-stage {
-            background: #0B0F19;
-            border: 1px solid var(--light-border);
-            color: var(--text-muted);
-            padding: 6px 12px;
-            font-size: 0.72rem;
+        .btn-order-action {
+            padding: 6px 10px;
+            font-size: 0.7rem;
             font-weight: 800;
             text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.2s;
+            border: 1px solid var(--light-border);
+            background: transparent;
+            color: var(--text-cream);
         }
 
-        .btn-order-stage:hover {
-            border-color: var(--color-gold);
-            color: #FFF;
+        .btn-order-action.ready {
+            background: var(--color-ready);
+            border-color: var(--color-ready);
+            color: #FFFFFF;
         }
 
-        /* Auth Gate Overlay */
+        /* 2-Role Login Gate Modal Overlay */
         .auth-gate-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(5, 7, 12, 0.95);
-            backdrop-filter: blur(12px);
-            z-index: 10000;
+            background: rgba(7, 10, 16, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -375,22 +453,21 @@
         }
 
         .auth-gate-box {
-            background: var(--card-bg);
+            background: rgba(19, 27, 46, 0.96);
             border: 1px solid var(--card-border);
-            border-top: 4px solid var(--color-gold);
             max-width: 440px;
             width: 100%;
-            padding: 32px 24px;
+            padding: 36px 28px;
             text-align: center;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         }
 
         .auth-title {
             font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            color: var(--color-gold);
-            margin-bottom: 4px;
+            color: var(--color-gold-bright);
+            margin-bottom: 6px;
             text-transform: uppercase;
         }
 
@@ -401,142 +478,143 @@
         }
 
         .role-selector-tabs {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 24px;
         }
 
         .role-btn {
-            flex: 1;
-            padding: 10px 8px;
-            background: #0B0F19;
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--light-border);
             color: var(--text-muted);
+            padding: 10px;
             font-size: 0.78rem;
             font-weight: 800;
-            text-transform: uppercase;
             cursor: pointer;
+            text-transform: uppercase;
             transition: all 0.2s;
         }
 
         .role-btn.active {
-            background: var(--color-gold);
-            color: #000;
-            border-color: var(--color-gold);
+            background: var(--color-gold-bright);
+            color: #0B0E14;
+            border-color: var(--color-gold-bright);
         }
 
         .auth-input {
             width: 100%;
-            background: #0B0F19;
-            border: 1.5px solid var(--light-border);
-            color: #FFF;
-            padding: 12px 14px;
-            font-size: 16px;
-            margin-bottom: 12px;
-            outline: none;
+            background: rgba(11, 15, 25, 0.95);
+            border: 1px solid var(--card-border);
+            color: var(--text-cream);
+            padding: 12px 16px;
+            font-size: 0.95rem;
             text-align: center;
             letter-spacing: 2px;
+            margin-bottom: 14px;
+            outline: none;
         }
 
         .auth-input:focus {
-            border-color: var(--color-gold);
+            border-color: var(--color-gold-bright);
         }
 
         .btn-auth-submit {
             width: 100%;
-            background: var(--color-gold);
-            color: #000;
-            border: none;
-            padding: 13px;
-            font-size: 0.88rem;
+            background: var(--color-gold-bright);
+            border: 1px solid var(--color-gold-bright);
+            color: #0B0E14;
+            padding: 12px;
+            font-size: 0.85rem;
             font-weight: 800;
-            letter-spacing: 1px;
             text-transform: uppercase;
+            letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .btn-auth-submit:hover {
-            background: var(--color-gold-bright);
+            background: #FFFFFF;
+            border-color: #FFFFFF;
         }
 
         .auth-error-msg {
-            color: #EF4444;
-            font-size: 0.8rem;
+            color: var(--color-unavail);
+            font-size: 0.78rem;
             font-weight: 700;
-            margin-top: 10px;
+            margin-top: 12px;
             display: none;
-        }
-
-        @media (max-width: 600px) {
-            .inventory-grid {
-                grid-template-columns: 1fr;
-            }
-            .admin-nav-bar {
-                padding: 12px 14px;
-            }
-            .admin-main-wrapper {
-                padding: 16px 12px 60px 12px;
-            }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- Top Admin Navigation -->
+    <!-- TOP NAVIGATION BAR -->
     <header class="admin-nav-bar">
         <div class="admin-nav-left">
             <img src="logo.png" alt="Rib House Logo" class="admin-nav-logo">
-            <span class="admin-nav-title">RIB HOUSE PORTAL</span>
-            <span class="admin-user-badge" id="nav-role-badge">KITCHEN</span>
+            <div>
+                <h1 class="admin-nav-title">RIB HOUSE PORTAL</h1>
+            </div>
+            <span class="admin-user-badge" id="nav-role-badge">STAFF</span>
         </div>
-        <button type="button" class="btn-admin-logout" onclick="handleLogout()">Switch Role / Lock</button>
+        <div>
+            <button type="button" class="btn-admin-logout" onclick="handleLogout()">Sign Out</button>
+        </div>
     </header>
 
-    <!-- Main Content Container -->
+    <!-- MAIN ADMIN WRAPPER -->
     <main class="admin-main-wrapper" id="admin-main-content" style="display: none;">
 
-        <!-- Navigation Tabs -->
-        <div class="portal-tabs-bar">
-            <button type="button" class="portal-tab-btn active" id="tab-btn-inv" onclick="switchPortalTab('inventory')">
-                Dish Availability (86 List)
+        <!-- TABS BAR -->
+        <nav class="portal-tabs-bar">
+            <button type="button" class="portal-tab-btn active" id="tab-btn-inventory" onclick="switchPortalTab('inventory')">
+                Dish Inventory & Availability (<span id="total-items-badge">85</span>)
             </button>
             <button type="button" class="portal-tab-btn" id="tab-btn-orders" onclick="switchPortalTab('orders')">
-                Active Orders (<span id="active-orders-count">0</span>)
+                Live Kitchen Orders (<span id="active-orders-count">0</span>)
             </button>
             <button type="button" class="portal-tab-btn" id="tab-btn-settings" onclick="switchPortalTab('settings')" style="display: none;">
                 Security & Settings
             </button>
-        </div>
+        </nav>
 
-        <!-- TAB 1: INVENTORY & DISH AVAILABILITY (READY / HOLD / UNAVAILABLE) -->
+        <!-- TAB 1: FULL DISH INVENTORY & AVAILABILITY ENGINE -->
         <section id="section-inventory">
-            <div class="inventory-controls-bar">
-                <input type="text" id="inv-search-input" class="inventory-search-input" placeholder="Search dish or side (e.g. Rice, Ugali, Ribs, Coffee)..." oninput="handleSearchInventory()">
-                <div class="category-filter-pills">
-                    <button type="button" class="cat-pill active" onclick="filterInvCategory('all', this)">All Items</button>
-                    <button type="button" class="cat-pill" onclick="filterInvCategory('sides', this)">Sides & Pairings</button>
-                    <button type="button" class="cat-pill" onclick="filterInvCategory('choma', this)">Choma & Meats</button>
-                    <button type="button" class="cat-pill" onclick="filterInvCategory('breakfast', this)">Breakfast</button>
-                    <button type="button" class="cat-pill" onclick="filterInvCategory('main', this)">Mains</button>
-                    <button type="button" class="cat-pill" onclick="filterInvCategory('drinks', this)">Drinks</button>
+            
+            <!-- Category Filter Tabs Bar (Ordered Exactly as Menu) -->
+            <div class="category-filters-bar">
+                <button type="button" class="btn-cat-filter active" onclick="filterCategory('all', this)">All Items (85)</button>
+                <button type="button" class="btn-cat-filter" onclick="filterCategory('sides', this)">Sides & Pairings</button>
+                <button type="button" class="btn-cat-filter" onclick="filterCategory('breakfast', this)">Breakfast Combos</button>
+                <button type="button" class="btn-cat-filter" onclick="filterCategory('barista', this)">Barista & Hot Drinks</button>
+                <button type="button" class="btn-cat-filter" onclick="filterCategory('cold_drinks', this)">Cold Drinks & Shakes</button>
+                <button type="button" class="btn-cat-filter" onclick="filterCategory('main', this)">Main Dishes</button>
+                <button type="button" class="btn-cat-filter" onclick="filterCategory('choma', this)">Choma, Chemsha & Platters</button>
+                <button type="button" class="btn-cat-filter" onclick="filterCategory('extra_sides', this)">Extra Sides & Veges</button>
+            </div>
+
+            <!-- Search & Legend Toolbar -->
+            <div class="search-info-bar">
+                <input type="text" id="inv-search-input" class="search-input-box" placeholder="Search dish, side, drink..." oninput="handleSearchInventory(this.value)">
+                
+                <div class="status-legend-bar">
+                    <span class="legend-pill"><span class="legend-dot" style="background: var(--color-ready);"></span> Ready (+ Add to Order)</span>
+                    <span class="legend-pill"><span class="legend-dot" style="background: var(--color-hold);"></span> Hold (Shows Hold)</span>
+                    <span class="legend-pill"><span class="legend-dot" style="background: var(--color-unavail);"></span> Unavailable (Disappears)</span>
                 </div>
             </div>
 
-            <!-- Dynamic Dish & Side Cards -->
+            <!-- Inventory Cards Grid (Populated via JS) -->
             <div class="inventory-grid" id="inventory-dishes-grid">
                 <!-- Populated via JS -->
             </div>
         </section>
 
-        <!-- TAB 2: ACTIVE LIVE ORDERS FEED -->
+        <!-- TAB 2: LIVE KITCHEN ORDERS FEED -->
         <section id="section-orders" style="display: none;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                <h3 style="font-size: 1.1rem; text-transform: uppercase; color: var(--text-main);">Live Orders Queue</h3>
-                <button type="button" class="btn-admin-logout" onclick="clearAllOrders()" style="color: #EF4444; border-color: #EF4444;">Clear All Orders</button>
-            </div>
-            <div class="orders-feed-container" id="admin-live-orders-feed">
+            <div class="orders-feed-container" id="orders-feed-grid">
                 <!-- Populated via JS -->
             </div>
         </section>
@@ -544,7 +622,7 @@
         <!-- TAB 3: ADMIN SETTINGS & SECURITY PIN CHANGE (MASTER ADMIN ONLY) -->
         <section id="section-settings" style="display: none;">
             <div style="max-width: 540px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px;">
-                <h3 style="font-size: 1.1rem; text-transform: uppercase; color: var(--color-gold); margin-bottom: 16px;">Portal Security Settings</h3>
+                <h3 style="font-size: 1.1rem; text-transform: uppercase; color: var(--color-gold-bright); margin-bottom: 16px;">Portal Security Settings</h3>
                 
                 <form id="settings-form" onsubmit="handleSaveSettings(event)">
                     <div style="margin-bottom: 16px;">
@@ -573,7 +651,7 @@
     <!-- 2-ROLE AUTHENTICATION GATE MODAL -->
     <div class="auth-gate-overlay" id="auth-gate-modal">
         <div class="auth-gate-box">
-            <img src="logo.png" alt="Rib House Logo" style="height: 48px; width: auto; margin-bottom: 10px;">
+            <img src="logo.png" alt="Rib House Logo" style="height: 48px; width: auto; margin-bottom: 12px;">
             <h2 class="auth-title">RIB HOUSE PORTAL</h2>
             <p class="auth-sub">Select your role to access kitchen inventory & orders</p>
 
@@ -605,60 +683,114 @@
 
     <!-- Scripts -->
     <script>
-        // --- 1. FULL DISH & SIDES REPOSITORY FOR RIB HOUSE ---
+        // --- 1. FULL DISH & SIDES REPOSITORY FOR RIB HOUSE (ORDERED EXACTLY AS MENU) ---
         const INVENTORY_ITEMS = [
-            // Sides & Pairings
-            { id: "side_rice", name: "Rice (Side)", category: "sides", price: "Side Option" },
-            { id: "side_ugali", name: "Ugali (Side)", category: "sides", price: "Side Option" },
+            // --- 1. SIDES & ACCOMPANIMENTS ---
+            { id: "side_ugali_chapati", name: "Ugali / Chapati (Side)", category: "sides", price: "Side Option" },
+            { id: "side_rice_mukimo", name: "Rice / Mukimo (Side)", category: "sides", price: "Side Option" },
+            { id: "side_pilau", name: "Pilau (Side)", category: "sides", price: "Side Option" },
             { id: "side_chips", name: "Chips / Fries (Side)", category: "sides", price: "Side Option" },
-            { id: "side_mukimo", name: "Mukimo (Side)", category: "sides", price: "Side Option" },
-            { id: "side_chapati", name: "Chapati (Side)", category: "sides", price: "Side Option" },
+            { id: "side_chips_masala", name: "Chips Masala (Side)", category: "sides", price: "Side Option" },
+            { id: "side_rice_plain", name: "Rice Plain", category: "sides", price: "Side Option" },
+            { id: "side_mukimo_plain", name: "Mukimo Plain", category: "sides", price: "Side Option" },
+            { id: "side_rice_mukimo_special", name: "Rice / Mukimo Special", category: "sides", price: "Side Option" },
+            { id: "side_pilau_special", name: "Pilau Special", category: "sides", price: "Side Option" },
+            { id: "side_waru", name: "Waru (Side)", category: "sides", price: "Side Option" },
+            { id: "side_spinach", name: "Spinach (Side)", category: "sides", price: "Side Option" },
+            { id: "side_banana", name: "Banana (Side)", category: "sides", price: "Side Option" },
             { id: "side_managu", name: "Managu (Greens)", category: "sides", price: "Side Option" },
-            { id: "side_sukuma", name: "Sukuma Wiki", category: "sides", price: "Side Option" },
-            { id: "side_cabbage", name: "Cabbage", category: "sides", price: "Side Option" },
-            { id: "side_kachumbari", name: "Kachumbari", category: "sides", price: "Side Option" },
+            { id: "side_sukuma", name: "Sukuma Wiki (Greens)", category: "sides", price: "Side Option" },
+            { id: "side_cabbage", name: "Cabbage (Greens)", category: "sides", price: "Side Option" },
+            { id: "side_kachumbari", name: "Kachumbari (Salad)", category: "sides", price: "Side Option" },
 
-            // Main Wood-Fired Meats & Choma
-            { id: "choma_beef_1kg", name: "Choma Beef (1 KG)", category: "choma", price: "1100/=" },
-            { id: "choma_goat_1kg", name: "Choma Goat (1 KG)", category: "choma", price: "1200/=" },
-            { id: "chemsha_goat_1kg", name: "Chemsha Goat (1 KG)", category: "choma", price: "1300/=" },
-            { id: "tumbukiza_1kg", name: "Beef / Goat Tumbukiza (1 KG)", category: "choma", price: "1300/=" },
-            { id: "chicken_platter_4", name: "Chicken Platter for 4", category: "choma", price: "1900/=" },
-            { id: "beef_steak_grilled", name: "Beef Steak Grilled", category: "main", price: "580/=" },
-            { id: "matumbo_fry", name: "Matumbo Fry", category: "main", price: "400/=" },
-            { id: "beef_stew_fry", name: "Beef Stew / Fry", category: "main", price: "440/=" },
-            { id: "goat_stew_fry", name: "Goat Stew / Fry", category: "main", price: "490/=" },
-            { id: "chicken_wet_dry_fry", name: "Chicken Wet / Dry Fry", category: "main", price: "500/=" },
-            { id: "tilapia_fry_whole", name: "Tilapia Fry Whole", category: "main", price: "570/=" },
+            // --- 2. BREAKFAST COMBOS & SPECIALS (PART 01) ---
+            { id: "test_dish", name: "TEST DISH (1/=)", category: "breakfast", price: "1/=" },
+            { id: "pancake_breakfast", name: "PANCAKE BREAKFAST", category: "breakfast", price: "400/=" },
+            { id: "mini_breakfast", name: "MINI BREAKFAST", category: "breakfast", price: "310/=" },
+            { id: "rib_house_breakfast", name: "RIB HOUSE BREAKFAST", category: "breakfast", price: "300/=" },
+            { id: "main_breakfast", name: "MAIN BREAKFAST", category: "breakfast", price: "400/=" },
+            { id: "goat_soup_breakfast", name: "GOAT SOUP BREAKFAST", category: "breakfast", price: "300/=" },
+            { id: "chicken_soup_breakfast", name: "CHICKEN SOUP BREAKFAST", category: "breakfast", price: "300/=" },
+            { id: "chips_combo", name: "CHIPS COMBO", category: "breakfast", price: "300/=" },
+            { id: "samosa_combo", name: "SAMOSA COMBO", category: "breakfast", price: "280/=" },
+            { id: "traditional_breakfast", name: "TRADITIONAL BREAKFAST", category: "breakfast", price: "300/=" },
+            { id: "farmers_choice", name: "FARMERS CHOICE", category: "breakfast", price: "380/=" },
+            { id: "rib_house_bite", name: "RIB HOUSE BITE", category: "breakfast", price: "200/=" },
+            { id: "special_breakfast", name: "SPECIAL BREAKFAST", category: "breakfast", price: "220/=" },
+            { id: "rib_house_special", name: "RIB HOUSE SPECIAL", category: "breakfast", price: "310/=" },
+            { id: "british_breakfast", name: "BRITISH BREAKFAST", category: "breakfast", price: "320/=" },
+
+            // --- 3. BARISTA & HOT BEVERAGES ---
+            { id: "house_coffee_white", name: "House Coffee White", category: "barista", price: "150/=" },
+            { id: "house_coffee_black", name: "House Coffee Black", category: "barista", price: "100/=" },
+            { id: "black_coffee_lemon", name: "Black Coffee W lemon", category: "barista", price: "110/=" },
+            { id: "americano", name: "Americano", category: "barista", price: "150/=" },
+            { id: "latte_mocha", name: "Latte Mocha", category: "barista", price: "150/=" },
+            { id: "latte_macchiato", name: "Latte Macchiato", category: "barista", price: "180/=" },
+            { id: "coffee_latte", name: "Coffee Latte", category: "barista", price: "150/=" },
+            { id: "lemon_tea", name: "Lemon Tea", category: "barista", price: "100/=" },
+            { id: "lemon_tea_honey", name: "Lemon Tea W Honey", category: "barista", price: "150/=" },
+            { id: "lemon_water", name: "Lemon Water", category: "barista", price: "70/=" },
+            { id: "tea_special", name: "Tea Special", category: "barista", price: "100/=" },
+            { id: "tea_masala_white", name: "Tea Masala White", category: "barista", price: "130/=" },
+            { id: "tea_masala_black", name: "Tea Masala Black", category: "barista", price: "100/=" },
+            { id: "ginger_tea", name: "Ginger Tea", category: "barista", price: "130/=" },
+            { id: "dawa_tea", name: "Dawa (Lemon, Ginger & Honey)", category: "barista", price: "200/=" },
+            { id: "honey_espresso", name: "Honey Espresso", category: "barista", price: "110/=" },
+            { id: "hot_milk", name: "Hot Milk", category: "barista", price: "100/=" },
+            { id: "honey_cone", name: "Honey Cone", category: "barista", price: "50/=" },
+            { id: "cappuccino_single", name: "Cappuccino (Single)", category: "barista", price: "150/=" },
+            { id: "cappuccino_double", name: "Cappuccino (Double)", category: "barista", price: "180/=" },
+            { id: "espresso_single", name: "Espresso (Single)", category: "barista", price: "120/=" },
+            { id: "espresso_double", name: "Espresso (Double)", category: "barista", price: "150/=" },
+
+            // --- 4. COLD BEVERAGES & SHAKES ---
+            { id: "milkshake_flavored", name: "Milkshake (Flavored)", category: "cold_drinks", price: "250/=" },
+            { id: "espresso_cold", name: "Espresso (Cold)", category: "cold_drinks", price: "250/=" },
+            { id: "oreo_shake", name: "Oreo Shake", category: "cold_drinks", price: "300/=" },
+            { id: "smoothies_tropical", name: "Smoothies (Tropical)", category: "cold_drinks", price: "200/=" },
+            { id: "ice_cream_scoops", name: "Ice Cream Scoops", category: "cold_drinks", price: "150/=" },
+            { id: "lemonade_flavor", name: "Lemonade (Flavor)", category: "cold_drinks", price: "100/=" },
+            { id: "iced_coffee", name: "Iced Coffee", category: "cold_drinks", price: "180/=" },
+
+            // --- 5. MAIN DISHES (PART 02) ---
+            { id: "matumbo_fry", name: "MATUMBO FRY (All Sides)", category: "main", price: "400/=" },
+            { id: "beef_stew_fry", name: "BEEF STEW / FRY (All Sides)", category: "main", price: "440/=" },
+            { id: "goat_stew_fry", name: "GOAT STEW / FRY (All Sides)", category: "main", price: "470/=" },
+            { id: "liver", name: "LIVER (All Sides)", category: "main", price: "470/=" },
+            { id: "chicken_kienyeji_quarter", name: "CHICKEN KIENYEJI QUARTER", category: "main", price: "570/=" },
+            { id: "chicken_wet_fry", name: "CHICKEN WET FRY (All Sides)", category: "main", price: "450/=" },
+            { id: "beef_steak", name: "BEEF STEAK (All Sides)", category: "main", price: "590/=" },
+            { id: "deep_fried_chicken", name: "DEEP FRIED CHICKEN", category: "main", price: "390/=" },
+            { id: "fish_fillet", name: "FISH FILLET (All Sides)", category: "main", price: "480/=" },
+            { id: "tilapia_stew", name: "TILAPIA STEW (All Sides)", category: "main", price: "590/=" },
+            { id: "tilapia_fry", name: "TILAPIA FRY (All Sides)", category: "main", price: "570/=" },
             { id: "ugali_sukuma_cabbage", name: "Ugali with Sukuma / Cabbage", category: "main", price: "170/=" },
             { id: "ugali_managu", name: "Ugali with Managu", category: "main", price: "220/=" },
-            { id: "test_dish", name: "TEST DISH", category: "main", price: "1/=" },
 
-            // Breakfast Specials
-            { id: "pancake_breakfast", name: "Pancake Breakfast", category: "breakfast", price: "400/=" },
-            { id: "mini_breakfast", name: "Mini Breakfast", category: "breakfast", price: "310/=" },
-            { id: "rib_house_breakfast", name: "Rib House Breakfast", category: "breakfast", price: "300/=" },
-            { id: "main_breakfast", name: "Main Breakfast", category: "breakfast", price: "400/=" },
-            { id: "goat_soup_breakfast", name: "Goat Soup Breakfast", category: "breakfast", price: "300/=" },
-            { id: "chicken_soup_breakfast", name: "Chicken Soup Breakfast", category: "breakfast", price: "300/=" },
-            { id: "chips_combo", name: "Chips Combo", category: "breakfast", price: "300/=" },
-            { id: "samosa_combo", name: "Samosa Combo", category: "breakfast", price: "280/=" },
-            { id: "traditional_breakfast", name: "Traditional Breakfast", category: "breakfast", price: "300/=" },
-            { id: "farmers_choice", name: "Farmers Choice", category: "breakfast", price: "380/=" },
-            { id: "british_breakfast", name: "British Breakfast", category: "breakfast", price: "320/=" },
+            // --- 6. CHOMA, CHEMSHA, TUMBUKIZA & PLATTERS (PART 03) ---
+            { id: "choma_beef_1kg", name: "CHOMA BEEF (1 KG)", category: "choma", price: "1100/=" },
+            { id: "choma_beef_half_kg", name: "CHOMA BEEF (0.5 KG)", category: "choma", price: "550/=" },
+            { id: "choma_goat_1kg", name: "CHOMA GOAT (1 KG)", category: "choma", price: "1200/=" },
+            { id: "choma_goat_half_kg", name: "CHOMA GOAT (0.5 KG)", category: "choma", price: "600/=" },
+            { id: "chemsha_beef_1kg", name: "CHEMSHA BEEF (1 KG)", category: "choma", price: "1200/=" },
+            { id: "chemsha_beef_half_kg", name: "CHEMSHA BEEF (0.5 KG)", category: "choma", price: "600/=" },
+            { id: "chemsha_goat_1kg", name: "CHEMSHA GOAT (1 KG)", category: "choma", price: "1300/=" },
+            { id: "chemsha_goat_half_kg", name: "CHEMSHA GOAT (0.5 KG)", category: "choma", price: "650/=" },
+            { id: "beef_fry_tumbukiza_1kg", name: "BEEF FRY / TUMBUKIZA (1 KG)", category: "choma", price: "1300/=" },
+            { id: "goat_fry_tumbukiza_1kg", name: "GOAT FRY / TUMBUKIZA (1 KG)", category: "choma", price: "1400/=" },
+            { id: "chicken_platter_4", name: "CHICKEN PLATTER FOR 4 (ON ORDER)", category: "choma", price: "1900/=" },
 
-            // Barista Drinks & Beverages
-            { id: "house_coffee_white", name: "House Coffee White", category: "drinks", price: "150/=" },
-            { id: "house_coffee_black", name: "House Coffee Black", category: "drinks", price: "100/=" },
-            { id: "cappuccino_single", name: "Cappuccino (Single)", category: "drinks", price: "150/=" },
-            { id: "espresso_single", name: "Espresso (Single)", category: "drinks", price: "120/=" },
-            { id: "coffee_latte", name: "Coffee Latte", category: "drinks", price: "150/=" },
-            { id: "dawa_tea", name: "Dawa (Lemon, Ginger & Honey)", category: "drinks", price: "200/=" },
-            { id: "tea_masala_white", name: "Tea Masala White", category: "drinks", price: "130/=" },
-            { id: "lemon_tea_honey", name: "Lemon Tea w Honey", category: "drinks", price: "150/=" },
-            { id: "oreo_shake", name: "Oreo Shake", category: "drinks", price: "300/=" },
-            { id: "milkshake_flavored", name: "Milkshake (Flavored)", category: "drinks", price: "250/=" },
-            { id: "smoothies_tropical", name: "Smoothies (Tropical)", category: "drinks", price: "200/=" }
+            // --- 7. EXTRA SIDES & VEGES ---
+            { id: "extra_rice_mukimo_special", name: "Rice / Mukimo Special", category: "extra_sides", price: "250/=" },
+            { id: "extra_pilau_special", name: "Pilau Special", category: "extra_sides", price: "270/=" },
+            { id: "extra_chips_plain", name: "Chips Plain", category: "extra_sides", price: "220/=" },
+            { id: "extra_chips_masala", name: "Chips Masala", category: "extra_sides", price: "270/=" },
+            { id: "extra_rice_plain", name: "Rice Plain", category: "extra_sides", price: "200/=" },
+            { id: "extra_mukimo_plain", name: "Mukimo Plain", category: "extra_sides", price: "200/=" },
+            { id: "extra_waru", name: "Waru", category: "extra_sides", price: "120/=" },
+            { id: "extra_spinach", name: "Spinach", category: "extra_sides", price: "120/=" },
+            { id: "extra_banana", name: "Banana", category: "extra_sides", price: "100/=" }
         ];
 
         // --- 2. AUTHENTICATION & ROLE MANAGEMENT ---
@@ -679,7 +811,6 @@
             const formKitchen = document.getElementById('kitchen-login-form');
             const formAdmin = document.getElementById('admin-login-form');
             const errMsg = document.getElementById('auth-error-msg');
-
             if (errMsg) errMsg.style.display = 'none';
 
             if (role === 'kitchen') {
@@ -739,7 +870,9 @@
             if (role === 'admin') {
                 if (badge) {
                     badge.textContent = 'MASTER ADMIN';
-                    badge.style.background = 'rgba(184, 134, 11, 0.2)';
+                    badge.style.background = 'rgba(184, 134, 11, 0.25)';
+                    badge.style.color = '#D4AF37';
+                    badge.style.borderColor = '#D4AF37';
                 }
                 if (settingsTabBtn) settingsTabBtn.style.display = 'block';
             } else {
@@ -766,7 +899,7 @@
             document.getElementById('admin-2fa-input').value = '';
         }
 
-        // --- 3. INVENTORY STATE MANAGEMENT (READY, HOLD, UNAVAILABLE) & CLOUD SYNC ---
+        // --- 3. INVENTORY STATE MANAGEMENT & REAL-TIME CLOUD SYNC ---
         const RIBHOUSE_CLOUD_SYNC_URL = 'https://ribhouse-admin-default-rtdb.firebaseio.com/inventory.json';
 
         function getInventoryState() {
@@ -870,7 +1003,7 @@
 
             // Search filter
             if (query) {
-                items = items.filter(i => i.name.toLowerCase().includes(query));
+                items = items.filter(i => i.name.toLowerCase().includes(query) || i.category.toLowerCase().includes(query));
             }
 
             if (items.length === 0) {
@@ -898,7 +1031,7 @@
                             <button type="button" class="btn-inv-state state-hold ${status === 'hold' ? 'active' : ''}" onclick="setItemStatus('${item.id}', 'hold')">
                                 Hold
                             </button>
-                            <button type="button" class="btn-inv-state state-unavail ${status === 'unavailable' ? 'active' : ''}" onclick="setItemStatus('${item.id}', 'unavailable')">
+                            <button type="button" class="btn-inv-state state-unavailable ${status === 'unavailable' ? 'active' : ''}" onclick="setItemStatus('${item.id}', 'unavailable')">
                                 Unavailable
                             </button>
                         </div>
@@ -909,132 +1042,117 @@
             grid.innerHTML = html;
         }
 
-        function handleSearchInventory() {
-            renderInventoryCards();
-        }
-
-        function filterInvCategory(cat, btn) {
-            currentSelectedCategory = cat;
-            document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+        function filterCategory(category, btn) {
+            currentSelectedCategory = category;
+            document.querySelectorAll('.btn-cat-filter').forEach(b => b.classList.remove('active'));
             if (btn) btn.classList.add('active');
             renderInventoryCards();
         }
 
-        // --- 4. ACTIVE LIVE ORDERS TAB ---
-        function renderActiveOrders() {
-            const feed = document.getElementById('admin-live-orders-feed');
-            const countBadge = document.getElementById('active-orders-count');
-            if (!feed) return;
+        function handleSearchInventory(val) {
+            renderInventoryCards();
+        }
 
-            const orders = JSON.parse(localStorage.getItem('ribhouse_active_orders') || '[]');
+        // --- 4. PORTAL TABS & SWITCHING ---
+        function switchPortalTab(tabName) {
+            document.querySelectorAll('.portal-tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-inventory').style.display = 'none';
+            document.getElementById('section-orders').style.display = 'none';
+            document.getElementById('section-settings').style.display = 'none';
+
+            if (tabName === 'inventory') {
+                document.getElementById('tab-btn-inventory').classList.add('active');
+                document.getElementById('section-inventory').style.display = 'block';
+                renderInventoryCards();
+            } else if (tabName === 'orders') {
+                document.getElementById('tab-btn-orders').classList.add('active');
+                document.getElementById('section-orders').style.display = 'block';
+                renderActiveOrders();
+            } else if (tabName === 'settings') {
+                if (currentAuthRole !== 'admin') return;
+                document.getElementById('tab-btn-settings').classList.add('active');
+                document.getElementById('section-settings').style.display = 'block';
+                loadSettingsToForm();
+            }
+        }
+
+        // --- 5. ORDERS QUEUE MANAGEMENT ---
+        function getActiveOrders() {
+            return JSON.parse(localStorage.getItem('ribhouse_orders_queue') || '[]');
+        }
+
+        function renderActiveOrders() {
+            const grid = document.getElementById('orders-feed-grid');
+            const countBadge = document.getElementById('active-orders-count');
+            if (!grid) return;
+
+            const orders = getActiveOrders();
             if (countBadge) countBadge.textContent = orders.length;
 
             if (orders.length === 0) {
-                feed.innerHTML = '<div style="text-align: center; padding: 40px; background: var(--card-bg); border: 1px dashed var(--card-border); color: var(--text-muted);">No active orders right now.</div>';
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--text-muted); font-size: 0.95rem;">No active kitchen orders right now. Customer orders will appear here automatically.</div>';
                 return;
             }
 
             let html = '';
-            orders.forEach(order => {
-                const isPaid = order.paymentStatus === 'PAID';
+            orders.forEach((order, idx) => {
                 html += `
-                    <div class="admin-order-item-card">
-                        <div class="admin-order-header">
-                            <div>
-                                <span class="admin-order-ref">${order.ref}</span>
-                                <span style="font-size: 0.78rem; color: var(--text-muted); margin-left: 8px;">${order.dateStr || ''}</span>
-                            </div>
+                    <div class="order-ticket-card">
+                        <div class="order-ticket-header">
+                            <span class="order-id-badge">ORDER #${order.orderId || (1000 + idx)}</span>
+                            <span class="order-timestamp">${order.time || 'Just Now'} &bull; ${order.table || 'Dine-In / WhatsApp'}</span>
+                        </div>
+
+                        <div class="order-items-list">
+                            ${(order.items || []).map(it => `
+                                <div class="order-item-line">
+                                    <span class="order-item-name">${it.name}</span>
+                                    <span class="order-item-qty">x${it.quantity || 1}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div class="order-ticket-footer">
+                            <span class="order-total-amount">KSh ${order.total || 0}/=</span>
                             <div class="order-status-actions">
-                                <button type="button" class="btn-order-stage" onclick="setOrderStatus('${order.ref}', 'PREPARING')">Grill</button>
-                                <button type="button" class="btn-order-stage" onclick="setOrderStatus('${order.ref}', 'TRANSIT')">Transit</button>
-                                <button type="button" class="btn-order-stage" onclick="setOrderStatus('${order.ref}', 'DELIVERED')" style="color: #10B981; border-color: #10B981;">Delivered</button>
+                                <button type="button" class="btn-order-action ready" onclick="handleMarkOrderComplete(${idx})">Complete</button>
                             </div>
-                        </div>
-
-                        <div style="display: flex; justify-content: space-between; font-size: 0.88rem; flex-wrap: wrap; gap: 4px;">
-                            <span><strong>Guest:</strong> ${order.customerName} (<a href="tel:${order.phone}" style="color: var(--color-gold);">${order.phone}</a>)</span>
-                            <strong style="color: var(--color-gold);">KSh ${order.totalAmount ? order.totalAmount.toLocaleString() : 0}/=</strong>
-                        </div>
-
-                        <div style="font-size: 0.82rem; color: var(--text-muted);">
-                            <strong>Service:</strong> ${order.tableOrLocation}
-                            ${order.gpsUrl ? `<a href="${order.gpsUrl}" target="_blank" style="margin-left: 6px; color: #10B981; text-decoration: underline; font-weight: 700;">Open Map</a>` : ''}
-                        </div>
-
-                        <div style="font-size: 0.82rem; background: #0B0F19; padding: 10px; border: 1px solid var(--card-border);">
-                            ${order.itemsSummary ? order.itemsSummary.join('<br>') : ''}
-                        </div>
-
-                        <div style="font-size: 0.78rem; font-weight: 700; color: ${isPaid ? '#10B981' : '#F59E0B'};">
-                            ${isPaid ? `M-Pesa Verified: ${order.mpesaCode}` : 'Payment Status: Pending Till 4977556'}
                         </div>
                     </div>
                 `;
             });
 
-            feed.innerHTML = html;
+            grid.innerHTML = html;
         }
 
-        function setOrderStatus(ref, status) {
-            const orders = JSON.parse(localStorage.getItem('ribhouse_active_orders') || '[]');
-            const idx = orders.findIndex(o => o.ref === ref);
-            if (idx > -1) {
-                orders[idx].status = status;
-                localStorage.setItem('ribhouse_active_orders', JSON.stringify(orders));
-                renderActiveOrders();
-            }
+        function handleMarkOrderComplete(idx) {
+            const orders = getActiveOrders();
+            orders.splice(idx, 1);
+            localStorage.setItem('ribhouse_orders_queue', JSON.stringify(orders));
+            renderActiveOrders();
         }
 
-        function clearAllOrders() {
-            if (confirm('Clear all orders in active dashboard?')) {
-                localStorage.removeItem('ribhouse_active_orders');
-                renderActiveOrders();
-            }
-        }
-
-        // --- 5. PORTAL TABS & SETTINGS ---
-        function switchPortalTab(tab) {
-            const secInv = document.getElementById('section-inventory');
-            const secOrders = document.getElementById('section-orders');
-            const secSet = document.getElementById('section-settings');
-
-            const btnInv = document.getElementById('tab-btn-inv');
-            const btnOrders = document.getElementById('tab-btn-orders');
-            const btnSet = document.getElementById('tab-btn-settings');
-
-            [btnInv, btnOrders, btnSet].forEach(b => { if (b) b.classList.remove('active'); });
-            [secInv, secOrders, secSet].forEach(s => { if (s) s.style.display = 'none'; });
-
-            if (tab === 'inventory') {
-                if (secInv) secInv.style.display = 'block';
-                if (btnInv) btnInv.classList.add('active');
-                renderInventoryCards();
-            } else if (tab === 'orders') {
-                if (secOrders) secOrders.style.display = 'block';
-                if (btnOrders) btnOrders.classList.add('active');
-                renderActiveOrders();
-            } else if (tab === 'settings') {
-                if (secSet) secSet.style.display = 'block';
-                if (btnSet) btnSet.classList.add('active');
-                loadSettingsInputs();
-            }
-        }
-
-        function loadSettingsInputs() {
+        // --- 6. SETTINGS FORM HANDLER ---
+        function loadSettingsToForm() {
             const sec = getSecuritySettings();
-            document.getElementById('set-admin-pin').value = sec.adminPin || '4977';
-            document.getElementById('set-admin-2fa').value = sec.admin2fa || 'RH9921';
-            document.getElementById('set-kitchen-pin').value = sec.kitchenPin || '1234';
+            const pAdmin = document.getElementById('set-admin-pin');
+            const p2fa = document.getElementById('set-admin-2fa');
+            const pKitch = document.getElementById('set-kitchen-pin');
+
+            if (pAdmin) pAdmin.value = sec.adminPin || '4977';
+            if (p2fa) p2fa.value = sec.admin2fa || 'RH9921';
+            if (pKitch) pKitch.value = sec.kitchenPin || '1234';
         }
 
         function handleSaveSettings(e) {
             e.preventDefault();
-            const newSettings = {
-                adminPin: document.getElementById('set-admin-pin').value.trim() || '4977',
-                admin2fa: document.getElementById('set-admin-2fa').value.trim() || 'RH9921',
-                kitchenPin: document.getElementById('set-kitchen-pin').value.trim() || '1234'
-            };
-            localStorage.setItem('ribhouse_portal_security', JSON.stringify(newSettings));
+            const adminPin = document.getElementById('set-admin-pin').value.trim();
+            const admin2fa = document.getElementById('set-admin-2fa').value.trim();
+            const kitchenPin = document.getElementById('set-kitchen-pin').value.trim();
+
+            const sec = { adminPin, admin2fa, kitchenPin };
+            localStorage.setItem('ribhouse_portal_security', JSON.stringify(sec));
 
             const msg = document.getElementById('settings-success-msg');
             if (msg) {
@@ -1042,11 +1160,6 @@
                 setTimeout(() => { msg.style.display = 'none'; }, 3000);
             }
         }
-
-        // Initialize on load
-        document.addEventListener('DOMContentLoaded', () => {
-            selectLoginRole('kitchen');
-        });
     </script>
 </body>
 

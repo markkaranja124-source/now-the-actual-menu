@@ -452,11 +452,22 @@ function getDishInventoryState() {
 
 function resolveInventoryKey(name) {
     const n = (name || '').toLowerCase().trim();
-    
-    // Exact Sides & Pairings
-    if (n.includes('rice')) return 'side_rice';
-    if (n.includes('mukimo')) return 'side_mukimo';
-    if (n.includes('chapati')) return 'side_chapati';
+
+    // 1. Extra Sides & Veges
+    if (n.includes('rice / mukimo special') || n.includes('rice/mukimo special')) return 'extra_rice_mukimo_special';
+    if (n.includes('pilau special')) return 'extra_pilau_special';
+    if (n.includes('chips masala')) return 'extra_chips_masala';
+    if (n.includes('chips plain')) return 'extra_chips_plain';
+    if (n.includes('rice plain')) return 'extra_rice_plain';
+    if (n.includes('mukimo plain')) return 'extra_mukimo_plain';
+    if (n.includes('waru')) return 'extra_waru';
+    if (n.includes('spinach')) return 'extra_spinach';
+    if (n.includes('banana')) return 'extra_banana';
+
+    // 2. Base Side Pairings for Multi-Option Dishes
+    if (n.includes('ugali / chapati') || n.includes('ugali/chapati')) return 'side_ugali_chapati';
+    if (n.includes('rice / mukimo') || n.includes('rice/mukimo')) return 'side_rice_mukimo';
+    if (n.includes('pilau')) return 'side_pilau';
     if (n.includes('kachumbari')) return 'side_kachumbari';
     if (n.includes('chips') || n.includes('fries')) {
         if (n.includes('combo')) return 'chips_combo';
@@ -465,27 +476,17 @@ function resolveInventoryKey(name) {
     if (n.includes('ugali')) {
         if (n.includes('managu')) return 'ugali_managu';
         if (n.includes('sukuma') || n.includes('cabbage')) return 'ugali_sukuma_cabbage';
-        return 'side_ugali';
+        return 'side_ugali_chapati';
     }
+    if (n.includes('mukimo')) return 'side_rice_mukimo';
+    if (n.includes('chapati')) return 'side_ugali_chapati';
+    if (n.includes('rice')) return 'side_rice_mukimo';
     if (n.includes('managu')) return 'side_managu';
     if (n.includes('sukuma')) return 'side_sukuma';
     if (n.includes('cabbage')) return 'side_cabbage';
 
-    // Choma & Meats
-    if (n.includes('goat') && (n.includes('choma') || n.includes('mbuzi'))) return 'choma_goat_1kg';
-    if (n.includes('beef') && n.includes('choma')) return 'choma_beef_1kg';
-    if (n.includes('chemsha')) return 'chemsha_goat_1kg';
-    if (n.includes('tumbukiza')) return 'tumbukiza_1kg';
-    if (n.includes('chicken platter') || n.includes('platter')) return 'chicken_platter_4';
-    if (n.includes('beef steak') || n.includes('steak')) return 'beef_steak_grilled';
-    if (n.includes('matumbo')) return 'matumbo_fry';
-    if (n.includes('beef stew') || n.includes('beef fry')) return 'beef_stew_fry';
-    if (n.includes('goat stew') || n.includes('goat fry')) return 'goat_stew_fry';
-    if (n.includes('chicken wet') || n.includes('chicken dry') || n.includes('chicken fry')) return 'chicken_wet_dry_fry';
-    if (n.includes('tilapia') || n.includes('fish')) return 'tilapia_fry_whole';
+    // 3. Breakfast Combos & Specials
     if (n.includes('test')) return 'test_dish';
-
-    // Breakfast
     if (n.includes('pancake')) return 'pancake_breakfast';
     if (n.includes('mini breakfast')) return 'mini_breakfast';
     if (n.includes('rib house breakfast')) return 'rib_house_breakfast';
@@ -495,20 +496,79 @@ function resolveInventoryKey(name) {
     if (n.includes('samosa combo')) return 'samosa_combo';
     if (n.includes('traditional breakfast')) return 'traditional_breakfast';
     if (n.includes('farmers choice')) return 'farmers_choice';
+    if (n.includes('rib house bite')) return 'rib_house_bite';
+    if (n.includes('special breakfast')) return 'special_breakfast';
+    if (n.includes('rib house special')) return 'rib_house_special';
     if (n.includes('british breakfast')) return 'british_breakfast';
 
-    // Barista Drinks
+    // 4. Barista & Hot Beverages
     if (n.includes('coffee white')) return 'house_coffee_white';
     if (n.includes('coffee black')) return 'house_coffee_black';
-    if (n.includes('cappuccino')) return 'cappuccino_single';
-    if (n.includes('espresso')) return 'espresso_single';
-    if (n.includes('latte')) return 'coffee_latte';
+    if (n.includes('black coffee') && n.includes('lemon')) return 'black_coffee_lemon';
+    if (n.includes('americano')) return 'americano';
+    if (n.includes('latte mocha') || n.includes('mocha')) return 'latte_mocha';
+    if (n.includes('macchiato') || n.includes('machiatto')) return 'latte_macchiato';
+    if (n.includes('coffee latte')) return 'coffee_latte';
+    if (n.includes('lemon tea w honey') || n.includes('lemon tea with honey')) return 'lemon_tea_honey';
+    if (n.includes('lemon tea')) return 'lemon_tea';
+    if (n.includes('lemon water')) return 'lemon_water';
+    if (n.includes('tea special')) return 'tea_special';
+    if (n.includes('tea masala white') || n.includes('masala white')) return 'tea_masala_white';
+    if (n.includes('tea masala black') || n.includes('masala black')) return 'tea_masala_black';
+    if (n.includes('ginger tea')) return 'ginger_tea';
     if (n.includes('dawa')) return 'dawa_tea';
-    if (n.includes('masala')) return 'tea_masala_white';
-    if (n.includes('lemon tea')) return 'lemon_tea_honey';
-    if (n.includes('oreo')) return 'oreo_shake';
+    if (n.includes('honey espresso')) return 'honey_espresso';
+    if (n.includes('hot milk')) return 'hot_milk';
+    if (n.includes('honey cone')) return 'honey_cone';
+    if (n.includes('cappuccino') && (n.includes('double') || n.includes('2'))) return 'cappuccino_double';
+    if (n.includes('cappuccino')) return 'cappuccino_single';
+    if (n.includes('espresso') && (n.includes('double') || n.includes('2'))) return 'espresso_double';
+    if (n.includes('espresso') && n.includes('cold')) return 'espresso_cold';
+    if (n.includes('espresso')) return 'espresso_single';
+
+    // 5. Cold Beverages & Shakes
     if (n.includes('milkshake')) return 'milkshake_flavored';
+    if (n.includes('oreo')) return 'oreo_shake';
     if (n.includes('smoothie')) return 'smoothies_tropical';
+    if (n.includes('ice cream')) return 'ice_cream_scoops';
+    if (n.includes('lemonade')) return 'lemonade_flavor';
+    if (n.includes('iced coffee')) return 'iced_coffee';
+
+    // 6. Main Dishes
+    if (n.includes('matumbo')) return 'matumbo_fry';
+    if (n.includes('beef stew') || n.includes('beef fry')) return 'beef_stew_fry';
+    if (n.includes('goat stew') || n.includes('goat fry')) return 'goat_stew_fry';
+    if (n.includes('liver')) return 'liver';
+    if (n.includes('kienyeji')) return 'chicken_kienyeji_quarter';
+    if (n.includes('chicken wet')) return 'chicken_wet_fry';
+    if (n.includes('beef steak') || n.includes('steak')) return 'beef_steak';
+    if (n.includes('deep fried chicken')) return 'deep_fried_chicken';
+    if (n.includes('fish fillet') || n.includes('fillet')) return 'fish_fillet';
+    if (n.includes('tilapia stew')) return 'tilapia_stew';
+    if (n.includes('tilapia fry') || n.includes('tilapia')) return 'tilapia_fry';
+
+    // 7. Choma, Chemsha, Tumbukiza & Platters
+    if (n.includes('platter')) return 'chicken_platter_4';
+    if (n.includes('tumbukiza')) {
+        if (n.includes('goat')) return 'goat_fry_tumbukiza_1kg';
+        return 'beef_fry_tumbukiza_1kg';
+    }
+    if (n.includes('chemsha')) {
+        if (n.includes('goat')) {
+            if (n.includes('0.5') || n.includes('half')) return 'chemsha_goat_half_kg';
+            return 'chemsha_goat_1kg';
+        }
+        if (n.includes('0.5') || n.includes('half')) return 'chemsha_beef_half_kg';
+        return 'chemsha_beef_1kg';
+    }
+    if (n.includes('choma') || n.includes('mbuzi')) {
+        if (n.includes('goat') || n.includes('mbuzi')) {
+            if (n.includes('0.5') || n.includes('half')) return 'choma_goat_half_kg';
+            return 'choma_goat_1kg';
+        }
+        if (n.includes('0.5') || n.includes('half')) return 'choma_beef_half_kg';
+        return 'choma_beef_1kg';
+    }
 
     return n.replace(/[^a-z0-9]/g, '_');
 }

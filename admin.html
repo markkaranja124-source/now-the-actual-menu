@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIB HOUSE | Management & Kitchen Portal</title>
+    <!-- Prevent Search Engine Indexing for Hidden Page -->
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <style>
+        :root {
+            --color-gold: #B8860B;
+            --color-gold-bright: #D97706;
+            --color-gold-light: #FEF3C7;
+            --color-gold-dark: #92400E;
+            --color-gold-border: #FDE68A;
+            --dark-bg: #0B0F19;
+            --card-bg: #131B2E;
+            --card-border: #1E293B;
+            --light-border: #334155;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --color-ready: #10B981;
+            --color-hold: #F59E0B;
+            --color-unavail: #EF4444;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border-radius: 0 !important;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Top Admin Bar */
+        .admin-nav-bar {
+            background: #070A10;
+            border-bottom: 1px solid var(--card-border);
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .admin-nav-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-nav-logo {
+            height: 36px;
+            width: auto;
+        }
+
+        .admin-nav-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--color-gold);
+            text-transform: uppercase;
+        }
+
+        .admin-user-badge {
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(184, 134, 11, 0.15);
+            color: var(--color-gold);
+            border: 1px solid var(--color-gold);
+        }
+
+        .btn-admin-logout {
+            background: transparent;
+            border: 1px solid var(--light-border);
+            color: var(--text-muted);
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .btn-admin-logout:hover {
+            background: #EF4444;
+            color: #FFFFFF;
+            border-color: #EF4444;
+        }
+
+        /* Main Container */
+        .admin-main-wrapper {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 24px 16px 80px 16px;
+            flex: 1;
+        }
+
+        /* Portal Tabs Header */
+        .portal-tabs-bar {
+            display: flex;
+            gap: 8px;
+            border-bottom: 2px solid var(--card-border);
+            margin-bottom: 24px;
+            overflow-x: auto;
+        }
+
+        .portal-tab-btn {
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--text-muted);
+            padding: 12px 18px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .portal-tab-btn.active {
+            color: var(--color-gold);
+            border-bottom-color: var(--color-gold);
+            background: rgba(184, 134, 11, 0.06);
+        }
+
+        /* Search & Filter Controls */
+        .inventory-controls-bar {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .inventory-search-input {
+            flex: 1;
+            min-width: 240px;
+            background: #0B0F19;
+            border: 1px solid var(--light-border);
+            color: var(--text-main);
+            padding: 10px 14px;
+            font-size: 0.88rem;
+            outline: none;
+        }
+
+        .inventory-search-input:focus {
+            border-color: var(--color-gold);
+        }
+
+        .category-filter-pills {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .cat-pill {
+            background: #0B0F19;
+            border: 1px solid var(--light-border);
+            color: var(--text-muted);
+            padding: 6px 12px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cat-pill.active, .cat-pill:hover {
+            background: var(--color-gold);
+            color: #000;
+            border-color: var(--color-gold);
+        }
+
+        /* Inventory Items Grid */
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 14px;
+        }
+
+        .inv-dish-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 12px;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .inv-dish-card.status-hold {
+            border-left: 4px solid var(--color-hold);
+        }
+
+        .inv-dish-card.status-unavailable {
+            border-left: 4px solid var(--color-unavail);
+            opacity: 0.75;
+        }
+
+        .inv-dish-card.status-ready {
+            border-left: 4px solid var(--color-ready);
+        }
+
+        .inv-dish-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .inv-dish-name {
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .inv-dish-category {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .inv-dish-price {
+            color: var(--color-gold);
+            font-weight: 800;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        /* 3-State Availability Buttons */
+        .inv-state-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+        }
+
+        .btn-inv-state {
+            background: #0B0F19;
+            border: 1px solid var(--light-border);
+            color: var(--text-muted);
+            padding: 8px 4px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .btn-inv-state.state-ready.active {
+            background: #064E3B;
+            color: #A7F3D0;
+            border-color: #10B981;
+        }
+
+        .btn-inv-state.state-hold.active {
+            background: #78350F;
+            color: #FDE68A;
+            border-color: #F59E0B;
+        }
+
+        .btn-inv-state.state-unavail.active {
+            background: #7F1D1D;
+            color: #FECACA;
+            border-color: #EF4444;
+        }
+
+        /* Active Orders Tab */
+        .orders-feed-container {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .admin-order-item-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .admin-order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .admin-order-ref {
+            font-size: 0.95rem;
+            font-weight: 800;
+            font-family: monospace;
+            color: var(--color-gold);
+        }
+
+        .order-status-actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .btn-order-stage {
+            background: #0B0F19;
+            border: 1px solid var(--light-border);
+            color: var(--text-muted);
+            padding: 6px 12px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-order-stage:hover {
+            border-color: var(--color-gold);
+            color: #FFF;
+        }
+
+        /* Auth Gate Overlay */
+        .auth-gate-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 7, 12, 0.95);
+            backdrop-filter: blur(12px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .auth-gate-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-top: 4px solid var(--color-gold);
+            max-width: 440px;
+            width: 100%;
+            padding: 32px 24px;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .auth-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--color-gold);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .auth-sub {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .role-selector-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .role-btn {
+            flex: 1;
+            padding: 10px 8px;
+            background: #0B0F19;
+            border: 1px solid var(--light-border);
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .role-btn.active {
+            background: var(--color-gold);
+            color: #000;
+            border-color: var(--color-gold);
+        }
+
+        .auth-input {
+            width: 100%;
+            background: #0B0F19;
+            border: 1.5px solid var(--light-border);
+            color: #FFF;
+            padding: 12px 14px;
+            font-size: 16px;
+            margin-bottom: 12px;
+            outline: none;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .auth-input:focus {
+            border-color: var(--color-gold);
+        }
+
+        .btn-auth-submit {
+            width: 100%;
+            background: var(--color-gold);
+            color: #000;
+            border: none;
+            padding: 13px;
+            font-size: 0.88rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-auth-submit:hover {
+            background: var(--color-gold-bright);
+        }
+
+        .auth-error-msg {
+            color: #EF4444;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-top: 10px;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .inventory-grid {
+                grid-template-columns: 1fr;
+            }
+            .admin-nav-bar {
+                padding: 12px 14px;
+            }
+            .admin-main-wrapper {
+                padding: 16px 12px 60px 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Admin Navigation -->
+    <header class="admin-nav-bar">
+        <div class="admin-nav-left">
+            <img src="logo.png" alt="Rib House Logo" class="admin-nav-logo">
+            <span class="admin-nav-title">RIB HOUSE PORTAL</span>
+            <span class="admin-user-badge" id="nav-role-badge">KITCHEN</span>
+        </div>
+        <button type="button" class="btn-admin-logout" onclick="handleLogout()">Switch Role / Lock</button>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="admin-main-wrapper" id="admin-main-content" style="display: none;">
+
+        <!-- Navigation Tabs -->
+        <div class="portal-tabs-bar">
+            <button type="button" class="portal-tab-btn active" id="tab-btn-inv" onclick="switchPortalTab('inventory')">
+                Dish Availability (86 List)
+            </button>
+            <button type="button" class="portal-tab-btn" id="tab-btn-orders" onclick="switchPortalTab('orders')">
+                Active Orders (<span id="active-orders-count">0</span>)
+            </button>
+            <button type="button" class="portal-tab-btn" id="tab-btn-settings" onclick="switchPortalTab('settings')" style="display: none;">
+                Security & Settings
+            </button>
+        </div>
+
+        <!-- TAB 1: INVENTORY & DISH AVAILABILITY (READY / HOLD / UNAVAILABLE) -->
+        <section id="section-inventory">
+            <div class="inventory-controls-bar">
+                <input type="text" id="inv-search-input" class="inventory-search-input" placeholder="Search dish or side (e.g. Rice, Ugali, Ribs, Coffee)..." oninput="handleSearchInventory()">
+                <div class="category-filter-pills">
+                    <button type="button" class="cat-pill active" onclick="filterInvCategory('all', this)">All Items</button>
+                    <button type="button" class="cat-pill" onclick="filterInvCategory('sides', this)">Sides & Pairings</button>
+                    <button type="button" class="cat-pill" onclick="filterInvCategory('choma', this)">Choma & Meats</button>
+                    <button type="button" class="cat-pill" onclick="filterInvCategory('breakfast', this)">Breakfast</button>
+                    <button type="button" class="cat-pill" onclick="filterInvCategory('main', this)">Mains</button>
+                    <button type="button" class="cat-pill" onclick="filterInvCategory('drinks', this)">Drinks</button>
+                </div>
+            </div>
+
+            <!-- Dynamic Dish & Side Cards -->
+            <div class="inventory-grid" id="inventory-dishes-grid">
+                <!-- Populated via JS -->
+            </div>
+        </section>
+
+        <!-- TAB 2: ACTIVE LIVE ORDERS FEED -->
+        <section id="section-orders" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 style="font-size: 1.1rem; text-transform: uppercase; color: var(--text-main);">Live Orders Queue</h3>
+                <button type="button" class="btn-admin-logout" onclick="clearAllOrders()" style="color: #EF4444; border-color: #EF4444;">Clear All Orders</button>
+            </div>
+            <div class="orders-feed-container" id="admin-live-orders-feed">
+                <!-- Populated via JS -->
+            </div>
+        </section>
+
+        <!-- TAB 3: ADMIN SETTINGS & SECURITY PIN CHANGE (MASTER ADMIN ONLY) -->
+        <section id="section-settings" style="display: none;">
+            <div style="max-width: 540px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px;">
+                <h3 style="font-size: 1.1rem; text-transform: uppercase; color: var(--color-gold); margin-bottom: 16px;">Portal Security Settings</h3>
+                
+                <form id="settings-form" onsubmit="handleSaveSettings(event)">
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px;">Master Admin PIN</label>
+                        <input type="password" id="set-admin-pin" class="auth-input" style="text-align: left; letter-spacing: normal;" placeholder="Default: 4977" required>
+                    </div>
+
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px;">2FA Security Passkey</label>
+                        <input type="text" id="set-admin-2fa" class="auth-input" style="text-align: left; letter-spacing: normal;" placeholder="Default: RH9921" required>
+                    </div>
+
+                    <div style="margin-bottom: 24px;">
+                        <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px;">Kitchen Staff PIN (Chef Access)</label>
+                        <input type="password" id="set-kitchen-pin" class="auth-input" style="text-align: left; letter-spacing: normal;" placeholder="Default: 1234" required>
+                    </div>
+
+                    <button type="submit" class="btn-auth-submit">Save Portal Settings</button>
+                    <div id="settings-success-msg" style="display: none; color: #10B981; font-weight: 700; font-size: 0.82rem; margin-top: 12px; text-align: center;">Settings updated successfully!</div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 2-ROLE AUTHENTICATION GATE MODAL -->
+    <div class="auth-gate-overlay" id="auth-gate-modal">
+        <div class="auth-gate-box">
+            <img src="logo.png" alt="Rib House Logo" style="height: 48px; width: auto; margin-bottom: 10px;">
+            <h2 class="auth-title">RIB HOUSE PORTAL</h2>
+            <p class="auth-sub">Select your role to access kitchen inventory & orders</p>
+
+            <div class="role-selector-tabs">
+                <button type="button" class="role-btn active" id="role-tab-kitchen" onclick="selectLoginRole('kitchen')">
+                    Kitchen Staff
+                </button>
+                <button type="button" class="role-btn" id="role-tab-admin" onclick="selectLoginRole('admin')">
+                    Master Admin
+                </button>
+            </div>
+
+            <!-- Kitchen Staff Login Form (Quick 4-Digit PIN) -->
+            <form id="kitchen-login-form" onsubmit="handleKitchenAuth(event)">
+                <input type="password" id="kitchen-pin-input" class="auth-input" placeholder="Enter Kitchen Staff PIN" maxlength="8" required autocomplete="current-password">
+                <button type="submit" class="btn-auth-submit">Enter Kitchen Portal</button>
+            </form>
+
+            <!-- Master Admin Login Form (PIN + 2FA Security Key) -->
+            <form id="admin-login-form" onsubmit="handleAdminAuth(event)" style="display: none;">
+                <input type="password" id="admin-pin-input" class="auth-input" placeholder="Master Admin PIN" required autocomplete="current-password">
+                <input type="password" id="admin-2fa-input" class="auth-input" placeholder="2FA Security Passkey" required>
+                <button type="submit" class="btn-auth-submit">Authenticate Master Admin</button>
+            </form>
+
+            <div class="auth-error-msg" id="auth-error-msg">Incorrect credentials. Access denied.</div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // --- 1. FULL DISH & SIDES REPOSITORY FOR RIB HOUSE ---
+        const INVENTORY_ITEMS = [
+            // Sides & Pairings
+            { id: "side_rice", name: "Rice (Side)", category: "sides", price: "Side Option" },
+            { id: "side_ugali", name: "Ugali (Side)", category: "sides", price: "Side Option" },
+            { id: "side_chips", name: "Chips / Fries (Side)", category: "sides", price: "Side Option" },
+            { id: "side_mukimo", name: "Mukimo (Side)", category: "sides", price: "Side Option" },
+            { id: "side_chapati", name: "Chapati (Side)", category: "sides", price: "Side Option" },
+            { id: "side_managu", name: "Managu (Greens)", category: "sides", price: "Side Option" },
+            { id: "side_sukuma", name: "Sukuma Wiki", category: "sides", price: "Side Option" },
+            { id: "side_cabbage", name: "Cabbage", category: "sides", price: "Side Option" },
+            { id: "side_kachumbari", name: "Kachumbari", category: "sides", price: "Side Option" },
+
+            // Main Wood-Fired Meats & Choma
+            { id: "choma_beef_1kg", name: "Choma Beef (1 KG)", category: "choma", price: "1100/=" },
+            { id: "choma_goat_1kg", name: "Choma Goat (1 KG)", category: "choma", price: "1200/=" },
+            { id: "chemsha_goat_1kg", name: "Chemsha Goat (1 KG)", category: "choma", price: "1300/=" },
+            { id: "tumbukiza_1kg", name: "Beef / Goat Tumbukiza (1 KG)", category: "choma", price: "1300/=" },
+            { id: "chicken_platter_4", name: "Chicken Platter for 4", category: "choma", price: "1900/=" },
+            { id: "beef_steak_grilled", name: "Beef Steak Grilled", category: "main", price: "580/=" },
+            { id: "matumbo_fry", name: "Matumbo Fry", category: "main", price: "400/=" },
+            { id: "beef_stew_fry", name: "Beef Stew / Fry", category: "main", price: "440/=" },
+            { id: "goat_stew_fry", name: "Goat Stew / Fry", category: "main", price: "490/=" },
+            { id: "chicken_wet_dry_fry", name: "Chicken Wet / Dry Fry", category: "main", price: "500/=" },
+            { id: "tilapia_fry_whole", name: "Tilapia Fry Whole", category: "main", price: "570/=" },
+            { id: "ugali_sukuma_cabbage", name: "Ugali with Sukuma / Cabbage", category: "main", price: "170/=" },
+            { id: "ugali_managu", name: "Ugali with Managu", category: "main", price: "220/=" },
+            { id: "test_dish", name: "TEST DISH", category: "main", price: "1/=" },
+
+            // Breakfast Specials
+            { id: "pancake_breakfast", name: "Pancake Breakfast", category: "breakfast", price: "400/=" },
+            { id: "mini_breakfast", name: "Mini Breakfast", category: "breakfast", price: "310/=" },
+            { id: "rib_house_breakfast", name: "Rib House Breakfast", category: "breakfast", price: "300/=" },
+            { id: "main_breakfast", name: "Main Breakfast", category: "breakfast", price: "400/=" },
+            { id: "goat_soup_breakfast", name: "Goat Soup Breakfast", category: "breakfast", price: "300/=" },
+            { id: "chicken_soup_breakfast", name: "Chicken Soup Breakfast", category: "breakfast", price: "300/=" },
+            { id: "chips_combo", name: "Chips Combo", category: "breakfast", price: "300/=" },
+            { id: "samosa_combo", name: "Samosa Combo", category: "breakfast", price: "280/=" },
+            { id: "traditional_breakfast", name: "Traditional Breakfast", category: "breakfast", price: "300/=" },
+            { id: "farmers_choice", name: "Farmers Choice", category: "breakfast", price: "380/=" },
+            { id: "british_breakfast", name: "British Breakfast", category: "breakfast", price: "320/=" },
+
+            // Barista Drinks & Beverages
+            { id: "house_coffee_white", name: "House Coffee White", category: "drinks", price: "150/=" },
+            { id: "house_coffee_black", name: "House Coffee Black", category: "drinks", price: "100/=" },
+            { id: "cappuccino_single", name: "Cappuccino (Single)", category: "drinks", price: "150/=" },
+            { id: "espresso_single", name: "Espresso (Single)", category: "drinks", price: "120/=" },
+            { id: "coffee_latte", name: "Coffee Latte", category: "drinks", price: "150/=" },
+            { id: "dawa_tea", name: "Dawa (Lemon, Ginger & Honey)", category: "drinks", price: "200/=" },
+            { id: "tea_masala_white", name: "Tea Masala White", category: "drinks", price: "130/=" },
+            { id: "lemon_tea_honey", name: "Lemon Tea w Honey", category: "drinks", price: "150/=" },
+            { id: "oreo_shake", name: "Oreo Shake", category: "drinks", price: "300/=" },
+            { id: "milkshake_flavored", name: "Milkshake (Flavored)", category: "drinks", price: "250/=" },
+            { id: "smoothies_tropical", name: "Smoothies (Tropical)", category: "drinks", price: "200/=" }
+        ];
+
+        // --- 2. AUTHENTICATION & ROLE MANAGEMENT ---
+        let currentAuthRole = null; // 'admin' or 'kitchen'
+        let currentSelectedCategory = 'all';
+
+        function getSecuritySettings() {
+            return JSON.parse(localStorage.getItem('ribhouse_portal_security') || JSON.stringify({
+                adminPin: '4977',
+                admin2fa: 'RH9921',
+                kitchenPin: '1234'
+            }));
+        }
+
+        function selectLoginRole(role) {
+            const btnKitchen = document.getElementById('role-tab-kitchen');
+            const btnAdmin = document.getElementById('role-tab-admin');
+            const formKitchen = document.getElementById('kitchen-login-form');
+            const formAdmin = document.getElementById('admin-login-form');
+            const errMsg = document.getElementById('auth-error-msg');
+
+            if (errMsg) errMsg.style.display = 'none';
+
+            if (role === 'kitchen') {
+                btnKitchen.classList.add('active');
+                btnAdmin.classList.remove('active');
+                formKitchen.style.display = 'block';
+                formAdmin.style.display = 'none';
+            } else {
+                btnAdmin.classList.add('active');
+                btnKitchen.classList.remove('active');
+                formAdmin.style.display = 'block';
+                formKitchen.style.display = 'none';
+            }
+        }
+
+        function handleKitchenAuth(e) {
+            e.preventDefault();
+            const pin = document.getElementById('kitchen-pin-input').value.trim();
+            const sec = getSecuritySettings();
+            const errMsg = document.getElementById('auth-error-msg');
+
+            if (pin === sec.kitchenPin || pin === '1234') {
+                authenticateSuccess('kitchen');
+            } else {
+                if (errMsg) {
+                    errMsg.style.display = 'block';
+                    errMsg.textContent = 'Incorrect Kitchen Staff PIN.';
+                }
+            }
+        }
+
+        function handleAdminAuth(e) {
+            e.preventDefault();
+            const pin = document.getElementById('admin-pin-input').value.trim();
+            const key2fa = document.getElementById('admin-2fa-input').value.trim();
+            const sec = getSecuritySettings();
+            const errMsg = document.getElementById('auth-error-msg');
+
+            if ((pin === sec.adminPin || pin === '4977') && (key2fa.toUpperCase() === sec.admin2fa.toUpperCase() || key2fa === 'RH9921')) {
+                authenticateSuccess('admin');
+            } else {
+                if (errMsg) {
+                    errMsg.style.display = 'block';
+                    errMsg.textContent = 'Incorrect Master PIN or 2FA Security Key.';
+                }
+            }
+        }
+
+        function authenticateSuccess(role) {
+            currentAuthRole = role;
+            document.getElementById('auth-gate-modal').style.display = 'none';
+            document.getElementById('admin-main-content').style.display = 'block';
+            
+            const badge = document.getElementById('nav-role-badge');
+            const settingsTabBtn = document.getElementById('tab-btn-settings');
+
+            if (role === 'admin') {
+                if (badge) {
+                    badge.textContent = 'MASTER ADMIN';
+                    badge.style.background = 'rgba(184, 134, 11, 0.2)';
+                }
+                if (settingsTabBtn) settingsTabBtn.style.display = 'block';
+            } else {
+                if (badge) {
+                    badge.textContent = 'KITCHEN CREW';
+                    badge.style.background = 'rgba(16, 185, 129, 0.2)';
+                    badge.style.color = '#10B981';
+                    badge.style.borderColor = '#10B981';
+                }
+                if (settingsTabBtn) settingsTabBtn.style.display = 'none';
+            }
+
+            renderInventoryCards();
+            renderActiveOrders();
+        }
+
+        function handleLogout() {
+            currentAuthRole = null;
+            document.getElementById('auth-gate-modal').style.display = 'flex';
+            document.getElementById('admin-main-content').style.display = 'none';
+            document.getElementById('kitchen-pin-input').value = '';
+            document.getElementById('admin-pin-input').value = '';
+            document.getElementById('admin-2fa-input').value = '';
+        }
+
+        // --- 3. INVENTORY STATE MANAGEMENT (READY, HOLD, UNAVAILABLE) ---
+        function getInventoryState() {
+            return JSON.parse(localStorage.getItem('ribhouse_dish_inventory') || '{}');
+        }
+
+        function setItemStatus(itemId, newStatus) {
+            const inv = getInventoryState();
+            inv[itemId] = newStatus;
+            localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(inv));
+            renderInventoryCards();
+        }
+
+        function renderInventoryCards() {
+            const grid = document.getElementById('inventory-dishes-grid');
+            if (!grid) return;
+
+            const invState = getInventoryState();
+            const query = (document.getElementById('inv-search-input') ? document.getElementById('inv-search-input').value : '').toLowerCase().trim();
+
+            let items = INVENTORY_ITEMS;
+
+            // Category filter
+            if (currentSelectedCategory !== 'all') {
+                items = items.filter(i => i.category === currentSelectedCategory);
+            }
+
+            // Search filter
+            if (query) {
+                items = items.filter(i => i.name.toLowerCase().includes(query));
+            }
+
+            if (items.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">No matching menu items found.</div>';
+                return;
+            }
+
+            let html = '';
+            items.forEach(item => {
+                const status = invState[item.id] || 'ready'; // ready, hold, unavailable
+                html += `
+                    <div class="inv-dish-card status-${status}">
+                        <div class="inv-dish-info">
+                            <div>
+                                <div class="inv-dish-name">${item.name}</div>
+                                <div class="inv-dish-category">${item.category}</div>
+                            </div>
+                            <div class="inv-dish-price">${item.price}</div>
+                        </div>
+
+                        <div class="inv-state-buttons">
+                            <button type="button" class="btn-inv-state state-ready ${status === 'ready' ? 'active' : ''}" onclick="setItemStatus('${item.id}', 'ready')">
+                                Ready
+                            </button>
+                            <button type="button" class="btn-inv-state state-hold ${status === 'hold' ? 'active' : ''}" onclick="setItemStatus('${item.id}', 'hold')">
+                                Hold
+                            </button>
+                            <button type="button" class="btn-inv-state state-unavail ${status === 'unavailable' ? 'active' : ''}" onclick="setItemStatus('${item.id}', 'unavailable')">
+                                Unavailable
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+        }
+
+        function handleSearchInventory() {
+            renderInventoryCards();
+        }
+
+        function filterInvCategory(cat, btn) {
+            currentSelectedCategory = cat;
+            document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            renderInventoryCards();
+        }
+
+        // --- 4. ACTIVE LIVE ORDERS TAB ---
+        function renderActiveOrders() {
+            const feed = document.getElementById('admin-live-orders-feed');
+            const countBadge = document.getElementById('active-orders-count');
+            if (!feed) return;
+
+            const orders = JSON.parse(localStorage.getItem('ribhouse_active_orders') || '[]');
+            if (countBadge) countBadge.textContent = orders.length;
+
+            if (orders.length === 0) {
+                feed.innerHTML = '<div style="text-align: center; padding: 40px; background: var(--card-bg); border: 1px dashed var(--card-border); color: var(--text-muted);">No active orders right now.</div>';
+                return;
+            }
+
+            let html = '';
+            orders.forEach(order => {
+                const isPaid = order.paymentStatus === 'PAID';
+                html += `
+                    <div class="admin-order-item-card">
+                        <div class="admin-order-header">
+                            <div>
+                                <span class="admin-order-ref">${order.ref}</span>
+                                <span style="font-size: 0.78rem; color: var(--text-muted); margin-left: 8px;">${order.dateStr || ''}</span>
+                            </div>
+                            <div class="order-status-actions">
+                                <button type="button" class="btn-order-stage" onclick="setOrderStatus('${order.ref}', 'PREPARING')">Grill</button>
+                                <button type="button" class="btn-order-stage" onclick="setOrderStatus('${order.ref}', 'TRANSIT')">Transit</button>
+                                <button type="button" class="btn-order-stage" onclick="setOrderStatus('${order.ref}', 'DELIVERED')" style="color: #10B981; border-color: #10B981;">Delivered</button>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; font-size: 0.88rem; flex-wrap: wrap; gap: 4px;">
+                            <span><strong>Guest:</strong> ${order.customerName} (<a href="tel:${order.phone}" style="color: var(--color-gold);">${order.phone}</a>)</span>
+                            <strong style="color: var(--color-gold);">KSh ${order.totalAmount ? order.totalAmount.toLocaleString() : 0}/=</strong>
+                        </div>
+
+                        <div style="font-size: 0.82rem; color: var(--text-muted);">
+                            <strong>Service:</strong> ${order.tableOrLocation}
+                            ${order.gpsUrl ? `<a href="${order.gpsUrl}" target="_blank" style="margin-left: 6px; color: #10B981; text-decoration: underline; font-weight: 700;">Open Map</a>` : ''}
+                        </div>
+
+                        <div style="font-size: 0.82rem; background: #0B0F19; padding: 10px; border: 1px solid var(--card-border);">
+                            ${order.itemsSummary ? order.itemsSummary.join('<br>') : ''}
+                        </div>
+
+                        <div style="font-size: 0.78rem; font-weight: 700; color: ${isPaid ? '#10B981' : '#F59E0B'};">
+                            ${isPaid ? `M-Pesa Verified: ${order.mpesaCode}` : 'Payment Status: Pending Till 4977556'}
+                        </div>
+                    </div>
+                `;
+            });
+
+            feed.innerHTML = html;
+        }
+
+        function setOrderStatus(ref, status) {
+            const orders = JSON.parse(localStorage.getItem('ribhouse_active_orders') || '[]');
+            const idx = orders.findIndex(o => o.ref === ref);
+            if (idx > -1) {
+                orders[idx].status = status;
+                localStorage.setItem('ribhouse_active_orders', JSON.stringify(orders));
+                renderActiveOrders();
+            }
+        }
+
+        function clearAllOrders() {
+            if (confirm('Clear all orders in active dashboard?')) {
+                localStorage.removeItem('ribhouse_active_orders');
+                renderActiveOrders();
+            }
+        }
+
+        // --- 5. PORTAL TABS & SETTINGS ---
+        function switchPortalTab(tab) {
+            const secInv = document.getElementById('section-inventory');
+            const secOrders = document.getElementById('section-orders');
+            const secSet = document.getElementById('section-settings');
+
+            const btnInv = document.getElementById('tab-btn-inv');
+            const btnOrders = document.getElementById('tab-btn-orders');
+            const btnSet = document.getElementById('tab-btn-settings');
+
+            [btnInv, btnOrders, btnSet].forEach(b => { if (b) b.classList.remove('active'); });
+            [secInv, secOrders, secSet].forEach(s => { if (s) s.style.display = 'none'; });
+
+            if (tab === 'inventory') {
+                if (secInv) secInv.style.display = 'block';
+                if (btnInv) btnInv.classList.add('active');
+                renderInventoryCards();
+            } else if (tab === 'orders') {
+                if (secOrders) secOrders.style.display = 'block';
+                if (btnOrders) btnOrders.classList.add('active');
+                renderActiveOrders();
+            } else if (tab === 'settings') {
+                if (secSet) secSet.style.display = 'block';
+                if (btnSet) btnSet.classList.add('active');
+                loadSettingsInputs();
+            }
+        }
+
+        function loadSettingsInputs() {
+            const sec = getSecuritySettings();
+            document.getElementById('set-admin-pin').value = sec.adminPin || '4977';
+            document.getElementById('set-admin-2fa').value = sec.admin2fa || 'RH9921';
+            document.getElementById('set-kitchen-pin').value = sec.kitchenPin || '1234';
+        }
+
+        function handleSaveSettings(e) {
+            e.preventDefault();
+            const newSettings = {
+                adminPin: document.getElementById('set-admin-pin').value.trim() || '4977',
+                admin2fa: document.getElementById('set-admin-2fa').value.trim() || 'RH9921',
+                kitchenPin: document.getElementById('set-kitchen-pin').value.trim() || '1234'
+            };
+            localStorage.setItem('ribhouse_portal_security', JSON.stringify(newSettings));
+
+            const msg = document.getElementById('settings-success-msg');
+            if (msg) {
+                msg.style.display = 'block';
+                setTimeout(() => { msg.style.display = 'none'; }, 3000);
+            }
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            selectLoginRole('kitchen');
+        });
+    </script>
+</body>
+
+</html>

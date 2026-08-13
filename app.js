@@ -442,6 +442,75 @@ function updateSelectionBarUI() {
     }
 }
 
+// --- DISH AVAILABILITY & INVENTORY HELPERS ---
+function getDishInventoryState() {
+    return JSON.parse(localStorage.getItem('ribhouse_dish_inventory') || '{}');
+}
+
+function resolveInventoryKey(name) {
+    const n = (name || '').toLowerCase().trim();
+    if (n.includes('rice')) return 'side_rice';
+    if (n.includes('ugali')) {
+        if (n.includes('managu')) return 'ugali_managu';
+        if (n.includes('sukuma') || n.includes('cabbage')) return 'ugali_sukuma_cabbage';
+        return 'side_ugali';
+    }
+    if (n.includes('chips') || n.includes('fries')) {
+        if (n.includes('combo')) return 'chips_combo';
+        return 'side_chips';
+    }
+    if (n.includes('mukimo')) return 'side_mukimo';
+    if (n.includes('chapati')) return 'side_chapati';
+    if (n.includes('managu')) return 'side_managu';
+    if (n.includes('kachumbari')) return 'side_kachumbari';
+    if (n.includes('sukuma')) return 'side_sukuma';
+    if (n.includes('cabbage')) return 'side_cabbage';
+
+    if (n.includes('test dish')) return 'test_dish';
+    if (n.includes('choma beef')) return 'choma_beef_1kg';
+    if (n.includes('choma goat')) return 'choma_goat_1kg';
+    if (n.includes('chemsha goat')) return 'chemsha_goat_1kg';
+    if (n.includes('tumbukiza')) return 'tumbukiza_1kg';
+    if (n.includes('chicken platter')) return 'chicken_platter_4';
+    if (n.includes('beef steak')) return 'beef_steak_grilled';
+    if (n.includes('matumbo')) return 'matumbo_fry';
+    if (n.includes('beef stew') || n.includes('beef fry')) return 'beef_stew_fry';
+    if (n.includes('goat stew') || n.includes('goat fry')) return 'goat_stew_fry';
+    if (n.includes('chicken wet') || n.includes('chicken dry')) return 'chicken_wet_dry_fry';
+    if (n.includes('tilapia')) return 'tilapia_fry_whole';
+
+    if (n.includes('pancake')) return 'pancake_breakfast';
+    if (n.includes('mini breakfast')) return 'mini_breakfast';
+    if (n.includes('rib house breakfast')) return 'rib_house_breakfast';
+    if (n.includes('main breakfast')) return 'main_breakfast';
+    if (n.includes('goat soup')) return 'goat_soup_breakfast';
+    if (n.includes('chicken soup')) return 'chicken_soup_breakfast';
+    if (n.includes('samosa combo')) return 'samosa_combo';
+    if (n.includes('traditional breakfast')) return 'traditional_breakfast';
+    if (n.includes('farmers choice')) return 'farmers_choice';
+    if (n.includes('british breakfast')) return 'british_breakfast';
+
+    if (n.includes('coffee white')) return 'house_coffee_white';
+    if (n.includes('coffee black')) return 'house_coffee_black';
+    if (n.includes('cappuccino')) return 'cappuccino_single';
+    if (n.includes('espresso')) return 'espresso_single';
+    if (n.includes('latte')) return 'coffee_latte';
+    if (n.includes('dawa')) return 'dawa_tea';
+    if (n.includes('masala')) return 'tea_masala_white';
+    if (n.includes('lemon tea')) return 'lemon_tea_honey';
+    if (n.includes('oreo')) return 'oreo_shake';
+    if (n.includes('milkshake')) return 'milkshake_flavored';
+    if (n.includes('smoothie')) return 'smoothies_tropical';
+
+    return n.replace(/[^a-z0-9]/g, '_');
+}
+
+function getItemAvailability(name) {
+    const inv = getDishInventoryState();
+    const key = resolveInventoryKey(name);
+    return inv[key] || 'ready'; // 'ready', 'hold', 'unavailable'
+}
+
 // --- 4. CLICKABLE DISH CARDS & ADD TO ORDER SYSTEM ---
 function initClickableMenuDishes() {
     const allCards = document.querySelectorAll('.menu-grid > div');
@@ -473,9 +542,10 @@ function initClickableMenuDishes() {
 
         if (optionRows.length >= 2) {
             // MULTI-OPTION CARD (e.g. Matumbo Fry, Beef Stew, Goat Stew, etc.)
-            // Remove any bottom card button if present so only neat inline option pills show
             const existingCardBtn = card.querySelector('.card-order-action-btn');
             if (existingCardBtn) existingCardBtn.remove();
+
+            let visibleOptionCount = 0;
 
             optionRows.forEach(row => {
                 const spans = row.querySelectorAll('span');
@@ -487,10 +557,25 @@ function initClickableMenuDishes() {
                 if (!sideName || !sidePrice) return;
                 const fullDishName = `${mainTitle} (${sideName})`;
 
-                row.style.cursor = 'pointer';
-                row.style.transition = 'all 0.2s ease';
+                // Check Inventory Status for this option / side
+                let itemStatus = getItemAvailability(fullDishName);
+                if (itemStatus === 'ready') {
+                    itemStatus = getItemAvailability(sideName);
+                }
+
+                // If Unavailable: Disappear completely from the customer's view!
+                if (itemStatus === 'unavailable') {
+                    row.style.display = 'none';
+                    return;
+                }
+
+                visibleOptionCount++;
+                row.style.display = 'flex';
+                row.style.justifyContent = 'space-between';
+                row.style.alignItems = 'center';
                 row.style.borderRadius = '6px';
                 row.style.padding = '6px 8px';
+                row.style.transition = 'all 0.2s ease';
 
                 // Find or create neat inline action pill button inside the row
                 let rowPill = row.querySelector('.row-order-pill');
@@ -503,13 +588,11 @@ function initClickableMenuDishes() {
                     rowPill.style.fontSize = '0.725rem';
                     rowPill.style.fontWeight = '700';
                     rowPill.style.border = '1px solid #E67E22';
-                    rowPill.style.cursor = 'pointer';
                     rowPill.style.transition = 'all 0.2s ease';
                     rowPill.style.flexShrink = '0';
                     row.appendChild(rowPill);
                 }
 
-                const isSel = isDishSelected(fullDishName);
                 spans[0].style.fontFamily = 'var(--font-serif)';
                 spans[0].style.fontSize = '1.05rem';
                 spans[0].style.color = '#111114';
@@ -519,6 +602,25 @@ function initClickableMenuDishes() {
                 spans[1].style.fontWeight = 'bold';
                 spans[1].style.color = '#D35400';
 
+                // If on Hold: Show Hold badge and disable clicking
+                if (itemStatus === 'hold') {
+                    row.style.opacity = '0.65';
+                    row.style.cursor = 'not-allowed';
+                    row.style.background = 'transparent';
+                    rowPill.innerHTML = 'Hold';
+                    rowPill.style.background = '#334155';
+                    rowPill.style.color = '#94A3B8';
+                    rowPill.style.borderColor = '#475569';
+                    rowPill.style.cursor = 'not-allowed';
+                    return;
+                }
+
+                // Normal Available / Ready state
+                row.style.opacity = '1';
+                row.style.cursor = 'pointer';
+                rowPill.style.cursor = 'pointer';
+
+                const isSel = isDishSelected(fullDishName);
                 if (isSel) {
                     row.style.background = 'rgba(230, 126, 34, 0.12)';
                     rowPill.innerHTML = '✓ Added';
@@ -535,6 +637,7 @@ function initClickableMenuDishes() {
                     row.dataset.hasClickListener = 'true';
                     row.addEventListener('click', (e) => {
                         e.stopPropagation();
+                        if (getItemAvailability(fullDishName) === 'hold' || getItemAvailability(sideName) === 'hold') return;
                         const dishObj = {
                             name: fullDishName,
                             price: sidePrice,
@@ -546,6 +649,13 @@ function initClickableMenuDishes() {
                     });
                 }
             });
+
+            if (visibleOptionCount === 0) {
+                card.style.opacity = '0.4';
+            } else {
+                card.style.opacity = '1';
+            }
+
         } else {
             // SINGLE DISH CARD (e.g., Pancake Breakfast, Barista Hot & Cold Drinks)
             const priceSpan = card.querySelector('span');
@@ -557,7 +667,9 @@ function initClickableMenuDishes() {
             const priceText = priceSpan.innerText.trim();
             const descText = descP ? descP.innerText.trim() : '';
 
-            card.style.cursor = 'pointer';
+            // Check Inventory Status
+            const itemStatus = getItemAvailability(dishName);
+
             card.style.display = 'flex';
             card.style.flexDirection = 'column';
             card.style.justifyContent = 'space-between';
@@ -592,10 +704,38 @@ function initClickableMenuDishes() {
                 orderBtn.style.fontSize = '0.8rem';
                 orderBtn.style.fontWeight = '700';
                 orderBtn.style.border = '1px solid #E67E22';
-                orderBtn.style.cursor = 'pointer';
                 orderBtn.style.transition = 'all 0.2s ease';
                 card.appendChild(orderBtn);
             }
+
+            // 1. UNAVAILABLE STATE -> Button disappears completely, card dimmed & unclickable
+            if (itemStatus === 'unavailable') {
+                card.style.opacity = '0.55';
+                card.style.cursor = 'default';
+                card.style.borderColor = 'var(--color-border-dark)';
+                orderBtn.style.display = 'none';
+                return;
+            }
+
+            // 2. HOLD STATE -> Button shows "Hold", disabled
+            if (itemStatus === 'hold') {
+                card.style.opacity = '0.75';
+                card.style.cursor = 'not-allowed';
+                card.style.borderColor = '#475569';
+                orderBtn.style.display = 'block';
+                orderBtn.innerHTML = 'Hold';
+                orderBtn.style.background = '#1E293B';
+                orderBtn.style.color = '#94A3B8';
+                orderBtn.style.borderColor = '#334155';
+                orderBtn.style.cursor = 'not-allowed';
+                return;
+            }
+
+            // 3. READY STATE -> Normal ordering
+            card.style.opacity = '1';
+            card.style.cursor = 'pointer';
+            orderBtn.style.display = 'block';
+            orderBtn.style.cursor = 'pointer';
 
             const selected = isDishSelected(dishName);
             if (selected) {
@@ -613,6 +753,7 @@ function initClickableMenuDishes() {
             if (!card.dataset.hasClickListener) {
                 card.dataset.hasClickListener = 'true';
                 card.addEventListener('click', (e) => {
+                    if (getItemAvailability(dishName) === 'hold' || getItemAvailability(dishName) === 'unavailable') return;
                     const dishObj = {
                         name: dishName,
                         price: priceText,
@@ -626,6 +767,16 @@ function initClickableMenuDishes() {
         }
     });
 }
+
+// Live Multi-Window & Multi-Tab Synchronization Listener
+window.addEventListener('storage', (e) => {
+    if (e.key === 'ribhouse_dish_inventory' || e.key === 'ribhouse_selected_cart') {
+        refreshAllDishCardsUI();
+        if (typeof renderSelectedOrderPage === 'function') {
+            renderSelectedOrderPage();
+        }
+    }
+});
 
 function refreshAllDishCardsUI() {
     initClickableMenuDishes();
@@ -1407,17 +1558,22 @@ function renderSelectedOrderPage() {
 
                 // Dynamic Side Choice (e.g. Ugali vs Chapati, or Rice vs Mukimo)
                 if (hasSide && sideOptions.length > 0) {
-                    if (!portion.side || !sideOptions.includes(portion.side)) {
-                        portion.side = sideOptions[0];
+                    // Filter out unavailable sides so they disappear completely from the customer's choice
+                    const availableSides = sideOptions.filter(opt => getItemAvailability(opt) !== 'unavailable');
+                    const validOptions = availableSides.length > 0 ? availableSides : sideOptions;
+
+                    if (!portion.side || !validOptions.includes(portion.side)) {
+                        portion.side = validOptions[0];
                     }
                     const currentSide = portion.side;
                     pControls += `<div class="custom-choice-pills">`;
-                    sideOptions.forEach(opt => {
+                    validOptions.forEach(opt => {
+                        const isHold = (getItemAvailability(opt) === 'hold');
                         const isActive = (currentSide === opt);
                         const escapedOpt = opt.replace(/'/g, "\\'");
                         pControls += `
-                            <button type="button" class="choice-pill ${isActive ? 'active' : ''}" onclick="setPortionSideOption('${item.id}', ${pIdx}, '${escapedOpt}')">
-                                <span class="pill-radio">${isActive ? '■' : '□'}</span> ${opt}
+                            <button type="button" class="choice-pill ${isActive ? 'active' : ''} ${isHold ? 'disabled-hold' : ''}" ${isHold ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : ''} onclick="setPortionSideOption('${item.id}', ${pIdx}, '${escapedOpt}')">
+                                <span class="pill-radio">${isActive ? '■' : '□'}</span> ${opt}${isHold ? ' (Hold)' : ''}
                             </button>
                         `;
                     });

@@ -1495,20 +1495,22 @@
                 return;
             }
 
-            if (submitBtn) {
-                submitBtn.disabled = false;
-                submitBtn.style.opacity = '1';
-            }
-
             let totalDishes = cart.length;
             let totalQty = 0;
             let grandTotal = 0;
             let html = '';
+            let unavailableItems = [];
 
             cart.forEach(item => {
                 const itemSubtotal = calculateSubtotal(item);
                 totalQty += item.qty;
                 grandTotal += itemSubtotal;
+
+                // Check Item Status
+                const mainStatus = typeof getItemAvailability === 'function' ? getItemAvailability(item.name) : 'ready';
+                if (mainStatus !== 'ready') {
+                    unavailableItems.push(`${item.name} (${mainStatus === 'hold' ? 'On Hold' : 'Unavailable'})`);
+                }
 
                 // Portion breakdown text
                 let portionText = '';
@@ -1516,7 +1518,13 @@
                     const parts = [];
                     item.portions.forEach((p, idx) => {
                         let opts = [];
-                        if (item.hasSide && p.side) opts.push(p.side);
+                        if (item.hasSide && p.side) {
+                            const sideStatus = typeof getItemAvailability === 'function' ? getItemAvailability(p.side) : 'ready';
+                            if (sideStatus !== 'ready') {
+                                unavailableItems.push(`${p.side} (${sideStatus === 'hold' ? 'On Hold' : 'Unavailable'})`);
+                            }
+                            opts.push(p.side);
+                        }
                         if (item.hasPrep && p.prep) opts.push(p.prep);
                         if (item.hasPairing && p.pairing && p.pairing !== 'none') {
                             opts.push(p.pairing.replace('_', ' + '));
@@ -1531,10 +1539,11 @@
                 }
 
                 html += `
-                    <div class="order-dish-row">
+                    <div class="order-dish-row ${mainStatus !== 'ready' ? 'dish-unavailable-warning' : ''}">
                         <div class="dish-info-left">
                             <span class="dish-title-text">${item.name}</span>
                             ${portionText ? `<span class="dish-portion-subtext">${portionText}</span>` : ''}
+                            ${mainStatus !== 'ready' ? `<span style="display:block; color:#EF4444; font-size:0.75rem; font-weight:700; margin-top:2px;">Currently ${mainStatus === 'hold' ? 'on Hold in Kitchen' : 'Out of Stock'}</span>` : ''}
                         </div>
                         <div class="dish-pricing-right">
                             <span class="dish-qty-badge">${item.qty}x</span>
@@ -1543,6 +1552,25 @@
                     </div>
                 `;
             });
+
+            if (unavailableItems.length > 0) {
+                html += `
+                    <div style="background:#FEF2F2; border:1px solid #FECACA; padding:12px; margin-top:14px; color:#991B1B; font-size:0.82rem; font-weight:700;">
+                        Notice: Some items in your order (${unavailableItems.join(', ')}) are currently paused or unavailable. Please adjust your order to proceed.
+                    </div>
+                `;
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.style.opacity = '0.5';
+                    submitBtn.style.cursor = 'not-allowed';
+                }
+            } else {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                    submitBtn.style.cursor = 'pointer';
+                }
+            }
 
             listEl.innerHTML = html;
             if (dishesCountEl) dishesCountEl.textContent = `${totalDishes} ${totalDishes === 1 ? 'Dish' : 'Dishes'}`;

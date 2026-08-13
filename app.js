@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(forceScrollToTop, 10);
     setTimeout(forceScrollToTop, 150);
 
+    initLiveInventoryListener();
     initSideDrawerNavigation();
     initMenuDishSearch();
     initScrollNavbar();
@@ -38,10 +39,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.addEventListener('load', () => {
     forceScrollToTop();
+    initLiveInventoryListener();
 });
 
 window.addEventListener('pageshow', () => {
     forceScrollToTop();
+    initLiveInventoryListener();
     initClickableMenuDishes();
     updateSelectionBarUI();
     initLocationSection();
@@ -551,13 +554,16 @@ async function pushCloudInventoryItem(itemId, status) {
 function initLiveInventoryListener() {
     fetchCloudInventory();
     
-    // Auto sync periodically in background
-    setInterval(fetchCloudInventory, 8000);
+    // Auto sync periodically in background every 3 seconds
+    if (!window._ribhouse_sync_interval) {
+        window._ribhouse_sync_interval = setInterval(fetchCloudInventory, 3000);
+    }
 
     // Try EventSource (SSE) for zero-latency live sync
     try {
-        if (window.EventSource) {
+        if (window.EventSource && !window._ribhouse_eventsource) {
             const evtSource = new EventSource(RIBHOUSE_CLOUD_SYNC_URL);
+            window._ribhouse_eventsource = evtSource;
             evtSource.addEventListener('put', (e) => {
                 try {
                     const parsed = JSON.parse(e.data);
@@ -585,6 +591,10 @@ function initLiveInventoryListener() {
             });
         }
     } catch (e) {}
+}
+
+if (typeof window !== 'undefined') {
+    initLiveInventoryListener();
 }
 
 function getItemAvailability(name) {

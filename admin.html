@@ -752,6 +752,7 @@
                 if (settingsTabBtn) settingsTabBtn.style.display = 'none';
             }
 
+            fetchCloudInventoryAdmin();
             renderInventoryCards();
             renderActiveOrders();
         }
@@ -765,16 +766,46 @@
             document.getElementById('admin-2fa-input').value = '';
         }
 
-        // --- 3. INVENTORY STATE MANAGEMENT (READY, HOLD, UNAVAILABLE) ---
+        // --- 3. INVENTORY STATE MANAGEMENT (READY, HOLD, UNAVAILABLE) & CLOUD SYNC ---
+        const RIBHOUSE_CLOUD_SYNC_URL = 'https://ribhouse-digital-menu-default-rtdb.firebaseio.com/inventory.json';
+
         function getInventoryState() {
             return JSON.parse(localStorage.getItem('ribhouse_dish_inventory') || '{}');
         }
 
-        function setItemStatus(itemId, newStatus) {
+        async function fetchCloudInventoryAdmin() {
+            try {
+                const res = await fetch(RIBHOUSE_CLOUD_SYNC_URL);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && typeof data === 'object') {
+                        const local = getInventoryState();
+                        const merged = { ...local, ...data };
+                        localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(merged));
+                        renderInventoryCards();
+                    }
+                }
+            } catch (e) {
+                // Offline fallback
+            }
+        }
+
+        async function setItemStatus(itemId, newStatus) {
             const inv = getInventoryState();
             inv[itemId] = newStatus;
             localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(inv));
             renderInventoryCards();
+
+            // Real-time Cloud Broadcast to All Customer Phones
+            try {
+                await fetch(RIBHOUSE_CLOUD_SYNC_URL, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ [itemId]: newStatus })
+                });
+            } catch (e) {
+                console.warn('Cloud sync offline; stored in local memory.');
+            }
         }
 
         function renderInventoryCards() {

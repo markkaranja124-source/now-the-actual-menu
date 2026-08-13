@@ -511,7 +511,7 @@ function resolveInventoryKey(name) {
 }
 
 // --- LIVE CLOUD INVENTORY SYNC ENGINE ---
-const RIBHOUSE_CLOUD_SYNC_URL = 'https://ribhouse-digital-menu-default-rtdb.firebaseio.com/inventory.json';
+const RIBHOUSE_CLOUD_SYNC_URL = 'https://ribhouse-admin-default-rtdb.firebaseio.com/inventory.json';
 
 // Fetch latest inventory from cloud on load & listen in real-time
 async function fetchCloudInventory() {

@@ -767,7 +767,7 @@
         }
 
         // --- 3. INVENTORY STATE MANAGEMENT (READY, HOLD, UNAVAILABLE) & CLOUD SYNC ---
-        const RIBHOUSE_CLOUD_SYNC_URL = 'https://ribhouse-digital-menu-default-rtdb.firebaseio.com/inventory.json';
+        const RIBHOUSE_CLOUD_SYNC_URL = 'https://ribhouse-admin-default-rtdb.firebaseio.com/inventory.json';
 
         function getInventoryState() {
             return JSON.parse(localStorage.getItem('ribhouse_dish_inventory') || '{}');

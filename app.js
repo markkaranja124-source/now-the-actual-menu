@@ -449,36 +449,40 @@ function getDishInventoryState() {
 
 function resolveInventoryKey(name) {
     const n = (name || '').toLowerCase().trim();
+    
+    // Exact Sides & Pairings
     if (n.includes('rice')) return 'side_rice';
+    if (n.includes('mukimo')) return 'side_mukimo';
+    if (n.includes('chapati')) return 'side_chapati';
+    if (n.includes('kachumbari')) return 'side_kachumbari';
+    if (n.includes('chips') || n.includes('fries')) {
+        if (n.includes('combo')) return 'chips_combo';
+        return 'side_chips';
+    }
     if (n.includes('ugali')) {
         if (n.includes('managu')) return 'ugali_managu';
         if (n.includes('sukuma') || n.includes('cabbage')) return 'ugali_sukuma_cabbage';
         return 'side_ugali';
     }
-    if (n.includes('chips') || n.includes('fries')) {
-        if (n.includes('combo')) return 'chips_combo';
-        return 'side_chips';
-    }
-    if (n.includes('mukimo')) return 'side_mukimo';
-    if (n.includes('chapati')) return 'side_chapati';
     if (n.includes('managu')) return 'side_managu';
-    if (n.includes('kachumbari')) return 'side_kachumbari';
     if (n.includes('sukuma')) return 'side_sukuma';
     if (n.includes('cabbage')) return 'side_cabbage';
 
-    if (n.includes('test dish')) return 'test_dish';
-    if (n.includes('choma beef')) return 'choma_beef_1kg';
-    if (n.includes('choma goat')) return 'choma_goat_1kg';
-    if (n.includes('chemsha goat')) return 'chemsha_goat_1kg';
+    // Choma & Meats
+    if (n.includes('goat') && (n.includes('choma') || n.includes('mbuzi'))) return 'choma_goat_1kg';
+    if (n.includes('beef') && n.includes('choma')) return 'choma_beef_1kg';
+    if (n.includes('chemsha')) return 'chemsha_goat_1kg';
     if (n.includes('tumbukiza')) return 'tumbukiza_1kg';
-    if (n.includes('chicken platter')) return 'chicken_platter_4';
-    if (n.includes('beef steak')) return 'beef_steak_grilled';
+    if (n.includes('chicken platter') || n.includes('platter')) return 'chicken_platter_4';
+    if (n.includes('beef steak') || n.includes('steak')) return 'beef_steak_grilled';
     if (n.includes('matumbo')) return 'matumbo_fry';
     if (n.includes('beef stew') || n.includes('beef fry')) return 'beef_stew_fry';
     if (n.includes('goat stew') || n.includes('goat fry')) return 'goat_stew_fry';
-    if (n.includes('chicken wet') || n.includes('chicken dry')) return 'chicken_wet_dry_fry';
-    if (n.includes('tilapia')) return 'tilapia_fry_whole';
+    if (n.includes('chicken wet') || n.includes('chicken dry') || n.includes('chicken fry')) return 'chicken_wet_dry_fry';
+    if (n.includes('tilapia') || n.includes('fish')) return 'tilapia_fry_whole';
+    if (n.includes('test')) return 'test_dish';
 
+    // Breakfast
     if (n.includes('pancake')) return 'pancake_breakfast';
     if (n.includes('mini breakfast')) return 'mini_breakfast';
     if (n.includes('rib house breakfast')) return 'rib_house_breakfast';
@@ -490,6 +494,7 @@ function resolveInventoryKey(name) {
     if (n.includes('farmers choice')) return 'farmers_choice';
     if (n.includes('british breakfast')) return 'british_breakfast';
 
+    // Barista Drinks
     if (n.includes('coffee white')) return 'house_coffee_white';
     if (n.includes('coffee black')) return 'house_coffee_black';
     if (n.includes('cappuccino')) return 'cappuccino_single';

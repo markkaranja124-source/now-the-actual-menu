@@ -790,6 +790,52 @@
             }
         }
 
+        // Live EventSource (SSE) Listener for Admin Portal
+        function initAdminLiveCloudStream() {
+            fetchCloudInventoryAdmin();
+            try {
+                if (window.EventSource && !window._admin_eventsource) {
+                    const evtSource = new EventSource(RIBHOUSE_CLOUD_SYNC_URL);
+                    window._admin_eventsource = evtSource;
+
+                    function processAdminLiveEvent(e) {
+                        try {
+                            const parsed = JSON.parse(e.data);
+                            if (!parsed) return;
+                            const local = getInventoryState();
+                            let hasChanged = false;
+
+                            if (parsed.path === '/' || parsed.path === '') {
+                                if (parsed.data && typeof parsed.data === 'object') {
+                                    Object.assign(local, parsed.data);
+                                    hasChanged = true;
+                                }
+                            } else if (parsed.path) {
+                                const cleanKey = parsed.path.replace(/^\//, '').split('/')[0];
+                                if (cleanKey && parsed.data !== undefined) {
+                                    local[cleanKey] = parsed.data;
+                                    hasChanged = true;
+                                }
+                            }
+
+                            if (hasChanged) {
+                                localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(local));
+                                renderInventoryCards();
+                            }
+                        } catch(err) {}
+                    }
+
+                    evtSource.addEventListener('put', processAdminLiveEvent);
+                    evtSource.addEventListener('patch', processAdminLiveEvent);
+                    evtSource.onmessage = processAdminLiveEvent;
+                }
+            } catch(e) {}
+        }
+
+        if (typeof window !== 'undefined') {
+            initAdminLiveCloudStream();
+        }
+
         async function setItemStatus(itemId, newStatus) {
             const inv = getInventoryState();
             inv[itemId] = newStatus;

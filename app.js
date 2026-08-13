@@ -550,45 +550,55 @@ async function pushCloudInventoryItem(itemId, status) {
     }
 }
 
-// Live listener for all customer devices across Kenya
+// Live listener for all customer devices across Kenya (Zero-Latency Real-Time SSE Stream)
 function initLiveInventoryListener() {
     fetchCloudInventory();
     
-    // Auto sync periodically in background every 3 seconds
+    // Auto sync periodically in background every 2 seconds as backup
     if (!window._ribhouse_sync_interval) {
-        window._ribhouse_sync_interval = setInterval(fetchCloudInventory, 3000);
+        window._ribhouse_sync_interval = setInterval(fetchCloudInventory, 2000);
     }
 
-    // Try EventSource (SSE) for zero-latency live sync
+    // Native Realtime EventSource (SSE Stream) for 0.05-second instant live updates
     try {
         if (window.EventSource && !window._ribhouse_eventsource) {
             const evtSource = new EventSource(RIBHOUSE_CLOUD_SYNC_URL);
             window._ribhouse_eventsource = evtSource;
-            evtSource.addEventListener('put', (e) => {
+
+            function processLiveCloudPayload(e) {
                 try {
                     const parsed = JSON.parse(e.data);
-                    if (parsed && parsed.data && typeof parsed.data === 'object') {
-                        const local = getDishInventoryState();
-                        const merged = { ...local, ...parsed.data };
-                        localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(merged));
+                    if (!parsed) return;
+                    const local = getDishInventoryState();
+                    let hasChanged = false;
+
+                    if (parsed.path === '/' || parsed.path === '') {
+                        if (parsed.data && typeof parsed.data === 'object') {
+                            Object.assign(local, parsed.data);
+                            hasChanged = true;
+                        }
+                    } else if (parsed.path) {
+                        // Single item key updated e.g. path: "/choma_goat_1kg", data: "hold"
+                        const cleanKey = parsed.path.replace(/^\//, '').split('/')[0];
+                        if (cleanKey && parsed.data !== undefined) {
+                            local[cleanKey] = parsed.data;
+                            hasChanged = true;
+                        }
+                    }
+
+                    if (hasChanged) {
+                        localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(local));
                         refreshAllDishCardsUI();
-                    } else if (parsed && parsed.path === '/' && parsed.data) {
-                        localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(parsed.data));
-                        refreshAllDishCardsUI();
+                        if (typeof renderSelectedOrderPage === 'function') {
+                            renderSelectedOrderPage();
+                        }
                     }
                 } catch(err) {}
-            });
-            evtSource.addEventListener('patch', (e) => {
-                try {
-                    const parsed = JSON.parse(e.data);
-                    if (parsed && parsed.data) {
-                        const local = getDishInventoryState();
-                        const merged = { ...local, ...parsed.data };
-                        localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(merged));
-                        refreshAllDishCardsUI();
-                    }
-                } catch(err) {}
-            });
+            }
+
+            evtSource.addEventListener('put', processLiveCloudPayload);
+            evtSource.addEventListener('patch', processLiveCloudPayload);
+            evtSource.onmessage = processLiveCloudPayload;
         }
     } catch (e) {}
 }

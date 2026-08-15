@@ -100,6 +100,10 @@
                         <span class="drawer-link-text">PLACE YOUR ORDER PAGE</span>
                         <span class="drawer-link-arrow">&rsaquo;</span>
                     </a>
+                    <a href="javascript:void(0)" onclick="openCustomerFeedbackModal()" class="drawer-link" style="color: #FF8400; font-weight: 700;">
+                        <span class="drawer-link-text">⭐ GUEST REVIEWS & FEEDBACK</span>
+                        <span class="drawer-link-arrow">&rsaquo;</span>
+                    </a>
                 </nav>
             </div>
         </div>
@@ -1620,8 +1624,8 @@
     -->
 
     <!-- Floating Share Feedback Button (Bottom Left) -->
-    <button class="feedback-trigger-btn" id="feedback-trigger-btn" aria-label="Share Feedback">
-        <span class="feedback-label">Share Feedback</span>
+    <button class="feedback-trigger-btn" id="feedback-trigger-btn" onclick="openCustomerFeedbackModal()" aria-label="Share Feedback">
+        <span class="feedback-label">⭐ Share Feedback</span>
     </button>
 
     <!-- Floating Your Order Button (Bottom Right - Matching Share Feedback Look & Feel) -->

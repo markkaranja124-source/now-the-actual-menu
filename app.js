@@ -2088,26 +2088,52 @@ function initCustomerFeedbackSystem() {
     trackDailyUniqueVisitor();
 
     // B. CUSTOMER FEEDBACK MODAL OPEN / CLOSE
+    window.openCustomerFeedbackModal = function() {
+        const overlay = document.getElementById('feedback-modal-overlay');
+        const form = document.getElementById('customer-feedback-form');
+        const success = document.getElementById('feedback-success-msg');
+        if (overlay) {
+            overlay.classList.add('active');
+            if (form) form.style.display = 'flex';
+            if (success) success.style.display = 'none';
+        } else {
+            window.location.href = 'index.html?open=feedback';
+        }
+    };
+
+    window.closeCustomerFeedbackModal = function() {
+        const overlay = document.getElementById('feedback-modal-overlay');
+        if (overlay) overlay.classList.remove('active');
+    };
+
     if (feedbackTrigger && feedbackModalOverlay) {
-        feedbackTrigger.addEventListener('click', () => {
-            feedbackModalOverlay.classList.add('active');
-            if (feedbackForm) feedbackForm.style.display = 'flex';
-            if (successMsgContainer) successMsgContainer.style.display = 'none';
+        feedbackTrigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.openCustomerFeedbackModal();
         });
     }
 
     if (feedbackCloseBtn && feedbackModalOverlay) {
         feedbackCloseBtn.addEventListener('click', () => {
-            feedbackModalOverlay.classList.remove('active');
+            window.closeCustomerFeedbackModal();
         });
         feedbackModalOverlay.addEventListener('click', (e) => {
-            if (e.target === feedbackModalOverlay) feedbackModalOverlay.classList.remove('active');
+            if (e.target === feedbackModalOverlay) window.closeCustomerFeedbackModal();
         });
     }
 
     if (closeSuccessBtn && feedbackModalOverlay) {
         closeSuccessBtn.addEventListener('click', () => {
-            feedbackModalOverlay.classList.remove('active');
+            window.closeCustomerFeedbackModal();
+        });
+    }
+
+    // Auto-open modal if URL contains ?open=feedback or hash #feedback/#reviews
+    if (window.location.search.includes('open=feedback') || window.location.hash === '#feedback' || window.location.hash === '#reviews') {
+        setTimeout(() => {
+            window.openCustomerFeedbackModal();
+        }, 300);
+    }
         });
     }
 

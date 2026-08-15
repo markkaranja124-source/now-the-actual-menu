@@ -31,6 +31,7 @@
             --color-ready: #10B981;
             --color-hold: #F59E0B;
             --color-unavail: #EF4444;
+            --color-gold: #D4AF37;
         }
 
         *, *::before, *::after {
@@ -161,7 +162,7 @@
             border-color: var(--color-orange-border);
         }
 
-        /* Category Filter Tabs Bar (Ordered Exactly as Main Menu) */
+        /* Category Filter Tabs Bar */
         .category-filters-bar {
             display: flex;
             gap: 8px;
@@ -217,28 +218,6 @@
         .search-input-box:focus {
             border-color: var(--color-orange-dark);
             box-shadow: 0 2px 12px rgba(230, 126, 34, 0.2);
-        }
-
-        .status-legend-bar {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        .legend-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .legend-dot {
-            width: 8px;
-            height: 8px;
-            display: inline-block;
         }
 
         /* Dishes Inventory Grid */
@@ -450,12 +429,274 @@
             color: #FFFFFF;
         }
 
-        /* 2-Role Login Gate Modal Overlay */
+        /* ------------------------------------------------------------- */
+        /* CUSTOMER REVIEWS & OWNER ANALYTICS SECTION                    */
+        /* ------------------------------------------------------------- */
+        .admin-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .admin-stat-card {
+            background: #FFFFFF;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stat-num {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-orange-dark);
+            line-height: 1.1;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .admin-actions-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .admin-action-btn {
+            background: var(--color-orange);
+            color: #FFFFFF;
+            border: 1px solid var(--color-orange);
+            padding: 10px 18px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .admin-action-btn:hover {
+            background: var(--color-orange-dark);
+            border-color: var(--color-orange-dark);
+        }
+
+        .admin-action-btn.secondary {
+            background: #FFFFFF;
+            color: var(--text-dark);
+            border-color: var(--light-border);
+        }
+
+        .admin-action-btn.secondary:hover {
+            border-color: var(--color-orange);
+            color: var(--color-orange-dark);
+        }
+
+        .admin-action-btn.danger {
+            background: #FFFFFF;
+            color: var(--color-unavail);
+            border-color: var(--color-unavail);
+        }
+
+        .admin-action-btn.danger:hover {
+            background: var(--color-unavail);
+            color: #FFFFFF;
+        }
+
+        .feedback-feed-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+        }
+
+        .feedback-card {
+            background: #FFFFFF;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .fb-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .fb-dish-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-orange-dark);
+            text-transform: uppercase;
+        }
+
+        .fb-stars {
+            color: #F59E0B;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+        }
+
+        .fb-body-text {
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            line-height: 1.4;
+            font-style: italic;
+        }
+
+        .fb-footer {
+            border-top: 1px dashed var(--light-border);
+            padding-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .fb-group-badge {
+            background: rgba(230, 126, 34, 0.1);
+            color: var(--color-orange-dark);
+            padding: 2px 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* ------------------------------------------------------------- */
+        /* SECURITY SETTINGS & REAL-TIME PASSWORD VALIDATOR              */
+        /* ------------------------------------------------------------- */
+        .settings-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 24px;
+        }
+
+        .settings-box {
+            background: #FFFFFF;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+            padding: 28px;
+        }
+
+        .settings-heading {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--color-orange-dark);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .settings-sub {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        /* Password Requirements Checklist */
+        .password-requirements-box {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            padding: 14px 16px;
+            margin: 12px 0 18px 0;
+        }
+
+        .pwd-req-title {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .pwd-req-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .pwd-req-item {
+            font-size: 0.76rem;
+            color: #64748B;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .pwd-req-item .req-icon {
+            font-size: 0.85rem;
+            font-weight: 800;
+            width: 14px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .pwd-req-item.met {
+            color: #059669;
+            font-weight: 700;
+        }
+
+        .pwd-req-item.met .req-icon {
+            color: #10B981;
+        }
+
+        .pwd-match-indicator {
+            font-size: 0.75rem;
+            margin-top: 6px;
+            font-weight: 700;
+            display: none;
+        }
+
+        .pwd-match-indicator.match {
+            display: block;
+            color: #10B981;
+        }
+
+        .pwd-match-indicator.mismatch {
+            display: block;
+            color: #EF4444;
+        }
+
+        /* ------------------------------------------------------------- */
+        /* 2-ROLE LOGIN GATE MODAL OVERLAY                               */
+        /* ------------------------------------------------------------- */
         .auth-gate-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(17, 17, 20, 0.6);
-            backdrop-filter: blur(12px);
+            background: rgba(17, 17, 20, 0.65);
+            backdrop-filter: blur(14px);
             z-index: 1000;
             display: flex;
             align-items: center;
@@ -466,7 +707,7 @@
         .auth-gate-box {
             background: #FFFFFF;
             border: 2px solid var(--color-orange);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
             max-width: 440px;
             width: 100%;
             padding: 36px 28px;
@@ -519,16 +760,16 @@
             border: 1px solid #CBD5E1;
             color: var(--text-dark);
             padding: 12px 16px;
-            font-size: 0.95rem;
-            text-align: center;
-            letter-spacing: 2px;
+            font-size: 0.92rem;
             margin-bottom: 14px;
             outline: none;
+            transition: all 0.2s;
         }
 
         .auth-input:focus {
             border-color: var(--color-orange);
             background: #FFFFFF;
+            box-shadow: 0 0 0 1px var(--color-orange);
         }
 
         .btn-auth-submit {
@@ -550,12 +791,85 @@
             border-color: var(--color-orange-dark);
         }
 
+        .btn-auth-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
         .auth-error-msg {
             color: var(--color-unavail);
+            background: #FEF2F2;
+            border: 1px solid #FCA5A5;
+            padding: 10px 14px;
             font-size: 0.78rem;
             font-weight: 700;
-            margin-top: 12px;
+            margin-top: 14px;
             display: none;
+            text-align: center;
+        }
+
+        .auth-success-msg {
+            color: #065F46;
+            background: #ECFDF5;
+            border: 1px solid #6EE7B7;
+            padding: 10px 14px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-top: 14px;
+            display: none;
+            text-align: center;
+        }
+
+        /* ------------------------------------------------------------- */
+        /* DAILY SUMMARY REPORT MODAL                                    */
+        /* ------------------------------------------------------------- */
+        .daily-report-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(17, 17, 20, 0.75);
+            backdrop-filter: blur(10px);
+            z-index: 1050;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .daily-report-overlay.active {
+            display: flex;
+        }
+
+        .daily-report-modal {
+            background: #FFFFFF;
+            border: 2px solid var(--color-orange);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+            max-width: 680px;
+            width: 100%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .daily-report-header {
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--light-border);
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .daily-report-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .report-sheet {
+            border: 1px solid #CBD5E1;
+            padding: 24px;
+            background: #FAFAFA;
         }
     </style>
 </head>
@@ -587,6 +901,9 @@
             <button type="button" class="portal-tab-btn" id="tab-btn-orders" onclick="switchPortalTab('orders')">
                 Live Kitchen Orders (<span id="active-orders-count">0</span>)
             </button>
+            <button type="button" class="portal-tab-btn" id="tab-btn-feedback" onclick="switchPortalTab('feedback')" style="display: none;">
+                Customer Reviews & AI Analytics (<span id="tab-feedback-count">0</span>)
+            </button>
             <button type="button" class="portal-tab-btn" id="tab-btn-settings" onclick="switchPortalTab('settings')" style="display: none;">
                 Security & Settings
             </button>
@@ -594,7 +911,6 @@
 
         <!-- TAB 1: FULL DISH INVENTORY & AVAILABILITY ENGINE -->
         <section id="section-inventory">
-            
             <!-- Category Filter Tabs Bar (Ordered Exactly as Menu) -->
             <div class="category-filters-bar">
                 <button type="button" class="btn-cat-filter active" onclick="filterCategory('all', this)">All Items (85)</button>
@@ -612,7 +928,7 @@
                 <input type="text" id="inv-search-input" class="search-input-box" placeholder="Search dish, side, drink..." oninput="handleSearchInventory(this.value)">
             </div>
 
-            <!-- Inventory Cards Grid (Populated via JS) -->
+            <!-- Inventory Cards Grid -->
             <div class="inventory-grid" id="inventory-dishes-grid">
                 <!-- Populated via JS -->
             </div>
@@ -625,30 +941,121 @@
             </div>
         </section>
 
-        <!-- TAB 3: ADMIN SETTINGS & SECURITY PIN CHANGE (MASTER ADMIN ONLY) -->
+        <!-- TAB 3: CUSTOMER REVIEWS & AI ANALYTICS (MASTER ADMIN / OWNER EXCLUSIVE) -->
+        <section id="section-feedback" style="display: none;">
+            <!-- Real-Time Stats Grid -->
+            <div class="admin-stats-grid">
+                <div class="admin-stat-card">
+                    <span class="stat-num" id="stat-total-reviews">0</span>
+                    <span class="stat-label">Total Verified Reviews</span>
+                </div>
+                <div class="admin-stat-card">
+                    <span class="stat-num" id="stat-avg-rating">5.0 ⭐</span>
+                    <span class="stat-label">Average Customer Rating</span>
+                </div>
+                <div class="admin-stat-card">
+                    <span class="stat-num" id="stat-top-dish">-</span>
+                    <span class="stat-label">Top Favorite Dish</span>
+                </div>
+                <div class="admin-stat-card">
+                    <span class="stat-num" id="stat-database-status">Connected</span>
+                    <span class="stat-label">Database Store</span>
+                </div>
+            </div>
+
+            <!-- Actions Bar -->
+            <div class="admin-actions-bar">
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" class="admin-action-btn" onclick="openDailyReportModal()">Export Daily Summary Report</button>
+                    <button type="button" class="admin-action-btn secondary" onclick="loadAdminFeedback()">Refresh Feed</button>
+                </div>
+                <button type="button" class="admin-action-btn danger" onclick="handleClearAllFeedback()">Clear Reviews</button>
+            </div>
+
+            <!-- Feedback Feed Grid -->
+            <div class="feedback-feed-grid" id="feedback-feed-grid">
+                <!-- Populated via JS -->
+            </div>
+        </section>
+
+        <!-- TAB 4: ADMIN SETTINGS & REAL-TIME PASSWORD VALIDATOR (MASTER ADMIN ONLY) -->
         <section id="section-settings" style="display: none;">
-            <div style="max-width: 540px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px;">
-                <h3 style="font-size: 1.1rem; text-transform: uppercase; color: var(--color-orange-dark); margin-bottom: 16px;">Portal Security Settings</h3>
+            <div class="settings-container">
                 
-                <form id="settings-form" onsubmit="handleSaveSettings(event)">
-                    <div style="margin-bottom: 16px;">
-                        <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px;">Master Admin PIN</label>
-                        <input type="password" id="set-admin-pin" class="auth-input" style="text-align: left; letter-spacing: normal;" placeholder="Default: 4977" required>
-                    </div>
+                <!-- 1. Master Admin Password Upgrade Form -->
+                <div class="settings-box">
+                    <h3 class="settings-heading">Administrator Password</h3>
+                    <p class="settings-sub">Enforce strict 12+ character complexity standards with salted Bcrypt hashing.</p>
 
-                    <div style="margin-bottom: 16px;">
-                        <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px;">2FA Security Passkey</label>
-                        <input type="text" id="set-admin-2fa" class="auth-input" style="text-align: left; letter-spacing: normal;" placeholder="Default: RH9921" required>
-                    </div>
+                    <form id="admin-password-change-form" onsubmit="handleChangeAdminPassword(event)">
+                        <div class="form-group">
+                            <label class="form-label">Current Master Password</label>
+                            <input type="password" id="current-admin-pass" class="auth-input" placeholder="Enter current master password" required autocomplete="current-password">
+                        </div>
 
-                    <div style="margin-bottom: 24px;">
-                        <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px;">Kitchen Staff PIN (Chef Access)</label>
-                        <input type="password" id="set-kitchen-pin" class="auth-input" style="text-align: left; letter-spacing: normal;" placeholder="Default: 1234" required>
-                    </div>
+                        <div class="form-group">
+                            <label class="form-label">New Master Password</label>
+                            <input type="password" id="new-admin-pass" class="auth-input" placeholder="Create strong 12+ character password" required autocomplete="new-password" oninput="handlePasswordComplexityLiveCheck(this.value)">
+                            
+                            <!-- Real-time Interactive Password Requirements Checklist -->
+                            <div class="password-requirements-box">
+                                <div class="pwd-req-title">Password Security Requirements</div>
+                                <ul class="pwd-req-list">
+                                    <li class="pwd-req-item" id="req-length">
+                                        <span class="req-icon">○</span> At least 12 characters long
+                                    </li>
+                                    <li class="pwd-req-item" id="req-upper">
+                                        <span class="req-icon">○</span> At least one uppercase letter (A-Z)
+                                    </li>
+                                    <li class="pwd-req-item" id="req-lower">
+                                        <span class="req-icon">○</span> At least one lowercase letter (a-z)
+                                    </li>
+                                    <li class="pwd-req-item" id="req-num">
+                                        <span class="req-icon">○</span> At least one number (0-9)
+                                    </li>
+                                    <li class="pwd-req-item" id="req-spec">
+                                        <span class="req-icon">○</span> At least one special character (@, #, $, %, !, &, etc.)
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
 
-                    <button type="submit" class="btn-auth-submit">Save Portal Settings</button>
-                    <div id="settings-success-msg" style="display: none; color: #10B981; font-weight: 700; font-size: 0.82rem; margin-top: 12px; text-align: center;">Settings updated successfully!</div>
-                </form>
+                        <div class="form-group">
+                            <label class="form-label">Confirm New Password</label>
+                            <input type="password" id="confirm-admin-pass" class="auth-input" placeholder="Re-type new password" required autocomplete="new-password" oninput="handlePasswordMatchLiveCheck()">
+                            <div class="pwd-match-indicator" id="pwd-match-indicator"></div>
+                        </div>
+
+                        <button type="submit" class="btn-auth-submit" id="btn-save-password">Update Administrator Password</button>
+                        <div class="auth-error-msg" id="pwd-error-msg"></div>
+                        <div class="auth-success-msg" id="pwd-success-msg"></div>
+                    </form>
+                </div>
+
+                <!-- 2. Kitchen Staff Quick PIN Form -->
+                <div class="settings-box">
+                    <h3 class="settings-heading">Kitchen Staff PIN</h3>
+                    <p class="settings-sub">Set the 4 to 8 digit quick-access PIN for kitchen chefs and live order viewers.</p>
+
+                    <form id="kitchen-pin-change-form" onsubmit="handleChangeKitchenPin(event)">
+                        <div class="form-group">
+                            <label class="form-label">New Kitchen Staff PIN</label>
+                            <input type="password" id="set-kitchen-pin" class="auth-input" placeholder="Enter 4-8 digit PIN (e.g. 1234)" maxlength="8" required pattern="\d{4,8}" title="PIN must be between 4 and 8 digits">
+                        </div>
+
+                        <button type="submit" class="btn-auth-submit">Update Kitchen PIN</button>
+                        <div class="auth-error-msg" id="kpin-error-msg"></div>
+                        <div class="auth-success-msg" id="kpin-success-msg"></div>
+                    </form>
+
+                    <div style="margin-top: 32px; border-top: 1px solid #E2E8F0; padding-top: 18px;">
+                        <h4 style="font-size: 0.82rem; text-transform: uppercase; color: var(--text-dark); margin-bottom: 6px;">Session Security Policy</h4>
+                        <p style="font-size: 0.75rem; color: var(--text-muted);">
+                            Active sessions automatically expire after <strong>30 minutes of idle inactivity</strong>. Failed login attempts trigger a 15-minute temporary lockout after 5 consecutive failures.
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -670,20 +1077,51 @@
                 </button>
             </div>
 
-            <!-- Kitchen Staff Login Form (Quick 4-Digit PIN) -->
+            <!-- Kitchen Staff Login Form (Quick 4-8 Digit PIN) -->
             <form id="kitchen-login-form" onsubmit="handleKitchenAuth(event)">
                 <input type="password" id="kitchen-pin-input" class="auth-input" placeholder="Enter Kitchen Staff PIN" maxlength="8" required autocomplete="current-password">
-                <button type="submit" class="btn-auth-submit">Enter Kitchen Portal</button>
+                <button type="submit" class="btn-auth-submit" id="btn-submit-kitchen">Enter Kitchen Portal</button>
             </form>
 
-            <!-- Master Admin Login Form (PIN + 2FA Security Key) -->
+            <!-- Master Admin Login Form (Identifier + Secure Password) -->
             <form id="admin-login-form" onsubmit="handleAdminAuth(event)" style="display: none;">
-                <input type="password" id="admin-pin-input" class="auth-input" placeholder="Master Admin PIN" required autocomplete="current-password">
-                <input type="password" id="admin-2fa-input" class="auth-input" placeholder="2FA Security Passkey" required>
-                <button type="submit" class="btn-auth-submit">Authenticate Master Admin</button>
+                <input type="text" id="admin-username-input" class="auth-input" placeholder="Administrator Username / Email" value="admin" required autocomplete="username">
+                <input type="password" id="admin-password-input" class="auth-input" placeholder="Master Administrator Password" required autocomplete="current-password">
+                <button type="submit" class="btn-auth-submit" id="btn-submit-admin">Authenticate Master Admin</button>
             </form>
 
-            <div class="auth-error-msg" id="auth-error-msg">Incorrect credentials. Access denied.</div>
+            <div class="auth-error-msg" id="auth-error-msg">Invalid email or password.</div>
+        </div>
+    </div>
+
+    <!-- DAILY SUMMARY REPORT MODAL -->
+    <div class="daily-report-overlay" id="daily-report-overlay">
+        <div class="daily-report-modal">
+            <div class="daily-report-header">
+                <div>
+                    <h3 style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.3rem; color: var(--color-orange-dark); text-transform: uppercase;">Daily Customer Summary Report</h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted);">Executive daily customer insights & feedback report.</p>
+                </div>
+                <button type="button" onclick="closeDailyReportModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #475569;">&times;</button>
+            </div>
+            <div class="daily-report-body">
+                <div class="report-sheet" id="printable-report-sheet">
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--color-orange); padding-bottom: 12px; margin-bottom: 16px;">
+                        <div>
+                            <h2 style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.35rem; color: var(--color-orange-dark); text-transform: uppercase;">RIB HOUSE WOOD-FIRED RESTAURANT</h2>
+                            <p style="font-size: 0.78rem; color: var(--text-muted);">Executive Daily Performance & Customer Review Summary</p>
+                        </div>
+                        <img src="logo.png" alt="Rib House Logo" style="height: 36px;">
+                    </div>
+                    <div id="report-content-body">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 14px 24px; background: #F8FAFC; border-top: 1px solid var(--light-border); display: flex; justify-content: flex-end; gap: 8px;">
+                <button type="button" class="admin-action-btn secondary" onclick="closeDailyReportModal()">Close</button>
+                <button type="button" class="admin-action-btn" onclick="window.print()">Print / Save as PDF</button>
+            </div>
         </div>
     </div>
 
@@ -802,14 +1240,8 @@
         // --- 2. AUTHENTICATION & ROLE MANAGEMENT ---
         let currentAuthRole = null; // 'admin' or 'kitchen'
         let currentSelectedCategory = 'all';
-
-        function getSecuritySettings() {
-            return JSON.parse(localStorage.getItem('ribhouse_portal_security') || JSON.stringify({
-                adminPin: '4977',
-                admin2fa: 'RH9921',
-                kitchenPin: '1234'
-            }));
-        }
+        let idleTimer = null;
+        const IDLE_TIMEOUT_MS = 30 * 60 * 1000; // 30 Minutes Inactivity Expiry
 
         function selectLoginRole(role) {
             const btnKitchen = document.getElementById('role-tab-kitchen');
@@ -832,36 +1264,76 @@
             }
         }
 
-        function handleKitchenAuth(e) {
+        // Kitchen Auth Handler (API Request)
+        async function handleKitchenAuth(e) {
             e.preventDefault();
             const pin = document.getElementById('kitchen-pin-input').value.trim();
-            const sec = getSecuritySettings();
             const errMsg = document.getElementById('auth-error-msg');
+            const submitBtn = document.getElementById('btn-submit-kitchen');
 
-            if (pin === sec.kitchenPin || pin === '1234') {
-                authenticateSuccess('kitchen');
-            } else {
-                if (errMsg) {
-                    errMsg.style.display = 'block';
-                    errMsg.textContent = 'Incorrect Kitchen Staff PIN.';
+            if (errMsg) errMsg.style.display = 'none';
+            if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Verifying...'; }
+
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ role: 'kitchen', pin: pin })
+                });
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    authenticateSuccess('kitchen');
+                } else {
+                    if (errMsg) {
+                        errMsg.textContent = data.message || 'Invalid credentials.';
+                        errMsg.style.display = 'block';
+                    }
                 }
+            } catch (err) {
+                if (errMsg) {
+                    errMsg.textContent = 'Connection error. Please try again.';
+                    errMsg.style.display = 'block';
+                }
+            } finally {
+                if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Enter Kitchen Portal'; }
             }
         }
 
-        function handleAdminAuth(e) {
+        // Master Admin Auth Handler (API Request)
+        async function handleAdminAuth(e) {
             e.preventDefault();
-            const pin = document.getElementById('admin-pin-input').value.trim();
-            const key2fa = document.getElementById('admin-2fa-input').value.trim();
-            const sec = getSecuritySettings();
+            const username = document.getElementById('admin-username-input').value.trim();
+            const password = document.getElementById('admin-password-input').value;
             const errMsg = document.getElementById('auth-error-msg');
+            const submitBtn = document.getElementById('btn-submit-admin');
 
-            if ((pin === sec.adminPin || pin === '4977') && (key2fa.toUpperCase() === sec.admin2fa.toUpperCase() || key2fa === 'RH9921')) {
-                authenticateSuccess('admin');
-            } else {
-                if (errMsg) {
-                    errMsg.style.display = 'block';
-                    errMsg.textContent = 'Incorrect Master PIN or 2FA Security Key.';
+            if (errMsg) errMsg.style.display = 'none';
+            if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Authenticating...'; }
+
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ role: 'admin', username: username, password: password })
+                });
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    authenticateSuccess('admin');
+                } else {
+                    if (errMsg) {
+                        errMsg.textContent = data.message || 'Invalid email or password.';
+                        errMsg.style.display = 'block';
+                    }
                 }
+            } catch (err) {
+                if (errMsg) {
+                    errMsg.textContent = 'Connection error. Please try again.';
+                    errMsg.style.display = 'block';
+                }
+            } finally {
+                if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Authenticate Master Admin'; }
             }
         }
 
@@ -869,9 +1341,10 @@
             currentAuthRole = role;
             document.getElementById('auth-gate-modal').style.display = 'none';
             document.getElementById('admin-main-content').style.display = 'block';
-            
+
             const badge = document.getElementById('nav-role-badge');
             const settingsTabBtn = document.getElementById('tab-btn-settings');
+            const feedbackTabBtn = document.getElementById('tab-btn-feedback');
 
             if (role === 'admin') {
                 if (badge) {
@@ -881,6 +1354,8 @@
                     badge.style.borderColor = '#E67E22';
                 }
                 if (settingsTabBtn) settingsTabBtn.style.display = 'block';
+                if (feedbackTabBtn) feedbackTabBtn.style.display = 'block';
+                loadAdminFeedback();
             } else {
                 if (badge) {
                     badge.textContent = 'KITCHEN CREW';
@@ -889,20 +1364,62 @@
                     badge.style.borderColor = '#10B981';
                 }
                 if (settingsTabBtn) settingsTabBtn.style.display = 'none';
+                if (feedbackTabBtn) feedbackTabBtn.style.display = 'none';
             }
 
             fetchCloudInventoryAdmin();
             renderInventoryCards();
             renderActiveOrders();
+            startInactivityTimer();
         }
 
-        function handleLogout() {
+        async function handleLogout() {
             currentAuthRole = null;
+            try {
+                await fetch('/api/auth/logout', { method: 'POST' });
+            } catch (e) {}
+
             document.getElementById('auth-gate-modal').style.display = 'flex';
             document.getElementById('admin-main-content').style.display = 'none';
             document.getElementById('kitchen-pin-input').value = '';
-            document.getElementById('admin-pin-input').value = '';
-            document.getElementById('admin-2fa-input').value = '';
+            document.getElementById('admin-password-input').value = '';
+            const errMsg = document.getElementById('auth-error-msg');
+            if (errMsg) errMsg.style.display = 'none';
+        }
+
+        // Automatic Inactivity Session Idle Timer (30 minutes)
+        function startInactivityTimer() {
+            function resetTimer() {
+                if (idleTimer) clearTimeout(idleTimer);
+                if (currentAuthRole) {
+                    idleTimer = setTimeout(() => {
+                        alert('Session expired due to 30 minutes of inactivity. Please sign in again.');
+                        handleLogout();
+                    }, IDLE_TIMEOUT_MS);
+                }
+            }
+
+            window.addEventListener('mousemove', resetTimer, { passive: true });
+            window.addEventListener('keydown', resetTimer, { passive: true });
+            window.addEventListener('click', resetTimer, { passive: true });
+            window.addEventListener('scroll', resetTimer, { passive: true });
+            resetTimer();
+        }
+
+        // Check active session on initial page load
+        async function checkInitialSession() {
+            try {
+                const res = await fetch('/api/auth/session');
+                const data = await res.json();
+                if (data.authenticated && data.role) {
+                    authenticateSuccess(data.role);
+                } else {
+                    document.getElementById('auth-gate-modal').style.display = 'flex';
+                    document.getElementById('admin-main-content').style.display = 'none';
+                }
+            } catch (e) {
+                document.getElementById('auth-gate-modal').style.display = 'flex';
+            }
         }
 
         // --- 3. INVENTORY STATE MANAGEMENT & REAL-TIME CLOUD SYNC ---
@@ -929,7 +1446,6 @@
             }
         }
 
-        // Live EventSource (SSE) Listener for Admin Portal
         function initAdminLiveCloudStream() {
             fetchCloudInventoryAdmin();
             try {
@@ -973,6 +1489,7 @@
 
         if (typeof window !== 'undefined') {
             initAdminLiveCloudStream();
+            checkInitialSession();
         }
 
         async function setItemStatus(itemId, newStatus) {
@@ -981,7 +1498,6 @@
             localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(inv));
             renderInventoryCards();
 
-            // Real-time Cloud Broadcast to All Customer Phones
             try {
                 await fetch(RIBHOUSE_CLOUD_SYNC_URL, {
                     method: 'PATCH',
@@ -1002,12 +1518,10 @@
 
             let items = INVENTORY_ITEMS;
 
-            // Category filter
             if (currentSelectedCategory !== 'all') {
                 items = items.filter(i => i.category === currentSelectedCategory);
             }
 
-            // Search filter
             if (query) {
                 items = items.filter(i => i.name.toLowerCase().includes(query) || i.category.toLowerCase().includes(query));
             }
@@ -1019,7 +1533,7 @@
 
             let html = '';
             items.forEach(item => {
-                const status = invState[item.id] || 'ready'; // ready, hold, unavailable
+                const status = invState[item.id] || 'ready';
                 html += `
                     <div class="inv-dish-card status-${status}">
                         <div class="inv-dish-info">
@@ -1065,6 +1579,7 @@
             
             document.getElementById('section-inventory').style.display = 'none';
             document.getElementById('section-orders').style.display = 'none';
+            document.getElementById('section-feedback').style.display = 'none';
             document.getElementById('section-settings').style.display = 'none';
 
             if (tabName === 'inventory') {
@@ -1075,11 +1590,15 @@
                 document.getElementById('tab-btn-orders').classList.add('active');
                 document.getElementById('section-orders').style.display = 'block';
                 renderActiveOrders();
+            } else if (tabName === 'feedback') {
+                if (currentAuthRole !== 'admin') return;
+                document.getElementById('tab-btn-feedback').classList.add('active');
+                document.getElementById('section-feedback').style.display = 'block';
+                loadAdminFeedback();
             } else if (tabName === 'settings') {
                 if (currentAuthRole !== 'admin') return;
                 document.getElementById('tab-btn-settings').classList.add('active');
                 document.getElementById('section-settings').style.display = 'block';
-                loadSettingsToForm();
             }
         }
 
@@ -1106,8 +1625,8 @@
                 html += `
                     <div class="order-ticket-card">
                         <div class="order-ticket-header">
-                            <span class="order-id-badge">ORDER #${order.orderId || (1000 + idx)}</span>
-                            <span class="order-timestamp">${order.time || 'Just Now'} &bull; ${order.table || 'Dine-In / WhatsApp'}</span>
+                            <span class="order-id-badge">ORDER #${order.orderRef || order.orderId || (1000 + idx)}</span>
+                            <span class="order-timestamp">${order.time || 'Just Now'} &bull; ${order.diningType || 'Dine-In / Online'}</span>
                         </div>
 
                         <div class="order-items-list">
@@ -1139,31 +1658,255 @@
             renderActiveOrders();
         }
 
-        // --- 6. SETTINGS FORM HANDLER ---
-        function loadSettingsToForm() {
-            const sec = getSecuritySettings();
-            const pAdmin = document.getElementById('set-admin-pin');
-            const p2fa = document.getElementById('set-admin-2fa');
-            const pKitch = document.getElementById('set-kitchen-pin');
+        // --- 6. CUSTOMER REVIEWS & FEEDBACK DATABASE CLIENT ---
+        let currentFeedbacksCache = [];
 
-            if (pAdmin) pAdmin.value = sec.adminPin || '4977';
-            if (p2fa) p2fa.value = sec.admin2fa || 'RH9921';
-            if (pKitch) pKitch.value = sec.kitchenPin || '1234';
+        async function loadAdminFeedback() {
+            const grid = document.getElementById('feedback-feed-grid');
+            const totalEl = document.getElementById('stat-total-reviews');
+            const avgEl = document.getElementById('stat-avg-rating');
+            const topEl = document.getElementById('stat-top-dish');
+            const countTab = document.getElementById('tab-feedback-count');
+
+            try {
+                const res = await fetch('/api/admin/feedback');
+                if (!res.ok) throw new Error('Unauthorized');
+                const data = await res.json();
+
+                currentFeedbacksCache = data.feedbacks || [];
+
+                if (totalEl) totalEl.textContent = data.analytics?.totalReviews || 0;
+                if (avgEl) avgEl.textContent = `${data.analytics?.avgRating || '5.0'} ⭐`;
+                if (topEl) topEl.textContent = data.analytics?.topDish || '-';
+                if (countTab) countTab.textContent = currentFeedbacksCache.length;
+
+                if (!grid) return;
+
+                if (currentFeedbacksCache.length === 0) {
+                    grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: var(--text-muted);">No customer reviews submitted yet. Live reviews will be saved in the database automatically.</div>';
+                    return;
+                }
+
+                let html = '';
+                currentFeedbacksCache.forEach(fb => {
+                    const stars = '★'.repeat(fb.rating || 5) + '☆'.repeat(5 - (fb.rating || 5));
+                    html += `
+                        <div class="feedback-card">
+                            <div class="fb-header">
+                                <div>
+                                    <div class="fb-dish-title">${fb.dish || 'General Experience'}</div>
+                                    <div style="font-size: 0.72rem; color: var(--text-muted);">${fb.author || 'Guest'}</div>
+                                </div>
+                                <div class="fb-stars">${stars}</div>
+                            </div>
+                            <div class="fb-body-text">"${fb.comments || 'No written comments.'}"</div>
+                            <div class="fb-footer">
+                                <span class="fb-group-badge">${fb.group || 'Solo Diners'}</span>
+                                <span>${fb.date || 'Recent'}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                grid.innerHTML = html;
+            } catch (err) {
+                if (grid) grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--color-unavail);">Failed to load reviews from server database.</div>';
+            }
         }
 
-        function handleSaveSettings(e) {
+        async function handleClearAllFeedback() {
+            if (!confirm('Are you sure you want to clear all customer feedback records from the database?')) return;
+            try {
+                const res = await fetch('/api/admin/feedback', { method: 'DELETE' });
+                if (res.ok) {
+                    loadAdminFeedback();
+                }
+            } catch (e) {
+                alert('Failed to clear customer reviews.');
+            }
+        }
+
+        // Daily Report Modal
+        function openDailyReportModal() {
+            const overlay = document.getElementById('daily-report-overlay');
+            const content = document.getElementById('report-content-body');
+            if (!overlay || !content) return;
+
+            const total = currentFeedbacksCache.length;
+            const avg = total > 0 ? (currentFeedbacksCache.reduce((a, b) => a + (b.rating || 5), 0) / total).toFixed(1) : '5.0';
+
+            let html = `
+                <div style="margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: #FFF; border: 1px solid #E2E8F0; padding: 12px;">
+                        <strong style="font-size: 0.75rem; text-transform: uppercase; color: #64748B;">Total Customer Reviews</strong>
+                        <div style="font-size: 1.5rem; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; color: #D35400;">${total}</div>
+                    </div>
+                    <div style="background: #FFF; border: 1px solid #E2E8F0; padding: 12px;">
+                        <strong style="font-size: 0.75rem; text-transform: uppercase; color: #64748B;">Average Satisfaction</strong>
+                        <div style="font-size: 1.5rem; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; color: #D35400;">${avg} / 5.0 ⭐</div>
+                    </div>
+                </div>
+                <h4 style="font-size: 0.85rem; text-transform: uppercase; margin-bottom: 10px; color: #111;">Customer Comments & Ratings</h4>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+            `;
+
+            currentFeedbacksCache.forEach((fb, i) => {
+                html += `
+                    <div style="background: #FFF; border: 1px solid #E2E8F0; padding: 10px 14px; font-size: 0.82rem;">
+                        <div style="display: flex; justify-content: space-between; font-weight: 700; color: #D35400;">
+                            <span>${i+1}. ${fb.dish} (${fb.rating}⭐)</span>
+                            <span style="font-size: 0.72rem; color: #64748B;">${fb.date}</span>
+                        </div>
+                        <p style="margin: 4px 0 2px 0; font-style: italic; color: #333;">"${fb.comments || 'No comment'}"</p>
+                        <small style="color: #64748B;">- ${fb.author} (${fb.group})</small>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            content.innerHTML = html;
+            overlay.classList.add('active');
+        }
+
+        function closeDailyReportModal() {
+            const overlay = document.getElementById('daily-report-overlay');
+            if (overlay) overlay.classList.remove('active');
+        }
+
+        // --- 7. REAL-TIME PASSWORD COMPLEXITY VALIDATOR & SETTINGS HANDLERS ---
+        function handlePasswordComplexityLiveCheck(pwd) {
+            const reqLength = document.getElementById('req-length');
+            const reqUpper = document.getElementById('req-upper');
+            const reqLower = document.getElementById('req-lower');
+            const reqNum = document.getElementById('req-num');
+            const reqSpec = document.getElementById('req-spec');
+
+            function toggleReq(el, isMet) {
+                if (!el) return;
+                const icon = el.querySelector('.req-icon');
+                if (isMet) {
+                    el.classList.add('met');
+                    if (icon) icon.textContent = '✓';
+                } else {
+                    el.classList.remove('met');
+                    if (icon) icon.textContent = '○';
+                }
+            }
+
+            toggleReq(reqLength, pwd && pwd.length >= 12);
+            toggleReq(reqUpper, /[A-Z]/.test(pwd));
+            toggleReq(reqLower, /[a-z]/.test(pwd));
+            toggleReq(reqNum, /[0-9]/.test(pwd));
+            toggleReq(reqSpec, /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]/.test(pwd));
+
+            handlePasswordMatchLiveCheck();
+        }
+
+        function handlePasswordMatchLiveCheck() {
+            const newPass = document.getElementById('new-admin-pass').value;
+            const confPass = document.getElementById('confirm-admin-pass').value;
+            const matchIndicator = document.getElementById('pwd-match-indicator');
+
+            if (!matchIndicator) return;
+
+            if (!confPass) {
+                matchIndicator.style.display = 'none';
+                return;
+            }
+
+            if (newPass === confPass) {
+                matchIndicator.textContent = '✓ Passwords match';
+                matchIndicator.className = 'pwd-match-indicator match';
+            } else {
+                matchIndicator.textContent = '✕ Passwords do not match';
+                matchIndicator.className = 'pwd-match-indicator mismatch';
+            }
+        }
+
+        async function handleChangeAdminPassword(e) {
             e.preventDefault();
-            const adminPin = document.getElementById('set-admin-pin').value.trim();
-            const admin2fa = document.getElementById('set-admin-2fa').value.trim();
-            const kitchenPin = document.getElementById('set-kitchen-pin').value.trim();
+            const currentPassword = document.getElementById('current-admin-pass').value;
+            const newPassword = document.getElementById('new-admin-pass').value;
+            const confirmPassword = document.getElementById('confirm-admin-pass').value;
+            const errMsg = document.getElementById('pwd-error-msg');
+            const successMsg = document.getElementById('pwd-success-msg');
+            const btn = document.getElementById('btn-save-password');
 
-            const sec = { adminPin, admin2fa, kitchenPin };
-            localStorage.setItem('ribhouse_portal_security', JSON.stringify(sec));
+            if (errMsg) errMsg.style.display = 'none';
+            if (successMsg) successMsg.style.display = 'none';
+            if (btn) { btn.disabled = true; btn.textContent = 'Updating...'; }
 
-            const msg = document.getElementById('settings-success-msg');
-            if (msg) {
-                msg.style.display = 'block';
-                setTimeout(() => { msg.style.display = 'none'; }, 3000);
+            try {
+                const res = await fetch('/api/auth/change-password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        currentPassword: currentPassword,
+                        newPassword: newPassword,
+                        confirmPassword: confirmPassword
+                    })
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    if (successMsg) {
+                        successMsg.textContent = '✓ Administrator password updated and secured with Bcrypt!';
+                        successMsg.style.display = 'block';
+                    }
+                    document.getElementById('admin-password-change-form').reset();
+                    handlePasswordComplexityLiveCheck('');
+                } else {
+                    if (errMsg) {
+                        errMsg.textContent = data.message || 'Failed to update password.';
+                        errMsg.style.display = 'block';
+                    }
+                }
+            } catch (err) {
+                if (errMsg) {
+                    errMsg.textContent = 'Network error while updating password.';
+                    errMsg.style.display = 'block';
+                }
+            } finally {
+                if (btn) { btn.disabled = false; btn.textContent = 'Update Administrator Password'; }
+            }
+        }
+
+        async function handleChangeKitchenPin(e) {
+            e.preventDefault();
+            const newPin = document.getElementById('set-kitchen-pin').value.trim();
+            const errMsg = document.getElementById('kpin-error-msg');
+            const successMsg = document.getElementById('kpin-success-msg');
+
+            if (errMsg) errMsg.style.display = 'none';
+            if (successMsg) successMsg.style.display = 'none';
+
+            try {
+                const res = await fetch('/api/auth/change-kitchen-pin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ newPin: newPin })
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    if (successMsg) {
+                        successMsg.textContent = '✓ Kitchen Staff PIN updated successfully!';
+                        successMsg.style.display = 'block';
+                    }
+                    document.getElementById('set-kitchen-pin').value = '';
+                } else {
+                    if (errMsg) {
+                        errMsg.textContent = data.message || 'Failed to update Kitchen PIN.';
+                        errMsg.style.display = 'block';
+                    }
+                }
+            } catch (err) {
+                if (errMsg) {
+                    errMsg.textContent = 'Network error while updating Kitchen PIN.';
+                    errMsg.style.display = 'block';
+                }
             }
         }
     </script>

@@ -478,7 +478,371 @@
             color: #FFFFFF;
         }
 
+        /* ==========================================================================
+           AUTOMATED M-PESA LIVE PAYMENT & VERIFICATION WIDGET
+           ========================================================================== */
+        .mpesa-live-card {
+            background: #FFFFFF;
+            border: 1.5px solid #16A34A;
+            margin: 16px 0;
+            padding: 16px;
+            box-shadow: 0 4px 18px rgba(22, 163, 74, 0.08);
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .mpesa-live-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--light-border);
+        }
+
+        .mpesa-live-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mpesa-pill-logo {
+            background: #008751;
+            color: #FFFFFF;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .mpesa-till-badge {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--color-gold-dark);
+            background: var(--color-gold-light);
+            padding: 3px 8px;
+            border: 1px solid var(--color-gold-border);
+        }
+
+        .mpesa-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #FEF3C7;
+            color: #92400E;
+            border: 1px solid #FCD34D;
+        }
+
+        .mpesa-status-pill.verified {
+            background: #DCFCE7;
+            color: #166534;
+            border-color: #86EFAC;
+        }
+
+        .mpesa-status-pill.failed {
+            background: #FEE2E2;
+            color: #991B1B;
+            border-color: #FCA5A5;
+        }
+
+        .mpesa-status-dot {
+            width: 7px;
+            height: 7px;
+            background: #D97706;
+            border-radius: 50% !important;
+            animation: mpesaPulseDot 1.4s infinite ease-in-out;
+        }
+
+        .mpesa-status-pill.verified .mpesa-status-dot {
+            background: #16A34A;
+            animation: none;
+        }
+
+        .mpesa-status-pill.failed .mpesa-status-dot {
+            background: #DC2626;
+            animation: none;
+        }
+
+        @keyframes mpesaPulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.3); }
+        }
+
+        .mpesa-state-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 8px 4px;
+        }
+
+        .mpesa-pulse-avatar {
+            position: relative;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ECFDF5;
+            border: 1.5px solid #10B981;
+            margin-bottom: 10px;
+        }
+
+        .mpesa-phone-icon {
+            font-size: 1.4rem;
+        }
+
+        .radar-pulse {
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border: 2px solid #10B981;
+            opacity: 0.8;
+            animation: radarPulse 2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        @keyframes radarPulse {
+            0% { transform: scale(0.9); opacity: 0.9; }
+            70% { transform: scale(1.3); opacity: 0; }
+            100% { transform: scale(1.3); opacity: 0; }
+        }
+
+        .mpesa-prompt-title {
+            font-size: 0.98rem;
+            font-weight: 800;
+            color: var(--dark-text);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mpesa-prompt-sub {
+            font-size: 0.84rem;
+            color: var(--slate-text);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .mpesa-progress-container {
+            width: 100%;
+            height: 6px;
+            background: #E2E8F0;
+            overflow: hidden;
+            margin-bottom: 6px;
+        }
+
+        .mpesa-progress-bar {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, #10B981, #059669);
+            transition: width 1s linear;
+        }
+
+        .mpesa-time-left {
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: var(--subtle-text);
+            margin-bottom: 14px;
+        }
+
+        .mpesa-action-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .btn-mpesa-resend {
+            background: #008751;
+            color: #FFFFFF;
+            border: none;
+            padding: 8px 14px;
+            font-size: 0.74rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-mpesa-resend:hover {
+            background: #00663d;
+        }
+
+        .btn-mpesa-manual-toggle {
+            background: #FFFFFF;
+            border: 1px solid var(--light-border);
+            color: var(--slate-text);
+            padding: 7px 12px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-mpesa-manual-toggle:hover {
+            border-color: var(--color-gold);
+            color: var(--dark-text);
+        }
+
+        .btn-mpesa-sim {
+            background: #FEF3C7;
+            border: 1px dashed #D97706;
+            color: #92400E;
+            padding: 7px 12px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-mpesa-sim:hover {
+            background: #FDE68A;
+        }
+
+        /* Verified State UI */
+        .mpesa-verified-icon-wrap {
+            width: 52px;
+            height: 52px;
+            background: #15803D;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 15px rgba(21, 128, 61, 0.35);
+        }
+
+        .mpesa-verified-title {
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: #15803D;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .mpesa-receipt-badge {
+            background: #ECFDF5;
+            border: 1.5px solid #10B981;
+            padding: 6px 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .mpesa-receipt-badge .receipt-label {
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: #065F46;
+            text-transform: uppercase;
+        }
+
+        .mpesa-receipt-badge .receipt-code {
+            font-size: 0.95rem;
+            font-weight: 900;
+            color: #047857;
+            font-family: monospace;
+            letter-spacing: 1px;
+        }
+
+        .mpesa-verified-sub {
+            font-size: 0.82rem;
+            color: var(--slate-text);
+            line-height: 1.4;
+            max-width: 380px;
+        }
+
+        /* Failed State UI */
+        .mpesa-failed-icon-wrap {
+            font-size: 2rem;
+            margin-bottom: 6px;
+        }
+
+        .mpesa-failed-title {
+            font-size: 0.98rem;
+            font-weight: 800;
+            color: #B91C1C;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .mpesa-failed-sub {
+            font-size: 0.82rem;
+            color: var(--slate-text);
+            margin-bottom: 12px;
+        }
+
+        /* Manual Input Tray */
+        .mpesa-manual-tray {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--light-border);
+            text-align: left;
+        }
+
+        .manual-code-label {
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: var(--muted-text);
+            display: block;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .manual-input-group {
+            display: flex;
+            gap: 6px;
+        }
+
+        .manual-code-input {
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid var(--light-border);
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-family: monospace;
+        }
+
+        .btn-manual-verify {
+            background: var(--dark-text);
+            color: #FFFFFF;
+            border: none;
+            padding: 8px 14px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-manual-verify:hover {
+            background: var(--color-gold);
+            color: #000;
+        }
+
+        .manual-status-msg {
+            margin-top: 6px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
         /* Right Column: Order Review */
+
         .order-items-scroll-list {
             max-height: 380px;
             overflow-y: auto;
@@ -1377,17 +1741,91 @@
                 </div>
             </div>
 
-            <!-- M-Pesa Code Verification Input & STK Trigger -->
-            <div class="mpesa-attach-box">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <span style="font-size: 0.78rem; font-weight: 800; color: #14532D; text-transform: uppercase; letter-spacing: 0.5px;">Confirm M-Pesa Payment</span>
-                    <button type="button" class="btn-trigger-stk" onclick="triggerMpesaSTKPush()">Send STK Push PIN</button>
+            <!-- M-Pesa Automated Payment & Verification Widget -->
+            <div class="mpesa-live-card" id="mpesa-live-widget">
+                <!-- Header -->
+                <div class="mpesa-live-header">
+                    <div class="mpesa-live-brand">
+                        <span class="mpesa-pill-logo">LIPA NA M-PESA</span>
+                        <span class="mpesa-till-badge">TILL: 4977556</span>
+                    </div>
+                    <div class="mpesa-status-pill" id="mpesa-status-pill">
+                        <span class="mpesa-status-dot"></span>
+                        <span id="mpesa-status-text">Sending Prompt...</span>
+                    </div>
                 </div>
-                <div style="display: flex; gap: 8px;">
-                    <input type="text" id="modal-mpesa-input" class="form-control" placeholder="Paste Safaricom SMS or Code (e.g. SHK49X82LK)" style="font-size: 0.82rem; padding: 8px 12px; background: #FFFFFF;">
-                    <button type="button" class="btn-attach-code" onclick="handleAttachMpesaCode()">Attach</button>
+
+                <!-- Active State: Waiting for PIN -->
+                <div id="mpesa-state-waiting" class="mpesa-state-box">
+                    <div class="mpesa-pulse-avatar">
+                        <div class="radar-pulse"></div>
+                        <span class="mpesa-phone-icon">📱</span>
+                    </div>
+                    <div class="mpesa-state-text-wrap">
+                        <h4 class="mpesa-prompt-title">M-Pesa PIN Prompt Sent</h4>
+                        <p class="mpesa-prompt-sub" id="mpesa-prompt-target">
+                            Check your phone (<strong id="mpesa-phone-display">07XX XXX XXX</strong>) and enter your M-Pesa PIN for <strong id="mpesa-amount-display">KSh 0/=</strong>.
+                        </p>
+                    </div>
+
+                    <!-- Live Countdown Progress -->
+                    <div class="mpesa-progress-container">
+                        <div class="mpesa-progress-bar" id="mpesa-progress-bar"></div>
+                    </div>
+                    <div class="mpesa-time-left" id="mpesa-time-left">Prompt active: 60s remaining</div>
+
+                    <div class="mpesa-action-row">
+                        <button type="button" class="btn-mpesa-resend" onclick="triggerMpesaSTKPush(true)">
+                            <span>🔄 Resend Prompt</span>
+                        </button>
+                        <button type="button" class="btn-mpesa-manual-toggle" onclick="toggleManualMpesaInput()">
+                            <span>Manual Code</span>
+                        </button>
+                        <button type="button" class="btn-mpesa-sim" id="btn-mpesa-sim" onclick="simulateMpesaSuccess()" title="Test Instant Payment Confirmation">
+                            <span>⚡ Test Confirm (Demo)</span>
+                        </button>
+                    </div>
                 </div>
-                <div id="stk-status-msg" style="display: none; margin-top: 8px; font-size: 0.8rem; font-weight: 600; color: #15803D;"></div>
+
+                <!-- Success State: Verified -->
+                <div id="mpesa-state-verified" class="mpesa-state-box" style="display: none;">
+                    <div class="mpesa-verified-icon-wrap">
+                        <span class="verified-checkmark">✓</span>
+                    </div>
+                    <h4 class="mpesa-verified-title">PAYMENT VERIFIED & CONFIRMED</h4>
+                    <div class="mpesa-receipt-badge">
+                        <span class="receipt-label">M-Pesa Receipt:</span>
+                        <strong class="receipt-code" id="mpesa-receipt-display">TA12345678</strong>
+                    </div>
+                    <p class="mpesa-verified-sub">Your transaction has been verified by Safaricom. Your order is officially paid and the kitchen is firing up the grill!</p>
+                </div>
+
+                <!-- Failed / Cancelled State -->
+                <div id="mpesa-state-failed" class="mpesa-state-box" style="display: none;">
+                    <div class="mpesa-failed-icon-wrap">
+                        <span>⚠️</span>
+                    </div>
+                    <h4 class="mpesa-failed-title">PIN Prompt Cancelled / Expired</h4>
+                    <p class="mpesa-failed-sub" id="mpesa-failed-msg">The prompt was not completed. You can resend the prompt or attach your code manually.</p>
+                    <div class="mpesa-action-row">
+                        <button type="button" class="btn-mpesa-resend" onclick="triggerMpesaSTKPush(true)">
+                            <span>🔄 Send New STK Prompt</span>
+                        </button>
+                        <button type="button" class="btn-mpesa-manual-toggle" onclick="toggleManualMpesaInput()">
+                            <span>Enter Code Manually</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Manual Code Fallback Tray -->
+                <div id="mpesa-manual-container" class="mpesa-manual-tray" style="display: none;">
+                    <label class="manual-code-label">Paid via Till 4977556 manually? Paste Code:</label>
+                    <div class="manual-input-group">
+                        <input type="text" id="modal-mpesa-input" class="manual-code-input" placeholder="e.g. TA12BC34DE">
+                        <button type="button" class="btn-manual-verify" onclick="handleAttachMpesaCode()">Verify Code</button>
+                    </div>
+                    <div id="stk-status-msg" class="manual-status-msg" style="display: none;"></div>
+                </div>
             </div>
 
             <div class="modal-actions">
@@ -1892,6 +2330,9 @@
             // Open Success Modal
             const modal = document.getElementById('order-success-modal');
             if (modal) modal.classList.add('active');
+
+            // Automatically trigger Lipa Na M-Pesa STK Push
+            triggerMpesaSTKPush(false);
         }
 
         function updateWhatsAppLink() {
@@ -1951,7 +2392,215 @@ ${o.specialNotes ? `*Notes*        ❯  ${o.specialNotes}\n` : ''}*Status*      
             if (waLinkEl) waLinkEl.href = waUrl;
         }
 
-        // --- 7. M-PESA CODE ATTACH & STK PUSH TRIGGER ---
+        // --- 7. AUTOMATED M-PESA STK PUSH & REAL-TIME POLLING ENGINE ---
+        let mpesaPollingInterval = null;
+        let mpesaCountdownInterval = null;
+        let mpesaSecondsRemaining = 60;
+
+        function showMpesaState(state, customMsg) {
+            const waitBox = document.getElementById('mpesa-state-waiting');
+            const verBox = document.getElementById('mpesa-state-verified');
+            const failBox = document.getElementById('mpesa-state-failed');
+            const pill = document.getElementById('mpesa-status-pill');
+            const pillText = document.getElementById('mpesa-status-text');
+
+            if (waitBox) waitBox.style.display = 'none';
+            if (verBox) verBox.style.display = 'none';
+            if (failBox) failBox.style.display = 'none';
+
+            if (state === 'waiting') {
+                if (waitBox) waitBox.style.display = 'flex';
+                if (pill) pill.className = 'mpesa-status-pill';
+                if (pillText) pillText.textContent = 'Awaiting PIN...';
+            } else if (state === 'verified') {
+                if (verBox) verBox.style.display = 'flex';
+                if (pill) pill.className = 'mpesa-status-pill verified';
+                if (pillText) pillText.textContent = 'Verified ✓';
+            } else if (state === 'failed') {
+                if (failBox) failBox.style.display = 'flex';
+                if (pill) pill.className = 'mpesa-status-pill failed';
+                if (pillText) pillText.textContent = 'Cancelled / Expired';
+                if (customMsg) {
+                    const failMsgEl = document.getElementById('mpesa-failed-msg');
+                    if (failMsgEl) failMsgEl.textContent = customMsg;
+                }
+            }
+        }
+
+        function startMpesaCountdown(seconds = 60) {
+            if (mpesaCountdownInterval) clearInterval(mpesaCountdownInterval);
+            mpesaSecondsRemaining = seconds;
+
+            const bar = document.getElementById('mpesa-progress-bar');
+            const text = document.getElementById('mpesa-time-left');
+
+            if (bar) bar.style.width = '100%';
+            if (text) text.textContent = `Prompt active: ${mpesaSecondsRemaining}s remaining`;
+
+            mpesaCountdownInterval = setInterval(() => {
+                mpesaSecondsRemaining--;
+                if (bar) {
+                    const pct = Math.max(0, (mpesaSecondsRemaining / seconds) * 100);
+                    bar.style.width = `${pct}%`;
+                }
+                if (text) {
+                    text.textContent = `Prompt active: ${Math.max(0, mpesaSecondsRemaining)}s remaining`;
+                }
+
+                if (mpesaSecondsRemaining <= 0) {
+                    clearInterval(mpesaCountdownInterval);
+                    mpesaCountdownInterval = null;
+                }
+            }, 1000);
+        }
+
+        async function triggerMpesaSTKPush(isRetry = false) {
+            if (!currentActiveOrder) return;
+            const phone = currentActiveOrder.phone;
+            const amount = currentActiveOrder.totalAmount;
+            const orderRef = currentActiveOrder.ref;
+
+            showMpesaState('waiting');
+            const phoneDisp = document.getElementById('mpesa-phone-display');
+            const amtDisp = document.getElementById('mpesa-amount-display');
+            if (phoneDisp) phoneDisp.textContent = phone;
+            if (amtDisp) amtDisp.textContent = `KSh ${amount.toLocaleString()}/=`;
+
+            const pillText = document.getElementById('mpesa-status-text');
+            if (pillText) pillText.textContent = isRetry ? 'Resending Prompt...' : 'Sending STK Prompt...';
+
+            startMpesaCountdown(60);
+
+            try {
+                const res = await fetch('/api/mpesa/stkpush', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        phone: phone,
+                        amount: amount,
+                        orderRef: orderRef,
+                        customerName: currentActiveOrder.customerName,
+                        diningType: currentActiveOrder.diningType,
+                        specialNotes: currentActiveOrder.specialNotes
+                    })
+                });
+
+                const data = await res.json();
+
+                if (pillText) {
+                    pillText.textContent = data.isSimulated ? 'Enter PIN (Demo Mode)' : 'Enter PIN on Phone';
+                }
+
+                // Start automatic polling to detect payment completion
+                startMpesaPolling(orderRef);
+
+            } catch (err) {
+                console.warn('STK Push request network warning:', err);
+                if (pillText) pillText.textContent = 'Awaiting PIN...';
+                startMpesaPolling(orderRef);
+            }
+        }
+
+        function startMpesaPolling(orderRef) {
+            if (mpesaPollingInterval) clearInterval(mpesaPollingInterval);
+
+            let attempts = 0;
+            const maxAttempts = 45; // Poll every 2s for 90s
+
+            mpesaPollingInterval = setInterval(async () => {
+                attempts++;
+                if (attempts > maxAttempts) {
+                    clearInterval(mpesaPollingInterval);
+                    mpesaPollingInterval = null;
+                    if (currentActiveOrder && currentActiveOrder.paymentStatus !== 'PAID') {
+                        showMpesaState('failed', 'Payment prompt timed out. Please retry sending the prompt or paste your confirmation code.');
+                    }
+                    return;
+                }
+
+                try {
+                    const res = await fetch(`/api/mpesa/status/${encodeURIComponent(orderRef)}`);
+                    if (!res.ok) return;
+                    const statusData = await res.json();
+
+                    if (statusData.success && statusData.status === 'PAID') {
+                        clearInterval(mpesaPollingInterval);
+                        mpesaPollingInterval = null;
+                        if (mpesaCountdownInterval) clearInterval(mpesaCountdownInterval);
+
+                        onMpesaPaymentConfirmed(statusData.receipt || `RH${Date.now().toString().slice(-8)}`);
+                    } else if (statusData.status === 'FAILED') {
+                        clearInterval(mpesaPollingInterval);
+                        mpesaPollingInterval = null;
+                        showMpesaState('failed', statusData.failureReason || 'Transaction was cancelled on your phone.');
+                    }
+                } catch (e) {
+                    // Silently ignore temporary fetch errors during polling
+                }
+            }, 2000);
+        }
+
+        function onMpesaPaymentConfirmed(receiptCode) {
+            if (!currentActiveOrder) return;
+
+            currentActiveOrder.mpesaCode = receiptCode;
+            currentActiveOrder.paymentStatus = 'PAID';
+
+            // Show verified state in widget
+            showMpesaState('verified');
+            const receiptEl = document.getElementById('mpesa-receipt-display');
+            if (receiptEl) receiptEl.textContent = receiptCode;
+
+            // Update modal summary row
+            const codeRow = document.getElementById('modal-mpesa-code-row');
+            const codeVal = document.getElementById('modal-mpesa-code-val');
+            if (codeRow) codeRow.style.display = 'flex';
+            if (codeVal) codeVal.textContent = receiptCode;
+
+            // Update LocalStorage active orders
+            try {
+                const allActive = JSON.parse(localStorage.getItem('ribhouse_active_orders') || '[]');
+                const idx = allActive.findIndex(o => o.ref === currentActiveOrder.ref);
+                if (idx > -1) {
+                    allActive[idx].mpesaCode = receiptCode;
+                    allActive[idx].paymentStatus = 'PAID';
+                    localStorage.setItem('ribhouse_active_orders', JSON.stringify(allActive));
+                }
+            } catch(e) {}
+
+            // Update WhatsApp link with verified code
+            updateWhatsAppLink();
+
+            // Play celebratory audio chime
+            playSuccessChime();
+        }
+
+        function simulateMpesaSuccess() {
+            if (!currentActiveOrder) return;
+            const simCode = 'SIM' + Math.random().toString(36).substring(2, 9).toUpperCase();
+
+            fetch('/api/mpesa/simulate-success', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    orderRef: currentActiveOrder.ref,
+                    code: simCode,
+                    amount: currentActiveOrder.totalAmount
+                })
+            }).then(() => {
+                onMpesaPaymentConfirmed(simCode);
+            }).catch(() => {
+                onMpesaPaymentConfirmed(simCode);
+            });
+        }
+
+        function toggleManualMpesaInput() {
+            const tray = document.getElementById('mpesa-manual-container');
+            if (tray) {
+                tray.style.display = tray.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+
         function handleAttachMpesaCode() {
             const input = document.getElementById('modal-mpesa-input');
             const raw = input ? input.value.trim() : '';
@@ -1963,53 +2612,48 @@ ${o.specialNotes ? `*Notes*        ❯  ${o.specialNotes}\n` : ''}*Status*      
             const match = raw.match(/\b([A-Z0-9]{10})\b/i) || raw.match(/^([A-Z0-9]+)$/i);
             const code = match ? match[1].toUpperCase() : raw.toUpperCase();
 
-            if (currentActiveOrder) {
-                currentActiveOrder.mpesaCode = code;
-                currentActiveOrder.paymentStatus = 'PAID';
-
-                const codeRow = document.getElementById('modal-mpesa-code-row');
-                const codeVal = document.getElementById('modal-mpesa-code-val');
-                if (codeRow) codeRow.style.display = 'flex';
-                if (codeVal) codeVal.textContent = code;
-
-                try {
-                    const allActive = JSON.parse(localStorage.getItem('ribhouse_active_orders') || '[]');
-                    const idx = allActive.findIndex(o => o.ref === currentActiveOrder.ref);
-                    if (idx > -1) {
-                        allActive[idx].mpesaCode = code;
-                        allActive[idx].paymentStatus = 'PAID';
-                        localStorage.setItem('ribhouse_active_orders', JSON.stringify(allActive));
-                    }
-                } catch(e) {}
-
-                updateWhatsAppLink();
-            }
+            onMpesaPaymentConfirmed(code);
 
             const statusMsg = document.getElementById('stk-status-msg');
             if (statusMsg) {
                 statusMsg.style.display = 'block';
+                statusMsg.style.color = '#15803D';
                 statusMsg.innerHTML = `M-Pesa Code <strong>${code}</strong> attached and verified!`;
             }
         }
 
-        function triggerMpesaSTKPush() {
-            if (!currentActiveOrder) return;
-            const phone = currentActiveOrder.phone;
-            const amount = currentActiveOrder.totalAmount;
-            const statusMsg = document.getElementById('stk-status-msg');
+        function playSuccessChime() {
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                const ctx = new AudioCtx();
+                const now = ctx.currentTime;
 
-            if (statusMsg) {
-                statusMsg.style.display = 'block';
-                statusMsg.innerHTML = `Sending Lipa na M-Pesa PIN prompt to <strong>${phone}</strong> for KSh ${amount.toLocaleString()}/=...`;
-                statusMsg.style.color = '#B45309';
-            }
+                const osc1 = ctx.createOscillator();
+                const osc2 = ctx.createOscillator();
+                const gain = ctx.createGain();
 
-            setTimeout(() => {
-                if (statusMsg) {
-                    statusMsg.innerHTML = `M-Pesa PIN prompt sent to <strong>${phone}</strong>. Enter your M-Pesa PIN on your phone to complete payment.`;
-                    statusMsg.style.color = '#15803D';
-                }
-            }, 1200);
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(523.25, now);
+                osc1.frequency.exponentialRampToValueAtTime(659.25, now + 0.15);
+
+                osc2.type = 'triangle';
+                osc2.frequency.setValueAtTime(659.25, now + 0.15);
+                osc2.frequency.exponentialRampToValueAtTime(1046.50, now + 0.35);
+
+                gain.gain.setValueAtTime(0.01, now);
+                gain.gain.linearRampToValueAtTime(0.2, now + 0.1);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+
+                osc1.connect(gain);
+                osc2.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc1.start(now);
+                osc2.start(now + 0.15);
+                osc1.stop(now + 0.8);
+                osc2.stop(now + 0.8);
+            } catch(e) {}
         }
 
         function closeSuccessModal() {

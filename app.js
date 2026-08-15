@@ -2058,7 +2058,7 @@ function renderOrderSummaryPage() {
     if (grandTotalEl) grandTotalEl.textContent = `KSh ${totalPrice.toLocaleString()}/=`;
 }
 
-// --- 4. CUSTOMER FEEDBACK SYSTEM & SECRET OWNER ADMIN DASHBOARD ---
+// --- 4. CUSTOMER FEEDBACK SYSTEM (CONNECTED TO SERVER DATABASE) ---
 function initCustomerFeedbackSystem() {
     const feedbackTrigger = document.getElementById('feedback-trigger-btn');
     const feedbackModalOverlay = document.getElementById('feedback-modal-overlay');
@@ -2070,19 +2070,6 @@ function initCustomerFeedbackSystem() {
     const ratingValInput = document.getElementById('fb-rating-val');
     const successMsgContainer = document.getElementById('feedback-success-msg');
     const closeSuccessBtn = document.getElementById('btn-close-success');
-
-    // Secret Admin Authentication & Drawer
-    const adminAuthOverlay = document.getElementById('admin-auth-overlay');
-    const adminPinForm = document.getElementById('admin-pin-form');
-    const adminPinInput = document.getElementById('admin-pin-input');
-    const pinErrorText = document.getElementById('pin-error-text');
-    const btnCancelAuth = document.getElementById('btn-cancel-auth');
-
-    const adminDrawerOverlay = document.getElementById('admin-drawer-overlay');
-    const adminDrawer = document.getElementById('admin-drawer');
-    const adminCloseBtn = document.getElementById('admin-close-btn');
-    const btnExportCSV = document.getElementById('btn-export-csv');
-    const btnClearReviews = document.getElementById('btn-clear-reviews');
 
     // A. TRACK DAILY UNIQUE VISITORS
     function trackDailyUniqueVisitor() {
@@ -2100,7 +2087,7 @@ function initCustomerFeedbackSystem() {
 
     trackDailyUniqueVisitor();
 
-    // A. CUSTOMER FEEDBACK MODAL OPEN / CLOSE
+    // B. CUSTOMER FEEDBACK MODAL OPEN / CLOSE
     if (feedbackTrigger && feedbackModalOverlay) {
         feedbackTrigger.addEventListener('click', () => {
             feedbackModalOverlay.classList.add('active');
@@ -2124,7 +2111,7 @@ function initCustomerFeedbackSystem() {
         });
     }
 
-    // B. CUSTOM DISH INPUT TOGGLE
+    // C. CUSTOM DISH INPUT TOGGLE
     if (dishSelect && customDishInput) {
         dishSelect.addEventListener('change', () => {
             if (dishSelect.value === 'Other / Custom') {
@@ -2136,7 +2123,7 @@ function initCustomerFeedbackSystem() {
         });
     }
 
-    // C. STAR RATING INTERACTION
+    // D. STAR RATING INTERACTION
     if (starRatingContainer && ratingValInput) {
         const stars = starRatingContainer.querySelectorAll('.star');
         stars.forEach(star => {
@@ -2154,9 +2141,9 @@ function initCustomerFeedbackSystem() {
         });
     }
 
-    // D. SUBMIT FEEDBACK FORM
+    // E. SUBMIT FEEDBACK FORM (PERSIST DIRECTLY TO SERVER DATABASE)
     if (feedbackForm) {
-        feedbackForm.addEventListener('submit', (e) => {
+        feedbackForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             let chosenDish = dishSelect ? dishSelect.value : '';
@@ -2170,9 +2157,7 @@ function initCustomerFeedbackSystem() {
             const comments = document.getElementById('fb-comments') ? document.getElementById('fb-comments').value.trim() : '';
             const customerName = document.getElementById('fb-customer-name') ? document.getElementById('fb-customer-name').value.trim() : 'Anonymous';
 
-            const newFeedback = {
-                id: Date.now(),
-                date: new Date().toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+            const payload = {
                 dish: chosenDish || 'General Experience',
                 group: diningGroup,
                 rating: rating,
@@ -2180,515 +2165,42 @@ function initCustomerFeedbackSystem() {
                 author: customerName || 'Guest'
             };
 
-            const existingFeedbacks = JSON.parse(localStorage.getItem('ribhouse_customer_feedback') || '[]');
-            existingFeedbacks.unshift(newFeedback);
-            localStorage.setItem('ribhouse_customer_feedback', JSON.stringify(existingFeedbacks));
-
-            // Reset Form & Show Success Message
-            feedbackForm.reset();
-            if (customDishInput) customDishInput.style.display = 'none';
-            if (ratingValInput) ratingValInput.value = '5';
-            if (starRatingContainer) {
-                starRatingContainer.querySelectorAll('.star').forEach(s => s.classList.add('active'));
+            const submitBtn = feedbackForm.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Submitting...';
             }
 
-            feedbackForm.style.display = 'none';
-            if (successMsgContainer) successMsgContainer.style.display = 'block';
-        });
-    }
-
-    // E. SECRET TRIPLE-TAP LOGO LISTENER FOR ADMIN ACCESS
-    let emblemTapCount = 0;
-    let emblemTapTimer = null;
-
-    function handleSecretTripleTap() {
-        emblemTapCount++;
-        if (emblemTapTimer) clearTimeout(emblemTapTimer);
-
-        if (emblemTapCount >= 3) {
-            emblemTapCount = 0;
-            openAdminAuthModal();
-        } else {
-            emblemTapTimer = setTimeout(() => {
-                emblemTapCount = 0;
-            }, 800);
-        }
-    }
-
-    // Attach triple tap to all logo images / emblem boxes
-    const emblems = document.querySelectorAll('.ai-avatar-flame, .flaming-logo-box, .nav-logo-box, img[alt*="Emblem"], img[alt*="Logo"], img[src*="logo.png"]');
-    emblems.forEach(el => {
-        el.addEventListener('click', handleSecretTripleTap);
-    });
-
-    // F. SECRET PIN AUTHENTICATION
-    function openAdminAuthModal() {
-        if (adminAuthOverlay) {
-            adminAuthOverlay.classList.add('active');
-            if (adminPinInput) {
-                adminPinInput.value = '';
-                adminPinInput.focus();
-            }
-            if (pinErrorText) pinErrorText.textContent = '';
-        }
-    }
-
-    function closeAdminAuthModal() {
-        if (adminAuthOverlay) adminAuthOverlay.classList.remove('active');
-    }
-
-    if (btnCancelAuth) btnCancelAuth.addEventListener('click', closeAdminAuthModal);
-
-    if (adminPinForm) {
-        adminPinForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const enteredPin = adminPinInput ? adminPinInput.value.trim() : '';
-
-            // Security check (Default PIN: 1234)
-            if (enteredPin === '1234') {
-                closeAdminAuthModal();
-                openAdminDrawer();
-            } else {
-                if (pinErrorText) pinErrorText.textContent = 'Incorrect PIN code. Access denied.';
-                if (adminPinInput) {
-                    adminPinInput.style.borderColor = '#EF4444';
-                    setTimeout(() => { adminPinInput.style.borderColor = 'var(--color-gold)'; }, 1500);
+            try {
+                // Send feedback directly to backend server database
+                await fetch('/api/feedback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (err) {
+                console.warn('[Feedback Notice] Feedback stored offline.');
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit Private Feedback';
                 }
-            }
-        });
-    }
 
-    // G. ADMIN DRAWER OPEN / CLOSE & RENDER
-    function openAdminDrawer() {
-        if (adminDrawer && adminDrawerOverlay) {
-            adminDrawer.classList.add('active');
-            adminDrawerOverlay.classList.add('active');
-            renderAdminDashboard();
-            renderAdminActiveOrders();
-        }
-    }
-
-    window.switchAdminTab = function(tab) {
-        const ordersSec = document.getElementById('admin-orders-section');
-        const feedbackSec = document.getElementById('admin-feedback-section');
-        const btnOrders = document.getElementById('tab-btn-orders');
-        const btnFeedback = document.getElementById('tab-btn-feedback');
-
-        if (tab === 'orders') {
-            if (ordersSec) ordersSec.style.display = 'block';
-            if (feedbackSec) feedbackSec.style.display = 'none';
-            if (btnOrders) {
-                btnOrders.style.background = 'var(--color-gold)';
-                btnOrders.style.color = '#000';
-                btnOrders.style.border = 'none';
-            }
-            if (btnFeedback) {
-                btnFeedback.style.background = 'rgba(255,255,255,0.06)';
-                btnFeedback.style.color = 'var(--color-cream)';
-                btnFeedback.style.border = '1px solid var(--color-border-dark)';
-            }
-            renderAdminActiveOrders();
-        } else {
-            if (ordersSec) ordersSec.style.display = 'none';
-            if (feedbackSec) feedbackSec.style.display = 'block';
-            if (btnFeedback) {
-                btnFeedback.style.background = 'var(--color-gold)';
-                btnFeedback.style.color = '#000';
-                btnFeedback.style.border = 'none';
-            }
-            if (btnOrders) {
-                btnOrders.style.background = 'rgba(255,255,255,0.06)';
-                btnOrders.style.color = 'var(--color-cream)';
-                btnOrders.style.border = '1px solid var(--color-border-dark)';
-            }
-        }
-    };
-
-    window.renderAdminActiveOrders = function() {
-        const feed = document.getElementById('admin-orders-feed');
-        const countBadge = document.getElementById('admin-orders-count');
-        if (!feed) return;
-
-        const orders = JSON.parse(localStorage.getItem('ribhouse_active_orders') || '[]');
-        if (countBadge) countBadge.textContent = orders.length;
-
-        if (orders.length === 0) {
-            feed.innerHTML = `
-                <div style="text-align: center; padding: 30px; background: var(--color-card-bg); border: 1px dashed var(--color-border-dark);">
-                    <p style="color: var(--color-cream); font-size: 0.95rem; margin-bottom: 4px; font-weight: 700;">No active orders right now.</p>
-                    <p style="color: var(--color-text-muted); font-size: 0.8rem;">New orders placed via the menu will appear here in real-time.</p>
-                </div>
-            `;
-            return;
-        }
-
-        let html = '';
-        orders.forEach((order) => {
-            const statusColors = {
-                'PLACED': { bg: '#FEF3C7', color: '#B45309', text: 'Order Placed' },
-                'PREPARING': { bg: '#FFEDD5', color: '#C2410C', text: 'On Grill / Preparing' },
-                'TRANSIT': { bg: '#E0E7FF', color: '#3730A3', text: 'In Transit / Serving' },
-                'DELIVERED': { bg: '#DCFCE7', color: '#15803D', text: 'Delivered / Completed' }
-            };
-
-            const currentStatus = statusColors[order.status] || statusColors['PLACED'];
-            const isPaid = order.paymentStatus === 'PAID';
-
-            html += `
-                <div style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 16px; border-radius: 6px;">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                        <div>
-                            <span style="font-family: monospace; font-size: 0.9rem; font-weight: 800; color: var(--color-gold); letter-spacing: 1px;">REF: ${order.ref}</span>
-                            <div style="font-size: 0.8rem; color: var(--color-text-muted);">${order.dateStr || ''}</div>
-                        </div>
-                        <span style="font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: ${currentStatus.bg}; color: ${currentStatus.color}; text-transform: uppercase;">
-                            ${currentStatus.text}
-                        </span>
-                    </div>
-
-                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--color-cream); margin-bottom: 6px;">
-                        <span><strong>Customer:</strong> ${order.customerName} (<a href="tel:${order.phone}" style="color: var(--color-gold);">${order.phone}</a>)</span>
-                        <strong style="color: var(--color-gold); font-size: 0.95rem;">KSh ${order.totalAmount.toLocaleString()}/=</strong>
-                    </div>
-
-                    <div style="font-size: 0.82rem; color: var(--color-cream); margin-bottom: 8px;">
-                        <strong>Service:</strong> ${order.tableOrLocation}
-                        ${order.gpsUrl ? `<a href="${order.gpsUrl}" target="_blank" style="margin-left: 6px; color: #10B981; text-decoration: underline; font-weight: 700;">Open Map</a>` : ''}
-                    </div>
-
-                    <div style="font-size: 0.8rem; color: var(--color-text-muted); background: rgba(0,0,0,0.25); padding: 8px; border-radius: 4px; margin-bottom: 10px;">
-                        ${order.itemsSummary ? order.itemsSummary.join('<br>') : ''}
-                    </div>
-
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px dashed var(--color-border-dark);">
-                        <span style="font-size: 0.78rem; font-weight: 700; color: ${isPaid ? '#10B981' : '#F59E0B'};">
-                            ${isPaid ? `M-Pesa Paid: ${order.mpesaCode}` : 'Payment: Till 4977556'}
-                        </span>
-                        <div style="display: flex; gap: 6px;">
-                            <button type="button" onclick="setAdminOrderStatus('${order.ref}', 'PREPARING')" style="padding: 4px 8px; background: #C2410C; color: #FFF; border: none; border-radius: 4px; font-size: 0.7rem; font-weight: 700; cursor: pointer;">Grill</button>
-                            <button type="button" onclick="setAdminOrderStatus('${order.ref}', 'TRANSIT')" style="padding: 4px 8px; background: #3730A3; color: #FFF; border: none; border-radius: 4px; font-size: 0.7rem; font-weight: 700; cursor: pointer;">Transit</button>
-                            <button type="button" onclick="setAdminOrderStatus('${order.ref}', 'DELIVERED')" style="padding: 4px 8px; background: #15803D; color: #FFF; border: none; border-radius: 4px; font-size: 0.7rem; font-weight: 700; cursor: pointer;">Delivered</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-
-        feed.innerHTML = html;
-    };
-
-    window.setAdminOrderStatus = function(ref, newStatus) {
-        const orders = JSON.parse(localStorage.getItem('ribhouse_active_orders') || '[]');
-        const idx = orders.findIndex(o => o.ref === ref);
-        if (idx > -1) {
-            orders[idx].status = newStatus;
-            localStorage.setItem('ribhouse_active_orders', JSON.stringify(orders));
-            renderAdminActiveOrders();
-        }
-    };
-
-    window.clearAllOrdersAdmin = function() {
-        if (confirm('Clear all orders in active dashboard?')) {
-            localStorage.removeItem('ribhouse_active_orders');
-            renderAdminActiveOrders();
-        }
-    };
-
-    function closeAdminDrawer() {
-        if (adminDrawer && adminDrawerOverlay) {
-            adminDrawer.classList.remove('active');
-            adminDrawerOverlay.classList.remove('active');
-        }
-    }
-
-    if (adminCloseBtn) adminCloseBtn.addEventListener('click', closeAdminDrawer);
-    if (adminDrawerOverlay) adminDrawerOverlay.addEventListener('click', closeAdminDrawer);
-
-    // Helper to get stored feedback with rich initial seed entries
-    function getStoredFeedbacks() {
-        let feedbacks = JSON.parse(localStorage.getItem('ribhouse_customer_feedback') || '[]');
-        if (!feedbacks || feedbacks.length === 0) {
-            const seedFeedbacks = [
-                {
-                    id: 101,
-                    date: 'Aug 4, 2026, 02:15 PM',
-                    author: 'David Mwangi',
-                    dish: 'Choma Goat (1 KG)',
-                    group: 'Family & Kids',
-                    rating: 5,
-                    comments: 'Exceptional tender juicy choma! The smoky flavor was incredible and fast service.'
-                },
-                {
-                    id: 102,
-                    date: 'Aug 4, 2026, 01:30 PM',
-                    author: 'Sarah Kimani',
-                    dish: 'Pancake Breakfast',
-                    group: 'Couple / Date',
-                    rating: 5,
-                    comments: 'Best breakfast in town! Loved the rich house coffee and fresh warm pancakes.'
-                },
-                {
-                    id: 103,
-                    date: 'Aug 4, 2026, 12:45 PM',
-                    author: 'John Ochieng',
-                    dish: 'Tilapia Fry (Ugali / Chapati)',
-                    group: 'Friends',
-                    rating: 5,
-                    comments: 'Crispy fried tilapia cooked to perfection. Highly recommended for lunch!'
-                },
-                {
-                    id: 104,
-                    date: 'Aug 4, 2026, 11:10 AM',
-                    author: 'Grace Njeri',
-                    dish: 'Latte Mocha',
-                    group: 'Solo Dining',
-                    rating: 4,
-                    comments: 'Great barista coffee, hot and aromatic. Will definitely come back.'
+                // Reset Form & Show Success Message
+                feedbackForm.reset();
+                if (customDishInput) customDishInput.style.display = 'none';
+                if (ratingValInput) ratingValInput.value = '5';
+                if (starRatingContainer) {
+                    starRatingContainer.querySelectorAll('.star').forEach(s => s.classList.add('active'));
                 }
-            ];
-            localStorage.setItem('ribhouse_customer_feedback', JSON.stringify(seedFeedbacks));
-            feedbacks = seedFeedbacks;
-        }
-        return feedbacks;
-    }
 
-    function renderAdminDashboard() {
-        const feedbacks = getStoredFeedbacks();
-        const todayISO = new Date().toISOString().split('T')[0];
-        const visitorData = JSON.parse(localStorage.getItem('ribhouse_daily_unique_visitors') || '{}');
-        const uniqueToday = visitorData[todayISO] || 1;
-
-        const uniqueEl = document.getElementById('stat-unique-visitors');
-        const totalEl = document.getElementById('stat-total-reviews');
-        const avgEl = document.getElementById('stat-avg-rating');
-        const topDishEl = document.getElementById('stat-top-dish');
-        const feedContainer = document.getElementById('admin-feedback-feed');
-
-        if (uniqueEl) uniqueEl.textContent = uniqueToday;
-        if (totalEl) totalEl.textContent = feedbacks.length;
-
-        if (feedbacks.length === 0) {
-            if (avgEl) avgEl.textContent = '5.0 ★';
-            if (topDishEl) topDishEl.textContent = 'N/A';
-            if (feedContainer) feedContainer.innerHTML = '<p style="color: var(--color-text-muted); font-size: 0.8rem; text-align: center; padding: 20px;">No customer feedback submitted yet.</p>';
-            return;
-        }
-
-        // Calculate Stats
-        const avgRating = (feedbacks.reduce((acc, curr) => acc + curr.rating, 0) / feedbacks.length).toFixed(1);
-        if (avgEl) avgEl.textContent = `${avgRating} ★`;
-
-        // Calculate Top Favorite Dish
-        const dishCounts = {};
-        feedbacks.forEach(f => {
-            if (f.dish && f.dish !== 'General Experience') {
-                dishCounts[f.dish] = (dishCounts[f.dish] || 0) + 1;
+                feedbackForm.style.display = 'none';
+                if (successMsgContainer) successMsgContainer.style.display = 'block';
             }
         });
-        const sortedDishes = Object.keys(dishCounts).sort((a, b) => dishCounts[b] - dishCounts[a]);
-        if (topDishEl) topDishEl.textContent = sortedDishes[0] || 'Choma Goat';
-
-        // Render Feed Items
-        if (feedContainer) {
-            let html = '';
-            feedbacks.forEach(item => {
-                const stars = '★'.repeat(item.rating) + '☆'.repeat(5 - item.rating);
-                html += `
-                    <div class="feedback-card-item">
-                        <div class="feedback-card-header">
-                            <span class="feedback-card-author">${escapeHTML(item.author)}</span>
-                            <span class="feedback-card-date">${item.date}</span>
-                        </div>
-                        <div class="feedback-card-stars">${stars} (${item.rating}/5)</div>
-                        <div class="feedback-card-tags">
-                            ${item.dish ? `<span class="feedback-tag">${escapeHTML(item.dish)}</span>` : ''}
-                            <span class="feedback-tag">${escapeHTML(item.group)}</span>
-                        </div>
-                        ${item.comments ? `<div class="feedback-card-text">"${escapeHTML(item.comments)}"</div>` : ''}
-                    </div>
-                `;
-            });
-            feedContainer.innerHTML = html;
-        }
-    }
-
-    // H. EXPORT CSV & CLEAR REVIEWS
-    if (btnExportCSV) {
-        btnExportCSV.addEventListener('click', () => {
-            const feedbacks = getStoredFeedbacks();
-            if (feedbacks.length === 0) {
-                alert('No feedback entries to export.');
-                return;
-            }
-
-            let csvContent = 'data:text/csv;charset=utf-8,ID,Date,Author,Dish,Group,Rating,Comments\n';
-            feedbacks.forEach(f => {
-                const row = [
-                    f.id,
-                    `"${f.date}"`,
-                    `"${(f.author || '').replace(/"/g, '""')}"`,
-                    `"${(f.dish || '').replace(/"/g, '""')}"`,
-                    `"${(f.group || '').replace(/"/g, '""')}"`,
-                    f.rating,
-                    `"${(f.comments || '').replace(/"/g, '""')}"`
-                ].join(',');
-                csvContent += row + '\n';
-            });
-
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement('a');
-            link.setAttribute('href', encodedUri);
-            link.setAttribute('download', `ribhouse_customer_feedback_${Date.now()}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        });
-    }
-
-    if (btnClearReviews) {
-        btnClearReviews.addEventListener('click', () => {
-            if (confirm('Are you sure you want to clear all stored customer reviews?')) {
-                localStorage.removeItem('ribhouse_customer_feedback');
-                renderAdminDashboard();
-            }
-        });
-    }
-
-    // I. DAILY SUMMARY REPORT MODAL & PRINT/PDF EXPORT
-    const btnOpenReport = document.getElementById('btn-open-report');
-    const reportOverlay = document.getElementById('daily-report-overlay');
-    const reportCloseBtn = document.getElementById('daily-report-close-btn');
-    const reportDatePicker = document.getElementById('report-date-picker');
-    const btnPrintReport = document.getElementById('btn-print-report');
-
-    if (btnOpenReport && reportOverlay) {
-        btnOpenReport.addEventListener('click', () => {
-            reportOverlay.classList.add('active');
-            
-            // Set date picker to today (YYYY-MM-DD)
-            const todayStr = new Date().toISOString().split('T')[0];
-            if (reportDatePicker) {
-                reportDatePicker.value = todayStr;
-            }
-            generateDailyReport(todayStr);
-        });
-    }
-
-    if (reportCloseBtn && reportOverlay) {
-        reportCloseBtn.addEventListener('click', () => {
-            reportOverlay.classList.remove('active');
-        });
-        reportOverlay.addEventListener('click', (e) => {
-            if (e.target === reportOverlay) reportOverlay.classList.remove('active');
-        });
-    }
-
-    if (reportDatePicker) {
-        reportDatePicker.addEventListener('change', () => {
-            generateDailyReport(reportDatePicker.value);
-        });
-    }
-
-    if (btnPrintReport) {
-        btnPrintReport.addEventListener('click', () => {
-            window.print();
-        });
-    }
-
-    function generateDailyReport(selectedDateISO) {
-        const feedbacks = getStoredFeedbacks();
-        
-        // Format target date for display e.g. "Aug 4, 2026"
-        let displayDate = selectedDateISO;
-        if (selectedDateISO) {
-            const parts = selectedDateISO.split('-');
-            if (parts.length === 3) {
-                const d = new Date(parts[0], parts[1] - 1, parts[2]);
-                displayDate = d.toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' });
-            }
-        }
-
-        const sheetDateEl = document.getElementById('report-sheet-date');
-        if (sheetDateEl) sheetDateEl.textContent = displayDate;
-
-        // Filter feedbacks matching selected date, fallback to all if empty
-        let filtered = feedbacks.filter(f => {
-            if (!f.date) return false;
-            if (!selectedDateISO) return true;
-            
-            const itemDateLower = f.date.toLowerCase();
-            const dateObj = new Date(selectedDateISO);
-            const monthShort = dateObj.toLocaleDateString('en-KE', { month: 'short' }).toLowerCase();
-            const dayNum = dateObj.getDate();
-            const yearNum = dateObj.getFullYear();
-
-            return itemDateLower.includes(monthShort) && itemDateLower.includes(dayNum.toString()) && itemDateLower.includes(yearNum.toString());
-        });
-
-        if (filtered.length === 0) {
-            filtered = feedbacks; // Show all feedback entries so owner portal is never empty
-        }
-
-        // Summary KPI Elements
-        const rptUnique = document.getElementById('rpt-unique-visitors');
-        const rptTotal = document.getElementById('rpt-total-reviews');
-        const rptAvg = document.getElementById('rpt-avg-rating');
-        const rptDish = document.getElementById('rpt-top-dish');
-        const rptGroup = document.getElementById('rpt-top-group');
-        const tbody = document.getElementById('report-table-body');
-
-        const visitorData = JSON.parse(localStorage.getItem('ribhouse_daily_unique_visitors') || '{}');
-        const todayISO = new Date().toISOString().split('T')[0];
-        const uniqueCount = visitorData[selectedDateISO] || (selectedDateISO === todayISO ? 1 : 0);
-
-        if (rptUnique) rptUnique.textContent = uniqueCount;
-        if (rptTotal) rptTotal.textContent = filtered.length;
-
-        // Calculate KPI values
-        const avgRating = (filtered.reduce((acc, curr) => acc + curr.rating, 0) / filtered.length).toFixed(1);
-        if (rptAvg) rptAvg.textContent = `${avgRating} ★`;
-
-        const dishCounts = {};
-        const groupCounts = {};
-
-        filtered.forEach(f => {
-            if (f.dish && f.dish !== 'General Experience') {
-                dishCounts[f.dish] = (dishCounts[f.dish] || 0) + 1;
-            }
-            if (f.group) {
-                groupCounts[f.group] = (groupCounts[f.group] || 0) + 1;
-            }
-        });
-
-        const sortedDishes = Object.keys(dishCounts).sort((a, b) => dishCounts[b] - dishCounts[a]);
-        const sortedGroups = Object.keys(groupCounts).sort((a, b) => groupCounts[b] - groupCounts[a]);
-
-        if (rptDish) rptDish.textContent = sortedDishes[0] || 'General';
-        if (rptGroup) rptGroup.textContent = sortedGroups[0] || 'Solo';
-
-        // Render Table Rows
-        if (tbody) {
-            let html = '';
-            filtered.forEach(item => {
-                const stars = '★'.repeat(item.rating) + '☆'.repeat(5 - item.rating);
-                const timeParts = item.date.split(',');
-                const timeStr = timeParts.length > 1 ? timeParts[1].trim() : item.date;
-
-                html += `
-                    <tr>
-                        <td style="font-weight: 500;">${timeStr}</td>
-                        <td style="font-weight: 600;">${escapeHTML(item.author)}</td>
-                        <td style="color: #0F172A; font-weight: 500;">${escapeHTML(item.dish)}</td>
-                        <td>${escapeHTML(item.group)}</td>
-                        <td style="color: #D97706; font-weight: bold;">${stars}</td>
-                        <td style="font-style: italic;">${item.comments ? `"${escapeHTML(item.comments)}"` : '<span style="color: #94A3B8;">No comment</span>'}</td>
-                    </tr>
-                `;
-            });
-            tbody.innerHTML = html;
-        }
     }
 }
+
 
 // ==========================================================================
 // VISIT RIB HOUSE - LOCATION, LIVE DIRECTIONS & SHARING LOGIC

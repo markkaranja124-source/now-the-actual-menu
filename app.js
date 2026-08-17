@@ -1335,6 +1335,79 @@ function initSectionSlideshows() {
 // 3. OFFLINE RIB HOUSE MENU AI ASSISTANT LOGIC & SELECTION ENGINE
 // ==========================================================================
 
+// Dining Mode: 'dine_in' (default) vs 'takeaway'
+function getDiningType() {
+    try {
+        return sessionStorage.getItem('ribhouse_dining_type') || 'dine_in';
+    } catch(e) {
+        return 'dine_in';
+    }
+}
+
+function setDiningType(type) {
+    try {
+        sessionStorage.setItem('ribhouse_dining_type', type);
+    } catch(e) {}
+    if (typeof renderSelectedOrderPage === 'function') renderSelectedOrderPage();
+    if (typeof renderOrderSummaryPage === 'function') renderOrderSummaryPage();
+    if (typeof renderCheckoutPage === 'function') renderCheckoutPage();
+}
+
+window.setDiningType = setDiningType;
+
+// Standardized Takeaway Packaging Fee Calculation Rules:
+// 1. Choma & Chemsha (Goat / Beef / Pork / Platters): Meat Foil (20/=) + Soup Cup (20/=) = 40/= flat per meat order
+// 2. All Drinks & Soups (Coffee, Tea, Dawa, Shakes, Smoothies, Juices, Soups): Takeaway Cup = 20/= per unit
+// 3. All Other Meals & Stews (Breakfasts, Stews, Steaks, Fish, Chips Combos, Sides): Plastic Food Container = 20/= per unit
+function getItemPackagingDetails(item) {
+    const textLower = ((item.name || '') + ' ' + (item.desc || '') + ' ' + (item.category || '')).toLowerCase();
+    
+    // Check Choma & Chemsha
+    if (textLower.includes('choma') || textLower.includes('chemsha') || textLower.includes('tumbukiza') || textLower.includes('ribs') || textLower.includes('platter')) {
+        return {
+            type: 'choma_foil_soup',
+            label: 'Foil Wrap & Soup Cup',
+            feePerUnit: 40,
+            isFlat: true,
+            totalFee: 40
+        };
+    }
+    
+    // Check Drinks & Soups
+    if (textLower.includes('coffee') || textLower.includes('tea') || textLower.includes('latte') || textLower.includes('espresso') || textLower.includes('cappuccino') || textLower.includes('dawa') || textLower.includes('shake') || textLower.includes('smoothie') || textLower.includes('juice') || textLower.includes('lemonade') || textLower.includes('soup') || textLower.includes('chocolate') || textLower.includes('milo') || textLower.includes('water') || textLower.includes('drink')) {
+        return {
+            type: 'drink_cup',
+            label: 'Takeaway Cup',
+            feePerUnit: 20,
+            isFlat: false,
+            totalFee: 20 * (item.qty || 1)
+        };
+    }
+    
+    // Standard Food Dish
+    return {
+        type: 'food_container',
+        label: 'Plastic Food Container',
+        feePerUnit: 20,
+        isFlat: false,
+        totalFee: 20 * (item.qty || 1)
+    };
+}
+
+function calculateItemPackagingFee(item, diningType = getDiningType()) {
+    if (diningType === 'dine_in') return 0;
+    return getItemPackagingDetails(item).totalFee;
+}
+
+function calculateCartPackagingTotal(cart, diningType = getDiningType()) {
+    if (diningType === 'dine_in' || !cart || cart.length === 0) return 0;
+    let total = 0;
+    cart.forEach(item => {
+        total += calculateItemPackagingFee(item, diningType);
+    });
+    return total;
+}
+
 // SessionStorage Cart Helper Functions (Resets to 0 on fresh page run)
 function getSelectedCart() {
     try {
@@ -2731,6 +2804,7 @@ function renderSelectedOrderPage() {
     if (!listContainer) return;
 
     const cart = getSelectedCart();
+    const diningType = getDiningType();
 
     if (cart.length === 0) {
         listContainer.innerHTML = `
@@ -2759,11 +2833,34 @@ function renderSelectedOrderPage() {
     let totalDishes = cart.length;
     let totalQuantity = 0;
     let totalPrice = 0;
+    let packagingTotal = calculateCartPackagingTotal(cart, diningType);
+
+    // Dining Mode Selector Card (Dine-In vs Takeaway)
+    html += `
+        <div class="dining-mode-container">
+            <div class="dining-mode-header">
+                <div>
+                    <span class="dining-mode-title">Order Dining Mode</span>
+                    <div class="dining-mode-subtitle">Choose whether to dine at Rib House or pack your order to go</div>
+                </div>
+            </div>
+            <div class="dining-toggle-pills">
+                <button type="button" class="dining-pill ${diningType === 'dine_in' ? 'active' : ''}" onclick="setDiningType('dine_in')">
+                    <span class="pill-radio">${diningType === 'dine_in' ? '■' : '□'}</span> Dine-In (Table Service - KSh 0)
+                </button>
+                <button type="button" class="dining-pill ${diningType === 'takeaway' ? 'active' : ''}" onclick="setDiningType('takeaway')">
+                    <span class="pill-radio">${diningType === 'takeaway' ? '■' : '□'}</span> Takeaway (Packed To-Go)
+                </button>
+            </div>
+        </div>
+    `;
 
     cart.forEach(item => {
         const itemSubtotal = calculateItemSubtotal(item);
         totalQuantity += item.qty;
         totalPrice += itemSubtotal;
+
+        const pkgDetails = getItemPackagingDetails(item);
 
         // Resolve side options dynamically for this item
         const sideOptions = (item.sideOptions && item.sideOptions.length > 0) 
@@ -2785,20 +2882,6 @@ function renderSelectedOrderPage() {
             item.portions.pop();
         }
 
-        // Determine Category Badge (Clean, No Emojis)
-        const nameLower = (item.name || '').toLowerCase();
-        let categoryBadge = 'Main Dish';
-
-        if (nameLower.includes('choma') || nameLower.includes('beef') || nameLower.includes('goat') || nameLower.includes('steak') || nameLower.includes('platter') || nameLower.includes('tumbukiza') || nameLower.includes('chemsha')) {
-            categoryBadge = 'Wood-Fired Choma';
-        } else if (nameLower.includes('breakfast') || nameLower.includes('pancake') || nameLower.includes('egg') || nameLower.includes('toast') || nameLower.includes('bite') || nameLower.includes('samosa') || nameLower.includes('combo')) {
-            categoryBadge = 'Gourmet Breakfast';
-        } else if (nameLower.includes('coffee') || nameLower.includes('tea') || nameLower.includes('shake') || nameLower.includes('drink') || nameLower.includes('dawa') || nameLower.includes('lemonade') || nameLower.includes('smoothie')) {
-            categoryBadge = 'Barista Brew';
-        } else if (nameLower.includes('tilapia') || nameLower.includes('fish')) {
-            categoryBadge = 'Fresh Tilapia';
-        }
-
         // Build Custom Option UI for each individual portion (Plate 1, Plate 2, etc.)
         let portionsHtml = '';
 
@@ -2814,7 +2897,6 @@ function renderSelectedOrderPage() {
 
                 // Dynamic Side Choice (e.g. Ugali vs Chapati, or Rice vs Mukimo)
                 if (hasSide && sideOptions.length > 0) {
-                    // Filter out unavailable sides so they disappear completely from the customer's choice
                     const availableSides = sideOptions.filter(opt => getItemAvailability(opt) !== 'unavailable');
                     const validOptions = availableSides.length > 0 ? availableSides : sideOptions;
 
@@ -2889,6 +2971,11 @@ function renderSelectedOrderPage() {
             ? `<img src="${dishImg}" alt="${item.name}" class="order-dish-img">`
             : `<div class="dish-placeholder-box"><span class="dish-placeholder-label">PHOTO</span></div>`;
 
+        // Packaging badge if takeaway
+        const packagingBadgeHtml = (diningType === 'takeaway') 
+            ? `<div class="item-packaging-tag">Takeaway Packaging: ${pkgDetails.label} (+KSh ${pkgDetails.totalFee.toLocaleString()}/=)</div>`
+            : '';
+
         html += `
             <div class="order-item-row-luxury" data-id="${item.id}">
                 <div class="order-item-main-info">
@@ -2899,6 +2986,7 @@ function renderSelectedOrderPage() {
                         <h3 class="order-dish-title">${item.name}</h3>
                         ${item.desc ? `<p class="order-dish-desc">${item.desc}</p>` : ''}
                         <div class="order-dish-price-tag">Base Price: <strong>KSh ${baseVal.toLocaleString()}/=</strong></div>
+                        ${packagingBadgeHtml}
                         ${portionsHtml}
                     </div>
                 </div>
@@ -2928,9 +3016,17 @@ function renderSelectedOrderPage() {
 
     listContainer.innerHTML = html;
 
+    const grandTotal = totalPrice + packagingTotal;
+
     if (itemsCountEl) itemsCountEl.textContent = `${totalDishes} ${totalDishes === 1 ? 'Dish' : 'Dishes'}`;
     if (totalQtyEl) totalQtyEl.textContent = `${totalQuantity} ${totalQuantity === 1 ? 'Item' : 'Items'}`;
-    if (totalAmountEl) totalAmountEl.textContent = `KSh ${totalPrice.toLocaleString()}/=`;
+    if (totalAmountEl) {
+        if (diningType === 'takeaway') {
+            totalAmountEl.innerHTML = `KSh ${grandTotal.toLocaleString()}/= <span style="font-size: 0.85rem; font-weight: 500; color: #64748B; display: block; margin-top: 4px;">(Includes KSh ${packagingTotal.toLocaleString()}/= Takeaway Packaging)</span>`;
+        } else {
+            totalAmountEl.textContent = `KSh ${grandTotal.toLocaleString()}/=`;
+        }
+    }
 }
 
 // Global Quantity & Remove Handlers for order.html
@@ -2986,6 +3082,7 @@ function renderCheckoutPage() {
     if (!summaryItemsEl) return;
 
     const cart = getSelectedCart();
+    const diningType = getDiningType();
 
     if (cart.length === 0) {
         summaryItemsEl.innerHTML = `<p style="color: #475569;">No items selected. <a href="index.html" class="text-gold">Return to Menu</a></p>`;
@@ -2995,6 +3092,7 @@ function renderCheckoutPage() {
 
     let html = '';
     let totalPrice = 0;
+    let packagingTotal = calculateCartPackagingTotal(cart, diningType);
 
     cart.forEach(item => {
         const itemSubtotal = calculateItemSubtotal(item);
@@ -3007,8 +3105,18 @@ function renderCheckoutPage() {
         `;
     });
 
+    if (diningType === 'takeaway' && packagingTotal > 0) {
+        html += `
+            <div style="display: flex; justify-content: space-between; margin-top: 12px; padding-top: 8px; border-top: 1px dashed #CBD5E1; color: #B8860B; font-weight: 600;">
+                <span>Takeaway Packaging Fee</span>
+                <span>+KSh ${packagingTotal.toLocaleString()}/=</span>
+            </div>
+        `;
+    }
+
     summaryItemsEl.innerHTML = html;
-    if (totalAmountEl) totalAmountEl.textContent = `KSh ${totalPrice.toLocaleString()}/=`;
+    const grandTotal = totalPrice + packagingTotal;
+    if (totalAmountEl) totalAmountEl.textContent = `KSh ${grandTotal.toLocaleString()}/=`;
 }
 
 // ==========================================================================
@@ -3023,6 +3131,7 @@ function renderOrderSummaryPage() {
     if (!listContainer) return;
 
     const cart = getSelectedCart();
+    const diningType = getDiningType();
 
     if (cart.length === 0) {
         listContainer.innerHTML = `
@@ -3044,23 +3153,34 @@ function renderOrderSummaryPage() {
     let totalDishes = cart.length;
     let totalQuantity = 0;
     let totalPrice = 0;
+    let packagingTotal = calculateCartPackagingTotal(cart, diningType);
+
+    // Dining Mode Selector Card (Dine-In vs Takeaway)
+    html += `
+        <div class="dining-mode-container">
+            <div class="dining-mode-header">
+                <div>
+                    <span class="dining-mode-title">Order Dining Mode</span>
+                    <div class="dining-mode-subtitle">Choose whether to dine at Rib House or pack your order to go</div>
+                </div>
+            </div>
+            <div class="dining-toggle-pills">
+                <button type="button" class="dining-pill ${diningType === 'dine_in' ? 'active' : ''}" onclick="setDiningType('dine_in')">
+                    <span class="pill-radio">${diningType === 'dine_in' ? '■' : '□'}</span> Dine-In (Table Service - KSh 0)
+                </button>
+                <button type="button" class="dining-pill ${diningType === 'takeaway' ? 'active' : ''}" onclick="setDiningType('takeaway')">
+                    <span class="pill-radio">${diningType === 'takeaway' ? '■' : '□'}</span> Takeaway (Packed To-Go)
+                </button>
+            </div>
+        </div>
+    `;
 
     cart.forEach(item => {
         const itemSubtotal = calculateItemSubtotal(item);
         totalQuantity += item.qty;
         totalPrice += itemSubtotal;
 
-        // Determine Category Badge (Clean, No Emojis)
-        const nameLower = item.name.toLowerCase();
-        let categoryBadge = 'Main Dish';
-
-        if (nameLower.includes('choma') || nameLower.includes('beef') || nameLower.includes('goat') || nameLower.includes('steak') || nameLower.includes('platter') || nameLower.includes('tumbukiza') || nameLower.includes('chemsha')) {
-            categoryBadge = 'Wood-Fired Choma';
-        } else if (nameLower.includes('breakfast') || nameLower.includes('pancake') || nameLower.includes('egg') || nameLower.includes('toast') || nameLower.includes('bite') || nameLower.includes('samosa') || nameLower.includes('combo')) {
-            categoryBadge = 'Gourmet Breakfast';
-        } else if (nameLower.includes('coffee') || nameLower.includes('tea') || nameLower.includes('shake') || nameLower.includes('drink') || nameLower.includes('dawa') || nameLower.includes('lemonade') || nameLower.includes('smoothie')) {
-            categoryBadge = 'Barista Brew';
-        }
+        const pkgDetails = getItemPackagingDetails(item);
 
         // Render portion breakdowns
         let breakdownHtml = '';
@@ -3099,6 +3219,10 @@ function renderOrderSummaryPage() {
             ? `<img src="${dishImg}" alt="${item.name}" class="order-dish-img">`
             : `<div class="dish-placeholder-box"><span class="dish-placeholder-label">PHOTO</span></div>`;
 
+        const packagingBadgeHtml = (diningType === 'takeaway') 
+            ? `<div class="item-packaging-tag">Takeaway Packaging: ${pkgDetails.label} (+KSh ${pkgDetails.totalFee.toLocaleString()}/=)</div>`
+            : '';
+
         html += `
             <div class="order-item-row-luxury" style="pointer-events: none;">
                 <div class="order-item-main-info">
@@ -3111,6 +3235,7 @@ function renderOrderSummaryPage() {
                             Total Quantity: <strong style="color: #B8860B; font-size: 0.95rem;">${item.qty} ${item.qty === 1 ? 'Plate' : 'Plates'}</strong>
                         </div>
                         <div class="order-dish-price-tag">Base Price: <strong>KSh ${baseVal.toLocaleString()}/=</strong></div>
+                        ${packagingBadgeHtml}
                         ${breakdownHtml}
                     </div>
                 </div>
@@ -3132,9 +3257,17 @@ function renderOrderSummaryPage() {
 
     listContainer.innerHTML = html;
 
+    const grandTotal = totalPrice + packagingTotal;
+
     if (dishesCountEl) dishesCountEl.textContent = `${totalDishes} ${totalDishes === 1 ? 'Dish' : 'Dishes'}`;
     if (totalQtyEl) totalQtyEl.textContent = `${totalQuantity} ${totalQuantity === 1 ? 'Item' : 'Items'}`;
-    if (grandTotalEl) grandTotalEl.textContent = `KSh ${totalPrice.toLocaleString()}/=`;
+    if (grandTotalEl) {
+        if (diningType === 'takeaway') {
+            grandTotalEl.innerHTML = `KSh ${grandTotal.toLocaleString()}/= <span style="font-size: 0.82rem; font-weight: 500; color: #64748B; display: block; margin-top: 4px;">(Includes KSh ${packagingTotal.toLocaleString()}/= Takeaway Packaging)</span>`;
+        } else {
+            grandTotalEl.textContent = `KSh ${grandTotal.toLocaleString()}/=`;
+        }
+    }
 }
 
 // --- 4. CUSTOMER FEEDBACK SYSTEM (CONNECTED TO SERVER DATABASE) ---

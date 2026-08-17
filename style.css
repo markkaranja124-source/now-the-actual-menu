@@ -6481,3 +6481,105 @@ img {
 
 
 
+
+/* ==========================================================================
+   DINING MODE SELECTOR & TAKEAWAY PACKAGING STYLES (SHARP CORNERS)
+   ========================================================================== */
+.dining-mode-container {
+    background: #FFFFFF;
+    border: 1.5px solid #0F172A;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+.dining-mode-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.dining-mode-title {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0F172A;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dining-mode-subtitle {
+    font-size: 0.8rem;
+    color: #64748B;
+    font-weight: 500;
+    margin-top: 3px;
+}
+
+.dining-toggle-pills {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.dining-pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 18px;
+    background: #F8FAFC;
+    border: 1.5px solid #CBD5E1;
+    color: #334155;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 0 !important;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.dining-pill:hover {
+    border-color: #0F172A;
+    background: #F1F5F9;
+    color: #0F172A;
+}
+
+.dining-pill.active {
+    background: #0F172A !important;
+    border-color: #0F172A !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25);
+}
+
+.dining-pill .pill-radio {
+    color: #B8860B;
+    font-size: 0.95rem;
+}
+
+.dining-pill.active .pill-radio {
+    color: #F59E0B;
+}
+
+/* Packaging Fee Badge on Individual Order Items */
+.item-packaging-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    color: #92400E;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-top: 8px;
+    border-radius: 0 !important;
+}
+
+@media (max-width: 600px) {
+    .dining-toggle-pills {
+        grid-template-columns: 1fr;
+    }
+}

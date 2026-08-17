@@ -2138,7 +2138,6 @@ function renderSelectedOrderPage() {
                 <div class="order-item-main-info">
                     <div class="order-dish-image-frame">
                         ${imageHtml}
-                        <span class="order-badge-pill">${categoryBadge}</span>
                     </div>
                     <div class="order-dish-text-block">
                         <h3 class="order-dish-title">${item.name}</h3>
@@ -2349,7 +2348,6 @@ function renderOrderSummaryPage() {
                 <div class="order-item-main-info">
                     <div class="order-dish-image-frame">
                         ${imageHtml}
-                        <span class="order-badge-pill">${categoryBadge}</span>
                     </div>
                     <div class="order-dish-text-block">
                         <h3 class="order-dish-title">${item.name}</h3>

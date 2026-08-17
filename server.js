@@ -530,7 +530,7 @@ app.post('/api/feedback', (req, res) => {
 
         res.status(201).json({
             success: true,
-            message: 'Asante Sana! Your feedback has been received privately.',
+            message: 'Asante Sana! Your feedback has been received.',
             feedback: newFeedback
         });
     } catch (err) {

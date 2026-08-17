@@ -1387,7 +1387,7 @@ img {
     font-size: clamp(2.2rem, 4vw, 3.4rem);
     font-weight: 700;
     letter-spacing: 2px;
-    color: #0F172A !important;
+    color: #111114 !important;
     text-transform: uppercase;
     line-height: 1.1;
     margin-bottom: 14px;
@@ -1396,7 +1396,7 @@ img {
 
 .section-subtext-editorial {
     font-size: 1.02rem;
-    color: #475569 !important;
+    color: #334155 !important;
     font-weight: 500;
     line-height: 1.6;
     text-shadow: none !important;
@@ -1506,10 +1506,12 @@ img {
    7. INTERACTIVE MENU CATALOG (THE DROPS)
    -------------------------------------------------------------------------- */
 .menu-catalog-section {
-    background: var(--color-dark-surface);
-    border-top: 1px solid var(--color-border-dark);
-    border-bottom: 1px solid var(--color-border-dark);
-    padding: 100px 32px;
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
+    background-image: none !important;
+    border-top: 1px solid #E2E8F0;
+    border-bottom: 1px solid #E2E8F0;
+    padding: 60px 32px;
 }
 
 .catalog-controls {

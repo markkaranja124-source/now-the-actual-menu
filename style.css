@@ -183,24 +183,24 @@ img {
     position: relative;
     display: inline-flex;
     align-items: center;
-    background: #18181B !important; /* Sleek dark search background */
-    border: 1px solid #27272A !important;
+    background: #FFFFFF !important; /* Original pure white background */
+    border: 1.5px solid #111114 !important;
     padding: 6px 14px;
     border-radius: 0 !important;
     transition: var(--transition-fast);
     max-width: 280px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
 .nav-search-box .search-icon {
-    color: #94A3B8 !important;
+    color: #111114 !important;
     flex-shrink: 0;
 }
 
 .nav-search-box:focus-within {
-    background: #202124 !important;
-    border-color: #52525B !important;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    background: #FFFFFF !important;
+    border-color: #B8860B !important;
+    box-shadow: 0 0 15px rgba(184, 134, 11, 0.25);
     max-width: 340px;
 }
 
@@ -208,10 +208,10 @@ img {
     background: transparent;
     border: none;
     outline: none;
-    color: #F8FAFC !important;
+    color: #111114 !important; /* Crisp black text */
     font-family: var(--font-sans);
     font-size: 0.85rem;
-    font-weight: 500;
+    font-weight: 600;
     padding: 2px 8px;
     width: 140px;
     transition: width 0.3s ease;
@@ -223,14 +223,14 @@ img {
 }
 
 .nav-search-input::placeholder {
-    color: #71717A !important;
+    color: #64748B !important;
     font-size: 0.8rem;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .nav-search-box .search-clear-btn {
-    color: #94A3B8 !important;
-    background: rgba(255, 255, 255, 0.08);
+    color: #111114 !important;
+    background: rgba(0, 0, 0, 0.08);
     border: none;
     font-size: 1.1rem;
     width: 20px;
@@ -245,21 +245,21 @@ img {
 
 .nav-search-box .search-clear-btn:hover {
     color: #FFFFFF !important;
-    background: rgba(255, 255, 255, 0.2);
+    background: #111114;
 }
 
-/* Google-Style Live Auto-Suggest Dropdown (Sharp Corners) */
+/* Google-Style Live Auto-Suggest Dropdown (Sharp Corners & Pure White) */
 .search-suggestions-dropdown {
     position: absolute;
-    top: calc(100% + 4px);
+    top: calc(100% + 6px);
     right: 0;
     min-width: 320px;
     max-width: min(94vw, 420px);
     width: 380px;
-    background: #18181B;
-    border: 1px solid #27272A;
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
     border-radius: 0 !important;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.14);
     z-index: 1200;
     max-height: 480px;
     overflow-y: auto;
@@ -283,32 +283,32 @@ img {
 
 .search-suggestion-item:hover,
 .search-suggestion-item.active-keyboard-item {
-    background: #27272A !important;
+    background: #F8FAFC !important;
 }
 
 /* Featured Top Result Row */
 .search-suggestion-item.sugg-featured {
     padding: 12px 14px;
-    border-bottom: 1px solid #27272A;
-    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid #F1F5F9;
+    background: #FAFAFA;
 }
 
 .search-suggestion-item.sugg-featured:hover,
 .search-suggestion-item.sugg-featured.active-keyboard-item {
-    background: #27272A !important;
+    background: #F1F5F9 !important;
 }
 
 .sugg-row-icon-box {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #71717A;
+    color: #64748B;
     flex-shrink: 0;
 }
 
 .search-suggestion-item:hover .sugg-row-icon-box,
 .search-suggestion-item.active-keyboard-item .sugg-row-icon-box {
-    color: #E2E8F0;
+    color: #111114;
 }
 
 .sugg-content-box {
@@ -322,7 +322,7 @@ img {
 .sugg-title-line {
     font-size: 0.9rem;
     font-weight: 500;
-    color: #E2E8F0;
+    color: #111114;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -332,26 +332,26 @@ img {
 .sugg-featured .sugg-title-line {
     font-size: 0.95rem;
     font-weight: 700;
-    color: #FFFFFF;
+    color: #111114;
 }
 
 .sugg-subtitle-line {
     font-size: 0.75rem;
-    color: #94A3B8;
+    color: #64748B;
     line-height: 1.3;
 }
 
 .sugg-match-bold {
-    font-weight: 700;
-    color: #FFFFFF;
+    font-weight: 800;
+    color: #111114;
 }
 
 .sugg-thumb-box {
     width: 44px;
     height: 44px;
     flex-shrink: 0;
-    background: #27272A;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -369,7 +369,7 @@ img {
 .sugg-price-pill {
     font-size: 0.75rem;
     font-weight: 700;
-    color: #F59E0B;
+    color: #B8860B;
     flex-shrink: 0;
     margin-left: auto;
 }

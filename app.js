@@ -2642,4 +2642,69 @@ function initLocationSection() {
     }
 }
 
+// =============================================================================
+// GOOGLE CLOUD / FIREBASE STORAGE DYNAMIC IMAGE REGISTRY ENGINE
+// =============================================================================
+const FIREBASE_IMAGE_REGISTRY_URL = 'https://ribhouse-admin-default-rtdb.firebaseio.com/assets/images.json';
+
+function applyImageRegistry(registry) {
+    if (!registry || typeof registry !== 'object') return;
+    
+    document.querySelectorAll('img[data-img-key]').forEach(img => {
+        const key = img.getAttribute('data-img-key');
+        if (key && registry[key]) {
+            const cloudUrl = registry[key];
+            if (img.src !== cloudUrl && !img.src.endsWith(cloudUrl)) {
+                img.src = cloudUrl;
+            }
+        }
+    });
+}
+
+async function initCloudImageRegistry() {
+    try {
+        const res = await fetch(FIREBASE_IMAGE_REGISTRY_URL);
+        if (res.ok) {
+            const data = await res.json();
+            if (data && typeof data === 'object') {
+                applyImageRegistry(data);
+                localStorage.setItem('ribhouse_cached_image_registry', JSON.stringify(data));
+            }
+        }
+    } catch(e) {
+        try {
+            const cached = JSON.parse(localStorage.getItem('ribhouse_cached_image_registry') || '{}');
+            applyImageRegistry(cached);
+        } catch(err) {}
+    }
+
+    // Live Real-Time SSE Listener for Dynamic Instant Image Updates
+    try {
+        if (window.EventSource && !window._img_eventsource) {
+            const evtSource = new EventSource(FIREBASE_IMAGE_REGISTRY_URL);
+            window._img_eventsource = evtSource;
+            evtSource.addEventListener('put', (e) => {
+                try {
+                    const payload = JSON.parse(e.data);
+                    if (payload && payload.data) {
+                        applyImageRegistry(payload.data);
+                    }
+                } catch(err) {}
+            });
+            evtSource.addEventListener('patch', (e) => {
+                try {
+                    const payload = JSON.parse(e.data);
+                    if (payload && payload.data) {
+                        applyImageRegistry(payload.data);
+                    }
+                } catch(err) {}
+            });
+        }
+    } catch(e) {}
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initCloudImageRegistry();
+});
+
 

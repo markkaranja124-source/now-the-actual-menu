@@ -1977,134 +1977,171 @@
             const dateStr = now.toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' });
             const timeStr = now.toLocaleTimeString('en-KE', { hour: '2-digit', minute: '2-digit' });
 
-            let html = `
-                <div id="pdf-export-sheet" style="width: 750px; font-family: 'Plus Jakarta Sans', Arial, sans-serif; color: #111114; padding: 24px; background: #FFFFFF; box-sizing: border-box;">
-                    
-                    <!-- Header -->
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2.5px solid #E67E22; padding-bottom: 14px; margin-bottom: 18px;">
-                        <div>
-                            <h1 style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 26px; color: #D35400; text-transform: uppercase; margin: 0 0 4px 0; font-weight: 800; letter-spacing: 0.5px;">RIB HOUSE RESTAURANT</h1>
-                            <div style="font-size: 11px; color: #475569; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">P.O Box 00506-3999, GPO &bull; Nairobi, Kenya</div>
-                            <div style="font-size: 13px; font-weight: 700; color: #111114; margin-top: 4px;">Daily Customer Reviews & AI Analytics Executive Summary</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div style="font-size: 10px; color: #64748B; text-transform: uppercase; font-weight: 700;">Report Date</div>
-                            <div style="font-size: 15px; font-weight: 800; color: #111114;">${dateStr}</div>
-                            <div style="font-size: 10px; color: #64748B; margin-top: 2px;">Generated at ${timeStr}</div>
-                        </div>
-                    </div>
-
-                    <!-- Key Performance Metrics Grid -->
-                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 22px;">
-                        <div style="background: #FFF7ED; border: 1px solid rgba(230, 126, 34, 0.4); padding: 10px 12px; text-align: center;">
-                            <div style="font-size: 9.5px; text-transform: uppercase; color: #64748B; font-weight: 700;">Total Reviews</div>
-                            <div style="font-size: 22px; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; color: #D35400;">${total}</div>
-                        </div>
-                        <div style="background: #FFF7ED; border: 1px solid rgba(230, 126, 34, 0.4); padding: 10px 12px; text-align: center;">
-                            <div style="font-size: 9.5px; text-transform: uppercase; color: #64748B; font-weight: 700;">Avg Satisfaction</div>
-                            <div style="font-size: 22px; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; color: #D35400;">${avg} / 5.0</div>
-                        </div>
-                        <div style="background: #FFF7ED; border: 1px solid rgba(230, 126, 34, 0.4); padding: 10px 12px; text-align: center;">
-                            <div style="font-size: 9.5px; text-transform: uppercase; color: #64748B; font-weight: 700;">Top Loved Dish</div>
-                            <div style="font-size: 12px; font-weight: 800; color: #111114; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 4px;">${topDish}</div>
-                        </div>
-                        <div style="background: #FFF7ED; border: 1px solid rgba(230, 126, 34, 0.4); padding: 10px 12px; text-align: center;">
-                            <div style="font-size: 9.5px; text-transform: uppercase; color: #64748B; font-weight: 700;">5-Star Ratio</div>
-                            <div style="font-size: 13px; font-weight: 800; color: #16A34A; margin-top: 4px;">${total > 0 ? Math.round((star5 / total) * 100) : 100}%</div>
-                        </div>
-                    </div>
-
-                    <!-- Customer Feedback Entries Log -->
-                    <div style="margin-bottom: 16px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1.5px solid #CBD5E1; padding-bottom: 4px;">
-                            <h3 style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: #334155; margin: 0; font-weight: 800;">Itemized Customer Feedback Log (${total} Records)</h3>
-                            <span style="font-size: 10px; color: #64748B; font-weight: 600;">Full Verbatim Feedback</span>
-                        </div>
-                        
-                        <table style="width: 100%; border-collapse: collapse; font-size: 10.5px; table-layout: fixed;">
-                            <thead>
-                                <tr style="background: #F1F5F9; border-bottom: 1.5px solid #94A3B8; text-align: left;">
-                                    <th style="width: 28px; padding: 7px 4px; font-weight: 800; color: #1E293B;">#</th>
-                                    <th style="width: 85px; padding: 7px 4px; font-weight: 800; color: #1E293B;">Date / Time</th>
-                                    <th style="width: 105px; padding: 7px 4px; font-weight: 800; color: #1E293B;">Customer</th>
-                                    <th style="width: 135px; padding: 7px 4px; font-weight: 800; color: #1E293B;">Dish Ordered</th>
-                                    <th style="width: 65px; padding: 7px 4px; font-weight: 800; color: #1E293B;">Rating</th>
-                                    <th style="width: 90px; padding: 7px 4px; font-weight: 800; color: #1E293B;">Dining Group</th>
-                                    <th style="padding: 7px 4px; font-weight: 800; color: #1E293B;">Customer Comments</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-            `;
-
+            let rowsHtml = '';
             feedbacks.forEach((fb, idx) => {
                 const stars = '★'.repeat(fb.rating || 5) + '☆'.repeat(5 - (fb.rating || 5));
                 const bg = idx % 2 === 0 ? '#FFFFFF' : '#F8FAFC';
-                html += `
-                    <tr style="background: ${bg}; border-bottom: 1px solid #E2E8F0; page-break-inside: avoid;">
-                        <td style="padding: 6px 4px; font-weight: 700; color: #64748B; vertical-align: top;">${idx + 1}</td>
-                        <td style="padding: 6px 4px; color: #475569; vertical-align: top; word-break: break-word;">${escapeFbHtml(fb.date || 'Today')}</td>
-                        <td style="padding: 6px 4px; font-weight: 700; color: #111114; vertical-align: top; word-break: break-word;">${escapeFbHtml(fb.author || 'Guest')}</td>
-                        <td style="padding: 6px 4px; font-weight: 700; color: #D35400; vertical-align: top; word-break: break-word;">${escapeFbHtml(fb.dish || 'General Experience')}</td>
-                        <td style="padding: 6px 4px; color: #D35400; font-weight: 800; vertical-align: top; white-space: nowrap;">${stars}</td>
-                        <td style="padding: 6px 4px; color: #475569; vertical-align: top; word-break: break-word;">${escapeFbHtml(fb.group || 'Solo Diners')}</td>
-                        <td style="padding: 6px 4px; color: #1E293B; vertical-align: top; line-height: 1.4; word-break: break-word;">"${escapeFbHtml(fb.comments || 'No comment')}"</td>
+                rowsHtml += `
+                    <tr style="background: ${bg}; border-bottom: 1px solid #CBD5E1;">
+                        <td style="padding: 7px 4px; font-weight: bold; color: #64748B; vertical-align: top;">${idx + 1}</td>
+                        <td style="padding: 7px 4px; color: #475569; vertical-align: top; white-space: nowrap;">${escapeFbHtml(fb.date || 'Today')}</td>
+                        <td style="padding: 7px 4px; font-weight: bold; color: #111114; vertical-align: top;">${escapeFbHtml(fb.author || 'Guest')}</td>
+                        <td style="padding: 7px 4px; font-weight: bold; color: #D35400; vertical-align: top;">${escapeFbHtml(fb.dish || 'General Experience')}</td>
+                        <td style="padding: 7px 4px; color: #D35400; font-weight: bold; vertical-align: top; white-space: nowrap;">${stars}</td>
+                        <td style="padding: 7px 4px; color: #475569; vertical-align: top;">${escapeFbHtml(fb.group || 'Solo Diners')}</td>
+                        <td style="padding: 7px 4px; color: #1E293B; vertical-align: top; line-height: 1.4;">"${escapeFbHtml(fb.comments || 'No comment')}"</td>
                     </tr>
                 `;
             });
 
-            html += `
+            return `
+                <div id="pdf-export-container" style="width: 700px; max-width: 700px; margin: 0 auto; font-family: Arial, Helvetica, sans-serif; color: #111114; padding: 20px; background: #FFFFFF; box-sizing: border-box;">
+                    
+                    <!-- Header -->
+                    <table style="width: 100%; border-bottom: 2.5px solid #E67E22; padding-bottom: 12px; margin-bottom: 16px;">
+                        <tr>
+                            <td style="vertical-align: top;">
+                                <div style="font-size: 22px; font-weight: bold; color: #D35400; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">RIB HOUSE RESTAURANT</div>
+                                <div style="font-size: 11px; color: #475569; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">P.O Box 00506-3999, GPO &bull; Nairobi, Kenya</div>
+                                <div style="font-size: 12px; font-weight: bold; color: #111114; margin-top: 4px;">Daily Customer Reviews & AI Analytics Executive Summary</div>
+                            </td>
+                            <td style="text-align: right; vertical-align: top; width: 180px;">
+                                <div style="font-size: 10px; color: #64748B; text-transform: uppercase; font-weight: bold;">Report Date</div>
+                                <div style="font-size: 14px; font-weight: bold; color: #111114;">${dateStr}</div>
+                                <div style="font-size: 10px; color: #64748B; margin-top: 2px;">Generated at ${timeStr}</div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Key Performance Metrics Grid -->
+                    <table style="width: 100%; margin-bottom: 18px; border-collapse: separate; border-spacing: 6px 0;">
+                        <tr>
+                            <td style="width: 25%; background: #FFF7ED; border: 1px solid #E67E22; padding: 10px 8px; text-align: center;">
+                                <div style="font-size: 9px; text-transform: uppercase; color: #64748B; font-weight: bold;">Total Reviews</div>
+                                <div style="font-size: 20px; font-weight: bold; color: #D35400; margin-top: 2px;">${total}</div>
+                            </td>
+                            <td style="width: 25%; background: #FFF7ED; border: 1px solid #E67E22; padding: 10px 8px; text-align: center;">
+                                <div style="font-size: 9px; text-transform: uppercase; color: #64748B; font-weight: bold;">Avg Satisfaction</div>
+                                <div style="font-size: 20px; font-weight: bold; color: #D35400; margin-top: 2px;">${avg} / 5.0</div>
+                            </td>
+                            <td style="width: 25%; background: #FFF7ED; border: 1px solid #E67E22; padding: 10px 8px; text-align: center;">
+                                <div style="font-size: 9px; text-transform: uppercase; color: #64748B; font-weight: bold;">Top Loved Dish</div>
+                                <div style="font-size: 11px; font-weight: bold; color: #111114; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${topDish}</div>
+                            </td>
+                            <td style="width: 25%; background: #FFF7ED; border: 1px solid #E67E22; padding: 10px 8px; text-align: center;">
+                                <div style="font-size: 9px; text-transform: uppercase; color: #64748B; font-weight: bold;">5-Star Ratio</div>
+                                <div style="font-size: 12px; font-weight: bold; color: #16A34A; margin-top: 4px;">${total > 0 ? Math.round((star5 / total) * 100) : 100}% (5 Stars)</div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Customer Feedback Entries Log -->
+                    <div style="margin-bottom: 12px;">
+                        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #1E293B; font-weight: bold; margin-bottom: 6px; border-bottom: 1px solid #CBD5E1; padding-bottom: 4px;">
+                            Itemized Customer Feedback Log (${total} Records)
+                        </div>
+                        
+                        <table style="width: 100%; border-collapse: collapse; font-size: 10px;">
+                            <thead>
+                                <tr style="background: #F1F5F9; border-top: 1px solid #CBD5E1; border-bottom: 1.5px solid #94A3B8; text-align: left;">
+                                    <th style="width: 25px; padding: 6px 4px; font-weight: bold; color: #1E293B;">#</th>
+                                    <th style="width: 80px; padding: 6px 4px; font-weight: bold; color: #1E293B;">Date / Time</th>
+                                    <th style="width: 95px; padding: 6px 4px; font-weight: bold; color: #1E293B;">Customer</th>
+                                    <th style="width: 120px; padding: 6px 4px; font-weight: bold; color: #1E293B;">Dish Ordered</th>
+                                    <th style="width: 60px; padding: 6px 4px; font-weight: bold; color: #1E293B;">Rating</th>
+                                    <th style="width: 85px; padding: 6px 4px; font-weight: bold; color: #1E293B;">Dining Group</th>
+                                    <th style="padding: 6px 4px; font-weight: bold; color: #1E293B;">Customer Comments</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${rowsHtml}
                             </tbody>
                         </table>
                     </div>
 
                     <!-- Footer -->
-                    <div style="border-top: 1.5px solid #E2E8F0; padding-top: 10px; margin-top: 16px; font-size: 9px; color: #64748B; text-align: center; text-transform: uppercase; letter-spacing: 0.5px;">
+                    <div style="border-top: 1px solid #E2E8F0; padding-top: 8px; margin-top: 14px; font-size: 9px; color: #64748B; text-align: center; text-transform: uppercase; letter-spacing: 0.5px;">
                         Rib House Restaurant &bull; System Generated Daily Executive Briefing &bull; Confidential
                     </div>
                 </div>
             `;
-
-            return html;
         }
 
         function downloadDailyFeedbackPdf() {
             const reportHtml = generateExecutiveReportHtml();
-            const tempDiv = document.createElement('div');
-            tempDiv.id = 'pdf-render-scratchpad';
-            tempDiv.style.position = 'fixed';
-            tempDiv.style.left = '0';
-            tempDiv.style.top = '0';
-            tempDiv.style.width = '750px';
-            tempDiv.style.zIndex = '999999';
-            tempDiv.style.background = '#FFFFFF';
-            tempDiv.innerHTML = reportHtml;
-            document.body.appendChild(tempDiv);
+            
+            // Create dedicated hidden printable iframe (Foolproof vector PDF export)
+            const printFrame = document.createElement('iframe');
+            printFrame.style.position = 'fixed';
+            printFrame.style.right = '0';
+            printFrame.style.bottom = '0';
+            printFrame.style.width = '0';
+            printFrame.style.height = '0';
+            printFrame.style.border = '0';
+            document.body.appendChild(printFrame);
 
-            const now = new Date();
-            const dateStr = now.toISOString().split('T')[0];
-            const filename = `RibHouse_Daily_Customer_Feedback_Summary_${dateStr}.pdf`;
+            const doc = printFrame.contentWindow.document;
+            doc.open();
+            doc.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Rib House Restaurant - Daily Customer Feedback Summary</title>
+                    <style>
+                        @page { size: A4 portrait; margin: 8mm; }
+                        body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background: #FFFFFF; color: #111114; }
+                        * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+                        table { border-collapse: collapse; }
+                        tr { page-break-inside: avoid; }
+                    </style>
+                </head>
+                <body>
+                    ${reportHtml}
+                </body>
+                </html>
+            `);
+            doc.close();
 
+            // Try html2pdf direct file save if available
             if (window.html2pdf) {
+                const tempDiv = document.createElement('div');
+                tempDiv.style.width = '700px';
+                tempDiv.style.margin = '0 auto';
+                tempDiv.style.background = '#FFFFFF';
+                tempDiv.innerHTML = reportHtml;
+                document.body.appendChild(tempDiv);
+
+                const now = new Date();
+                const dateStr = now.toISOString().split('T')[0];
+                const filename = `RibHouse_Daily_Customer_Feedback_Summary_${dateStr}.pdf`;
+
                 const opt = {
                     margin: [6, 6, 6, 6],
                     filename: filename,
                     image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2, useCORS: true, letterRendering: true, scrollY: 0, windowWidth: 800 },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+                    html2canvas: { scale: 2, useCORS: true, letterRendering: true, scrollY: 0 },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
 
                 html2pdf().set(opt).from(tempDiv).save().then(() => {
                     if (document.body.contains(tempDiv)) document.body.removeChild(tempDiv);
+                    if (document.body.contains(printFrame)) document.body.removeChild(printFrame);
                 }).catch(() => {
                     if (document.body.contains(tempDiv)) document.body.removeChild(tempDiv);
-                    openDailyReportModal();
-                    window.print();
+                    printFrame.contentWindow.focus();
+                    printFrame.contentWindow.print();
+                    setTimeout(() => {
+                        if (document.body.contains(printFrame)) document.body.removeChild(printFrame);
+                    }, 2000);
                 });
             } else {
-                if (document.body.contains(tempDiv)) document.body.removeChild(tempDiv);
-                openDailyReportModal();
-                window.print();
+                setTimeout(() => {
+                    printFrame.contentWindow.focus();
+                    printFrame.contentWindow.print();
+                    setTimeout(() => {
+                        if (document.body.contains(printFrame)) document.body.removeChild(printFrame);
+                    }, 2000);
+                }, 300);
             }
         }
 

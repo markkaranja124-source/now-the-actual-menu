@@ -1908,6 +1908,15 @@ window.setPortionPrepOption = function(id, portionIndex, prep) {
 window.setPortionPairingOption = function(id, portionIndex, pairingKey) {
     let cart = getSelectedCart();
     const item = cart.find(i => i.id === id);
+    if (item && item.portions && item.portions[portionIndex]) {
+        item.portions[portionIndex].pairing = pairingKey;
+        saveSelectedCart(cart);
+        if (typeof renderSelectedOrderPage === 'function') {
+            renderSelectedOrderPage();
+        }
+    }
+};
+
 // Helper: Map dish names to their corresponding photo assets
 function getDishImage(dishName) {
     const nameLower = (dishName || '').toLowerCase();

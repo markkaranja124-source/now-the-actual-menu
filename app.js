@@ -1908,14 +1908,50 @@ window.setPortionPrepOption = function(id, portionIndex, prep) {
 window.setPortionPairingOption = function(id, portionIndex, pairingKey) {
     let cart = getSelectedCart();
     const item = cart.find(i => i.id === id);
-    if (item && item.portions && item.portions[portionIndex]) {
-        item.portions[portionIndex].pairing = pairingKey;
-        saveSelectedCart(cart);
-        if (typeof renderSelectedOrderPage === 'function') {
-            renderSelectedOrderPage();
-        }
+// Helper: Map dish names to their corresponding photo assets
+function getDishImage(dishName) {
+    const nameLower = (dishName || '').toLowerCase();
+    if (nameLower.includes('goat') || nameLower.includes('choma goat') || nameLower.includes('goat choma')) {
+        return 'Goatchoma1kg.png';
     }
-};
+    if (nameLower.includes('sizzling') || nameLower.includes('beef sizzling')) {
+        return 'beefsizzling.png';
+    }
+    if (nameLower.includes('chips special') || nameLower.includes('special with meat')) {
+        return 'Chips special with meat.png';
+    }
+    if (nameLower.includes('chips matumbo') || nameLower.includes('chipsmatumbo')) {
+        return 'Chipsmatumbocombo.png';
+    }
+    if (nameLower.includes('fries with salad') || nameLower.includes('chips with salad')) {
+        return 'Fries with salad.png';
+    }
+    if (nameLower.includes('beef fry') || nameLower.includes('beef') || nameLower.includes('stew')) {
+        return 'beef.png';
+    }
+    if (nameLower.includes('sausage') || nameLower.includes('sauseges')) {
+        return 'Sauseges.png';
+    }
+    if (nameLower.includes('coffee') || nameLower.includes('cappuccino') || nameLower.includes('tea') || nameLower.includes('latte') || nameLower.includes('espresso')) {
+        return 'housecoffee.png';
+    }
+    if (nameLower.includes('ice cream') || nameLower.includes('icecream')) {
+        return 'icecream.png';
+    }
+    if (nameLower.includes('breakfast special') || nameLower.includes('breakfast')) {
+        return 'Breakfast1.png';
+    }
+    if (nameLower.includes('bread and eggs') || nameLower.includes('eggs')) {
+        return 'breakfastbreadandeggs1.png';
+    }
+    if (nameLower.includes('bacon')) {
+        return 'breakfastbreadwithbacon1.png';
+    }
+    if (nameLower.includes('brown bread') || nameLower.includes('toast')) {
+        return 'brownbread1.png';
+    }
+    return null;
+}
 
 // ==========================================================================
 // 4. "YOUR SELECTED ORDER" PAGE LOGIC (order.html) - SINGLE VERTICAL COLUMN
@@ -2083,14 +2119,16 @@ function renderSelectedOrderPage() {
         }
 
         const baseVal = item.basePrice || parseInt((item.price || '0').toString().replace(/[^0-9]/g, ''), 10) || 0;
+        const dishImg = getDishImage(item.name);
+        const imageHtml = dishImg 
+            ? `<img src="${dishImg}" alt="${item.name}" class="order-dish-img">`
+            : `<div class="dish-placeholder-box"><span class="dish-placeholder-label">PHOTO</span></div>`;
 
         html += `
             <div class="order-item-row-luxury" data-id="${item.id}">
                 <div class="order-item-main-info">
                     <div class="order-dish-image-frame">
-                        <div class="dish-placeholder-box">
-                            <span class="dish-placeholder-label">PHOTO</span>
-                        </div>
+                        ${imageHtml}
                         <span class="order-badge-pill">${categoryBadge}</span>
                     </div>
                     <div class="order-dish-text-block">
@@ -2292,14 +2330,16 @@ function renderOrderSummaryPage() {
         }
 
         const baseVal = item.basePrice || parseInt((item.price || '0').toString().replace(/[^0-9]/g, ''), 10) || 0;
+        const dishImg = getDishImage(item.name);
+        const imageHtml = dishImg 
+            ? `<img src="${dishImg}" alt="${item.name}" class="order-dish-img">`
+            : `<div class="dish-placeholder-box"><span class="dish-placeholder-label">PHOTO</span></div>`;
 
         html += `
             <div class="order-item-row-luxury" style="pointer-events: none;">
                 <div class="order-item-main-info">
                     <div class="order-dish-image-frame">
-                        <div class="dish-placeholder-box">
-                            <span class="dish-placeholder-label">PHOTO</span>
-                        </div>
+                        ${imageHtml}
                         <span class="order-badge-pill">${categoryBadge}</span>
                     </div>
                     <div class="order-dish-text-block">

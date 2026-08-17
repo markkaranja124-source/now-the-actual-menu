@@ -6542,25 +6542,26 @@ img {
 }
 
 .dining-pill:hover {
-    border-color: #0F172A;
-    background: #F1F5F9;
+    border-color: #B8860B;
+    background: #FFFFFF;
     color: #0F172A;
 }
 
 .dining-pill.active {
-    background: #0F172A !important;
-    border-color: #0F172A !important;
-    color: #FFFFFF !important;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25);
+    background: #FFFFFF !important;
+    border: 2px solid #B8860B !important;
+    color: #0F172A !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 15px rgba(184, 134, 11, 0.15) !important;
 }
 
 .dining-pill .pill-radio {
-    color: #B8860B;
+    color: #94A3B8;
     font-size: 0.95rem;
 }
 
 .dining-pill.active .pill-radio {
-    color: #F59E0B;
+    color: #B8860B !important;
 }
 
 /* Packaging Fee Badge on Individual Order Items */

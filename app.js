@@ -2441,7 +2441,7 @@ function initCustomerFeedbackSystem() {
         });
     }
 
-    // E. SUBMIT FEEDBACK FORM (PERSIST DIRECTLY TO SERVER DATABASE)
+    // E. SUBMIT FEEDBACK FORM (PERSIST DIRECTLY TO CLOUD REALTIME & SERVER DATABASE)
     if (feedbackForm) {
         feedbackForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -2457,12 +2457,19 @@ function initCustomerFeedbackSystem() {
             const comments = document.getElementById('fb-comments') ? document.getElementById('fb-comments').value.trim() : '';
             const customerName = document.getElementById('fb-customer-name') ? document.getElementById('fb-customer-name').value.trim() : 'Anonymous';
 
+            const now = new Date();
+            const formattedDate = now.toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            const feedbackId = 'fb_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+
             const payload = {
+                id: feedbackId,
                 dish: chosenDish || 'General Experience',
                 group: diningGroup,
                 rating: rating,
                 comments: comments,
-                author: customerName || 'Guest'
+                author: customerName || 'Valued Guest',
+                date: formattedDate,
+                timestamp: Date.now()
             };
 
             const submitBtn = feedbackForm.querySelector('button[type="submit"]');
@@ -2471,8 +2478,29 @@ function initCustomerFeedbackSystem() {
                 submitBtn.textContent = 'Submitting...';
             }
 
+            // 1. Broadcast locally for instant same-browser multi-tab sync
             try {
-                // Send feedback directly to backend server database
+                const existing = JSON.parse(localStorage.getItem('ribhouse_feedbacks_queue') || '[]');
+                existing.unshift(payload);
+                localStorage.setItem('ribhouse_feedbacks_queue', JSON.stringify(existing.slice(0, 100)));
+                localStorage.setItem('ribhouse_last_feedback_event', JSON.stringify({ event: 'NEW_FEEDBACK', data: payload, time: Date.now() }));
+                if ('BroadcastChannel' in window) {
+                    const bc = new BroadcastChannel('ribhouse_realtime_feedback');
+                    bc.postMessage({ type: 'NEW_FEEDBACK', feedback: payload });
+                }
+            } catch(err) {}
+
+            // 2. Push in real-time to Global Firebase Realtime Cloud Database
+            try {
+                fetch('https://ribhouse-admin-default-rtdb.firebaseio.com/feedbacks.json', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).catch(() => {});
+            } catch(err) {}
+
+            // 3. Send feedback directly to backend server database
+            try {
                 await fetch('/api/feedback', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -2483,7 +2511,7 @@ function initCustomerFeedbackSystem() {
             } finally {
                 if (submitBtn) {
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Submit Private Feedback';
+                    submitBtn.textContent = 'Submit Feedback';
                 }
 
                 // Reset Form & Show Success Message

@@ -248,24 +248,32 @@ img {
     background: #111114;
 }
 
+.nav-right {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 1200;
+}
+
 /* Google-Style Live Auto-Suggest Dropdown (Sharp Corners & Pure White) */
 .search-suggestions-dropdown {
     position: absolute;
-    top: calc(100% + 6px);
+    top: calc(100% + 8px);
     right: 0;
     min-width: 320px;
     max-width: min(94vw, 420px);
     width: 380px;
-    background: #FFFFFF;
-    border: 1.5px solid #E2E8F0;
+    background: #FFFFFF !important;
+    border: 1.5px solid #CBD5E1 !important;
     border-radius: 0 !important;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.14);
-    z-index: 1200;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22) !important;
+    z-index: 999999 !important;
     max-height: 480px;
     overflow-y: auto;
     overscroll-behavior: contain;
     padding: 4px 0;
-    display: flex;
+    display: none;
     flex-direction: column;
 }
 

@@ -50,6 +50,65 @@ window.addEventListener('pageshow', () => {
     initLocationSection();
 });
 
+// Helper: Map dish names to their corresponding photo assets (Available globally)
+function getDishImage(dishName, dishDesc) {
+    const textLower = ((dishName || '') + ' ' + (dishDesc || '')).toLowerCase();
+    
+    // 1. Bacon orders (e.g. Pancake Breakfast with Bacon, Main Breakfast with Beef Bacon, etc.)
+    if (textLower.includes('bacon')) {
+        return 'breakfastbreadwithbacon1.png';
+    }
+    // 2. Goat Choma
+    if (textLower.includes('goat') || textLower.includes('choma goat') || textLower.includes('goat choma')) {
+        return 'Goatchoma1kg.png';
+    }
+    // 3. Sizzling Beef
+    if (textLower.includes('sizzling') || textLower.includes('beef sizzling')) {
+        return 'beefsizzling.png';
+    }
+    // 4. Chips Special with Meat
+    if (textLower.includes('chips special') || textLower.includes('special with meat')) {
+        return 'Chips special with meat.png';
+    }
+    // 5. Chips Matumbo Combo
+    if (textLower.includes('chips matumbo') || textLower.includes('chipsmatumbo') || textLower.includes('matumbo')) {
+        return 'Chipsmatumbocombo.png';
+    }
+    // 6. Fries with Salad
+    if (textLower.includes('fries with salad') || textLower.includes('chips with salad')) {
+        return 'Fries with salad.png';
+    }
+    // 7. Beef Fry / Stew
+    if (textLower.includes('beef fry') || textLower.includes('beef') || textLower.includes('stew')) {
+        return 'beef.png';
+    }
+    // 8. Sausages
+    if (textLower.includes('sausage') || textLower.includes('sauseges')) {
+        return 'Sauseges.png';
+    }
+    // 9. Coffee & Barista
+    if (textLower.includes('coffee') || textLower.includes('cappuccino') || textLower.includes('tea') || textLower.includes('latte') || textLower.includes('espresso')) {
+        return 'housecoffee.png';
+    }
+    // 10. Ice Cream
+    if (textLower.includes('ice cream') || textLower.includes('icecream')) {
+        return 'icecream.png';
+    }
+    // 11. Bread and Eggs
+    if (textLower.includes('bread and eggs') || textLower.includes('eggs') || textLower.includes('egg')) {
+        return 'breakfastbreadandeggs1.png';
+    }
+    // 12. Brown Bread / Toast
+    if (textLower.includes('brown bread') || textLower.includes('toast')) {
+        return 'brownbread1.png';
+    }
+    // 13. General Breakfast Combos
+    if (textLower.includes('breakfast') || textLower.includes('pancake')) {
+        return 'Breakfast1.png';
+    }
+    return null;
+}
+
 // --- 1. LUXURY SIDE DRAWER NAVIGATION LOGIC ---
 function initSideDrawerNavigation() {
     const toggleBtn = document.getElementById('side-drawer-toggle');
@@ -116,82 +175,85 @@ function initMenuDishSearch() {
 
     if (!searchInput) return;
 
-    // Collect all dish cards across all sections in the entire page
+    // Collect all dish cards by querying all h3 and h4 across the page
     const getDishCards = () => {
         const cardList = [];
-        const allDivs = document.querySelectorAll('.menu-grid > div, section div[style*="background"], div[style*="var(--color-card-bg)"]');
-        allDivs.forEach(div => {
-            if ((div.querySelector('h3') || div.querySelector('h4')) && !div.querySelector('.menu-grid')) {
-                if (!cardList.includes(div)) {
-                    cardList.push(div);
-                }
+        const headings = document.querySelectorAll('section h3, section h4, main h3, main h4');
+        headings.forEach(h => {
+            const rawName = (h.innerText || '').replace(/\s+/g, ' ').trim().toUpperCase();
+            if (rawName.includes('MENU / PART') || rawName.includes('RIB HOUSE') || rawName.includes('AUTHENTIC TASTE') || rawName.includes('OUR HERITAGE')) return;
+            let card = h.closest('div[style*="padding"], div[style*="background"], div[style*="border"]') || h.parentElement;
+            if (card && !cardList.includes(card)) {
+                cardList.push(card);
             }
         });
         return cardList;
     };
 
-    // Build structured master dish catalogue from DOM cards
+    // Build structured master dish catalogue from DOM headings
     const getMasterDishCatalogue = () => {
         const catalogue = [];
         const seenNames = new Set();
-        const cards = getDishCards();
+        const headings = document.querySelectorAll('section h3, section h4, main h3, main h4');
 
-        cards.forEach(card => {
-            const h3 = card.querySelector('h3, h4');
-            if (!h3) return;
-            const name = h3.innerText.replace(/\s+/g, ' ').trim();
-            if (!name || seenNames.has(name.toLowerCase())) return;
+        headings.forEach(h => {
+            const rawName = (h.innerText || '').replace(/\s+/g, ' ').trim();
+            if (!rawName) return;
 
-            // Ignore section and banner titles
-            const upperName = name.toUpperCase();
+            const upperName = rawName.toUpperCase();
             if (upperName.includes('MENU / PART') ||
-                upperName.includes('BREAKFAST COMBOS') ||
-                upperName.includes('BARISTA & HOT') ||
-                upperName.includes('COLD BEVERAGES') ||
-                upperName.includes('EXTRA SIDES &') ||
-                upperName.includes('MENU AI') ||
                 upperName.includes('AUTHENTIC TASTE') ||
-                upperName.includes('HOW TO ORDER')) {
+                upperName.includes('HOW TO ORDER') ||
+                upperName.includes('RIB HOUSE') ||
+                upperName.includes('OUR HERITAGE') ||
+                upperName.includes('LOCATION') ||
+                upperName.includes('NAVIGATION') ||
+                upperName.includes('CATEGORIES') ||
+                upperName.includes('ORDERS & PAYMENT') ||
+                upperName.includes('FEEDBACK') ||
+                upperName.includes('ASANTE SANA') ||
+                upperName.includes('SCAN & DISCOVER') ||
+                upperName.includes('DIRECT ASSISTANCE')) {
                 return;
             }
 
-            seenNames.add(name.toLowerCase());
+            if (seenNames.has(rawName.toLowerCase())) return;
+            seenNames.add(rawName.toLowerCase());
 
-            const descP = card.querySelector('p');
+            let card = h.closest('div[style*="padding"], div[style*="background"], div[style*="border"]') || h.parentElement;
+            const descP = card ? card.querySelector('p') : null;
             const desc = descP ? descP.innerText.replace(/\s+/g, ' ').trim() : '';
 
-            // Extract price
             let price = '';
-            const allSpans = card.querySelectorAll('span');
-            if (allSpans.length > 0) {
-                const lastSpan = allSpans[allSpans.length - 1];
-                price = lastSpan.innerText.replace(/\s+/g, ' ').trim();
-                if (!price.includes('/=')) {
-                    const firstSpan = allSpans[0];
-                    price = firstSpan.innerText.replace(/\s+/g, ' ').trim();
-                }
+            if (card) {
+                const allSpans = card.querySelectorAll('span');
+                allSpans.forEach(sp => {
+                    const txt = sp.innerText.trim();
+                    if (txt.includes('/=') || /^\d+$/.test(txt.replace(/[^0-9]/g, ''))) {
+                        if (!price) price = txt;
+                    }
+                });
             }
 
-            // Determine Category from parent container or section
-            let category = 'Menu';
-            const parentSection = card.closest('section, div[id]');
+            let category = 'Menu Dish';
+            const parentSection = h.closest('section, div[id]');
             const sectionId = (parentSection && parentSection.id) ? parentSection.id.toLowerCase() : '';
             if (sectionId.includes('breakfast') || sectionId.includes('bk')) {
                 category = 'Breakfast';
             } else if (sectionId.includes('choma') || sectionId.includes('meat')) {
-                category = 'Choma & Grill';
+                category = 'Wood-Fired Choma';
             } else if (sectionId.includes('main')) {
                 category = 'Main Dishes';
             } else if (sectionId.includes('extra') || sectionId.includes('side')) {
-                category = 'Sides';
-            } else if (name.toLowerCase().includes('coffee') || name.toLowerCase().includes('tea') || name.toLowerCase().includes('latte') || name.toLowerCase().includes('dawa')) {
-                category = 'Barista';
-            } else if (name.toLowerCase().includes('shake') || name.toLowerCase().includes('smoothie') || name.toLowerCase().includes('ice cream') || name.toLowerCase().includes('lemonade')) {
-                category = 'Cold Drinks';
+                category = 'Sides & Extras';
+            } else if (rawName.toLowerCase().includes('coffee') || rawName.toLowerCase().includes('tea') || rawName.toLowerCase().includes('latte') || rawName.toLowerCase().includes('dawa')) {
+                category = 'Barista & Hot Drinks';
+            } else if (rawName.toLowerCase().includes('shake') || rawName.toLowerCase().includes('smoothie') || rawName.toLowerCase().includes('ice cream') || rawName.toLowerCase().includes('lemonade')) {
+                category = 'Cold Drinks & Shakes';
             }
 
             catalogue.push({
-                name: name,
+                name: rawName,
                 price: price,
                 desc: desc,
                 category: category,
@@ -455,7 +517,17 @@ function initMenuDishSearch() {
         performSearch(true);
     });
 
+    searchInput.addEventListener('keyup', () => {
+        performSearch(true);
+    });
+
     searchInput.addEventListener('focus', () => {
+        if (searchInput.value.trim().length > 0) {
+            performSearch(true);
+        }
+    });
+
+    searchInput.addEventListener('click', () => {
         if (searchInput.value.trim().length > 0) {
             performSearch(true);
         }
@@ -1941,65 +2013,6 @@ window.setPortionPairingOption = function(id, portionIndex, pairingKey) {
         }
     }
 };
-
-// Helper: Map dish names to their corresponding photo assets
-function getDishImage(dishName, dishDesc) {
-    const textLower = ((dishName || '') + ' ' + (dishDesc || '')).toLowerCase();
-    
-    // 1. Bacon orders (e.g. Pancake Breakfast with Bacon, Main Breakfast with Beef Bacon, etc.)
-    if (textLower.includes('bacon')) {
-        return 'breakfastbreadwithbacon1.png';
-    }
-    // 2. Goat Choma
-    if (textLower.includes('goat') || textLower.includes('choma goat') || textLower.includes('goat choma')) {
-        return 'Goatchoma1kg.png';
-    }
-    // 3. Sizzling Beef
-    if (textLower.includes('sizzling') || textLower.includes('beef sizzling')) {
-        return 'beefsizzling.png';
-    }
-    // 4. Chips Special with Meat
-    if (textLower.includes('chips special') || textLower.includes('special with meat')) {
-        return 'Chips special with meat.png';
-    }
-    // 5. Chips Matumbo Combo
-    if (textLower.includes('chips matumbo') || textLower.includes('chipsmatumbo') || textLower.includes('matumbo')) {
-        return 'Chipsmatumbocombo.png';
-    }
-    // 6. Fries with Salad
-    if (textLower.includes('fries with salad') || textLower.includes('chips with salad')) {
-        return 'Fries with salad.png';
-    }
-    // 7. Beef Fry / Stew
-    if (textLower.includes('beef fry') || textLower.includes('beef') || textLower.includes('stew')) {
-        return 'beef.png';
-    }
-    // 8. Sausages
-    if (textLower.includes('sausage') || textLower.includes('sauseges')) {
-        return 'Sauseges.png';
-    }
-    // 9. Coffee & Barista
-    if (textLower.includes('coffee') || textLower.includes('cappuccino') || textLower.includes('tea') || textLower.includes('latte') || textLower.includes('espresso')) {
-        return 'housecoffee.png';
-    }
-    // 10. Ice Cream
-    if (textLower.includes('ice cream') || textLower.includes('icecream')) {
-        return 'icecream.png';
-    }
-    // 11. Bread and Eggs
-    if (textLower.includes('bread and eggs') || textLower.includes('eggs') || textLower.includes('egg')) {
-        return 'breakfastbreadandeggs1.png';
-    }
-    // 12. Brown Bread / Toast
-    if (textLower.includes('brown bread') || textLower.includes('toast')) {
-        return 'brownbread1.png';
-    }
-    // 13. General Breakfast Combos
-    if (textLower.includes('breakfast') || textLower.includes('pancake')) {
-        return 'Breakfast1.png';
-    }
-    return null;
-}
 
 // ==========================================================================
 // 4. "YOUR SELECTED ORDER" PAGE LOGIC (order.html) - SINGLE VERTICAL COLUMN

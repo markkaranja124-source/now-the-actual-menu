@@ -232,66 +232,29 @@
 
         .inv-dish-card {
             background: #FFFFFF;
-            border: 1.5px solid #CBD5E1;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
-            padding: 16px 18px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+            padding: 18px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: all 0.2s ease;
-            border-radius: 0 !important;
-            position: relative;
+            transition: all 0.2s;
         }
 
-        .inv-dish-card.status-ready {
-            border: 1.5px solid #10B981 !important;
-            background: #FFFFFF !important;
+        .inv-dish-card:hover {
+            border-color: var(--color-orange);
+            box-shadow: 0 6px 20px rgba(230, 126, 34, 0.12);
         }
 
         .inv-dish-card.status-hold {
-            border: 2.5px solid #F59E0B !important;
-            background: #FFFBEB !important;
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.18) !important;
+            border-color: var(--color-hold);
+            background: #FFFBEB;
         }
 
         .inv-dish-card.status-unavailable {
-            border: 2.5px solid #EF4444 !important;
-            background: #FEF2F2 !important;
-            opacity: 0.78 !important;
-            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.18) !important;
-        }
-
-        .inv-card-status-banner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.72rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 5px 8px;
-            margin-bottom: 12px;
-            border-radius: 0 !important;
-        }
-
-        .status-ready .inv-card-status-banner {
-            background: #ECFDF5;
-            color: #065F46;
-            border-left: 3px solid #10B981;
-        }
-
-        .status-hold .inv-card-status-banner {
-            background: #FEF3C7;
-            color: #92400E;
-            border-left: 3px solid #F59E0B;
-            font-weight: 800;
-        }
-
-        .status-unavailable .inv-card-status-banner {
-            background: #FEE2E2;
-            color: #991B1B;
-            border-left: 3px solid #EF4444;
-            font-weight: 800;
+            border-color: var(--color-unavail);
+            background: #FEF2F2;
+            opacity: 0.75;
         }
 
         .inv-dish-info {
@@ -336,64 +299,42 @@
         }
 
         .btn-inv-state {
-            padding: 10px 6px;
-            font-size: 0.74rem;
+            padding: 8px 6px;
+            font-size: 0.72rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             cursor: pointer;
-            border: 1.5px solid #CBD5E1;
+            border: 1px solid #CBD5E1;
             background: #F8FAFC;
             color: #64748B;
-            transition: all 0.15s ease;
+            transition: all 0.15s;
             text-align: center;
-            border-radius: 0 !important;
         }
 
         .btn-inv-state:hover {
-            border-color: #0F172A;
-            background: #F1F5F9;
-            color: #0F172A;
+            border-color: var(--color-orange);
         }
 
         .btn-inv-state.state-ready.active {
-            background: #10B981 !important;
-            color: #FFFFFF !important;
-            border-color: #10B981 !important;
-            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+            background: var(--color-ready);
+            color: #FFFFFF;
+            border-color: var(--color-ready);
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
         }
 
         .btn-inv-state.state-hold.active {
-            background: #F59E0B !important;
-            color: #000000 !important;
-            border-color: #F59E0B !important;
-            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.35);
+            background: var(--color-hold);
+            color: #000000;
+            border-color: var(--color-hold);
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25);
         }
 
         .btn-inv-state.state-unavailable.active {
-            background: #EF4444 !important;
-            color: #FFFFFF !important;
-            border-color: #EF4444 !important;
-            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
-        }
-
-        /* Toast Popup Notification */
-        .admin-live-toast {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background: #0F172A;
+            background: var(--color-unavail);
             color: #FFFFFF;
-            padding: 14px 22px;
-            font-size: 0.88rem;
-            font-weight: 700;
-            border-left: 5px solid #B8860B;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            z-index: 999999;
-            display: none;
-            align-items: center;
-            gap: 12px;
-            border-radius: 0 !important;
+            border-color: var(--color-unavail);
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25);
         }
 
         /* Orders Feed & Ticket Cards */
@@ -1590,11 +1531,6 @@
             localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(inv));
             renderInventoryCards();
 
-            // Show Toast Notification
-            const foundItem = INVENTORY_ITEMS.find(i => i.id === itemId);
-            const itemName = foundItem ? foundItem.name : itemId;
-            showAdminToast(`Updated: ${itemName} is now ${newStatus.toUpperCase()}`, newStatus);
-
             try {
                 await fetch(RIBHOUSE_CLOUD_SYNC_URL, {
                     method: 'PATCH',
@@ -1604,28 +1540,6 @@
             } catch (e) {
                 console.warn('Cloud sync offline; stored in local memory.');
             }
-        }
-
-        function showAdminToast(message, status) {
-            let toast = document.getElementById('admin-live-toast');
-            if (!toast) {
-                toast = document.createElement('div');
-                toast.id = 'admin-live-toast';
-                toast.className = 'admin-live-toast';
-                document.body.appendChild(toast);
-            }
-            let borderCol = '#10B981';
-            if (status === 'hold') borderCol = '#F59E0B';
-            if (status === 'unavailable') borderCol = '#EF4444';
-
-            toast.style.borderLeftColor = borderCol;
-            toast.textContent = message;
-            toast.style.display = 'flex';
-
-            if (window._toastTimeout) clearTimeout(window._toastTimeout);
-            window._toastTimeout = setTimeout(() => {
-                toast.style.display = 'none';
-            }, 3000);
         }
 
         function renderInventoryCards() {
@@ -1653,15 +1567,8 @@
             let html = '';
             items.forEach(item => {
                 const status = invState[item.id] || 'ready';
-                let statusLabel = 'READY (In Stock)';
-                if (status === 'hold') statusLabel = 'ON HOLD (Kitchen Paused)';
-                if (status === 'unavailable') statusLabel = 'UNAVAILABLE (Out of Stock)';
-
                 html += `
                     <div class="inv-dish-card status-${status}">
-                        <div class="inv-card-status-banner">
-                            <span>Status: ${statusLabel}</span>
-                        </div>
                         <div class="inv-dish-info">
                             <div>
                                 <div class="inv-dish-name">${item.name}</div>

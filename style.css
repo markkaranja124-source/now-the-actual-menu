@@ -183,25 +183,24 @@ img {
     position: relative;
     display: inline-flex;
     align-items: center;
-    background: #FFFFFF !important;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1.5px solid #111114 !important;
+    background: #18181B !important; /* Sleek dark search background */
+    border: 1px solid #27272A !important;
     padding: 6px 14px;
     border-radius: 0 !important;
     transition: var(--transition-fast);
     max-width: 280px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .nav-search-box .search-icon {
-    color: #111114 !important;
+    color: #94A3B8 !important;
+    flex-shrink: 0;
 }
 
 .nav-search-box:focus-within {
-    background: #FFFFFF !important;
-    border-color: #D35400 !important;
-    box-shadow: 0 0 15px rgba(211, 84, 0, 0.25);
+    background: #202124 !important;
+    border-color: #52525B !important;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
     max-width: 340px;
 }
 
@@ -209,11 +208,11 @@ img {
     background: transparent;
     border: none;
     outline: none;
-    color: #111114 !important;
+    color: #F8FAFC !important;
     font-family: var(--font-sans);
-    font-size: 0.825rem;
-    font-weight: 600;
-    padding: 2px 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 2px 8px;
     width: 140px;
     transition: width 0.3s ease;
     border-radius: 0 !important;
@@ -224,140 +223,155 @@ img {
 }
 
 .nav-search-input::placeholder {
-    color: #55555C !important;
-    font-size: 0.775rem;
-    font-weight: 500;
+    color: #71717A !important;
+    font-size: 0.8rem;
+    font-weight: 400;
 }
 
 .nav-search-box .search-clear-btn {
-    color: #111114 !important;
-    background: rgba(0, 0, 0, 0.08);
+    color: #94A3B8 !important;
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    font-size: 1.1rem;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     border-radius: 0 !important;
+    transition: all 0.2s ease;
 }
 
-/* 10-Dish Auto-Suggest Dropdown (Sharp Corners & Luxury Aesthetic) */
+.nav-search-box .search-clear-btn:hover {
+    color: #FFFFFF !important;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Google-Style Live Auto-Suggest Dropdown (Sharp Corners) */
 .search-suggestions-dropdown {
     position: absolute;
-    top: calc(100% + 8px);
+    top: calc(100% + 4px);
     right: 0;
     min-width: 320px;
     max-width: min(94vw, 420px);
     width: 380px;
-    background: #FFFFFF;
-    border: 1.5px solid var(--color-orange, #E67E22);
+    background: #18181B;
+    border: 1px solid #27272A;
     border-radius: 0 !important;
-    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
     z-index: 1200;
-    max-height: 440px;
+    max-height: 480px;
     overflow-y: auto;
     overscroll-behavior: contain;
-    padding: 0;
+    padding: 4px 0;
     display: flex;
     flex-direction: column;
 }
 
-.search-suggestions-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 14px;
-    background: #FAFAFA;
-    border-bottom: 1px solid #E2E8F0;
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: #64748B;
-    font-weight: 700;
-    border-radius: 0 !important;
-}
-
 .search-suggestion-item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 10px 14px;
-    border-bottom: 1px solid #F1F5F9;
     cursor: pointer;
-    background: #FFFFFF;
-    transition: background 0.15s ease;
+    background: transparent;
+    transition: background 0.12s ease;
     border-radius: 0 !important;
     text-decoration: none;
     gap: 12px;
 }
 
-.search-suggestion-item:last-child {
-    border-bottom: none;
-}
-
 .search-suggestion-item:hover,
 .search-suggestion-item.active-keyboard-item {
-    background: #FFF7ED !important;
-    border-left: 3px solid #D35400;
-    padding-left: 11px;
+    background: #27272A !important;
 }
 
-.search-sugg-left {
+/* Featured Top Result Row */
+.search-suggestion-item.sugg-featured {
+    padding: 12px 14px;
+    border-bottom: 1px solid #27272A;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.search-suggestion-item.sugg-featured:hover,
+.search-suggestion-item.sugg-featured.active-keyboard-item {
+    background: #27272A !important;
+}
+
+.sugg-row-icon-box {
     display: flex;
-    flex-direction: column;
-    gap: 2px;
-    overflow: hidden;
-    flex: 1;
-}
-
-.search-sugg-title {
-    font-family: var(--font-serif);
-    font-size: 0.975rem;
-    font-weight: 700;
-    color: #111114;
-    text-transform: uppercase;
-    line-height: 1.3;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.search-sugg-highlight {
-    color: #D35400;
-    font-weight: 800;
-    background: rgba(211, 84, 0, 0.10);
-    padding: 0 1px;
-}
-
-.search-sugg-desc {
-    font-size: 0.725rem;
-    color: #64748B;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1.3;
-}
-
-.search-sugg-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    color: #71717A;
     flex-shrink: 0;
 }
 
-.search-sugg-price {
-    font-family: var(--font-serif);
-    font-size: 0.95rem;
-    font-weight: 800;
-    color: #D35400;
-    white-space: nowrap;
+.search-suggestion-item:hover .sugg-row-icon-box,
+.search-suggestion-item.active-keyboard-item .sugg-row-icon-box {
+    color: #E2E8F0;
 }
 
-.search-sugg-cat {
-    font-size: 0.625rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 2px 6px;
-    background: #F1F5F9;
-    color: #475569;
-    border: 1px solid #E2E8F0;
+.sugg-content-box {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+    gap: 2px;
+}
+
+.sugg-title-line {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #E2E8F0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+}
+
+.sugg-featured .sugg-title-line {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+.sugg-subtitle-line {
+    font-size: 0.75rem;
+    color: #94A3B8;
+    line-height: 1.3;
+}
+
+.sugg-match-bold {
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+.sugg-thumb-box {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    background: #27272A;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
     border-radius: 0 !important;
+}
+
+.sugg-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.sugg-price-pill {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #F59E0B;
+    flex-shrink: 0;
+    margin-left: auto;
 }
 
 /* Card Pulse Glow when selected from search */

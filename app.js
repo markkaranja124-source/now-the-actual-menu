@@ -268,12 +268,12 @@ function initMenuDishSearch() {
         return directMatches.slice(0, 10);
     };
 
-    // Helper to highlight matching letters in dish title
+    // Helper to highlight matching query letters in dish title
     const highlightMatchLetters = (text, query) => {
         if (!query) return text;
         const qClean = query.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         const regex = new RegExp(`(${qClean})`, 'gi');
-        return text.replace(regex, '<span class="search-sugg-highlight">$1</span>');
+        return text.replace(regex, '<span class="sugg-match-bold">$1</span>');
     };
 
     let activeSuggestionIndex = -1;
@@ -299,27 +299,52 @@ function initMenuDishSearch() {
             return;
         }
 
-        let html = `
-            <div class="search-suggestions-header">
-                <span>Top Recommendations (${recommendations.length})</span>
-                <span>Select or press Enter</span>
-            </div>
+        const searchIconSvg = `
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
         `;
 
+        let html = '';
+
         recommendations.forEach((item, index) => {
+            const isTop = index === 0;
+            const dishImg = getDishImage(item.name, item.desc);
             const highlightedTitle = highlightMatchLetters(item.name, query);
-            html += `
-                <div class="search-suggestion-item" data-index="${index}" role="option" tabindex="0">
-                    <div class="search-sugg-left">
-                        <div class="search-sugg-title">${highlightedTitle}</div>
-                        ${item.desc ? `<div class="search-sugg-desc">${item.desc}</div>` : ''}
+
+            if (isTop) {
+                // Top Featured Entity Row with photo thumbnail
+                html += `
+                    <div class="search-suggestion-item sugg-featured" data-index="${index}" role="option" tabindex="0">
+                        <div class="sugg-row-icon-box">
+                            ${searchIconSvg}
+                        </div>
+                        <div class="sugg-content-box">
+                            <div class="sugg-title-line">${highlightedTitle}</div>
+                            <div class="sugg-subtitle-line">${item.category}${item.price ? ` • <strong style="color: #F59E0B;">${item.price}</strong>` : ''}</div>
+                        </div>
+                        ${dishImg ? `
+                            <div class="sugg-thumb-box">
+                                <img src="${dishImg}" alt="${item.name}" class="sugg-thumb-img">
+                            </div>
+                        ` : ''}
                     </div>
-                    <div class="search-sugg-right">
-                        ${item.price ? `<div class="search-sugg-price">${item.price}</div>` : ''}
-                        <span class="search-sugg-cat">${item.category}</span>
+                `;
+            } else {
+                // Autocomplete Keyword Suggestion Row
+                html += `
+                    <div class="search-suggestion-item" data-index="${index}" role="option" tabindex="0">
+                        <div class="sugg-row-icon-box">
+                            ${searchIconSvg}
+                        </div>
+                        <div class="sugg-content-box">
+                            <div class="sugg-title-line">${highlightedTitle}</div>
+                        </div>
+                        ${item.price ? `<span class="sugg-price-pill">${item.price}</span>` : ''}
                     </div>
-                </div>
-            `;
+                `;
+            }
         });
 
         suggestionsDropdown.innerHTML = html;

@@ -6584,27 +6584,3 @@ img {
         grid-template-columns: 1fr;
     }
 }
-
-/* Dish Card Inventory Status Badges (Sharp Corners) */
-.dish-status-pill {
-    display: inline-block;
-    padding: 3px 8px;
-    font-size: 0.7rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-    border-radius: 0 !important;
-}
-
-.dish-status-pill.pill-hold {
-    background: #FEF3C7;
-    color: #92400E;
-    border: 1px solid #F59E0B;
-}
-
-.dish-status-pill.pill-unavailable {
-    background: #FEE2E2;
-    color: #991B1B;
-    border: 1px solid #EF4444;
-}

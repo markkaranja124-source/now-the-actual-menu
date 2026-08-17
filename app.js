@@ -2023,8 +2023,9 @@ function initClickableMenuDishes() {
             card.style.alignItems = 'stretch';
             card.style.borderRadius = '0 !important';
 
-            // Find or create prominent status badge above title
-            let statusBadge = card.querySelector('.dish-status-pill');
+            // Remove any status badges if present
+            const existingBadge = card.querySelector('.dish-status-pill');
+            if (existingBadge) existingBadge.remove();
 
             let orderBtn = card.querySelector('.card-order-action-btn');
             if (!orderBtn) {
@@ -2041,49 +2042,32 @@ function initClickableMenuDishes() {
                 card.appendChild(orderBtn);
             }
 
-            // 1. UNAVAILABLE STATE -> Card dimmed, red status badge, unclickable
+            // 1. UNAVAILABLE STATE -> Remove add button completely, dish stays normally visible but unclickable
             if (itemStatus === 'unavailable') {
-                card.style.opacity = '0.55';
+                card.style.opacity = '1';
                 card.style.cursor = 'default';
-                card.style.border = '1.5px solid #EF4444';
-                card.style.background = '#FFF5F5';
+                card.style.border = '1px solid var(--color-border-gold)';
+                card.style.background = 'var(--color-card-bg)';
                 orderBtn.style.display = 'none';
-
-                if (!statusBadge) {
-                    statusBadge = document.createElement('span');
-                    statusBadge.className = 'dish-status-pill pill-unavailable';
-                    card.insertBefore(statusBadge, card.firstChild);
-                }
-                statusBadge.textContent = 'OUT OF STOCK';
-                statusBadge.style.display = 'inline-block';
                 return;
             }
 
-            // 2. HOLD STATE -> Amber status badge, disabled Hold button
+            // 2. HOLD STATE -> Shows "On Hold" button, disabled
             if (itemStatus === 'hold') {
-                card.style.opacity = '0.85';
+                card.style.opacity = '1';
                 card.style.cursor = 'not-allowed';
-                card.style.border = '2px solid #F59E0B';
-                card.style.background = '#FFFDF5';
+                card.style.border = '1px solid var(--color-border-gold)';
+                card.style.background = 'var(--color-card-bg)';
                 orderBtn.style.display = 'block';
                 orderBtn.innerHTML = 'On Hold';
                 orderBtn.style.background = '#F59E0B';
                 orderBtn.style.color = '#000000';
                 orderBtn.style.borderColor = '#D97706';
                 orderBtn.style.cursor = 'not-allowed';
-
-                if (!statusBadge) {
-                    statusBadge = document.createElement('span');
-                    statusBadge.className = 'dish-status-pill pill-hold';
-                    card.insertBefore(statusBadge, card.firstChild);
-                }
-                statusBadge.textContent = 'ON HOLD';
-                statusBadge.style.display = 'inline-block';
                 return;
             }
 
             // 3. READY STATE -> Normal ordering
-            if (statusBadge) statusBadge.style.display = 'none';
             card.style.opacity = '1';
             card.style.cursor = 'pointer';
             card.style.border = '1px solid var(--color-border-gold)';

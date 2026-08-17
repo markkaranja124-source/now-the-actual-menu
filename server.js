@@ -72,7 +72,7 @@ function writeJsonFile(filePath, data) {
 function initAuthStore() {
     let authData = readJsonFile(AUTH_STORE_PATH, null);
     if (!authData || !authData.admin || !authData.kitchen) {
-        console.log('🔒 [Security Initialisation] Seeding encrypted administrator & kitchen credentials...');
+        console.log('[Security Initialisation] Seeding encrypted administrator & kitchen credentials...');
         const initialAdminPass = 'RibHouse@2026!Master';
         const initialKitchenPin = '1234';
 
@@ -94,7 +94,7 @@ function initAuthStore() {
             }
         };
         writeJsonFile(AUTH_STORE_PATH, authData);
-        console.log('✅ [Security Initialisation] Bcrypt salted hashes stored in data/auth_store.json.');
+        console.log('[Security Initialisation] Bcrypt salted hashes stored in data/auth_store.json.');
     }
     return authData;
 }
@@ -526,7 +526,7 @@ app.post('/api/feedback', (req, res) => {
         feedbacks.unshift(newFeedback);
         writeJsonFile(FEEDBACK_STORE_PATH, feedbacks);
 
-        console.log(`💬 [Customer Feedback Ingested] Rating: ${cleanRating}⭐ by ${cleanAuthor} for "${cleanDish}"`);
+        console.log(`[Customer Feedback Ingested] Rating: ${cleanRating}/5 by ${cleanAuthor} for "${cleanDish}"`);
 
         res.status(201).json({
             success: true,
@@ -862,7 +862,7 @@ app.post('/api/mpesa/callback', (req, res) => {
                 }
             }
 
-            console.log(`🎉 [PAYMENT CONFIRMED]: Receipt=${mpesaReceipt}, Amount=KSh ${amount}, Phone=${phone}`);
+            console.log(`[PAYMENT CONFIRMED]: Receipt=${mpesaReceipt}, Amount=KSh ${amount}, Phone=${phone}`);
 
             if (existingTxn) {
                 existingTxn.status = 'PAID';
@@ -1054,10 +1054,10 @@ app.get('/api/health', (req, res) => {
 // Start Server
 app.listen(PORT, () => {
     console.log(`=======================================================`);
-    console.log(`🔥 RIB HOUSE SERVER RUNNING ON: http://localhost:${PORT}`);
-    console.log(`💳 Safaricom M-Pesa Till: ${process.env.MPESA_TILL_NUMBER || '4977556'}`);
-    console.log(`🔐 Bcrypt Hashed Authentication & Session Engine: ACTIVE`);
-    console.log(`💬 Persistent Database Reviews Engine: ACTIVE`);
-    console.log(`🌐 Environment: ${process.env.MPESA_ENVIRONMENT || 'sandbox'}`);
+    console.log(`RIB HOUSE SERVER RUNNING ON: http://localhost:${PORT}`);
+    console.log(`Safaricom M-Pesa Till: ${process.env.MPESA_TILL_NUMBER || '4977556'}`);
+    console.log(`Bcrypt Hashed Authentication & Session Engine: ACTIVE`);
+    console.log(`Persistent Database Reviews Engine: ACTIVE`);
+    console.log(`Environment: ${process.env.MPESA_ENVIRONMENT || 'sandbox'}`);
     console.log(`=======================================================`);
 });

@@ -974,7 +974,7 @@
                     <span class="stat-label">Total Verified Reviews</span>
                 </div>
                 <div class="admin-stat-card">
-                    <span class="stat-num" id="stat-avg-rating">5.0 ⭐</span>
+                    <span class="stat-num" id="stat-avg-rating">5.0 / 5.0</span>
                     <span class="stat-label">Average Customer Rating</span>
                 </div>
                 <div class="admin-stat-card">
@@ -1705,7 +1705,7 @@
                 currentFeedbacksCache = data.feedbacks || [];
 
                 if (totalEl) totalEl.textContent = data.analytics?.totalReviews || 0;
-                if (avgEl) avgEl.textContent = `${data.analytics?.avgRating || '5.0'} ⭐`;
+                if (avgEl) avgEl.textContent = `${data.analytics?.avgRating || '5.0'} / 5.0`;
                 if (topEl) topEl.textContent = data.analytics?.topDish || '-';
                 if (countTab) countTab.textContent = currentFeedbacksCache.length;
 
@@ -1747,7 +1747,7 @@
                 ];
                 currentFeedbacksCache = defaultFbs;
                 if (totalEl) totalEl.textContent = defaultFbs.length;
-                if (avgEl) avgEl.textContent = "5.0 ⭐";
+                if (avgEl) avgEl.textContent = "5.0 / 5.0";
                 if (topEl) topEl.textContent = "CHOMA GOAT (1 KG)";
                 if (countTab) countTab.textContent = defaultFbs.length;
 
@@ -1806,7 +1806,7 @@
                     </div>
                     <div style="background: #FFF; border: 1px solid #E2E8F0; padding: 12px;">
                         <strong style="font-size: 0.75rem; text-transform: uppercase; color: #64748B;">Average Satisfaction</strong>
-                        <div style="font-size: 1.5rem; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; color: #D35400;">${avg} / 5.0 ⭐</div>
+                        <div style="font-size: 1.5rem; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; color: #D35400;">${avg} / 5.0</div>
                     </div>
                 </div>
                 <h4 style="font-size: 0.85rem; text-transform: uppercase; margin-bottom: 10px; color: #111;">Customer Comments & Ratings</h4>
@@ -1817,7 +1817,7 @@
                 html += `
                     <div style="background: #FFF; border: 1px solid #E2E8F0; padding: 10px 14px; font-size: 0.82rem;">
                         <div style="display: flex; justify-content: space-between; font-weight: 700; color: #D35400;">
-                            <span>${i+1}. ${fb.dish} (${fb.rating}⭐)</span>
+                            <span>${i+1}. ${fb.dish} (${fb.rating}/5)</span>
                             <span style="font-size: 0.72rem; color: #64748B;">${fb.date}</span>
                         </div>
                         <p style="margin: 4px 0 2px 0; font-style: italic; color: #333;">"${fb.comments || 'No comment'}"</p>

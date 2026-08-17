@@ -980,7 +980,7 @@ function initMenuAIAssistant() {
     if (!triggerBtn || !drawer) return;
 
     // --- LIVE NAIROBI WEATHER & TIME-OF-DAY ENGINE ---
-    let currentNairobiWeather = { temp: 19, condition: "Partly Cloudy", isCold: true, isRainy: false, icon: "🌤️" };
+    let currentNairobiWeather = { temp: 19, condition: "Partly Cloudy", isCold: true, isRainy: false };
 
     async function fetchNairobiWeather() {
         try {
@@ -992,14 +992,13 @@ function initMenuAIAssistant() {
                 const isRainy = [51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code);
                 const isCold = temp < 21;
                 
-                let icon = isRainy ? '🌧️' : (temp >= 24 ? '☀️' : '🌤️');
                 let conditionStr = isRainy ? 'Rainy' : (temp >= 24 ? 'Sunny' : 'Partly Cloudy');
 
-                currentNairobiWeather = { temp, condition: conditionStr, isCold, isRainy, icon };
+                currentNairobiWeather = { temp, condition: conditionStr, isCold, isRainy };
 
                 const badge = document.getElementById('nairobi-weather-badge');
                 if (badge) {
-                    badge.innerHTML = `📍 Nairobi ${temp}°C ${icon}`;
+                    badge.innerHTML = `Nairobi ${temp}°C (${conditionStr})`;
                 }
             }
         } catch (e) {
@@ -1011,11 +1010,11 @@ function initMenuAIAssistant() {
 
     // --- A. ROTATING SPEECH TEASER BUBBLE ---
     const teaserPrompts = [
-        '💡 Ask me: "Dishes under 400/="',
-        '☕ Ask me: "What comes in Pancake Breakfast?"',
-        '🍗 Ask me: "Best platter for 4 people?"',
-        '🔥 Ask me: "Show spicy & grilled meat"',
-        '📞 Ask me: "M-Pesa Till Number"'
+        'Ask me: "Dishes under 400/="',
+        'Ask me: "What comes in Pancake Breakfast?"',
+        'Ask me: "Best platter for 4 people?"',
+        'Ask me: "Show spicy & grilled meat"',
+        'Ask me: "M-Pesa Till Number"'
     ];
     let teaserIndex = 0;
     let teaserInterval = setInterval(() => {
@@ -1339,12 +1338,12 @@ function initMenuAIAssistant() {
                 const mealsSentence = namesArr.slice(0, -1).join(', ') + ' and ' + namesArr[namesArr.length - 1];
                 const pricesFormula = subtotalArr.join(' + ');
 
-                let textBreakdown = `🍽️ **${mealsSentence} will cost you ${pricesFormula} = KSh ${grandTotal.toLocaleString()}/=!**\n\n`;
-                textBreakdown += "🧮 **Calculation Breakdown:**\n";
+                let textBreakdown = `**${mealsSentence} will cost you ${pricesFormula} = KSh ${grandTotal.toLocaleString()}/=!**\n\n`;
+                textBreakdown += "**Calculation Breakdown:**\n";
                 itemCalculations.forEach(calc => {
                     textBreakdown += `• **${calc.qty}x** ${calc.item.name} @ KSh ${calc.unitPrice.toLocaleString()} = **KSh ${calc.subtotal.toLocaleString()}/=**\n`;
                 });
-                textBreakdown += `\n💵 **Grand Total Cost:** **KSh ${grandTotal.toLocaleString()}/=**`;
+                textBreakdown += `\n**Grand Total Cost:** **KSh ${grandTotal.toLocaleString()}/=**`;
 
                 return {
                     text: textBreakdown,
@@ -1356,31 +1355,31 @@ function initMenuAIAssistant() {
         if (q.match(/^(hi|hello|hey|habari|mambo|sasa|good morning|good afternoon|good evening|weather|recommend|suggest|richi|richie)/)) {
             const hour = new Date().getHours();
             const isMorning = hour >= 0 && hour < 12;
-            const timeGreeting = isMorning ? "Good Morning ☕" : (hour < 17 ? "Good Afternoon ☀️" : "Good Evening 🌙");
+            const timeGreeting = isMorning ? "Good Morning" : (hour < 17 ? "Good Afternoon" : "Good Evening");
 
             let weatherRec = "";
             let recommendedCards = [];
 
             if (isMorning) {
-                weatherRec = `\n\n🌅 **Morning Recommendation:** Try our hot **PANCAKE BREAKFAST (400/=)**, **GOAT SOUP BREAKFAST (300/=)**, or **HOT LEMON DAWA TEA (1200/=)** to start your day!`;
+                weatherRec = `\n\n**Morning Recommendation:** Try our hot **PANCAKE BREAKFAST (400/=)**, **GOAT SOUP BREAKFAST (300/=)**, or **HOT LEMON DAWA TEA (1200/=)** to start your day!`;
                 recommendedCards = KNOWLEDGE.filter(k => k.category === 'breakfast' || k.name.includes('SOUP'));
             } else if (currentNairobiWeather.isRainy || currentNairobiWeather.isCold) {
-                weatherRec = `\n\n🌧️ **Nairobi Weather Alert (${currentNairobiWeather.temp}°C Chilly):** I highly recommend our steaming **GOAT TUMBUKIZA (1400/=)**, **MATUMBO FRY (400/=)**, or **BEEF STEAK GRILLED (580/=)** to keep you warm!`;
+                weatherRec = `\n\n**Nairobi Weather Alert (${currentNairobiWeather.temp}°C Chilly):** I highly recommend our steaming **GOAT TUMBUKIZA (1400/=)**, **MATUMBO FRY (400/=)**, or **BEEF STEAK GRILLED (580/=)** to keep you warm!`;
                 recommendedCards = KNOWLEDGE.filter(k => k.tags.includes('tumbukiza') || k.tags.includes('spicy') || k.name.includes('MATUMBO'));
             } else {
-                weatherRec = `\n\n☀️ **Nairobi Weather Alert (${currentNairobiWeather.temp}°C Sunny/Warm):** Cool down with our chilled **OREO MILKSHAKE (300/=)**, **TROPICAL SMOOTHIES (200/=)**, or juicy **CHOMA GOAT (1 KG)**!`;
+                weatherRec = `\n\n**Nairobi Weather Alert (${currentNairobiWeather.temp}°C Sunny/Warm):** Cool down with our chilled **OREO MILKSHAKE (300/=)**, **TROPICAL SMOOTHIES (200/=)**, or juicy **CHOMA GOAT (1 KG)**!`;
                 recommendedCards = KNOWLEDGE.filter(k => k.category === 'cold-drinks' || k.category === 'choma');
             }
 
             return {
-                text: `${timeGreeting}! 😊 Welcome to **Rib House**. The weather today is **${currentNairobiWeather.temp}°C ${currentNairobiWeather.icon}**.${weatherRec}`,
+                text: `${timeGreeting}! Welcome to **Rib House**. The weather today is **${currentNairobiWeather.temp}°C (${currentNairobiWeather.condition})**.${weatherRec}`,
                 cards: recommendedCards.slice(0, 3)
             };
         }
 
         if (q.includes("till") || q.includes("mpesa") || q.includes("pay") || q.includes("phone") || q.includes("hotline") || q.includes("order") || q.includes("contact")) {
             return {
-                text: "💳 **Payment & Order Hotline Information**:\n\n• **M-Pesa Till Number:** 4977556\n• **Direct Order Hotline:** 0724 594 204\n• **Email:** ribhouseke@gmail.com\n\nAll meals are cooked fresh daily!",
+                text: "**Payment & Order Hotline Information**:\n\n• **M-Pesa Till Number:** 4977556\n• **Direct Order Hotline:** 0724 594 204\n• **Email:** ribhouseke@gmail.com\n\nAll meals are cooked fresh daily!",
                 cards: []
             };
         }
@@ -1402,7 +1401,7 @@ function initMenuAIAssistant() {
                     const matchedItem = KNOWLEDGE.find(k => k.name.toLowerCase().includes(topName.toLowerCase()));
                     
                     return {
-                        text: `🔥 **Top Customer Recommendation!**\n\nBased on **${feedbacks.length}** recent guest reviews, our #1 most loved dish is **${topName}** (chosen by ${count} guests)!\n\nEvery meal is prepared fresh to order at Rib House.`,
+                        text: `**Top Customer Recommendation!**\n\nBased on **${feedbacks.length}** recent guest reviews, our #1 most loved dish is **${topName}** (chosen by ${count} guests)!\n\nEvery meal is prepared fresh to order at Rib House.`,
                         cards: matchedItem ? [matchedItem] : []
                     };
                 }
@@ -2133,8 +2132,6 @@ function initCustomerFeedbackSystem() {
         setTimeout(() => {
             window.openCustomerFeedbackModal();
         }, 300);
-    }
-        });
     }
 
     // C. CUSTOM DISH INPUT TOGGLE

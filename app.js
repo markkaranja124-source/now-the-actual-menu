@@ -1902,21 +1902,21 @@ function initClickableMenuDishes() {
                 row.style.display = 'flex';
                 row.style.justifyContent = 'space-between';
                 row.style.alignItems = 'center';
-                row.style.borderRadius = '6px';
+                row.style.borderRadius = '0 !important';
                 row.style.padding = '6px 8px';
                 row.style.transition = 'all 0.2s ease';
 
-                // Find or create neat inline action pill button inside the row
+                // Find or create inline action pill button inside the row
                 let rowPill = row.querySelector('.row-order-pill');
                 if (!rowPill) {
                     rowPill = document.createElement('button');
                     rowPill.className = 'row-order-pill';
                     rowPill.style.marginLeft = '10px';
                     rowPill.style.padding = '3px 8px';
-                    rowPill.style.borderRadius = '4px';
+                    rowPill.style.borderRadius = '0 !important';
                     rowPill.style.fontSize = '0.725rem';
                     rowPill.style.fontWeight = '700';
-                    rowPill.style.border = '1px solid #E67E22';
+                    rowPill.style.border = '1px solid #B8860B';
                     rowPill.style.transition = 'all 0.2s ease';
                     rowPill.style.flexShrink = '0';
                     row.appendChild(rowPill);
@@ -1929,13 +1929,13 @@ function initClickableMenuDishes() {
                 spans[1].style.fontFamily = 'var(--font-serif)';
                 spans[1].style.fontSize = '1.25rem';
                 spans[1].style.fontWeight = 'bold';
-                spans[1].style.color = '#D35400';
+                spans[1].style.color = '#B8860B';
 
                 // If on Hold: Show Hold badge and disable clicking
                 if (itemStatus === 'hold') {
                     row.style.opacity = '0.65';
                     row.style.cursor = 'not-allowed';
-                    row.style.background = 'transparent';
+                    row.style.background = '#FFFBEB';
                     rowPill.innerHTML = 'Hold';
                     rowPill.style.background = '#F59E0B';
                     rowPill.style.color = '#000000';
@@ -1951,15 +1951,15 @@ function initClickableMenuDishes() {
 
                 const isSel = isDishSelected(fullDishName);
                 if (isSel) {
-                    row.style.background = 'rgba(230, 126, 34, 0.12)';
+                    row.style.background = 'rgba(184, 134, 11, 0.12)';
                     rowPill.innerHTML = '✓ Added';
-                    rowPill.style.background = '#E67E22';
+                    rowPill.style.background = '#B8860B';
                     rowPill.style.color = '#FFFFFF';
                 } else {
                     row.style.background = 'transparent';
                     rowPill.innerHTML = '+ Add';
                     rowPill.style.background = 'transparent';
-                    rowPill.style.color = '#E67E22';
+                    rowPill.style.color = '#B8860B';
                 }
 
                 if (!row.dataset.hasClickListener) {
@@ -2003,25 +2003,10 @@ function initClickableMenuDishes() {
             card.style.flexDirection = 'column';
             card.style.justifyContent = 'space-between';
             card.style.alignItems = 'stretch';
+            card.style.borderRadius = '0 !important';
 
-            // Wrap title and price in card-top-header flex container
-            let topHeader = card.querySelector('.card-top-header');
-            if (!topHeader) {
-                topHeader = document.createElement('div');
-                topHeader.className = 'card-top-header';
-                topHeader.style.display = 'flex';
-                topHeader.style.justifyContent = 'space-between';
-                topHeader.style.alignItems = 'flex-start';
-                topHeader.style.width = '100%';
-                topHeader.style.gap = '10px';
-                topHeader.style.marginBottom = descP ? '8px' : '14px';
-
-                if (h3Header.parentNode === card && priceSpan.parentNode === card) {
-                    card.insertBefore(topHeader, card.firstChild);
-                    topHeader.appendChild(h3Header);
-                    topHeader.appendChild(priceSpan);
-                }
-            }
+            // Find or create prominent status badge above title
+            let statusBadge = card.querySelector('.dish-status-pill');
 
             let orderBtn = card.querySelector('.card-order-action-btn');
             if (!orderBtn) {
@@ -2030,54 +2015,75 @@ function initClickableMenuDishes() {
                 orderBtn.style.marginTop = '12px';
                 orderBtn.style.width = '100%';
                 orderBtn.style.padding = '8px 12px';
-                orderBtn.style.borderRadius = '6px';
+                orderBtn.style.borderRadius = '0 !important';
                 orderBtn.style.fontSize = '0.8rem';
                 orderBtn.style.fontWeight = '700';
-                orderBtn.style.border = '1px solid #E67E22';
+                orderBtn.style.border = '1px solid #B8860B';
                 orderBtn.style.transition = 'all 0.2s ease';
                 card.appendChild(orderBtn);
             }
 
-            // 1. UNAVAILABLE STATE -> Button disappears completely, card dimmed & unclickable
+            // 1. UNAVAILABLE STATE -> Card dimmed, red status badge, unclickable
             if (itemStatus === 'unavailable') {
                 card.style.opacity = '0.55';
                 card.style.cursor = 'default';
-                card.style.borderColor = 'var(--color-border-dark)';
+                card.style.border = '1.5px solid #EF4444';
+                card.style.background = '#FFF5F5';
                 orderBtn.style.display = 'none';
+
+                if (!statusBadge) {
+                    statusBadge = document.createElement('span');
+                    statusBadge.className = 'dish-status-pill pill-unavailable';
+                    card.insertBefore(statusBadge, card.firstChild);
+                }
+                statusBadge.textContent = 'OUT OF STOCK';
+                statusBadge.style.display = 'inline-block';
                 return;
             }
 
-            // 2. HOLD STATE -> Button shows "Hold", disabled
+            // 2. HOLD STATE -> Amber status badge, disabled Hold button
             if (itemStatus === 'hold') {
-                card.style.opacity = '0.75';
+                card.style.opacity = '0.85';
                 card.style.cursor = 'not-allowed';
-                card.style.borderColor = '#F59E0B';
+                card.style.border = '2px solid #F59E0B';
+                card.style.background = '#FFFDF5';
                 orderBtn.style.display = 'block';
-                orderBtn.innerHTML = 'Hold';
+                orderBtn.innerHTML = 'On Hold';
                 orderBtn.style.background = '#F59E0B';
                 orderBtn.style.color = '#000000';
                 orderBtn.style.borderColor = '#D97706';
                 orderBtn.style.cursor = 'not-allowed';
+
+                if (!statusBadge) {
+                    statusBadge = document.createElement('span');
+                    statusBadge.className = 'dish-status-pill pill-hold';
+                    card.insertBefore(statusBadge, card.firstChild);
+                }
+                statusBadge.textContent = 'ON HOLD';
+                statusBadge.style.display = 'inline-block';
                 return;
             }
 
             // 3. READY STATE -> Normal ordering
+            if (statusBadge) statusBadge.style.display = 'none';
             card.style.opacity = '1';
             card.style.cursor = 'pointer';
+            card.style.border = '1px solid var(--color-border-gold)';
+            card.style.background = 'var(--color-card-bg)';
             orderBtn.style.display = 'block';
             orderBtn.style.cursor = 'pointer';
 
             const selected = isDishSelected(dishName);
             if (selected) {
                 orderBtn.innerHTML = '✓ Added to Order';
-                orderBtn.style.background = '#E67E22';
+                orderBtn.style.background = '#B8860B';
                 orderBtn.style.color = '#FFFFFF';
-                card.style.borderColor = '#E67E22';
+                card.style.borderColor = '#B8860B';
             } else {
                 orderBtn.innerHTML = '+ Add to Order';
                 orderBtn.style.background = 'transparent';
-                orderBtn.style.color = '#E67E22';
-                card.style.borderColor = 'rgba(230, 126, 34, 0.4)';
+                orderBtn.style.color = '#B8860B';
+                card.style.borderColor = 'var(--color-border-gold)';
             }
 
             if (!card.dataset.hasClickListener) {

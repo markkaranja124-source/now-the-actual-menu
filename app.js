@@ -166,7 +166,748 @@ function initSideDrawerNavigation() {
     });
 }
 
-/// --- 2. LIVE FIREBASE DATABASE DISH SEARCH & AUTO-SUGGEST ENGINE ---
+// --- 2. LIVE TRIPLE-LAYER FAIL-SAFE DISH SEARCH & AUTO-SUGGEST ENGINE ---
+const RIBHOUSE_MASTER_DISHES = [
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-test-dish",
+    "id": "dish-test-dish",
+    "name": "TEST DISH",
+    "price": "1/=",
+    "priceNum": 1
+  },
+  {
+    "category": "Gourmet Breakfast",
+    "desc": "",
+    "domId": "dish-pancake-breakfast",
+    "id": "dish-pancake-breakfast",
+    "image": "Breakfast1.png",
+    "name": "PANCAKE BREAKFAST",
+    "price": "400/=",
+    "priceNum": 400
+  },
+  {
+    "category": "Gourmet Breakfast",
+    "desc": "",
+    "domId": "dish-mini-breakfast",
+    "id": "dish-mini-breakfast",
+    "image": "Breakfast1.png",
+    "name": "MINI BREAKFAST",
+    "price": "310/=",
+    "priceNum": 310
+  },
+  {
+    "category": "Gourmet Breakfast",
+    "desc": "",
+    "domId": "dish-rib-house-breakfast",
+    "id": "dish-rib-house-breakfast",
+    "image": "Breakfast1.png",
+    "name": "RIB HOUSE BREAKFAST",
+    "price": "300/=",
+    "priceNum": 300
+  },
+  {
+    "category": "Gourmet Breakfast",
+    "desc": "",
+    "domId": "dish-main-breakfast",
+    "id": "dish-main-breakfast",
+    "image": "Breakfast1.png",
+    "name": "MAIN BREAKFAST",
+    "price": "400/=",
+    "priceNum": 400
+  },
+  {
+    "category": "Gourmet Breakfast",
+    "desc": "",
+    "domId": "dish-goat-soup-breakfast",
+    "id": "dish-goat-soup-breakfast",
+    "image": "Goatchoma1kg.png",
+    "name": "GOAT SOUP BREAKFAST",
+    "price": "300/=",
+    "priceNum": 300
+  },
+  {
+    "category": "Gourmet Breakfast",
+    "desc": "",
+    "domId": "dish-chicken-soup-breakfast",
+    "id": "dish-chicken-soup-breakfast",
+    "image": "Breakfast1.png",
+    "name": "CHICKEN SOUP BREAKFAST",
+    "price": "300/=",
+    "priceNum": 300
+  },
+  {
+    "category": "Gourmet Breakfast",
+    "desc": "",
+    "domId": "dish-chips-combo",
+    "id": "dish-chips-combo",
+    "name": "CHIPS COMBO",
+    "price": "300/=",
+    "priceNum": 300
+  },
+  {
+    "category": "Gourmet Breakfast",
+    "desc": "",
+    "domId": "dish-samosa-combo",
+    "id": "dish-samosa-combo",
+    "name": "SAMOSA COMBO",
+    "price": "280/=",
+    "priceNum": 280
+  },
+  {
+    "category": "Gourmet Breakfast",
+    "desc": "",
+    "domId": "dish-traditional-breakfast",
+    "id": "dish-traditional-breakfast",
+    "image": "Breakfast1.png",
+    "name": "TRADITIONAL BREAKFAST",
+    "price": "300/=",
+    "priceNum": 300
+  },
+  {
+    "category": "Gourmet Breakfast",
+    "desc": "",
+    "domId": "dish-farmers-choice",
+    "id": "dish-farmers-choice",
+    "name": "FARMERS CHOICE",
+    "price": "380/=",
+    "priceNum": 380
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-rib-house-bite",
+    "id": "dish-rib-house-bite",
+    "name": "RIB HOUSE BITE",
+    "price": "200/=",
+    "priceNum": 200
+  },
+  {
+    "category": "Gourmet Breakfast",
+    "desc": "",
+    "domId": "dish-special-breakfast",
+    "id": "dish-special-breakfast",
+    "image": "Breakfast1.png",
+    "name": "SPECIAL BREAKFAST",
+    "price": "220/=",
+    "priceNum": 220
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-rib-house-special",
+    "id": "dish-rib-house-special",
+    "name": "RIB HOUSE SPECIAL",
+    "price": "310/=",
+    "priceNum": 310
+  },
+  {
+    "category": "Gourmet Breakfast",
+    "desc": "",
+    "domId": "dish-british-breakfast",
+    "id": "dish-british-breakfast",
+    "image": "Breakfast1.png",
+    "name": "BRITISH BREAKFAST",
+    "price": "320/=",
+    "priceNum": 320
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-house-coffee-white",
+    "id": "dish-house-coffee-white",
+    "image": "housecoffee.png",
+    "name": "House Coffee white",
+    "price": "150/=",
+    "priceNum": 150
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-house-coffee-black",
+    "id": "dish-house-coffee-black",
+    "image": "housecoffee.png",
+    "name": "House Coffee Black",
+    "price": "100/=",
+    "priceNum": 100
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-black-coffee-w-lemon",
+    "id": "dish-black-coffee-w-lemon",
+    "image": "housecoffee.png",
+    "name": "Black Coffee W lemon",
+    "price": "110/=",
+    "priceNum": 110
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-americano",
+    "id": "dish-americano",
+    "name": "Americano",
+    "price": "150/=",
+    "priceNum": 150
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-latte-mocha",
+    "id": "dish-latte-mocha",
+    "image": "housecoffee.png",
+    "name": "Latte Mocha",
+    "price": "150/=",
+    "priceNum": 150
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-latte-machiatto",
+    "id": "dish-latte-machiatto",
+    "image": "housecoffee.png",
+    "name": "Latte Machiatto",
+    "price": "180/=",
+    "priceNum": 180
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-coffee-latte",
+    "id": "dish-coffee-latte",
+    "image": "housecoffee.png",
+    "name": "Coffee Latte",
+    "price": "150/=",
+    "priceNum": 150
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-lemon-tea",
+    "id": "dish-lemon-tea",
+    "image": "housecoffee.png",
+    "name": "Lemon Tea",
+    "price": "100/=",
+    "priceNum": 100
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-lemon-tea-w-honey",
+    "id": "dish-lemon-tea-w-honey",
+    "image": "housecoffee.png",
+    "name": "Lemon Tea W Honey",
+    "price": "150/=",
+    "priceNum": 150
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-lemon-water",
+    "id": "dish-lemon-water",
+    "name": "Lemon Water",
+    "price": "70/=",
+    "priceNum": 70
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-tea-special",
+    "id": "dish-tea-special",
+    "image": "housecoffee.png",
+    "name": "Tea special",
+    "price": "100/=",
+    "priceNum": 100
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-tea-masala-white",
+    "id": "dish-tea-masala-white",
+    "image": "housecoffee.png",
+    "name": "Tea Masala White",
+    "price": "130/=",
+    "priceNum": 130
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-tea-masala-black",
+    "id": "dish-tea-masala-black",
+    "image": "housecoffee.png",
+    "name": "Tea Masala Black",
+    "price": "100/=",
+    "priceNum": 100
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-ginger-tea",
+    "id": "dish-ginger-tea",
+    "image": "housecoffee.png",
+    "name": "Ginger Tea",
+    "price": "130/=",
+    "priceNum": 130
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-dawa",
+    "id": "dish-dawa",
+    "name": "Dawa",
+    "price": "200/=",
+    "priceNum": 200
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-honey-espresso",
+    "id": "dish-honey-espresso",
+    "image": "housecoffee.png",
+    "name": "Honey Espresso",
+    "price": "110/=",
+    "priceNum": 110
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-hot-milk",
+    "id": "dish-hot-milk",
+    "name": "Hot Milk",
+    "price": "100/=",
+    "priceNum": 100
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-honey-cone",
+    "id": "dish-honey-cone",
+    "name": "Honey Cone",
+    "price": "50/=",
+    "priceNum": 50
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-cappuccino-single",
+    "id": "dish-cappuccino-single",
+    "image": "housecoffee.png",
+    "name": "Cappuccino (Single)",
+    "price": "150/=",
+    "priceNum": 150
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-cappuccino-double",
+    "id": "dish-cappuccino-double",
+    "image": "housecoffee.png",
+    "name": "Cappuccino (Double)",
+    "price": "180/=",
+    "priceNum": 180
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-espresso-single",
+    "id": "dish-espresso-single",
+    "image": "housecoffee.png",
+    "name": "Espresso (Single)",
+    "price": "120/=",
+    "priceNum": 120
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-espresso-double",
+    "id": "dish-espresso-double",
+    "image": "housecoffee.png",
+    "name": "Espresso (Double)",
+    "price": "150/=",
+    "priceNum": 150
+  },
+  {
+    "category": "Cold Drinks & Shakes",
+    "desc": "",
+    "domId": "dish-milkshake-flavored",
+    "id": "dish-milkshake-flavored",
+    "name": "Milkshake (Flavored)",
+    "price": "250/=",
+    "priceNum": 250
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-espresso-cold",
+    "id": "dish-espresso-cold",
+    "image": "housecoffee.png",
+    "name": "Espresso (Cold)",
+    "price": "250/=",
+    "priceNum": 250
+  },
+  {
+    "category": "Cold Drinks & Shakes",
+    "desc": "",
+    "domId": "dish-oreo-shake",
+    "id": "dish-oreo-shake",
+    "name": "Oreo shake",
+    "price": "300/=",
+    "priceNum": 300
+  },
+  {
+    "category": "Cold Drinks & Shakes",
+    "desc": "",
+    "domId": "dish-smoothies-tropical",
+    "id": "dish-smoothies-tropical",
+    "name": "Smoothies (Tropical)",
+    "price": "200/=",
+    "priceNum": 200
+  },
+  {
+    "category": "Cold Drinks & Shakes",
+    "desc": "",
+    "domId": "dish-ice-cream-scoops",
+    "id": "dish-ice-cream-scoops",
+    "image": "icecream.png",
+    "name": "Ice Cream Scoops",
+    "price": "150/=",
+    "priceNum": 150
+  },
+  {
+    "category": "Cold Drinks & Shakes",
+    "desc": "",
+    "domId": "dish-lemonade-flavor",
+    "id": "dish-lemonade-flavor",
+    "name": "Lemonade (Flavor)",
+    "price": "100/=",
+    "priceNum": 100
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-iced-coffee",
+    "id": "dish-iced-coffee",
+    "image": "housecoffee.png",
+    "name": "Iced Coffee",
+    "price": "180/=",
+    "priceNum": 180
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-matumbo-fry",
+    "id": "dish-matumbo-fry",
+    "image": "Chipsmatumbocombo.png",
+    "name": "MATUMBO FRY",
+    "price": "Price on request",
+    "priceNum": 0
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-beef-stew-fry",
+    "id": "dish-beef-stew-fry",
+    "image": "beef.png",
+    "name": "BEEF STEW / FRY",
+    "price": "Price on request",
+    "priceNum": 0
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-goat-stew-fry",
+    "id": "dish-goat-stew-fry",
+    "image": "Goatchoma1kg.png",
+    "name": "GOAT STEW / FRY",
+    "price": "Price on request",
+    "priceNum": 0
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-liver",
+    "id": "dish-liver",
+    "name": "LIVER",
+    "price": "Price on request",
+    "priceNum": 0
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-chicken-kienyeji-quarter",
+    "id": "dish-chicken-kienyeji-quarter",
+    "name": "CHICKEN KIENYEJI QUARTER",
+    "price": "Price on request",
+    "priceNum": 0
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-chicken-wet-fry",
+    "id": "dish-chicken-wet-fry",
+    "name": "CHICKEN WET FRY",
+    "price": "Price on request",
+    "priceNum": 0
+  },
+  {
+    "category": "Barista & Hot Beverages",
+    "desc": "",
+    "domId": "dish-beef-steak",
+    "id": "dish-beef-steak",
+    "image": "beef.png",
+    "name": "BEEF STEAK",
+    "price": "Price on request",
+    "priceNum": 0
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-deep-fried-chicken",
+    "id": "dish-deep-fried-chicken",
+    "name": "DEEP FRIED CHICKEN",
+    "price": "Price on request",
+    "priceNum": 0
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-fish-fillet",
+    "id": "dish-fish-fillet",
+    "name": "FISH FILLET",
+    "price": "Price on request",
+    "priceNum": 0
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-tilapia-stew",
+    "id": "dish-tilapia-stew",
+    "image": "beef.png",
+    "name": "TILAPIA STEW",
+    "price": "Price on request",
+    "priceNum": 0
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-tilapia-fry",
+    "id": "dish-tilapia-fry",
+    "name": "TILAPIA FRY",
+    "price": "Price on request",
+    "priceNum": 0
+  },
+  {
+    "category": "Sides & Extras",
+    "desc": "",
+    "domId": "dish-ugali-vegetables",
+    "id": "dish-ugali-vegetables",
+    "name": "UGALI & VEGETABLES",
+    "price": "Price on request",
+    "priceNum": 0
+  },
+  {
+    "category": "Wood-Fired Choma & Grill",
+    "desc": "",
+    "domId": "dish-choma-beef-1-kg",
+    "id": "dish-choma-beef-1-kg",
+    "image": "beef.png",
+    "name": "CHOMA BEEF (1 KG)",
+    "price": "1100/=",
+    "priceNum": 1100
+  },
+  {
+    "category": "Wood-Fired Choma & Grill",
+    "desc": "",
+    "domId": "dish-choma-beef-0-5-kg",
+    "id": "dish-choma-beef-0-5-kg",
+    "image": "beef.png",
+    "name": "CHOMA BEEF (0.5 KG)",
+    "price": "550/=",
+    "priceNum": 550
+  },
+  {
+    "category": "Wood-Fired Choma & Grill",
+    "desc": "",
+    "domId": "dish-choma-goat-1-kg",
+    "id": "dish-choma-goat-1-kg",
+    "image": "Goatchoma1kg.png",
+    "name": "CHOMA GOAT (1 KG)",
+    "price": "1200/=",
+    "priceNum": 1200
+  },
+  {
+    "category": "Wood-Fired Choma & Grill",
+    "desc": "",
+    "domId": "dish-choma-goat-0-5-kg",
+    "id": "dish-choma-goat-0-5-kg",
+    "image": "Goatchoma1kg.png",
+    "name": "CHOMA GOAT (0.5 KG)",
+    "price": "600/=",
+    "priceNum": 600
+  },
+  {
+    "category": "Wood-Fired Choma & Grill",
+    "desc": "",
+    "domId": "dish-chemsha-beef-1-kg",
+    "id": "dish-chemsha-beef-1-kg",
+    "image": "beef.png",
+    "name": "CHEMSHA BEEF (1 KG)",
+    "price": "1200/=",
+    "priceNum": 1200
+  },
+  {
+    "category": "Wood-Fired Choma & Grill",
+    "desc": "",
+    "domId": "dish-chemsha-beef-0-5-kg",
+    "id": "dish-chemsha-beef-0-5-kg",
+    "image": "beef.png",
+    "name": "CHEMSHA BEEF (0.5 KG)",
+    "price": "600/=",
+    "priceNum": 600
+  },
+  {
+    "category": "Wood-Fired Choma & Grill",
+    "desc": "",
+    "domId": "dish-chemsha-goat-1-kg",
+    "id": "dish-chemsha-goat-1-kg",
+    "image": "Goatchoma1kg.png",
+    "name": "CHEMSHA GOAT (1 KG)",
+    "price": "1300/=",
+    "priceNum": 1300
+  },
+  {
+    "category": "Wood-Fired Choma & Grill",
+    "desc": "",
+    "domId": "dish-chemsha-goat-0-5-kg",
+    "id": "dish-chemsha-goat-0-5-kg",
+    "image": "Goatchoma1kg.png",
+    "name": "CHEMSHA GOAT (0.5 KG)",
+    "price": "650/=",
+    "priceNum": 650
+  },
+  {
+    "category": "Wood-Fired Choma & Grill",
+    "desc": "",
+    "domId": "dish-beef-fry-tumbukiza-1-kg",
+    "id": "dish-beef-fry-tumbukiza-1-kg",
+    "image": "beef.png",
+    "name": "BEEF FRY / TUMBUKIZA (1 KG)",
+    "price": "1300/=",
+    "priceNum": 1300
+  },
+  {
+    "category": "Wood-Fired Choma & Grill",
+    "desc": "",
+    "domId": "dish-goat-fry-tumbukiza-1-kg",
+    "id": "dish-goat-fry-tumbukiza-1-kg",
+    "image": "Goatchoma1kg.png",
+    "name": "GOAT FRY / TUMBUKIZA (1 KG)",
+    "price": "1400/=",
+    "priceNum": 1400
+  },
+  {
+    "category": "Wood-Fired Choma & Grill",
+    "desc": "",
+    "domId": "dish-chicken-platter-for-4-on-order",
+    "id": "dish-chicken-platter-for-4-on-order",
+    "image": "housecoffee.png",
+    "name": "CHICKEN PLATTER FOR 4 (ON ORDER)",
+    "price": "1900/=",
+    "priceNum": 1900
+  },
+  {
+    "category": "Sides & Extras",
+    "desc": "",
+    "domId": "dish-rice-mukimo-special",
+    "id": "dish-rice-mukimo-special",
+    "name": "Rice / Mukimo Special",
+    "price": "250/=",
+    "priceNum": 250
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-pilau-special",
+    "id": "dish-pilau-special",
+    "name": "Pilau Special",
+    "price": "270/=",
+    "priceNum": 270
+  },
+  {
+    "category": "Sides & Extras",
+    "desc": "",
+    "domId": "dish-chips-plain",
+    "id": "dish-chips-plain",
+    "name": "Chips Plain",
+    "price": "220/=",
+    "priceNum": 220
+  },
+  {
+    "category": "Sides & Extras",
+    "desc": "",
+    "domId": "dish-chips-masala",
+    "id": "dish-chips-masala",
+    "name": "Chips Masala",
+    "price": "270/=",
+    "priceNum": 270
+  },
+  {
+    "category": "Sides & Extras",
+    "desc": "",
+    "domId": "dish-rice-plain",
+    "id": "dish-rice-plain",
+    "name": "Rice Plain",
+    "price": "200/=",
+    "priceNum": 200
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-mukimo-plain",
+    "id": "dish-mukimo-plain",
+    "name": "Mukimo Plain",
+    "price": "200/=",
+    "priceNum": 200
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-waru",
+    "id": "dish-waru",
+    "name": "Waru",
+    "price": "120/=",
+    "priceNum": 120
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-spinach",
+    "id": "dish-spinach",
+    "name": "Spinach",
+    "price": "120/=",
+    "priceNum": 120
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-banana",
+    "id": "dish-banana",
+    "name": "Banana",
+    "price": "100/=",
+    "priceNum": 100
+  },
+  {
+    "category": "Main Dishes",
+    "desc": "",
+    "domId": "dish-rib-house-menu-ai",
+    "id": "dish-rib-house-menu-ai",
+    "name": "RIB HOUSE MENU AI",
+    "price": "Price on request",
+    "priceNum": 0
+  }
+];
+
 function initMenuDishSearch() {
     const searchInput = document.getElementById('menu-dish-search-input');
     const clearBtn = document.getElementById('search-clear-btn');
@@ -175,11 +916,13 @@ function initMenuDishSearch() {
 
     if (!searchInput) return;
 
-    // Master in-memory database cache
-    let databaseDishes = window._ribhouseMenuDishes || [];
+    // Layer 1: Instant In-Memory Embedded Master Catalogue (0ms delay)
+    let databaseDishes = (window._ribhouseMenuDishes && window._ribhouseMenuDishes.length > 0)
+        ? window._ribhouseMenuDishes
+        : [...RIBHOUSE_MASTER_DISHES];
 
-    // Asynchronously fetch latest dishes from Firebase RTDB
-    const fetchDishesFromFirebase = async () => {
+    // Layer 2: Live Firebase RTDB Background Sync (if online and network allows)
+    const syncDishesFromFirebase = async () => {
         try {
             const resp = await fetch('https://ribhouse-admin-default-rtdb.firebaseio.com/menu/dishes.json');
             if (resp.ok) {
@@ -190,12 +933,12 @@ function initMenuDishSearch() {
                 }
             }
         } catch (e) {
-            // In-memory fallback
+            // Fails silently; embedded fallback continues with 0ms interruption
         }
     };
-    fetchDishesFromFirebase();
+    syncDishesFromFirebase();
 
-    // Collect all dish cards by querying all h3 and h4 across the page
+    // Layer 3: Scan all live DOM cards across all sections in index.html
     const getDishCards = () => {
         const cardList = [];
         const headings = document.querySelectorAll('section h3, section h4, main h3, main h4');
@@ -216,7 +959,7 @@ function initMenuDishSearch() {
         const q = query.toLowerCase().trim();
         const qTokens = q.split(/\s+/).filter(t => t.length > 0);
 
-        const list = databaseDishes.length > 0 ? databaseDishes : [];
+        const list = (databaseDishes && databaseDishes.length > 0) ? databaseDishes : RIBHOUSE_MASTER_DISHES;
 
         const scored = list.map(dish => {
             const nameLower = (dish.name || '').toLowerCase();

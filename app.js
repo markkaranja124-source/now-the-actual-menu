@@ -2652,10 +2652,22 @@ function applyImageRegistry(registry) {
     
     document.querySelectorAll('img[data-img-key]').forEach(img => {
         const key = img.getAttribute('data-img-key');
+        const defaultSrc = img.getAttribute('data-default-src') || img.src;
+        if (!img.getAttribute('data-default-src')) {
+            img.setAttribute('data-default-src', defaultSrc);
+        }
+
+        img.onerror = function() {
+            const def = img.getAttribute('data-default-src');
+            if (def && img.src !== def) {
+                img.src = def;
+            }
+        };
+
         if (key && registry[key]) {
-            const cloudUrl = registry[key];
-            if (img.src !== cloudUrl && !img.src.endsWith(cloudUrl)) {
-                img.src = cloudUrl;
+            const targetUrl = registry[key];
+            if (img.src !== targetUrl && !img.src.endsWith('/' + targetUrl) && !img.src.endsWith(targetUrl)) {
+                img.src = targetUrl;
             }
         }
     });
@@ -2663,20 +2675,15 @@ function applyImageRegistry(registry) {
 
 async function initCloudImageRegistry() {
     try {
+        localStorage.removeItem('ribhouse_cached_image_registry'); // Clean any stale cache
         const res = await fetch(FIREBASE_IMAGE_REGISTRY_URL);
         if (res.ok) {
             const data = await res.json();
             if (data && typeof data === 'object') {
                 applyImageRegistry(data);
-                localStorage.setItem('ribhouse_cached_image_registry', JSON.stringify(data));
             }
         }
-    } catch(e) {
-        try {
-            const cached = JSON.parse(localStorage.getItem('ribhouse_cached_image_registry') || '{}');
-            applyImageRegistry(cached);
-        } catch(err) {}
-    }
+    } catch(e) {}
 
     // Live Real-Time SSE Listener for Dynamic Instant Image Updates
     try {

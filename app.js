@@ -953,13 +953,17 @@ function initMenuDishSearch() {
         return cardList;
     };
 
-    // Calculate Top 10 Closely Related Recommendations from Database
+    // Calculate YouTube-Style Recommendations from Database
     const get10Recommendations = (query) => {
-        if (!query || query.length < 2) return [];
+        const list = (databaseDishes && databaseDishes.length > 0) ? databaseDishes : RIBHOUSE_MASTER_DISHES;
+
+        // If empty query (on click/focus), return top signature dishes
+        if (!query || query.trim().length === 0) {
+            return list.slice(0, 6);
+        }
+
         const q = query.toLowerCase().trim();
         const qTokens = q.split(/\s+/).filter(t => t.length > 0);
-
-        const list = (databaseDishes && databaseDishes.length > 0) ? databaseDishes : RIBHOUSE_MASTER_DISHES;
 
         const scored = list.map(dish => {
             const nameLower = (dish.name || '').toLowerCase();
@@ -1006,18 +1010,18 @@ function initMenuDishSearch() {
             .sort((a, b) => b.score - a.score)
             .map(entry => entry.dish);
 
-        // If fewer than 10 matches, fill with closely related dishes from the same categories
-        if (directMatches.length < 10 && directMatches.length > 0) {
+        // If fewer than 8 matches, fill with closely related dishes from the same categories
+        if (directMatches.length < 8 && directMatches.length > 0) {
             const matchedCategories = [...new Set(directMatches.map(d => d.category))];
             list.forEach(dish => {
-                if (directMatches.length >= 10) return;
+                if (directMatches.length >= 8) return;
                 if (!directMatches.some(d => d.name === dish.name) && matchedCategories.includes(dish.category)) {
                     directMatches.push(dish);
                 }
             });
         }
 
-        return directMatches.slice(0, 10);
+        return directMatches.slice(0, 8);
     };
 
     // Helper to highlight matching query letters in dish title
@@ -1045,7 +1049,7 @@ function initMenuDishSearch() {
         currentRecommendations = recommendations;
         activeSuggestionIndex = -1;
 
-        if (recommendations.length === 0 || query.length < 2) {
+        if (recommendations.length === 0) {
             hideSuggestions();
             return;
         }
@@ -1064,7 +1068,7 @@ function initMenuDishSearch() {
             const dishImg = item.image || getDishImage(item.name, item.desc);
             const highlightedTitle = highlightMatchLetters(item.name, query);
 
-            if (isTop) {
+            if (isTop && dishImg) {
                 // Top Featured Entity Row with photo thumbnail
                 html += `
                     <div class="search-suggestion-item sugg-featured" data-index="${index}" role="option" tabindex="0">
@@ -1075,15 +1079,13 @@ function initMenuDishSearch() {
                             <div class="sugg-title-line">${highlightedTitle}</div>
                             <div class="sugg-subtitle-line">${item.category || 'Menu'}${item.price ? ` • <strong style="color: #B8860B;">${item.price}</strong>` : ''}</div>
                         </div>
-                        ${dishImg ? `
-                            <div class="sugg-thumb-box">
-                                <img src="${dishImg}" alt="${item.name}" class="sugg-thumb-img">
-                            </div>
-                        ` : ''}
+                        <div class="sugg-thumb-box">
+                            <img src="${dishImg}" alt="${item.name}" class="sugg-thumb-img">
+                        </div>
                     </div>
                 `;
             } else {
-                // Autocomplete Keyword Suggestion Row
+                // YouTube-Style Autocomplete Keyword Suggestion Row
                 html += `
                     <div class="search-suggestion-item" data-index="${index}" role="option" tabindex="0">
                         <div class="sugg-row-icon-box">
@@ -1162,12 +1164,10 @@ function initMenuDishSearch() {
         const cards = getDishCards();
         let matchCount = 0;
 
-        // RULE: Only activate suggestions when at least 2 characters are keyed in
-        if (query.length < 2) {
-            if (clearBtn) clearBtn.style.display = query.length > 0 ? 'inline-flex' : 'none';
+        if (clearBtn) clearBtn.style.display = query.length > 0 ? 'inline-flex' : 'none';
+
+        if (!query) {
             if (countText) countText.textContent = 'All Dishes';
-            hideSuggestions();
-            
             cards.forEach(card => {
                 card.classList.remove('dish-card-hidden', 'dish-card-search-match');
             });
@@ -1175,10 +1175,14 @@ function initMenuDishSearch() {
             document.querySelectorAll('.menu-grid, [id^="bk-"], [id$="-section"]').forEach(el => {
                 el.style.display = '';
             });
+
+            // Show top recommendations on click / focus
+            if (renderDropdown) {
+                const recs = get10Recommendations('');
+                renderSuggestions(recs, '');
+            }
             return;
         }
-
-        if (clearBtn) clearBtn.style.display = 'inline-flex';
 
         // Multi-word matching
         const queryTokens = query.split(/\s+/).filter(t => t.length > 0);
@@ -1211,7 +1215,6 @@ function initMenuDishSearch() {
             countText.textContent = matchCount === 0 ? '0 Found' : `${matchCount} Found`;
         }
 
-        // Render 10-Dish Auto-Suggest Dropdown on live typing (>= 2 letters)
         if (renderDropdown) {
             const recs = get10Recommendations(query);
             renderSuggestions(recs, query);
@@ -1227,15 +1230,11 @@ function initMenuDishSearch() {
     });
 
     searchInput.addEventListener('focus', () => {
-        if (searchInput.value.trim().length >= 2) {
-            performSearch(true);
-        }
+        performSearch(true);
     });
 
     searchInput.addEventListener('click', () => {
-        if (searchInput.value.trim().length >= 2) {
-            performSearch(true);
-        }
+        performSearch(true);
     });
 
     // Keyboard Navigation: ArrowUp, ArrowDown, Enter, Escape

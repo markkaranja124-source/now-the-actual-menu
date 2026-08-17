@@ -410,7 +410,9 @@ function initMenuDishSearch() {
         });
 
         suggestionsDropdown.innerHTML = html;
-        suggestionsDropdown.style.display = 'flex';
+        suggestionsDropdown.style.setProperty('display', 'flex', 'important');
+        suggestionsDropdown.style.setProperty('visibility', 'visible', 'important');
+        suggestionsDropdown.style.setProperty('opacity', '1', 'important');
 
         // Attach click listeners to all suggestion items
         const itemEls = suggestionsDropdown.querySelectorAll('.search-suggestion-item');

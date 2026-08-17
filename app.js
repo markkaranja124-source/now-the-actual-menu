@@ -1918,46 +1918,60 @@ window.setPortionPairingOption = function(id, portionIndex, pairingKey) {
 };
 
 // Helper: Map dish names to their corresponding photo assets
-function getDishImage(dishName) {
-    const nameLower = (dishName || '').toLowerCase();
-    if (nameLower.includes('goat') || nameLower.includes('choma goat') || nameLower.includes('goat choma')) {
-        return 'Goatchoma1kg.png';
-    }
-    if (nameLower.includes('sizzling') || nameLower.includes('beef sizzling')) {
-        return 'beefsizzling.png';
-    }
-    if (nameLower.includes('chips special') || nameLower.includes('special with meat')) {
-        return 'Chips special with meat.png';
-    }
-    if (nameLower.includes('chips matumbo') || nameLower.includes('chipsmatumbo')) {
-        return 'Chipsmatumbocombo.png';
-    }
-    if (nameLower.includes('fries with salad') || nameLower.includes('chips with salad')) {
-        return 'Fries with salad.png';
-    }
-    if (nameLower.includes('beef fry') || nameLower.includes('beef') || nameLower.includes('stew')) {
-        return 'beef.png';
-    }
-    if (nameLower.includes('sausage') || nameLower.includes('sauseges')) {
-        return 'Sauseges.png';
-    }
-    if (nameLower.includes('coffee') || nameLower.includes('cappuccino') || nameLower.includes('tea') || nameLower.includes('latte') || nameLower.includes('espresso')) {
-        return 'housecoffee.png';
-    }
-    if (nameLower.includes('ice cream') || nameLower.includes('icecream')) {
-        return 'icecream.png';
-    }
-    if (nameLower.includes('breakfast special') || nameLower.includes('breakfast')) {
-        return 'Breakfast1.png';
-    }
-    if (nameLower.includes('bread and eggs') || nameLower.includes('eggs')) {
-        return 'breakfastbreadandeggs1.png';
-    }
-    if (nameLower.includes('bacon')) {
+function getDishImage(dishName, dishDesc) {
+    const textLower = ((dishName || '') + ' ' + (dishDesc || '')).toLowerCase();
+    
+    // 1. Bacon orders (e.g. Pancake Breakfast with Bacon, Main Breakfast with Beef Bacon, etc.)
+    if (textLower.includes('bacon')) {
         return 'breakfastbreadwithbacon1.png';
     }
-    if (nameLower.includes('brown bread') || nameLower.includes('toast')) {
+    // 2. Goat Choma
+    if (textLower.includes('goat') || textLower.includes('choma goat') || textLower.includes('goat choma')) {
+        return 'Goatchoma1kg.png';
+    }
+    // 3. Sizzling Beef
+    if (textLower.includes('sizzling') || textLower.includes('beef sizzling')) {
+        return 'beefsizzling.png';
+    }
+    // 4. Chips Special with Meat
+    if (textLower.includes('chips special') || textLower.includes('special with meat')) {
+        return 'Chips special with meat.png';
+    }
+    // 5. Chips Matumbo Combo
+    if (textLower.includes('chips matumbo') || textLower.includes('chipsmatumbo') || textLower.includes('matumbo')) {
+        return 'Chipsmatumbocombo.png';
+    }
+    // 6. Fries with Salad
+    if (textLower.includes('fries with salad') || textLower.includes('chips with salad')) {
+        return 'Fries with salad.png';
+    }
+    // 7. Beef Fry / Stew
+    if (textLower.includes('beef fry') || textLower.includes('beef') || textLower.includes('stew')) {
+        return 'beef.png';
+    }
+    // 8. Sausages
+    if (textLower.includes('sausage') || textLower.includes('sauseges')) {
+        return 'Sauseges.png';
+    }
+    // 9. Coffee & Barista
+    if (textLower.includes('coffee') || textLower.includes('cappuccino') || textLower.includes('tea') || textLower.includes('latte') || textLower.includes('espresso')) {
+        return 'housecoffee.png';
+    }
+    // 10. Ice Cream
+    if (textLower.includes('ice cream') || textLower.includes('icecream')) {
+        return 'icecream.png';
+    }
+    // 11. Bread and Eggs
+    if (textLower.includes('bread and eggs') || textLower.includes('eggs') || textLower.includes('egg')) {
+        return 'breakfastbreadandeggs1.png';
+    }
+    // 12. Brown Bread / Toast
+    if (textLower.includes('brown bread') || textLower.includes('toast')) {
         return 'brownbread1.png';
+    }
+    // 13. General Breakfast Combos
+    if (textLower.includes('breakfast') || textLower.includes('pancake')) {
+        return 'Breakfast1.png';
     }
     return null;
 }
@@ -2128,7 +2142,7 @@ function renderSelectedOrderPage() {
         }
 
         const baseVal = item.basePrice || parseInt((item.price || '0').toString().replace(/[^0-9]/g, ''), 10) || 0;
-        const dishImg = getDishImage(item.name);
+        const dishImg = getDishImage(item.name, item.desc);
         const imageHtml = dishImg 
             ? `<img src="${dishImg}" alt="${item.name}" class="order-dish-img">`
             : `<div class="dish-placeholder-box"><span class="dish-placeholder-label">PHOTO</span></div>`;
@@ -2338,7 +2352,7 @@ function renderOrderSummaryPage() {
         }
 
         const baseVal = item.basePrice || parseInt((item.price || '0').toString().replace(/[^0-9]/g, ''), 10) || 0;
-        const dishImg = getDishImage(item.name);
+        const dishImg = getDishImage(item.name, item.desc);
         const imageHtml = dishImg 
             ? `<img src="${dishImg}" alt="${item.name}" class="order-dish-img">`
             : `<div class="dish-placeholder-box"><span class="dish-placeholder-label">PHOTO</span></div>`;

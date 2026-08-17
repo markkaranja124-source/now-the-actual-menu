@@ -1633,14 +1633,10 @@
                             <span class="mpesa-badge">M-PESA BUY GOODS</span>
                             <span style="font-size: 0.78rem; color: var(--subtle-text); text-transform: uppercase; font-weight: 700;">Instant Payment</span>
                         </div>
-                        <div class="mpesa-details-grid">
+                        <div class="mpesa-details-grid" style="grid-template-columns: 1fr;">
                             <div class="mpesa-detail-card">
-                                <span class="label">Till Number</span>
+                                <span class="label">Till Number (Buy Goods)</span>
                                 <span class="val" id="till-number-val">4977556</span>
-                            </div>
-                            <div class="mpesa-detail-card">
-                                <span class="label">Order Hotline</span>
-                                <span class="val">0724 594 204</span>
                             </div>
                         </div>
                         <button type="button" class="btn-copy-till" onclick="copyTillNumber()">
@@ -1760,7 +1756,7 @@
                 <div id="mpesa-state-waiting" class="mpesa-state-box">
                     <div class="mpesa-pulse-avatar">
                         <div class="radar-pulse"></div>
-                        <span class="mpesa-phone-icon">📱</span>
+                        <span class="mpesa-phone-icon" style="font-size: 1.1rem; font-weight: 800;">M</span>
                     </div>
                     <div class="mpesa-state-text-wrap">
                         <h4 class="mpesa-prompt-title">M-Pesa PIN Prompt Sent</h4>
@@ -1777,13 +1773,13 @@
 
                     <div class="mpesa-action-row">
                         <button type="button" class="btn-mpesa-resend" onclick="triggerMpesaSTKPush(true)">
-                            <span>🔄 Resend Prompt</span>
+                            <span>Resend Prompt</span>
                         </button>
                         <button type="button" class="btn-mpesa-manual-toggle" onclick="toggleManualMpesaInput()">
                             <span>Manual Code</span>
                         </button>
                         <button type="button" class="btn-mpesa-sim" id="btn-mpesa-sim" onclick="simulateMpesaSuccess()" title="Test Instant Payment Confirmation">
-                            <span>⚡ Test Confirm (Demo)</span>
+                            <span>Test Confirm (Demo)</span>
                         </button>
                     </div>
                 </div>
@@ -1804,13 +1800,13 @@
                 <!-- Failed / Cancelled State -->
                 <div id="mpesa-state-failed" class="mpesa-state-box" style="display: none;">
                     <div class="mpesa-failed-icon-wrap">
-                        <span>⚠️</span>
+                        <span style="font-weight: 800; font-size: 1.2rem; color: #DC2626;">!</span>
                     </div>
                     <h4 class="mpesa-failed-title">PIN Prompt Cancelled / Expired</h4>
                     <p class="mpesa-failed-sub" id="mpesa-failed-msg">The prompt was not completed. You can resend the prompt or attach your code manually.</p>
                     <div class="mpesa-action-row">
                         <button type="button" class="btn-mpesa-resend" onclick="triggerMpesaSTKPush(true)">
-                            <span>🔄 Send New STK Prompt</span>
+                            <span>Send New STK Prompt</span>
                         </button>
                         <button type="button" class="btn-mpesa-manual-toggle" onclick="toggleManualMpesaInput()">
                             <span>Enter Code Manually</span>
@@ -1829,12 +1825,12 @@
                 </div>
             </div>
 
-            <div class="modal-actions">
-                <a href="#" id="modal-whatsapp-link" target="_blank" class="btn-modal-whatsapp">
-                    <span>Send Order Details via WhatsApp</span>
+            <div class="modal-actions" style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
+                <a href="#" id="modal-whatsapp-link" target="_blank" class="btn-modal-whatsapp" style="display: flex; align-items: center; justify-content: center; width: 100%; padding: 14px 20px; font-weight: 800; font-size: 0.9rem; background: #E67E22; color: #FFFFFF; border: none; cursor: pointer; text-transform: uppercase; text-decoration: none; border-radius: 0 !important; letter-spacing: 0.5px; transition: background 0.2s ease;">
+                    <span>SEND RECEIPT VIA WHATSAPP</span>
                 </a>
-                <button type="button" class="btn-modal-close" onclick="closeSuccessModal()">
-                    Back to Menu
+                <button type="button" class="btn-modal-close" style="width: 100%; padding: 12px 20px; font-weight: 700; background: #111114; color: #FFFFFF; border: none; cursor: pointer; text-transform: uppercase; border-radius: 0 !important;" onclick="closeSuccessModal()">
+                    Done &bull; Return to Menu
                 </button>
             </div>
         </div>
@@ -2340,13 +2336,26 @@
             if (!currentActiveOrder) return;
             const o = currentActiveOrder;
 
-            // Build neatly structured dish items (Option 2 layout)
-            const itemBlocks = [];
-            if (o.items && o.items.length > 0) {
-                o.items.forEach((item, idx) => {
-                    const sub = calculateSubtotal(item);
-                    let itemText = `${idx + 1}. *${item.name}* (x${item.qty})`;
+            // Format date matching the physical thermal slip: "16-Aug-2026 1:46 pm"
+            const now = new Date();
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const dayStr = String(now.getDate()).padStart(2, '0');
+            const monthStr = months[now.getMonth()];
+            const yearStr = now.getFullYear();
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'pm' : 'am';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            const formattedSlipDate = `${dayStr}-${monthStr}-${yearStr} ${hours}:${minutes} ${ampm}`;
 
+            // Build item lines matching the physical thermal slip layout
+            const receiptLines = [];
+            if (o.items && o.items.length > 0) {
+                o.items.forEach((item) => {
+                    const sub = calculateSubtotal(item);
+                    let line = `*${item.name.toUpperCase()}*\n       ${item.qty}.00`;
+                    
                     // Portions / Options details if present
                     if (item.portions && item.portions.length > 0 && (item.hasSide || item.hasPrep || item.hasPairing)) {
                         item.portions.forEach((p, pIdx) => {
@@ -2357,36 +2366,45 @@
                                 opts.push(p.pairing.replace('_', ' + '));
                             }
                             if (opts.length > 0) {
-                                itemText += `\n   └ ${item.qty > 1 ? `Plate ${pIdx + 1}: ` : 'Options: '}${opts.join(', ')}`;
+                                line += `\n       (${item.qty > 1 ? `Plate ${pIdx + 1}: ` : ''}${opts.join(', ')})`;
                             }
                         });
                     }
-                    itemText += `\n   └ Subtotal: KSh ${sub.toLocaleString()}/=`;
-                    itemBlocks.push(itemText);
+                    line += `\n       (Subtotal: KSh ${sub.toLocaleString()}/=)`;
+                    receiptLines.push(line);
                 });
             } else if (o.itemsSummary) {
-                itemBlocks.push(o.itemsSummary.join('\n'));
+                receiptLines.push(o.itemsSummary.join('\n\n'));
             }
 
             const paymentDisplay = o.mpesaCode 
                 ? `M-Pesa Verified (${o.mpesaCode})` 
                 : 'Till 4977556 (Buy Goods)';
 
+            const cleanRef = (o.ref || 'RH' + Date.now().toString().slice(-6)).toUpperCase();
+
             const waText = 
-`*RIB HOUSE WOOD-FIRED GRILL*
-*Order Confirmation*
+`*RIB HOUSE LIMITED*
+P.O Box 00506-3999, GPO
 
-*Ref Number*   ❯  ${o.ref}
-*Customer*     ❯  ${o.customerName}
-*Phone*        ❯  ${o.phone}
-*Service*      ❯  ${o.tableOrLocation}
-${o.gpsUrl ? `*Delivery Pin* ❯  ${o.gpsUrl}\n` : ''}
-*Selected Dishes:*
-${itemBlocks.join('\n\n')}
+*CUSTOMER ORDER*
 
-*Grand Total*  ❯  *KSh ${o.totalAmount.toLocaleString()}/=*
-*Payment*      ❯  ${paymentDisplay}
-${o.specialNotes ? `*Notes*        ❯  ${o.specialNotes}\n` : ''}*Status*       ❯  Order Placed`;
+*Order No:* ${cleanRef}
+*Date:*     ${formattedSlipDate}
+*Customer:* ${o.customerName}
+*Phone:*    ${o.phone}
+*Service:*  ${o.tableOrLocation}
+${o.gpsUrl ? `*GPS Pin:*  ${o.gpsUrl}\n` : ''}----------------------------------------
+*Order Details*
+----------------------------------------
+
+${receiptLines.join('\n\n')}
+
+----------------------------------------
+*Grand Total:* *KSh ${o.totalAmount.toLocaleString()}/=*
+*Payment:*     ${paymentDisplay}
+${o.specialNotes ? `*Notes:*       ${o.specialNotes}\n` : ''}----------------------------------------
+*Waiter:* ONLINE ORDER SYSTEM`;
 
             const waUrl = `https://wa.me/254793382017?text=${encodeURIComponent(waText)}`;
             const waLinkEl = document.getElementById('modal-whatsapp-link');

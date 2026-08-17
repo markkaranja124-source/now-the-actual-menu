@@ -22,7 +22,7 @@
     <meta property="og:image" content="logo.png">
     <meta property="og:title" content="RIB HOUSE | Official Menu">
 
-    <link rel="stylesheet" href="style.css?v=20260817_live_search_v3">
+    <link rel="stylesheet" href="style.css?v=20260817_database_search_v4">
 </head>
 
 <body>
@@ -228,7 +228,7 @@
                     <!-- TEST DISH (FOR TESTING PURPOSES) -->
                     <div
                         style="background: var(--color-card-bg); border: 2px dashed var(--color-gold); padding: 24px; cursor: pointer;">
-                        <div
+                        <div id="dish-test-dish" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h3
                                 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-gold); text-transform: uppercase;">
@@ -241,7 +241,7 @@
 
                     <div
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px;">
-                        <div
+                        <div id="dish-pancake-breakfast" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h3
                                 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">
@@ -255,7 +255,7 @@
 
                     <div
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px;">
-                        <div
+                        <div id="dish-mini-breakfast" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h3
                                 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">
@@ -446,7 +446,7 @@
 
                 <div class="menu-grid"
                     style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); margin-bottom: 60px;">
-                    <div
+                    <div id="dish-house-coffee-white" class="menu-dish-card"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; justify-content: space-between; align-items: center;">
                         <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream);">House
                             Coffee white</h4>
@@ -648,7 +648,7 @@
                 </div>
 
                 <!-- Main Dishes Grid -->
-                <div class="menu-grid" id="main-dishes-grid"
+                <div id="dish-matumbo-fry" class="menu-dish-card" class="menu-grid" id="main-dishes-grid"
                     style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); margin-bottom: 50px;">
 
                     <!-- MATUMBO FRY -->
@@ -682,7 +682,7 @@
                                 <span
                                     style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-gold); font-weight: bold;">540/=</span>
                             </div>
-                            <div
+                            <div id="dish-beef-stew-fry" class="menu-dish-card"
                                 style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px;">
                                 <span style="font-size: 0.9rem; color: var(--color-cream);">Chips Masala</span>
                                 <span
@@ -722,7 +722,7 @@
                                 <span
                                     style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-gold); font-weight: bold;">590/=</span>
                             </div>
-                            <div
+                            <div id="dish-goat-stew-fry" class="menu-dish-card"
                                 style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px;">
                                 <span style="font-size: 0.9rem; color: var(--color-cream);">Chips Masala</span>
                                 <span
@@ -762,7 +762,7 @@
                                 <span
                                     style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-gold); font-weight: bold;">620/=</span>
                             </div>
-                            <div
+                            <div id="dish-liver" class="menu-dish-card"
                                 style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px;">
                                 <span style="font-size: 0.9rem; color: var(--color-cream);">Chips Masala</span>
                                 <span
@@ -802,7 +802,7 @@
                                 <span
                                     style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-gold); font-weight: bold;">620/=</span>
                             </div>
-                            <div
+                            <div id="dish-chicken-kienyeji-quarter" class="menu-dish-card"
                                 style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px;">
                                 <span style="font-size: 0.9rem; color: var(--color-cream);">Chips Masala</span>
                                 <span
@@ -842,7 +842,7 @@
                                 <span
                                     style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-gold); font-weight: bold;">720/=</span>
                             </div>
-                            <div
+                            <div id="dish-chicken-wet-fry" class="menu-dish-card"
                                 style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px;">
                                 <span style="font-size: 0.9rem; color: var(--color-cream);">Chips Masala</span>
                                 <span
@@ -882,7 +882,7 @@
                                 <span
                                     style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-gold); font-weight: bold;">580/=</span>
                             </div>
-                            <div
+                            <div id="dish-beef-steak" class="menu-dish-card"
                                 style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px;">
                                 <span style="font-size: 0.9rem; color: var(--color-cream);">Chips Masala</span>
                                 <span
@@ -922,7 +922,7 @@
                                 <span
                                     style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-gold); font-weight: bold;">740/=</span>
                             </div>
-                            <div
+                            <div id="dish-deep-fried-chicken" class="menu-dish-card"
                                 style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px;">
                                 <span style="font-size: 0.9rem; color: var(--color-cream);">Chips Masala</span>
                                 <span
@@ -962,7 +962,7 @@
                                 <span
                                     style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-gold); font-weight: bold;">600/=</span>
                             </div>
-                            <div
+                            <div id="dish-fish-fillet" class="menu-dish-card"
                                 style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px;">
                                 <span style="font-size: 0.9rem; color: var(--color-cream);">Chips Masala</span>
                                 <span
@@ -1002,7 +1002,7 @@
                                 <span
                                     style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-gold); font-weight: bold;">600/=</span>
                             </div>
-                            <div
+                            <div id="dish-tilapia-stew" class="menu-dish-card"
                                 style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px;">
                                 <span style="font-size: 0.9rem; color: var(--color-cream);">Chips Masala</span>
                                 <span
@@ -1042,7 +1042,7 @@
                                 <span
                                     style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-gold); font-weight: bold;">720/=</span>
                             </div>
-                            <div
+                            <div id="dish-tilapia-fry" class="menu-dish-card"
                                 style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px;">
                                 <span style="font-size: 0.9rem; color: var(--color-cream);">Chips Masala</span>
                                 <span
@@ -1082,7 +1082,7 @@
                                 <span
                                     style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-gold); font-weight: bold;">700/=</span>
                             </div>
-                            <div
+                            <div id="dish-ugali-vegetables" class="menu-dish-card"
                                 style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px;">
                                 <span style="font-size: 0.9rem; color: var(--color-cream);">Chips Masala</span>
                                 <span
@@ -1132,7 +1132,7 @@
                 <div class="menu-grid" id="meat-portions-grid"
                     style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); margin-bottom: 50px;">
 
-                    <div
+                    <div id="dish-choma-beef-0-5-kg" class="menu-dish-card"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; justify-content: space-between; align-items: center;">
                         <h4
                             style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1141,7 +1141,7 @@
                             style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-gold); font-weight: bold;">1100/=</span>
                     </div>
 
-                    <div
+                    <div id="dish-choma-goat-1-kg" class="menu-dish-card"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; justify-content: space-between; align-items: center;">
                         <h4
                             style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1213,7 +1213,7 @@
                             style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-gold); font-weight: bold;">1300/=</span>
                     </div>
 
-                    <div
+                    <div id="dish-chicken-platter-for-4-on-order" class="menu-dish-card"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-dark); padding: 20px; display: flex; justify-content: space-between; align-items: center;">
                         <h4
                             style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1225,7 +1225,7 @@
                     <!-- CHICKEN PLATTER FOR 4 -->
                     <div
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; grid-column: 1 / -1;">
-                        <div
+                        <div id="dish-rice-mukimo-special" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h3
                                 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1240,7 +1240,7 @@
 
                 </div>
 
-                <div class="section-header-editorial" style="margin-bottom: 30px;">
+                <div id="dish-pilau-special" class="menu-dish-card" class="section-header-editorial" style="margin-bottom: 30px;">
                     <h3
                         style="font-family: var(--font-serif); font-size: 2rem; color: var(--color-cream); text-transform: uppercase;">
                         EXTRA SIDES & VEGES</h3>
@@ -1249,42 +1249,42 @@
                 <!-- Extra Sides Grid -->
                 <div class="menu-grid" id="extra-sides-grid"
                     style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));">
-                    <div
+                    <div id="dish-chips-plain" class="menu-dish-card"
                         style="background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
                         <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-cream);">Rice /
                             Mukimo Special</h4>
                         <span style="font-size: 1rem; color: var(--color-gold); font-weight: bold;">250/=</span>
                     </div>
 
-                    <div
+                    <div id="dish-chips-masala" class="menu-dish-card"
                         style="background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
                         <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-cream);">Pilau
                             Special</h4>
                         <span style="font-size: 1rem; color: var(--color-gold); font-weight: bold;">270/=</span>
                     </div>
 
-                    <div
+                    <div id="dish-rice-plain" class="menu-dish-card"
                         style="background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
                         <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-cream);">Chips
                             Plain</h4>
                         <span style="font-size: 1rem; color: var(--color-gold); font-weight: bold;">220/=</span>
                     </div>
 
-                    <div
+                    <div id="dish-mukimo-plain" class="menu-dish-card"
                         style="background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
                         <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-cream);">Chips
                             Masala</h4>
                         <span style="font-size: 1rem; color: var(--color-gold); font-weight: bold;">270/=</span>
                     </div>
 
-                    <div
+                    <div id="dish-waru" class="menu-dish-card"
                         style="background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
                         <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-cream);">Rice
                             Plain</h4>
                         <span style="font-size: 1rem; color: var(--color-gold); font-weight: bold;">200/=</span>
                     </div>
 
-                    <div
+                    <div id="dish-spinach" class="menu-dish-card"
                         style="background: var(--color-dark-surface); border: 1px solid var(--color-border-dark); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
                         <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-cream);">Mukimo
                             Plain</h4>
@@ -1680,7 +1680,7 @@
         </div>
     </div>
 
-    <script src="app.js?v=20260817_live_search_v3"></script>
+    <script src="app.js?v=20260817_database_search_v4"></script>
 </body>
 
 </html>

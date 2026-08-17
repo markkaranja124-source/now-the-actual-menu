@@ -166,7 +166,7 @@ function initSideDrawerNavigation() {
     });
 }
 
-// --- 2. LIVE INTERACTIVE DISH SEARCH & 10-DISH AUTO-SUGGEST ENGINE ---
+/// --- 2. LIVE FIREBASE DATABASE DISH SEARCH & AUTO-SUGGEST ENGINE ---
 function initMenuDishSearch() {
     const searchInput = document.getElementById('menu-dish-search-input');
     const clearBtn = document.getElementById('search-clear-btn');
@@ -175,6 +175,26 @@ function initMenuDishSearch() {
 
     if (!searchInput) return;
 
+    // Master in-memory database cache
+    let databaseDishes = window._ribhouseMenuDishes || [];
+
+    // Asynchronously fetch latest dishes from Firebase RTDB
+    const fetchDishesFromFirebase = async () => {
+        try {
+            const resp = await fetch('https://ribhouse-admin-default-rtdb.firebaseio.com/menu/dishes.json');
+            if (resp.ok) {
+                const data = await resp.json();
+                if (Array.isArray(data) && data.length > 0) {
+                    databaseDishes = data;
+                    window._ribhouseMenuDishes = data;
+                }
+            }
+        } catch (e) {
+            // In-memory fallback
+        }
+    };
+    fetchDishesFromFirebase();
+
     // Collect all dish cards by querying all h3 and h4 across the page
     const getDishCards = () => {
         const cardList = [];
@@ -182,7 +202,7 @@ function initMenuDishSearch() {
         headings.forEach(h => {
             const rawName = (h.innerText || '').replace(/\s+/g, ' ').trim().toUpperCase();
             if (rawName.includes('MENU / PART') || rawName.includes('RIB HOUSE') || rawName.includes('AUTHENTIC TASTE') || rawName.includes('OUR HERITAGE')) return;
-            let card = h.closest('div[style*="padding"], div[style*="background"], div[style*="border"]') || h.parentElement;
+            let card = h.closest('div[style*="padding"], div[style*="background"], div[style*="border"], [id^="dish-"]') || h.parentElement;
             if (card && !cardList.includes(card)) {
                 cardList.push(card);
             }
@@ -190,90 +210,18 @@ function initMenuDishSearch() {
         return cardList;
     };
 
-    // Build structured master dish catalogue from DOM headings
-    const getMasterDishCatalogue = () => {
-        const catalogue = [];
-        const seenNames = new Set();
-        const headings = document.querySelectorAll('section h3, section h4, main h3, main h4');
-
-        headings.forEach(h => {
-            const rawName = (h.innerText || '').replace(/\s+/g, ' ').trim();
-            if (!rawName) return;
-
-            const upperName = rawName.toUpperCase();
-            if (upperName.includes('MENU / PART') ||
-                upperName.includes('AUTHENTIC TASTE') ||
-                upperName.includes('HOW TO ORDER') ||
-                upperName.includes('RIB HOUSE') ||
-                upperName.includes('OUR HERITAGE') ||
-                upperName.includes('LOCATION') ||
-                upperName.includes('NAVIGATION') ||
-                upperName.includes('CATEGORIES') ||
-                upperName.includes('ORDERS & PAYMENT') ||
-                upperName.includes('FEEDBACK') ||
-                upperName.includes('ASANTE SANA') ||
-                upperName.includes('SCAN & DISCOVER') ||
-                upperName.includes('DIRECT ASSISTANCE')) {
-                return;
-            }
-
-            if (seenNames.has(rawName.toLowerCase())) return;
-            seenNames.add(rawName.toLowerCase());
-
-            let card = h.closest('div[style*="padding"], div[style*="background"], div[style*="border"]') || h.parentElement;
-            const descP = card ? card.querySelector('p') : null;
-            const desc = descP ? descP.innerText.replace(/\s+/g, ' ').trim() : '';
-
-            let price = '';
-            if (card) {
-                const allSpans = card.querySelectorAll('span');
-                allSpans.forEach(sp => {
-                    const txt = sp.innerText.trim();
-                    if (txt.includes('/=') || /^\d+$/.test(txt.replace(/[^0-9]/g, ''))) {
-                        if (!price) price = txt;
-                    }
-                });
-            }
-
-            let category = 'Menu Dish';
-            const parentSection = h.closest('section, div[id]');
-            const sectionId = (parentSection && parentSection.id) ? parentSection.id.toLowerCase() : '';
-            if (sectionId.includes('breakfast') || sectionId.includes('bk')) {
-                category = 'Breakfast';
-            } else if (sectionId.includes('choma') || sectionId.includes('meat')) {
-                category = 'Wood-Fired Choma';
-            } else if (sectionId.includes('main')) {
-                category = 'Main Dishes';
-            } else if (sectionId.includes('extra') || sectionId.includes('side')) {
-                category = 'Sides & Extras';
-            } else if (rawName.toLowerCase().includes('coffee') || rawName.toLowerCase().includes('tea') || rawName.toLowerCase().includes('latte') || rawName.toLowerCase().includes('dawa')) {
-                category = 'Barista & Hot Drinks';
-            } else if (rawName.toLowerCase().includes('shake') || rawName.toLowerCase().includes('smoothie') || rawName.toLowerCase().includes('ice cream') || rawName.toLowerCase().includes('lemonade')) {
-                category = 'Cold Drinks & Shakes';
-            }
-
-            catalogue.push({
-                name: rawName,
-                price: price,
-                desc: desc,
-                category: category,
-                cardElement: card
-            });
-        });
-
-        return catalogue;
-    };
-
-    // Calculate Top 10 Closely Related Recommendations
-    const get10Recommendations = (query, catalogue) => {
-        if (!query) return [];
+    // Calculate Top 10 Closely Related Recommendations from Database
+    const get10Recommendations = (query) => {
+        if (!query || query.length < 2) return [];
         const q = query.toLowerCase().trim();
         const qTokens = q.split(/\s+/).filter(t => t.length > 0);
 
-        const scored = catalogue.map(dish => {
-            const nameLower = dish.name.toLowerCase();
-            const descLower = dish.desc.toLowerCase();
-            const catLower = dish.category.toLowerCase();
+        const list = databaseDishes.length > 0 ? databaseDishes : [];
+
+        const scored = list.map(dish => {
+            const nameLower = (dish.name || '').toLowerCase();
+            const descLower = (dish.desc || '').toLowerCase();
+            const catLower = (dish.category || '').toLowerCase();
             let score = 0;
 
             // 1. Exact prefix match on full name
@@ -318,7 +266,7 @@ function initMenuDishSearch() {
         // If fewer than 10 matches, fill with closely related dishes from the same categories
         if (directMatches.length < 10 && directMatches.length > 0) {
             const matchedCategories = [...new Set(directMatches.map(d => d.category))];
-            catalogue.forEach(dish => {
+            list.forEach(dish => {
                 if (directMatches.length >= 10) return;
                 if (!directMatches.some(d => d.name === dish.name) && matchedCategories.includes(dish.category)) {
                     directMatches.push(dish);
@@ -326,7 +274,6 @@ function initMenuDishSearch() {
             });
         }
 
-        // Return up to 10 recommendations
         return directMatches.slice(0, 10);
     };
 
@@ -343,7 +290,7 @@ function initMenuDishSearch() {
 
     const hideSuggestions = () => {
         if (suggestionsDropdown) {
-            suggestionsDropdown.style.display = 'none';
+            suggestionsDropdown.style.setProperty('display', 'none', 'important');
             suggestionsDropdown.innerHTML = '';
         }
         activeSuggestionIndex = -1;
@@ -355,9 +302,8 @@ function initMenuDishSearch() {
         currentRecommendations = recommendations;
         activeSuggestionIndex = -1;
 
-        if (recommendations.length === 0) {
-            suggestionsDropdown.style.display = 'none';
-            suggestionsDropdown.innerHTML = '';
+        if (recommendations.length === 0 || query.length < 2) {
+            hideSuggestions();
             return;
         }
 
@@ -372,7 +318,7 @@ function initMenuDishSearch() {
 
         recommendations.forEach((item, index) => {
             const isTop = index === 0;
-            const dishImg = getDishImage(item.name, item.desc);
+            const dishImg = item.image || getDishImage(item.name, item.desc);
             const highlightedTitle = highlightMatchLetters(item.name, query);
 
             if (isTop) {
@@ -384,7 +330,7 @@ function initMenuDishSearch() {
                         </div>
                         <div class="sugg-content-box">
                             <div class="sugg-title-line">${highlightedTitle}</div>
-                            <div class="sugg-subtitle-line">${item.category}${item.price ? ` • <strong style="color: #F59E0B;">${item.price}</strong>` : ''}</div>
+                            <div class="sugg-subtitle-line">${item.category || 'Menu'}${item.price ? ` • <strong style="color: #B8860B;">${item.price}</strong>` : ''}</div>
                         </div>
                         ${dishImg ? `
                             <div class="sugg-thumb-box">
@@ -430,33 +376,52 @@ function initMenuDishSearch() {
     const selectDishSuggestion = (dishItem) => {
         searchInput.value = dishItem.name;
         hideSuggestions();
-        performSearch(false);
+        if (clearBtn) clearBtn.style.display = 'inline-flex';
 
-        if (dishItem.cardElement) {
-            dishItem.cardElement.classList.remove('dish-card-hidden');
-            dishItem.cardElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Find the target dish card element by domId or heading name
+        let targetCard = dishItem.domId ? document.getElementById(dishItem.domId) : null;
+        
+        if (!targetCard) {
+            const headings = document.querySelectorAll('section h3, section h4, main h3, main h4');
+            for (let h of headings) {
+                if ((h.innerText || '').replace(/\s+/g, ' ').trim().toLowerCase() === dishItem.name.toLowerCase()) {
+                    targetCard = h.closest('div[style*="padding"], div[style*="background"], div[style*="border"], [id^="dish-"]') || h.parentElement;
+                    break;
+                }
+            }
+        }
+
+        // Restore visibility on all cards
+        document.querySelectorAll('.menu-dish-card, [id^="dish-"]').forEach(c => {
+            c.classList.remove('dish-card-hidden');
+        });
+        document.querySelectorAll('.menu-grid, [id^="bk-"], [id$="-section"]').forEach(el => {
+            el.style.display = '';
+        });
+
+        if (targetCard) {
+            targetCard.classList.remove('dish-card-hidden');
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
             
-            // Pulse highlight animation on selected card
-            dishItem.cardElement.classList.remove('dish-card-pulse-highlight');
-            void dishItem.cardElement.offsetWidth; // Trigger reflow for restart
-            dishItem.cardElement.classList.add('dish-card-pulse-highlight');
+            // Golden Spotlight Pulse Glow Animation on selected card
+            targetCard.classList.remove('dish-card-pulse-highlight');
+            void targetCard.offsetWidth; // Trigger reflow for animation restart
+            targetCard.classList.add('dish-card-pulse-highlight');
             setTimeout(() => {
-                dishItem.cardElement.classList.remove('dish-card-pulse-highlight');
-            }, 2000);
+                targetCard.classList.remove('dish-card-pulse-highlight');
+            }, 2500);
         }
     };
 
-    let scrollTimeout = null;
-
     const performSearch = (renderDropdown = true) => {
-        const query = searchInput.value.trim().toLowerCase();
+        const rawVal = searchInput.value.trim();
+        const query = rawVal.toLowerCase();
         const cards = getDishCards();
-        const catalogue = getMasterDishCatalogue();
         let matchCount = 0;
-        let firstMatchCard = null;
 
-        if (!query) {
-            if (clearBtn) clearBtn.style.display = 'none';
+        // RULE: Only activate suggestions when at least 2 characters are keyed in
+        if (query.length < 2) {
+            if (clearBtn) clearBtn.style.display = query.length > 0 ? 'inline-flex' : 'none';
             if (countText) countText.textContent = 'All Dishes';
             hideSuggestions();
             
@@ -483,7 +448,6 @@ function initMenuDishSearch() {
                 card.classList.remove('dish-card-hidden');
                 card.classList.add('dish-card-search-match');
                 matchCount++;
-                if (!firstMatchCard) firstMatchCard = card;
             } else {
                 card.classList.add('dish-card-hidden');
                 card.classList.remove('dish-card-search-match');
@@ -501,16 +465,12 @@ function initMenuDishSearch() {
         });
 
         if (countText) {
-            if (matchCount === 0) {
-                countText.textContent = '0 Found';
-            } else {
-                countText.textContent = `${matchCount} Found`;
-            }
+            countText.textContent = matchCount === 0 ? '0 Found' : `${matchCount} Found`;
         }
 
-        // Render 10-Dish Auto-Suggest Dropdown on live typing
+        // Render 10-Dish Auto-Suggest Dropdown on live typing (>= 2 letters)
         if (renderDropdown) {
-            const recs = get10Recommendations(query, catalogue);
+            const recs = get10Recommendations(query);
             renderSuggestions(recs, query);
         }
     };
@@ -524,13 +484,13 @@ function initMenuDishSearch() {
     });
 
     searchInput.addEventListener('focus', () => {
-        if (searchInput.value.trim().length > 0) {
+        if (searchInput.value.trim().length >= 2) {
             performSearch(true);
         }
     });
 
     searchInput.addEventListener('click', () => {
-        if (searchInput.value.trim().length > 0) {
+        if (searchInput.value.trim().length >= 2) {
             performSearch(true);
         }
     });

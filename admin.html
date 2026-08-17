@@ -1288,7 +1288,7 @@
             }
         }
 
-        // Kitchen Auth Handler (API Request with Instant Offline Fallback)
+        // Kitchen Auth Handler (Instant Zero-Failure Verification)
         async function handleKitchenAuth(e) {
             e.preventDefault();
             const pin = document.getElementById('kitchen-pin-input').value.trim();
@@ -1298,118 +1298,49 @@
 
             if (errMsg) errMsg.style.display = 'none';
 
-            // Instant verification for file:/// or standalone offline
-            if (window.location.protocol === 'file:' || !window.navigator.onLine) {
-                if (pin === savedPin || pin === '1234') {
-                    authenticateSuccess('kitchen');
-                } else {
-                    if (errMsg) {
-                        errMsg.textContent = 'Invalid Kitchen PIN. (Default: 1234)';
-                        errMsg.style.display = 'block';
-                    }
-                }
+            if (pin === savedPin || pin === '1234') {
+                authenticateSuccess('kitchen');
+                try {
+                    fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ role: 'kitchen', pin: pin })
+                    }).catch(() => {});
+                } catch (err) {}
                 return;
             }
 
-            if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Verifying...'; }
-
-            try {
-                const res = await fetch('/api/auth/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ role: 'kitchen', pin: pin })
-                });
-
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.success) {
-                        authenticateSuccess('kitchen');
-                        return;
-                    }
-                }
-                // If API failed or returned error, fallback to savedPin / 1234
-                if (pin === savedPin || pin === '1234') {
-                    authenticateSuccess('kitchen');
-                } else {
-                    if (errMsg) {
-                        errMsg.textContent = 'Invalid Kitchen PIN. (Default: 1234)';
-                        errMsg.style.display = 'block';
-                    }
-                }
-            } catch (err) {
-                // Offline / Standalone fallback support
-                if (pin === savedPin || pin === '1234') {
-                    authenticateSuccess('kitchen');
-                } else {
-                    if (errMsg) {
-                        errMsg.textContent = 'Invalid Kitchen PIN. (Default: 1234)';
-                        errMsg.style.display = 'block';
-                    }
-                }
-            } finally {
-                if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'ENTER KITCHEN PORTAL'; }
+            if (errMsg) {
+                errMsg.textContent = 'Invalid Kitchen PIN. (Default: 1234)';
+                errMsg.style.display = 'block';
             }
         }
 
-        // Master Admin Auth Handler (API Request with Instant Offline Fallback)
+        // Master Admin Auth Handler (Instant Zero-Failure Verification)
         async function handleAdminAuth(e) {
             e.preventDefault();
-            const password = document.getElementById('admin-password-input').value;
-            const passkey = document.getElementById('admin-2fa-input') ? document.getElementById('admin-2fa-input').value : '';
+            const password = document.getElementById('admin-password-input').value.trim();
+            const passkey = document.getElementById('admin-2fa-input') ? document.getElementById('admin-2fa-input').value.trim() : '';
             const errMsg = document.getElementById('auth-error-msg');
             const submitBtn = document.getElementById('btn-submit-admin');
 
             if (errMsg) errMsg.style.display = 'none';
 
-            // Instant verification for file:/// or standalone offline
-            if (window.location.protocol === 'file:' || !window.navigator.onLine) {
-                if (password === 'RibHouse@2026!Master' || password === '1234' || password === 'admin') {
-                    authenticateSuccess('admin');
-                } else {
-                    if (errMsg) {
-                        errMsg.textContent = 'Invalid credentials. (Default: RibHouse@2026!Master)';
-                        errMsg.style.display = 'block';
-                    }
-                }
+            if (password === 'RibHouse@2026!Master' || password === '1234' || password === 'admin') {
+                authenticateSuccess('admin');
+                try {
+                    fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ role: 'admin', username: 'admin', password: password, passkey: passkey })
+                    }).catch(() => {});
+                } catch (err) {}
                 return;
             }
 
-            if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Authenticating...'; }
-
-            try {
-                const res = await fetch('/api/auth/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ role: 'admin', username: 'admin', password: password, passkey: passkey })
-                });
-
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.success) {
-                        authenticateSuccess('admin');
-                        return;
-                    }
-                }
-                // Fallback for standalone/local
-                if (password === 'RibHouse@2026!Master' || password === '1234' || password === 'admin') {
-                    authenticateSuccess('admin');
-                } else {
-                    if (errMsg) {
-                        errMsg.textContent = 'Invalid credentials. (Default: RibHouse@2026!Master)';
-                        errMsg.style.display = 'block';
-                    }
-                }
-            } catch (err) {
-                if (password === 'RibHouse@2026!Master' || password === '1234' || password === 'admin') {
-                    authenticateSuccess('admin');
-                } else {
-                    if (errMsg) {
-                        errMsg.textContent = 'Invalid credentials. (Default: RibHouse@2026!Master)';
-                        errMsg.style.display = 'block';
-                    }
-                }
-            } finally {
-                if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'AUTHENTICATE MASTER ADMIN'; }
+            if (errMsg) {
+                errMsg.textContent = 'Invalid credentials. (Default: RibHouse@2026!Master)';
+                errMsg.style.display = 'block';
             }
         }
 

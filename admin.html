@@ -1392,8 +1392,12 @@
                     badge.style.borderColor = '#10B981';
                 }
                 if (settingsTabBtn) settingsTabBtn.style.display = 'none';
-                if (feedbackTabBtn) feedbackTabBtn.style.display = 'block';
-                loadAdminFeedback();
+                if (feedbackTabBtn) feedbackTabBtn.style.display = 'none';
+                if (feedbackEventSource) {
+                    try { feedbackEventSource.close(); } catch(e) {}
+                    feedbackEventSource = null;
+                }
+                switchPortalTab('inventory');
             }
 
             fetchCloudInventoryAdmin();
@@ -1604,6 +1608,17 @@
 
         // --- 4. PORTAL TABS & SWITCHING ---
         function switchPortalTab(tabName) {
+            if (tabName === 'feedback' && currentAuthRole !== 'admin') {
+                alert('Access Restricted: Customer Reviews & AI Analytics are reserved for Master Admin only.');
+                switchPortalTab('inventory');
+                return;
+            }
+            if (tabName === 'settings' && currentAuthRole !== 'admin') {
+                alert('Access Restricted: Master Admin privilege required.');
+                switchPortalTab('inventory');
+                return;
+            }
+
             document.querySelectorAll('.portal-tab-btn').forEach(btn => btn.classList.remove('active'));
             
             document.getElementById('section-inventory').style.display = 'none';
@@ -1620,6 +1635,7 @@
                 document.getElementById('section-orders').style.display = 'block';
                 renderActiveOrders();
             } else if (tabName === 'feedback') {
+                if (currentAuthRole !== 'admin') return;
                 document.getElementById('tab-btn-feedback').classList.add('active');
                 document.getElementById('section-feedback').style.display = 'block';
                 loadAdminFeedback();
@@ -1775,10 +1791,13 @@
         }
 
         function initRealtimeFeedbackSync() {
+            if (currentAuthRole !== 'admin') return;
+
             // 1. Cross-Tab Live BroadcastChannel
             if ('BroadcastChannel' in window) {
                 const bc = new BroadcastChannel('ribhouse_realtime_feedback');
                 bc.onmessage = (e) => {
+                    if (currentAuthRole !== 'admin') return;
                     if (e.data && e.data.type === 'NEW_FEEDBACK' && e.data.feedback) {
                         handleIncomingLiveFeedback(e.data.feedback);
                     }
@@ -1787,6 +1806,7 @@
 
             // 2. LocalStorage Cross-Tab Fallback Listener
             window.addEventListener('storage', (e) => {
+                if (currentAuthRole !== 'admin') return;
                 if (e.key === 'ribhouse_last_feedback_event' && e.newValue) {
                     try {
                         const parsed = JSON.parse(e.newValue);
@@ -1805,6 +1825,7 @@
                 feedbackEventSource = new EventSource(RIBHOUSE_CLOUD_FEEDBACK_URL);
 
                 feedbackEventSource.addEventListener('put', (e) => {
+                    if (currentAuthRole !== 'admin') return;
                     try {
                         const payload = JSON.parse(e.data);
                         if (payload.data) {
@@ -1820,6 +1841,7 @@
                 });
 
                 feedbackEventSource.addEventListener('patch', (e) => {
+                    if (currentAuthRole !== 'admin') return;
                     try {
                         const payload = JSON.parse(e.data);
                         if (payload.data) {
@@ -1834,6 +1856,8 @@
         }
 
         async function loadAdminFeedback() {
+            if (currentAuthRole !== 'admin') return;
+
             const grid = document.getElementById('feedback-feed-grid');
 
             // Initialize live real-time synchronization listener

@@ -107,11 +107,12 @@ function initSideDrawerNavigation() {
     });
 }
 
-// --- 2. LIVE INTERACTIVE DISH SEARCH & FILTER LOGIC (ENTIRE PAGE) ---
+// --- 2. LIVE INTERACTIVE DISH SEARCH & 10-DISH AUTO-SUGGEST ENGINE ---
 function initMenuDishSearch() {
     const searchInput = document.getElementById('menu-dish-search-input');
     const clearBtn = document.getElementById('search-clear-btn');
     const countText = document.getElementById('search-count-text');
+    const suggestionsDropdown = document.getElementById('search-suggestions-dropdown');
 
     if (!searchInput) return;
 
@@ -120,7 +121,6 @@ function initMenuDishSearch() {
         const cardList = [];
         const allDivs = document.querySelectorAll('.menu-grid > div, section div[style*="background"], div[style*="var(--color-card-bg)"]');
         allDivs.forEach(div => {
-            // Ensure this is a dish card (has h3 or h4 title) and not a wrapper grid
             if ((div.querySelector('h3') || div.querySelector('h4')) && !div.querySelector('.menu-grid')) {
                 if (!cardList.includes(div)) {
                     cardList.push(div);
@@ -130,23 +130,251 @@ function initMenuDishSearch() {
         return cardList;
     };
 
+    // Build structured master dish catalogue from DOM cards
+    const getMasterDishCatalogue = () => {
+        const catalogue = [];
+        const seenNames = new Set();
+        const cards = getDishCards();
+
+        cards.forEach(card => {
+            const h3 = card.querySelector('h3, h4');
+            if (!h3) return;
+            const name = h3.innerText.replace(/\s+/g, ' ').trim();
+            if (!name || seenNames.has(name.toLowerCase())) return;
+
+            // Ignore section and banner titles
+            const upperName = name.toUpperCase();
+            if (upperName.includes('MENU / PART') ||
+                upperName.includes('BREAKFAST COMBOS') ||
+                upperName.includes('BARISTA & HOT') ||
+                upperName.includes('COLD BEVERAGES') ||
+                upperName.includes('EXTRA SIDES &') ||
+                upperName.includes('MENU AI') ||
+                upperName.includes('AUTHENTIC TASTE') ||
+                upperName.includes('HOW TO ORDER')) {
+                return;
+            }
+
+            seenNames.add(name.toLowerCase());
+
+            const descP = card.querySelector('p');
+            const desc = descP ? descP.innerText.replace(/\s+/g, ' ').trim() : '';
+
+            // Extract price
+            let price = '';
+            const allSpans = card.querySelectorAll('span');
+            if (allSpans.length > 0) {
+                const lastSpan = allSpans[allSpans.length - 1];
+                price = lastSpan.innerText.replace(/\s+/g, ' ').trim();
+                if (!price.includes('/=')) {
+                    const firstSpan = allSpans[0];
+                    price = firstSpan.innerText.replace(/\s+/g, ' ').trim();
+                }
+            }
+
+            // Determine Category from parent container or section
+            let category = 'Menu';
+            const parentSection = card.closest('section, div[id]');
+            const sectionId = (parentSection && parentSection.id) ? parentSection.id.toLowerCase() : '';
+            if (sectionId.includes('breakfast') || sectionId.includes('bk')) {
+                category = 'Breakfast';
+            } else if (sectionId.includes('choma') || sectionId.includes('meat')) {
+                category = 'Choma & Grill';
+            } else if (sectionId.includes('main')) {
+                category = 'Main Dishes';
+            } else if (sectionId.includes('extra') || sectionId.includes('side')) {
+                category = 'Sides';
+            } else if (name.toLowerCase().includes('coffee') || name.toLowerCase().includes('tea') || name.toLowerCase().includes('latte') || name.toLowerCase().includes('dawa')) {
+                category = 'Barista';
+            } else if (name.toLowerCase().includes('shake') || name.toLowerCase().includes('smoothie') || name.toLowerCase().includes('ice cream') || name.toLowerCase().includes('lemonade')) {
+                category = 'Cold Drinks';
+            }
+
+            catalogue.push({
+                name: name,
+                price: price,
+                desc: desc,
+                category: category,
+                cardElement: card
+            });
+        });
+
+        return catalogue;
+    };
+
+    // Calculate Top 10 Closely Related Recommendations
+    const get10Recommendations = (query, catalogue) => {
+        if (!query) return [];
+        const q = query.toLowerCase().trim();
+        const qTokens = q.split(/\s+/).filter(t => t.length > 0);
+
+        const scored = catalogue.map(dish => {
+            const nameLower = dish.name.toLowerCase();
+            const descLower = dish.desc.toLowerCase();
+            const catLower = dish.category.toLowerCase();
+            let score = 0;
+
+            // 1. Exact prefix match on full name
+            if (nameLower.startsWith(q)) {
+                score += 150;
+            }
+
+            // 2. Word prefix matches in title
+            const words = nameLower.split(/[\s\/\(\)]+/).filter(w => w.length > 0);
+            words.forEach((word, idx) => {
+                if (word.startsWith(q)) {
+                    score += (100 - idx * 5);
+                } else if (word.includes(q)) {
+                    score += 40;
+                }
+            });
+
+            // 3. Multi-word full inclusion
+            if (qTokens.length > 1 && qTokens.every(t => nameLower.includes(t))) {
+                score += 120;
+            }
+
+            // 4. Description / Ingredients inclusion
+            if (descLower.includes(q)) {
+                score += 45;
+            }
+
+            // 5. Category match
+            if (catLower.includes(q)) {
+                score += 35;
+            }
+
+            return { dish, score };
+        });
+
+        // Filter dishes with positive score and sort descending
+        const directMatches = scored
+            .filter(entry => entry.score > 0)
+            .sort((a, b) => b.score - a.score)
+            .map(entry => entry.dish);
+
+        // If fewer than 10 matches, fill with closely related dishes from the same categories
+        if (directMatches.length < 10 && directMatches.length > 0) {
+            const matchedCategories = [...new Set(directMatches.map(d => d.category))];
+            catalogue.forEach(dish => {
+                if (directMatches.length >= 10) return;
+                if (!directMatches.some(d => d.name === dish.name) && matchedCategories.includes(dish.category)) {
+                    directMatches.push(dish);
+                }
+            });
+        }
+
+        // Return up to 10 recommendations
+        return directMatches.slice(0, 10);
+    };
+
+    // Helper to highlight matching letters in dish title
+    const highlightMatchLetters = (text, query) => {
+        if (!query) return text;
+        const qClean = query.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(`(${qClean})`, 'gi');
+        return text.replace(regex, '<span class="search-sugg-highlight">$1</span>');
+    };
+
+    let activeSuggestionIndex = -1;
+    let currentRecommendations = [];
+
+    const hideSuggestions = () => {
+        if (suggestionsDropdown) {
+            suggestionsDropdown.style.display = 'none';
+            suggestionsDropdown.innerHTML = '';
+        }
+        activeSuggestionIndex = -1;
+        currentRecommendations = [];
+    };
+
+    const renderSuggestions = (recommendations, query) => {
+        if (!suggestionsDropdown) return;
+        currentRecommendations = recommendations;
+        activeSuggestionIndex = -1;
+
+        if (recommendations.length === 0) {
+            suggestionsDropdown.style.display = 'none';
+            suggestionsDropdown.innerHTML = '';
+            return;
+        }
+
+        let html = `
+            <div class="search-suggestions-header">
+                <span>Top Recommendations (${recommendations.length})</span>
+                <span>Select or press Enter</span>
+            </div>
+        `;
+
+        recommendations.forEach((item, index) => {
+            const highlightedTitle = highlightMatchLetters(item.name, query);
+            html += `
+                <div class="search-suggestion-item" data-index="${index}" role="option" tabindex="0">
+                    <div class="search-sugg-left">
+                        <div class="search-sugg-title">${highlightedTitle}</div>
+                        ${item.desc ? `<div class="search-sugg-desc">${item.desc}</div>` : ''}
+                    </div>
+                    <div class="search-sugg-right">
+                        ${item.price ? `<div class="search-sugg-price">${item.price}</div>` : ''}
+                        <span class="search-sugg-cat">${item.category}</span>
+                    </div>
+                </div>
+            `;
+        });
+
+        suggestionsDropdown.innerHTML = html;
+        suggestionsDropdown.style.display = 'flex';
+
+        // Attach click listeners to all suggestion items
+        const itemEls = suggestionsDropdown.querySelectorAll('.search-suggestion-item');
+        itemEls.forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const idx = parseInt(el.getAttribute('data-index'), 10);
+                if (recommendations[idx]) {
+                    selectDishSuggestion(recommendations[idx]);
+                }
+            });
+        });
+    };
+
+    const selectDishSuggestion = (dishItem) => {
+        searchInput.value = dishItem.name;
+        hideSuggestions();
+        performSearch(false);
+
+        if (dishItem.cardElement) {
+            dishItem.cardElement.classList.remove('dish-card-hidden');
+            dishItem.cardElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Pulse highlight animation on selected card
+            dishItem.cardElement.classList.remove('dish-card-pulse-highlight');
+            void dishItem.cardElement.offsetWidth; // Trigger reflow for restart
+            dishItem.cardElement.classList.add('dish-card-pulse-highlight');
+            setTimeout(() => {
+                dishItem.cardElement.classList.remove('dish-card-pulse-highlight');
+            }, 2000);
+        }
+    };
+
     let scrollTimeout = null;
 
-    const performSearch = () => {
+    const performSearch = (renderDropdown = true) => {
         const query = searchInput.value.trim().toLowerCase();
         const cards = getDishCards();
+        const catalogue = getMasterDishCatalogue();
         let matchCount = 0;
         let firstMatchCard = null;
 
         if (!query) {
             if (clearBtn) clearBtn.style.display = 'none';
             if (countText) countText.textContent = 'All Dishes';
+            hideSuggestions();
             
             cards.forEach(card => {
                 card.classList.remove('dish-card-hidden', 'dish-card-search-match');
             });
 
-            // Show all section grids & subsection headers
             document.querySelectorAll('.menu-grid, [id^="bk-"], [id$="-section"]').forEach(el => {
                 el.style.display = '';
             });
@@ -155,7 +383,7 @@ function initMenuDishSearch() {
 
         if (clearBtn) clearBtn.style.display = 'inline-flex';
 
-        // Multi-word matching (e.g., "beef choma" matches cards containing both "beef" and "choma")
+        // Multi-word matching
         const queryTokens = query.split(/\s+/).filter(t => t.length > 0);
 
         cards.forEach(card => {
@@ -191,32 +419,81 @@ function initMenuDishSearch() {
             }
         }
 
-        // Auto-scroll page to the first matching dish after user types
-        if (firstMatchCard) {
-            if (scrollTimeout) clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                firstMatchCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 300);
+        // Render 10-Dish Auto-Suggest Dropdown on live typing
+        if (renderDropdown) {
+            const recs = get10Recommendations(query, catalogue);
+            renderSuggestions(recs, query);
         }
     };
 
-    searchInput.addEventListener('input', performSearch);
+    searchInput.addEventListener('input', () => {
+        performSearch(true);
+    });
 
-    // Hitting Enter jumps immediately to the first matching dish card
+    searchInput.addEventListener('focus', () => {
+        if (searchInput.value.trim().length > 0) {
+            performSearch(true);
+        }
+    });
+
+    // Keyboard Navigation: ArrowUp, ArrowDown, Enter, Escape
     searchInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            const firstMatch = document.querySelector('.dish-card-search-match');
-            if (firstMatch) {
-                firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const itemEls = suggestionsDropdown ? suggestionsDropdown.querySelectorAll('.search-suggestion-item') : [];
+
+        if (e.key === 'ArrowDown') {
+            if (itemEls.length > 0) {
+                e.preventDefault();
+                activeSuggestionIndex = (activeSuggestionIndex + 1) % itemEls.length;
+                updateActiveSuggestionUI(itemEls);
             }
+        } else if (e.key === 'ArrowUp') {
+            if (itemEls.length > 0) {
+                e.preventDefault();
+                activeSuggestionIndex = (activeSuggestionIndex - 1 + itemEls.length) % itemEls.length;
+                updateActiveSuggestionUI(itemEls);
+            }
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (activeSuggestionIndex >= 0 && currentRecommendations[activeSuggestionIndex]) {
+                selectDishSuggestion(currentRecommendations[activeSuggestionIndex]);
+            } else if (currentRecommendations.length > 0) {
+                selectDishSuggestion(currentRecommendations[0]);
+            } else {
+                const firstMatch = document.querySelector('.dish-card-search-match');
+                if (firstMatch) {
+                    firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                hideSuggestions();
+            }
+        } else if (e.key === 'Escape') {
+            hideSuggestions();
+        }
+    });
+
+    function updateActiveSuggestionUI(itemEls) {
+        itemEls.forEach((el, idx) => {
+            if (idx === activeSuggestionIndex) {
+                el.classList.add('active-keyboard-item');
+                el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                el.classList.remove('active-keyboard-item');
+            }
+        });
+    }
+
+    // Dismiss suggestions when clicking anywhere outside
+    document.addEventListener('click', (e) => {
+        const searchBox = document.querySelector('.nav-search-box');
+        if (searchBox && !searchBox.contains(e.target)) {
+            hideSuggestions();
         }
     });
 
     if (clearBtn) {
         clearBtn.addEventListener('click', () => {
             searchInput.value = '';
-            performSearch();
+            hideSuggestions();
+            performSearch(false);
             searchInput.focus();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });

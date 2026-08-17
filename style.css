@@ -188,7 +188,7 @@ img {
     -webkit-backdrop-filter: blur(10px);
     border: 1.5px solid #111114 !important;
     padding: 6px 14px;
-    border-radius: 6px;
+    border-radius: 0 !important;
     transition: var(--transition-fast);
     max-width: 280px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
@@ -216,6 +216,7 @@ img {
     padding: 2px 6px;
     width: 140px;
     transition: width 0.3s ease;
+    border-radius: 0 !important;
 }
 
 .nav-search-box:focus-within .nav-search-input {
@@ -231,6 +232,155 @@ img {
 .nav-search-box .search-clear-btn {
     color: #111114 !important;
     background: rgba(0, 0, 0, 0.08);
+    border-radius: 0 !important;
+}
+
+/* 10-Dish Auto-Suggest Dropdown (Sharp Corners & Luxury Aesthetic) */
+.search-suggestions-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 320px;
+    max-width: min(94vw, 420px);
+    width: 380px;
+    background: #FFFFFF;
+    border: 1.5px solid var(--color-orange, #E67E22);
+    border-radius: 0 !important;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.22);
+    z-index: 1200;
+    max-height: 440px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-suggestions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 14px;
+    background: #FAFAFA;
+    border-bottom: 1px solid #E2E8F0;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #64748B;
+    font-weight: 700;
+    border-radius: 0 !important;
+}
+
+.search-suggestion-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px solid #F1F5F9;
+    cursor: pointer;
+    background: #FFFFFF;
+    transition: background 0.15s ease;
+    border-radius: 0 !important;
+    text-decoration: none;
+    gap: 12px;
+}
+
+.search-suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.search-suggestion-item:hover,
+.search-suggestion-item.active-keyboard-item {
+    background: #FFF7ED !important;
+    border-left: 3px solid #D35400;
+    padding-left: 11px;
+}
+
+.search-sugg-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+    flex: 1;
+}
+
+.search-sugg-title {
+    font-family: var(--font-serif);
+    font-size: 0.975rem;
+    font-weight: 700;
+    color: #111114;
+    text-transform: uppercase;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.search-sugg-highlight {
+    color: #D35400;
+    font-weight: 800;
+    background: rgba(211, 84, 0, 0.10);
+    padding: 0 1px;
+}
+
+.search-sugg-desc {
+    font-size: 0.725rem;
+    color: #64748B;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+}
+
+.search-sugg-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.search-sugg-price {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #D35400;
+    white-space: nowrap;
+}
+
+.search-sugg-cat {
+    font-size: 0.625rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 2px 6px;
+    background: #F1F5F9;
+    color: #475569;
+    border: 1px solid #E2E8F0;
+    border-radius: 0 !important;
+}
+
+/* Card Pulse Glow when selected from search */
+@keyframes dishCardPulseGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(211, 84, 0, 0.7);
+        border-color: #D35400 !important;
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 25px 6px rgba(211, 84, 0, 0.45);
+        border-color: #D35400 !important;
+        transform: scale(1.02);
+    }
+    100% {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        border-color: rgba(230, 126, 34, 0.4) !important;
+        transform: scale(1);
+    }
+}
+
+.dish-card-pulse-highlight {
+    animation: dishCardPulseGlow 1.8s ease forwards;
 }
 
 /* Boxed Luxury MENU Button */

@@ -96,6 +96,13 @@ window.addEventListener('pageshow', () => {
 function getDishImage(dishName, dishDesc) {
     const textLower = ((dishName || '') + ' ' + (dishDesc || '')).toLowerCase();
     
+        // Chemsha Dishes (Simmered Beef & Herbal Goat Broth)
+    if (textLower.includes('chemsha goat') || textLower.includes('goat chemsha') || textLower.includes('goat fry / tumbukiza')) {
+        return 'Goatsoup.webp';
+    }
+    if (textLower.includes('chemsha beef') || textLower.includes('beef chemsha') || textLower.includes('beef fry / tumbukiza')) {
+        return 'beef.webp';
+    }
     // 1. Soup Dishes (Priority before meat)
     if (textLower.includes('soup')) {
         return 'Goatsoup.webp';
@@ -857,7 +864,8 @@ const RIBHOUSE_MASTER_DISHES = [
     "image": "beef.webp",
     "name": "CHEMSHA BEEF (1 KG)",
     "price": "1200/=",
-    "priceNum": 1200
+    "priceNum": 1200,
+    "image": "beef.webp"
   },
   {
     "category": "Wood-Fired Choma & Grill",
@@ -867,7 +875,8 @@ const RIBHOUSE_MASTER_DISHES = [
     "image": "beef.webp",
     "name": "CHEMSHA BEEF (0.5 KG)",
     "price": "600/=",
-    "priceNum": 600
+    "priceNum": 600,
+    "image": "beef.webp"
   },
   {
     "category": "Wood-Fired Choma & Grill",
@@ -877,7 +886,8 @@ const RIBHOUSE_MASTER_DISHES = [
     "image": "Goatchoma1kg.webp",
     "name": "CHEMSHA GOAT (1 KG)",
     "price": "1300/=",
-    "priceNum": 1300
+    "priceNum": 1300,
+    "image": "Goatsoup.webp"
   },
   {
     "category": "Wood-Fired Choma & Grill",
@@ -887,7 +897,8 @@ const RIBHOUSE_MASTER_DISHES = [
     "image": "Goatchoma1kg.webp",
     "name": "CHEMSHA GOAT (0.5 KG)",
     "price": "650/=",
-    "priceNum": 650
+    "priceNum": 650,
+    "image": "Goatsoup.webp"
   },
   {
     "category": "Wood-Fired Choma & Grill",
@@ -1621,6 +1632,7 @@ function toggleSelectItem(dishDataStr) {
                 basePrice: numericPrice,
                 price: dish.price,
                 numericPrice: numericPrice,
+                image: getDishImage(dish.name, dish.desc),
                 desc: dish.desc || '',
                 category: dish.category || 'main',
                 hasSide: hasSide,

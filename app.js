@@ -3653,7 +3653,9 @@ function initLocationSection() {
 
 
 // ==========================================================================
-// ALL-WHITE & ORANGE DIGITAL WAITER SLIP GENERATOR & MODAL
+
+// ==========================================================================
+// ALL-WHITE & ORANGE OFFICIAL DIGITAL ORDER RECEIPT GENERATOR (CLEAN - NO EMOJIS)
 // ==========================================================================
 
 function openWaiterSlipModal(customData = {}) {
@@ -3668,194 +3670,7 @@ function openWaiterSlipModal(customData = {}) {
     const specialNotes = customData.specialNotes || '';
     const custName = customData.name || '';
 
-    // If no table/notes provided yet, retrieve from session/input or prompt gracefully
-    if (!locationNote) {
-        const tableInput = document.getElementById('cust-table-location') || document.getElementById('table-notes');
-        if (tableInput && tableInput.value.trim()) {
-            locationNote = tableInput.value.trim();
-        } else {
-            if (diningType === 'dine_in') {
-                const promptVal = prompt('Enter your Table Number for the Waiter Slip:', 'Table 1');
-                locationNote = promptVal ? promptVal.trim() : 'Table Service';
-            } else if (diningType === 'takeaway') {
-                const promptVal = prompt('Enter your Name for Takeaway Pickup:', custName || 'Counter Pickup');
-                locationNote = promptVal ? promptVal.trim() : 'Takeaway';
-            }
-        }
-    }
-
-    // Generate solid reference and formatted timestamp
-    const now = new Date();
-    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    const dateStr = now.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
-    
-    // Order Ref
-    const yy = String(now.getFullYear()).slice(-2);
-    const mm = String(now.getMonth() + 1).padStart(2, '0');
-    const dd = String(now.getDate()).padStart(2, '0');
-    const hh = String(now.getHours()).padStart(2, '0');
-    const min = String(now.getMinutes()).padStart(2, '0');
-    const seq = Math.floor(10 + Math.random() * 90);
-    const orderRef = 'RH' + yy + mm + dd + hh + min + seq;
-
-    // Calculate totals and items HTML
-    let grandTotal = 0;
-    let itemsHtml = '';
-
-    cart.forEach(item => {
-        const itemSubtotal = calculateItemSubtotal(item);
-        grandTotal += itemSubtotal;
-
-        let sideHtml = '';
-        if (item.sideOption) {
-            sideHtml = `<div class="waiter-slip-item-side">&bull; Side: ${item.sideOption}</div>`;
-        }
-
-        itemsHtml += `
-            <div class="waiter-slip-item-row">
-                <div class="waiter-slip-item-main">
-                    <div class="waiter-slip-item-title-row">
-                        <span class="waiter-slip-qty-tag">x${item.qty}</span>
-                        <span class="waiter-slip-item-name">${item.name}</span>
-                    </div>
-                    ${sideHtml}
-                </div>
-                <div class="waiter-slip-item-price">KSh ${itemSubtotal.toLocaleString()}/=</div>
-            </div>
-        `;
-    });
-
-    // Handle Packaging fee if takeaway
-    let packagingHtml = '';
-    if (diningType === 'takeaway') {
-        const pkgDetails = getOrderPackagingSummary(cart);
-        if (pkgDetails && pkgDetails.totalPackagingFee > 0) {
-            grandTotal += pkgDetails.totalPackagingFee;
-            packagingHtml = `
-                <div class="waiter-slip-item-row" style="background: #FFF7ED; padding: 6px 8px; margin-top: 4px;">
-                    <div class="waiter-slip-item-main">
-                        <span class="waiter-slip-item-name" style="color: #EA580C; font-size: 0.85rem;">Takeaway Packaging</span>
-                    </div>
-                    <div class="waiter-slip-item-price" style="color: #EA580C;">+KSh ${pkgDetails.totalPackagingFee.toLocaleString()}/=</div>
-                </div>
-            `;
-        }
-    }
-
-    // Badge Title
-    let badgeText = '';
-    if (diningType === 'dine_in') {
-        badgeText = locationNote ? `DINE IN &bull; ${locationNote.toUpperCase()}` : 'DINE IN &bull; TABLE SERVICE';
-    } else {
-        badgeText = locationNote ? `TAKEAWAY &bull; ${locationNote.toUpperCase()}` : 'TAKEAWAY &bull; PICKUP';
-    }
-
-    // Notes Box
-    let notesHtml = '';
-    if (specialNotes) {
-        notesHtml = `
-            <div class="waiter-slip-notes-box">
-                <strong>Special Kitchen Instructions:</strong>
-                ${specialNotes}
-            </div>
-        `;
-    }
-
-    // Modal Markup
-    let overlay = document.getElementById('waiter-slip-modal-overlay');
-    if (!overlay) {
-        overlay = document.createElement('div');
-        overlay.id = 'waiter-slip-modal-overlay';
-        overlay.className = 'waiter-slip-overlay';
-        document.body.appendChild(overlay);
-    }
-
-    overlay.innerHTML = `
-        <div class="waiter-slip-modal" role="dialog" aria-modal="true" aria-label="Waiter Order Ticket">
-            <button type="button" class="waiter-slip-close-btn" onclick="closeWaiterSlipModal()" aria-label="Close">&times;</button>
-            
-            <div class="waiter-slip-brand">
-                <img src="logo.webp" alt="Rib House Logo" width="48" height="48" decoding="async">
-                <div class="waiter-slip-brand-title">RIB HOUSE</div>
-                <div class="waiter-slip-brand-sub">WOOD-FIRED GRILL &bull; ORDER TICKET</div>
-            </div>
-
-            <div class="waiter-slip-badge-bar">
-                <div class="waiter-slip-table-badge">${badgeText}</div>
-            </div>
-
-            <div class="waiter-slip-meta-row">
-                <span>Ref: <strong style="color: #0F172A;">${orderRef}</strong></span>
-                <span>${dateStr} &bull; ${timeStr}</span>
-            </div>
-
-            <div class="waiter-slip-dashed-line"></div>
-
-            <div class="waiter-slip-items-header">
-                <span>Ordered Items</span>
-                <span>Subtotal</span>
-            </div>
-
-            <div class="waiter-slip-items-list">
-                ${itemsHtml}
-                ${packagingHtml}
-            </div>
-
-            ${notesHtml}
-
-            <div class="waiter-slip-dashed-line"></div>
-
-            <div class="waiter-slip-total-banner">
-                <span class="waiter-slip-total-title">Total Bill Cost</span>
-                <span class="waiter-slip-total-amount">KSh ${grandTotal.toLocaleString()}/=</span>
-            </div>
-
-            <div class="waiter-slip-notice">
-                <span class="emoji">👨‍🍳</span>
-                Please show this ticket to your waiter to place your order with the kitchen.
-            </div>
-
-            <div class="waiter-slip-actions-grid">
-                <button type="button" class="btn-slip-action secondary" onclick="closeWaiterSlipModal()">Edit Order</button>
-                <button type="button" class="btn-slip-action primary" onclick="handleFinishWaiterOrder()">Done / Placed</button>
-            </div>
-        </div>
-    `;
-
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeWaiterSlipModal() {
-    const overlay = document.getElementById('waiter-slip-modal-overlay');
-    if (overlay) {
-        overlay.classList.remove('active');
-    }
-    document.body.style.overflow = '';
-}
-
-function handleFinishWaiterOrder() {
-    closeWaiterSlipModal();
-    alert('Thank you! Your waiter will have your food prepared freshly over the wood-fired grill.');
-}
-
-// ==========================================================================
-// ALL-WHITE & ORANGE OFFICIAL DIGITAL ORDER RECEIPT GENERATOR
-// ==========================================================================
-
-function openWaiterSlipModal(customData = {}) {
-    const cart = getCartItems();
-    if (!cart || cart.length === 0) {
-        alert('Your order selection is empty. Please select dishes from the menu first.');
-        return;
-    }
-
-    const diningType = customData.diningType || getSelectedDiningType();
-    let locationNote = customData.locationNote || '';
-    const specialNotes = customData.specialNotes || '';
-    const custName = customData.name || '';
-
-    // If no table/notes provided yet, retrieve from session/input or prompt gracefully
+    // Retrieve from input or graceful prompt
     if (!locationNote) {
         const tableInput = document.getElementById('cust-table-location') || document.getElementById('table-notes');
         if (tableInput && tableInput.value.trim()) {
@@ -3871,12 +3686,11 @@ function openWaiterSlipModal(customData = {}) {
         }
     }
 
-    // Generate formatted timestamp & Receipt No
+    // Timestamp & Receipt Ref
     const now = new Date();
     const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     const dateStr = now.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
     
-    // Receipt Reference Number
     const yy = String(now.getFullYear()).slice(-2);
     const mm = String(now.getMonth() + 1).padStart(2, '0');
     const dd = String(now.getDate()).padStart(2, '0');
@@ -3885,7 +3699,7 @@ function openWaiterSlipModal(customData = {}) {
     const seq = Math.floor(10 + Math.random() * 90);
     const receiptRef = 'REC-RH' + yy + mm + dd + hh + min + seq;
 
-    // Calculate totals and items HTML
+    // Totals & Items HTML
     let grandTotal = 0;
     let itemsHtml = '';
 

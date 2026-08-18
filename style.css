@@ -6594,3 +6594,304 @@ img {
     content-visibility: auto;
     contain-intrinsic-size: 1px 800px;
 }
+
+
+/* ==========================================================================
+   ALL-WHITE & ORANGE DIGITAL WAITER SLIP (RECEIPT MODAL)
+   ========================================================================== */
+.waiter-slip-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    padding: 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.waiter-slip-overlay.active {
+    display: flex;
+}
+
+.waiter-slip-modal {
+    background: #FFFFFF !important;
+    color: #0F172A !important;
+    width: 100%;
+    max-width: 460px;
+    border: 2px solid #EA580C !important;
+    box-shadow: 0 25px 50px -12px rgba(234, 88, 12, 0.25), 0 0 0 1px rgba(234, 88, 12, 0.1);
+    padding: 28px 24px;
+    position: relative;
+    box-sizing: border-box;
+    animation: slipSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    border-radius: 0 !important;
+}
+
+@keyframes slipSlideIn {
+    0% { transform: translateY(30px) scale(0.96); opacity: 0; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.waiter-slip-close-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: #FFF7ED;
+    border: 1px solid #FFEDD5;
+    color: #EA580C;
+    width: 34px;
+    height: 34px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.waiter-slip-close-btn:hover {
+    background: #EA580C;
+    color: #FFFFFF;
+}
+
+.waiter-slip-brand {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.waiter-slip-brand img {
+    height: 48px;
+    width: 48px;
+    object-fit: contain;
+    margin: 0 auto 6px auto;
+    display: block;
+}
+
+.waiter-slip-brand-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #0F172A;
+    line-height: 1.1;
+    margin-bottom: 2px;
+}
+
+.waiter-slip-brand-sub {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #EA580C;
+    text-transform: uppercase;
+}
+
+.waiter-slip-badge-bar {
+    text-align: center;
+    margin: 14px 0;
+}
+
+.waiter-slip-table-badge {
+    display: inline-block;
+    background: #FFF7ED;
+    color: #C2410C;
+    border: 2px solid #EA580C;
+    font-weight: 800;
+    font-size: 1.15rem;
+    padding: 8px 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.waiter-slip-meta-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #64748B;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+}
+
+.waiter-slip-dashed-line {
+    border-bottom: 2px dashed #FDBA74;
+    margin: 14px 0;
+}
+
+.waiter-slip-items-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #EA580C;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+}
+
+.waiter-slip-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 280px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.waiter-slip-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.waiter-slip-item-main {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+    padding-right: 12px;
+}
+
+.waiter-slip-item-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.waiter-slip-qty-tag {
+    background: #EA580C;
+    color: #FFFFFF;
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 2px 7px;
+    line-height: 1.2;
+    display: inline-block;
+}
+
+.waiter-slip-item-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #0F172A;
+}
+
+.waiter-slip-item-side {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #EA580C;
+    margin-left: 28px;
+}
+
+.waiter-slip-item-price {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #0F172A;
+    white-space: nowrap;
+}
+
+.waiter-slip-notes-box {
+    background: #FEF3C7;
+    border-left: 3px solid #D97706;
+    padding: 10px 12px;
+    margin: 12px 0;
+    font-size: 0.84rem;
+    color: #78350F;
+}
+
+.waiter-slip-notes-box strong {
+    color: #92400E;
+    display: block;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+}
+
+.waiter-slip-total-banner {
+    background: #FFF7ED;
+    border: 1.5px solid #FDBA74;
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 0;
+}
+
+.waiter-slip-total-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #431407;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.waiter-slip-total-amount {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #EA580C;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.waiter-slip-notice {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    padding: 12px;
+    text-align: center;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 18px;
+}
+
+.waiter-slip-notice span.emoji {
+    font-size: 1.2rem;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.waiter-slip-actions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn-slip-action {
+    padding: 12px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: none;
+    transition: all 0.2s ease;
+    border-radius: 0 !important;
+}
+
+.btn-slip-action.primary {
+    background: #EA580C;
+    color: #FFFFFF;
+}
+
+.btn-slip-action.primary:hover {
+    background: #C2410C;
+}
+
+.btn-slip-action.secondary {
+    background: #FFF7ED;
+    color: #EA580C;
+    border: 1.5px solid #FDBA74;
+}
+
+.btn-slip-action.secondary:hover {
+    background: #FFEDD5;
+}

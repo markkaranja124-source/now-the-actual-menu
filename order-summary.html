@@ -107,14 +107,19 @@
                     </div>
                 </div>
 
-                <div class="summary-btn-group">
-                    <a href="order.html" class="btn-hero-outline"
-                        style="flex: 1; text-align: center; justify-content: center; padding: 16px;">
-                        <span>&larr; Manage Order & Quantities</span>
-                    </a>
-                    <a href="ai-helper.html" class="btn-checkout-gold-gradient" style="flex: 1; text-align: center; justify-content: center; padding: 16px; text-decoration: none; display: inline-flex; align-items: center;">
-                        <span>Proceed to Place Order &rarr;</span>
-                    </a>
+                <div class="summary-btn-group" style="display: flex; flex-direction: column; gap: 12px; margin-top: 20px;">
+                    <button type="button" class="btn-checkout-gold-gradient" onclick="openWaiterSlipModal()" style="width: 100%; text-align: center; justify-content: center; padding: 16px; border: none; cursor: pointer; display: flex; align-items: center; background: linear-align; font-size: 1.05rem;">
+                        <span>📋 SHOW ORDER TO WAITER NOW &rarr;</span>
+                    </button>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <a href="order.html" class="btn-hero-outline"
+                            style="text-align: center; justify-content: center; padding: 14px; text-decoration: none; display: flex; align-items: center;">
+                            <span>&larr; Edit Quantities</span>
+                        </a>
+                        <a href="ai-helper.html" class="btn-hero-outline" style="text-align: center; justify-content: center; padding: 14px; text-decoration: none; display: flex; align-items: center; border-color: var(--color-border-gold);">
+                            <span>Delivery Checkout &rarr;</span>
+                        </a>
+                    </div>
                 </div>
             </div>
 

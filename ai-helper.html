@@ -2027,21 +2027,30 @@
             const serviceSummary = document.getElementById('totals-service-type');
             const gpsContainer = document.getElementById('delivery-gps-container');
 
+            const mpesaBox = document.querySelector('.mpesa-instruction-box');
+            const submitBtn = document.getElementById('btn-submit-order');
+
             if (type === 'dine-in') {
                 if (label) label.innerHTML = 'Table Number <span class="req">*</span>';
                 if (input) input.placeholder = 'e.g. Table 4 (Inside or Terrace)';
                 if (serviceSummary) serviceSummary.textContent = 'Dine In';
                 if (gpsContainer) gpsContainer.style.display = 'none';
+                if (mpesaBox) mpesaBox.style.display = 'none';
+                if (submitBtn) submitBtn.innerHTML = '<span>SHOW ORDER TO WAITER</span> <span>&rarr;</span>';
             } else if (type === 'takeaway') {
                 if (label) label.innerHTML = 'Pickup Name & Notes <span class="req">*</span>';
                 if (input) input.placeholder = 'e.g. Ready in 15 mins for Kelvin';
                 if (serviceSummary) serviceSummary.textContent = 'Takeaway';
                 if (gpsContainer) gpsContainer.style.display = 'none';
+                if (mpesaBox) mpesaBox.style.display = 'none';
+                if (submitBtn) submitBtn.innerHTML = '<span>GENERATE TAKEAWAY TICKET</span> <span>&rarr;</span>';
             } else if (type === 'delivery') {
                 if (label) label.innerHTML = 'Delivery Address & Landmark <span class="req">*</span>';
                 if (input) input.placeholder = 'e.g. Development House, 3rd Floor, Moi Ave';
                 if (serviceSummary) serviceSummary.textContent = 'Direct Delivery';
                 if (gpsContainer) gpsContainer.style.display = 'block';
+                if (mpesaBox) mpesaBox.style.display = 'block';
+                if (submitBtn) submitBtn.innerHTML = '<span>PAY WITH M-PESA & DISPATCH</span> <span>&rarr;</span>';
             }
         }
 
@@ -2681,6 +2690,7 @@ ${o.specialNotes ? `*Notes:*       ${o.specialNotes}\n` : ''}-------------------
         // Initialize on load
         document.addEventListener('DOMContentLoaded', () => {
             renderCheckoutReview();
+        selectDiningOption('dine-in');
         });
     </script>
 </body>

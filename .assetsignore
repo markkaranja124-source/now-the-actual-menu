@@ -1,12 +1,25 @@
 # Exclude dependencies and build artifacts
 node_modules
+node_modules/
+node_modules/**
 .git
+.git/
+.git/**
 .agents
+.agents/
+.agents/**
+.env
 .env*
 data
+data/
+data/**
 theadminpage_deploy
+theadminpage_deploy/
+theadminpage_deploy/**
 
-# Exclude backend and config files from public static CDN
+# Exclude backend and config files from static CDN
 server.js
 package.json
 package-lock.json
+wrangler.jsonc
+wrangler.toml

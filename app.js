@@ -147,6 +147,12 @@ function getDishImage(dishName, dishDesc) {
 
     
     // Lemon Tea
+
+    // Oreo Shake
+    if (textLower.includes('oreo shake') || textLower.includes('oreo')) {
+        return 'Oreoshake.webp';
+    }
+
     if (textLower.includes('lemon tea')) {
         return 'Lemontea.webp';
     }

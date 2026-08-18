@@ -50,55 +50,99 @@ window.addEventListener('pageshow', () => {
 function getDishImage(dishName, dishDesc) {
     const textLower = ((dishName || '') + ' ' + (dishDesc || '')).toLowerCase();
     
-    // 1. Bacon orders (e.g. Pancake Breakfast with Bacon, Main Breakfast with Beef Bacon, etc.)
+    // 1. Soup Dishes (Priority before meat)
+    if (textLower.includes('soup')) {
+        return 'Goatsoup.webp';
+    }
+    // 2. Shakes & Cold Beverages
+    if (textLower.includes('oreo') || textLower.includes('shake') || textLower.includes('milkshake')) {
+        return 'Oreoshake.webp';
+    }
+    // 3. Lemon Tea & Specialty Teas (Priority before generic tea/coffee)
+    if (textLower.includes('lemon tea') || textLower.includes('lemon water') || textLower.includes('dawa')) {
+        return 'Lemontea.webp';
+    }
+    // 4. Fish & Tilapia (Wet Fry / Fillet / Stew - Priority before generic stew)
+    if (textLower.includes('fish') || textLower.includes('tilapia') || textLower.includes('fillet')) {
+        return 'fishwetfry.webp';
+    }
+    // 5. Chicken Dishes
+    if (textLower.includes('chicken') || textLower.includes('kienyeji')) {
+        return 'chickenquaterwithchips.webp';
+    }
+    // 6. Matumbo Dishes (Wet Fry / Tripe)
+    if (textLower.includes('matumbo')) {
+        return textLower.includes('chips matumbo') ? 'Chipsmatumbocombo.webp' : 'matumboplainwetfry.webp';
+    }
+    // 7. Pilau Dishes
+    if (textLower.includes('pilau')) {
+        return 'Pilauplain.webp';
+    }
+    // 8. Kebabs & Meat Bites
+    if (textLower.includes('kebab') || textLower.includes('farmers choice')) {
+        return 'Kebabs.webp';
+    }
+    // 9. Samosas & Mandazi Combos
+    if (textLower.includes('samosa combo') || textLower.includes('andazi') || textLower.includes('mandazi') || textLower.includes('rib house special')) {
+        return 'Andazisamosawitheggs.webp';
+    }
+    if (textLower.includes('samosa') || textLower.includes('rib house bite')) {
+        return 'Samosa.webp';
+    }
+    // 10. Chapati Dishes
+    if (textLower.includes('chapati with egg') || textLower.includes('chapati and egg') || textLower.includes('rolex') || textLower.includes('chapatiwitheggs')) {
+        return 'chapatiwitheggs.webp';
+    }
+    if (textLower.includes('chapati')) {
+        return 'chapatiplain.webp';
+    }
+    // 11. Bacon orders
     if (textLower.includes('bacon')) {
         return 'breakfastbreadwithbacon1.webp';
     }
-    // 2. Goat Choma
+    // 12. Goat Choma / Stew / Fry
     if (textLower.includes('goat') || textLower.includes('choma goat') || textLower.includes('goat choma')) {
         return 'Goatchoma1kg.webp';
     }
-    // 3. Sizzling Beef
+    // 13. Sizzling Beef
     if (textLower.includes('sizzling') || textLower.includes('beef sizzling')) {
         return 'beefsizzling.webp';
     }
-    // 4. Chips Special with Meat
+    // 14. Chips Combos
     if (textLower.includes('chips special') || textLower.includes('special with meat')) {
         return 'Chips special with meat.webp';
     }
-    // 5. Chips Matumbo Combo
-    if (textLower.includes('chips matumbo') || textLower.includes('chipsmatumbo') || textLower.includes('matumbo')) {
-        return 'Chipsmatumbocombo.webp';
-    }
-    // 6. Fries with Salad
     if (textLower.includes('fries with salad') || textLower.includes('chips with salad')) {
         return 'Fries with salad.webp';
     }
-    // 7. Beef Fry / Stew
-    if (textLower.includes('beef fry') || textLower.includes('beef') || textLower.includes('stew')) {
+    if (textLower.includes('chips')) {
+        return 'Chips special with meat.webp';
+    }
+    // 15. Beef Fry / Stew / Steak
+    if (textLower.includes('beef fry') || textLower.includes('beef') || textLower.includes('stew') || textLower.includes('steak') || textLower.includes('liver')) {
         return 'beef.webp';
     }
-    // 8. Sausages
+    // 16. Sausages
     if (textLower.includes('sausage') || textLower.includes('sauseges')) {
         return 'Sauseges.webp';
     }
-    // 9. Coffee & Barista
-    if (textLower.includes('coffee') || textLower.includes('cappuccino') || textLower.includes('tea') || textLower.includes('latte') || textLower.includes('espresso')) {
+    // 17. Coffee & Barista
+    if (textLower.includes('coffee') || textLower.includes('cappuccino') || textLower.includes('tea') || textLower.includes('latte') || textLower.includes('espresso') || textLower.includes('americano')) {
         return 'housecoffee.webp';
     }
-    // 10. Ice Cream
+    // 18. Ice Cream
     if (textLower.includes('ice cream') || textLower.includes('icecream')) {
         return 'icecream.webp';
     }
-    // 11. Bread and Eggs
+    // 19. Bread and Eggs
     if (textLower.includes('bread and eggs') || textLower.includes('eggs') || textLower.includes('egg')) {
         return 'breakfastbreadandeggs1.webp';
     }
-    // 12. Brown Bread / Toast
+    // 20. Brown Bread / Toast
     if (textLower.includes('brown bread') || textLower.includes('toast')) {
         return 'brownbread1.webp';
     }
-    // 13. General Breakfast Combos
+    // 21. General Breakfast Combos
     if (textLower.includes('breakfast') || textLower.includes('pancake')) {
         return 'Breakfast1.webp';
     }
@@ -3056,7 +3100,7 @@ function renderSelectedOrderPage() {
         }
 
         const baseVal = item.basePrice || parseInt((item.price || '0').toString().replace(/[^0-9]/g, ''), 10) || 0;
-        const dishImg = getDishImage(item.name, item.desc);
+        const dishImg = getDishImage(item.name, item.desc) || item.image;
         const imageHtml = dishImg 
             ? `<img src="${dishImg}" alt="${item.name}" class="order-dish-img">`
             : `<div class="dish-placeholder-box"><span class="dish-placeholder-label">PHOTO</span></div>`;
@@ -3304,7 +3348,7 @@ function renderOrderSummaryPage() {
         }
 
         const baseVal = item.basePrice || parseInt((item.price || '0').toString().replace(/[^0-9]/g, ''), 10) || 0;
-        const dishImg = getDishImage(item.name, item.desc);
+        const dishImg = getDishImage(item.name, item.desc) || item.image;
         const imageHtml = dishImg 
             ? `<img src="${dishImg}" alt="${item.name}" class="order-dish-img">`
             : `<div class="dish-placeholder-box"><span class="dish-placeholder-label">PHOTO</span></div>`;

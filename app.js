@@ -1,184 +1,78 @@
 
-// Phase: Instant 0ms Global Event Delegation for all Dish Cards and Rows
-if (typeof document !== 'undefined') {
-    document.addEventListener('click', function(e) {
-        // 1. Check if clicked a row-order-pill or option row
-        const rowPill = e.target.closest('.row-order-pill');
-        const optionRow = e.target.closest('.menu-dish-card div[style*="display: flex"], .menu-dish-card div[style*="display:flex"]');
-        
-        if (rowPill || optionRow) {
-            const targetRow = rowPill ? rowPill.closest('div[style*="justify-content: space-between"]') : optionRow;
-            if (targetRow) {
-                const spans = targetRow.querySelectorAll('span');
-                const card = targetRow.closest('.menu-dish-card');
-                const h3 = card ? card.querySelector('h3, h4') : null;
-                
-                if (spans.length >= 2 && h3) {
-                    e.stopPropagation();
-                    const mainTitle = h3.innerText.replace(/\s+/g, ' ').trim();
-                    const sideName = spans[0].innerText.replace(/\s+/g, ' ').trim();
-                    const sidePrice = spans[1].innerText.replace(/\s+/g, ' ').trim();
-                    const fullDishName = `${mainTitle} (${sideName})`;
-                    
-                    if (typeof getItemAvailability === 'function') {
-                        if (getItemAvailability(fullDishName) === 'hold' || getItemAvailability(sideName) === 'hold') return;
-                    }
-                    
-                    if (typeof toggleSelectItem === 'function') {
-                        toggleSelectItem({
-                            name: fullDishName,
-                            price: sidePrice,
-                            desc: mainTitle,
-                            category: 'main'
-                        });
-                    }
-                    if (typeof refreshAllDishCardsUI === 'function') {
-                        refreshAllDishCardsUI();
-                    }
-                    return;
-                }
-            }
-        }
-
-        // 2. Check if clicked a card action button
-        const actionBtn = e.target.closest('.card-order-action-btn');
-        if (actionBtn) {
-            const card = actionBtn.closest('.menu-card-luxury-wrapper, .menu-dish-card');
-            const h3 = card ? card.querySelector('h3, h4') : null;
-            const priceSpan = card ? card.querySelector('span') : null;
-            const descP = card ? card.querySelector('p') : null;
-            
-            if (h3 && priceSpan) {
-                e.stopPropagation();
-                const dishName = h3.innerText.replace(/\s+/g, ' ').trim();
-                const priceText = priceSpan.innerText.replace(/\s+/g, ' ').trim();
-                const descText = descP ? descP.innerText.replace(/\s+/g, ' ').trim() : '';
-                
-                if (typeof getItemAvailability === 'function') {
-                    if (getItemAvailability(dishName) === 'hold' || getItemAvailability(dishName) === 'unavailable') return;
-                }
-                
-                if (typeof toggleSelectItem === 'function') {
-                    toggleSelectItem({
-                        name: dishName,
-                        price: priceText,
-                        desc: descText,
-                        category: 'main'
-                    });
-                }
-                if (typeof refreshAllDishCardsUI === 'function') {
-                    refreshAllDishCardsUI();
-                }
-            }
-        }
-    }, true);
-}
-
-// Helper: Robust String Normalizer for resilient dish matching
-function normalizeDishName(name) {
-    if (!name) return '';
-    return String(name)
-        .toLowerCase()
-        .replace(/\s+/g, ' ')
-        .replace(/\s*\(\s*/g, ' (')
-        .replace(/\s*\)\s*/g, ')')
-        .trim();
-}
-
-// Phase 3: Direct Robust Dish Selection Handler (Called directly via onclick on cards/buttons)
-function handleDirectDishSelect(element, dishName, dishPrice, dishDesc, dishCategory) {
-    if (typeof event !== 'undefined' && event) {
-        event.stopPropagation();
-    }
+function getDishImage(dishName, dishDesc) {
+    const textLower = ((dishName || '') + ' ' + (dishDesc || '')).toLowerCase();
     
-    // Safety check availability
-    if (typeof getItemAvailability === 'function') {
-        const status = getItemAvailability(dishName);
-        if (status === 'hold' || status === 'unavailable') {
-            return;
-        }
+    // Explicit exclusions (Dishes waiting for exact customer photos)
+    const excludeFromPlaceholders = [
+        'pancake breakfast', 'chicken soup breakfast', 'chips combo', 'rib house breakfast',
+        'traditional breakfast', 'farmers choice', 'special breakfast', 'rib house special',
+        'british breakfast', 'house coffee', 'black coffee', 'americano', 'latte mocha',
+        'latte machiatto', 'coffee latte', 'honey espresso', 'cappuccino', 'espresso',
+        'lemon water', 'tea special', 'tea masala', 'ginger tea', 'lemon tea', 'dawa',
+        'milkshake', 'iced coffee',
+        'choma beef', 'beef fry / tumbukiza', 'goat fry / tumbukiza', 'tumbukiza'
+    ];
+
+    if (excludeFromPlaceholders.some(ex => textLower.includes(ex))) {
+        return null;
     }
 
-    const dishObj = {
-        name: dishName,
-        price: dishPrice,
-        desc: dishDesc || '',
-        category: dishCategory || 'main'
-    };
-
-    if (typeof toggleSelectItem === 'function') {
-        toggleSelectItem(JSON.stringify(dishObj));
+    // 1. Chemsha Dishes (Simmered Beef & Herbal Goat Broth)
+    if (textLower.includes('chemsha goat') || textLower.includes('goat chemsha')) {
+        return 'Chemshagoat.webp';
     }
-    
-    if (typeof refreshAllDishCardsUI === 'function') {
-        refreshAllDishCardsUI();
+    if (textLower.includes('chemsha beef') || textLower.includes('beef chemsha')) {
+        return 'chemshabeef.webp';
     }
+
+    // 2. Pure Soup Dishes
+    if (textLower.includes('goat soup')) {
+        return 'Goatsoup.webp';
+    }
+
+    // 3. Fish & Tilapia (Wet Fry / Fillet / Stew)
+    if (textLower.includes('fish') || textLower.includes('tilapia') || textLower.includes('fillet')) {
+        return 'fishwetfry.webp';
+    }
+
+    // 4. Chicken Dishes (Whole / Wet Fry / Platter)
+    if (textLower.includes('chicken platter') || textLower.includes('chicken wet fry') || textLower.includes('chicken kienyeji')) {
+        return 'chickenquaterwithchips.webp';
+    }
+
+    // 5. Matumbo Dishes (Wet Fry / Tripe)
+    if (textLower.includes('matumbo')) {
+        return textLower.includes('chips matumbo') ? 'Chipsmatumbocombo.webp' : 'matumboplainwetfry.webp';
+    }
+
+    // 6. Pilau Dishes
+    if (textLower.includes('pilau')) {
+        return 'Pilauplain.webp';
+    }
+
+    // 7. Goat Choma Cuts
+    if (textLower.includes('choma goat') || textLower.includes('goat choma')) {
+        return 'Goatchoma1kg.webp';
+    }
+
+    // 8. Sizzling Beef
+    if (textLower.includes('sizzling') || textLower.includes('beef sizzling')) {
+        return 'beefsizzling.webp';
+    }
+
+    // 9. Beef Stew / Fry Cuts
+    if (textLower.includes('beef stew') || textLower.includes('beef fry') || textLower.includes('beef wet fry')) {
+        return 'beef.webp';
+    }
+
+    // 10. Chapati Dishes (Single)
+    if (textLower.includes('chapati plain')) {
+        return 'chapatiplain.webp';
+    }
+
+    return null;
 }
 
-if (typeof window !== 'undefined') {
-    window.normalizeDishName = normalizeDishName;
-    window.handleDirectDishSelect = handleDirectDishSelect;
-}
-
-/* ==========================================================================
-   RIB HOUSE - OFFICIAL DIGITAL MENU (PURE MENU SHOWCASE)
-   OFFLINE RIB HOUSE MENU AI ASSISTANT & KNOWLEDGE BASE
-   ========================================================================== */
-
-// --- FORCE SCROLL TO TOP ON PAGE LOAD & REFRESH ---
-if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
-}
-
-function forceScrollToTop() {
-    window.scrollTo(0, 0);
-    if (document.documentElement) document.documentElement.scrollTop = 0;
-    if (document.body) document.body.scrollTop = 0;
-}
-
-// Ensure instant scroll to top before unload
-window.addEventListener('beforeunload', () => {
-    forceScrollToTop();
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    forceScrollToTop();
-    setTimeout(forceScrollToTop, 10);
-    setTimeout(forceScrollToTop, 150);
-
-    const safeRun = (name, fn) => {
-        try {
-            if (typeof fn === 'function') fn();
-        } catch(e) {
-            console.warn('[RibHouse Init Error in ' + name + ']:', e);
-        }
-    };
-
-    // Priority 1: Interactive Menu Selection & Inventory
-    safeRun('initLiveInventoryListener', initLiveInventoryListener);
-    safeRun('initClickableMenuDishes', initClickableMenuDishes);
-    safeRun('updateSelectionBarUI', updateSelectionBarUI);
-
-    // Priority 2: Navigation & Search
-    safeRun('initSideDrawerNavigation', initSideDrawerNavigation);
-    safeRun('initMenuDishSearch', initMenuDishSearch);
-    safeRun('initScrollNavbar', initScrollNavbar);
-    safeRun('initSectionSlideshows', initSectionSlideshows);
-    safeRun('initMenuAIAssistant', initMenuAIAssistant);
-    safeRun('initCustomerFeedbackSystem', initCustomerFeedbackSystem);
-    safeRun('initLocationSection', initLocationSection);
-});
-
-window.addEventListener('load', () => {
-    forceScrollToTop();
-});
-
-window.addEventListener('pageshow', () => {
-    forceScrollToTop();
-    updateSelectionBarUI();
-});
-
-// Helper: Map dish names to their corresponding photo assets (Available globally)
 function getDishImage(dishName, dishDesc) {
     const textLower = ((dishName || '') + ' ' + (dishDesc || '')).toLowerCase();
     
@@ -881,7 +775,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-choma-beef-0-5-kg",
     "id": "dish-choma-beef-0-5-kg",
-    "image": "beef.webp",
+    
     "name": "CHOMA BEEF (0.5 KG)",
     "price": "550/=",
     "priceNum": 550
@@ -891,7 +785,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-choma-goat-1-kg",
     "id": "dish-choma-goat-1-kg",
-    "image": "Goatchoma1kg.webp",
+    
     "name": "CHOMA GOAT (1 KG)",
     "price": "1200/=",
     "priceNum": 1200
@@ -965,7 +859,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-goat-fry-tumbukiza-1-kg",
     "id": "dish-goat-fry-tumbukiza-1-kg",
-    "image": "Goatchoma1kg.webp",
+    
     "name": "GOAT FRY / TUMBUKIZA (1 KG)",
     "price": "1400/=",
     "priceNum": 1400
@@ -975,7 +869,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-chicken-platter-for-4-on-order",
     "id": "dish-chicken-platter-for-4-on-order",
-    "image": "housecoffee.webp",
+    
     "image": "chickenquaterwithchips.webp",
     "name": "CHICKEN PLATTER FOR 4 (ON ORDER)",
     "price": "1900/=",

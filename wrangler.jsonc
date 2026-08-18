@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "now-the-actual-menu",
+  "compatibility_date": "2026-08-18",
+  "assets": {
+    "directory": ".",
+    "exclude": [
+      "node_modules/**",
+      ".git/**",
+      ".agents/**",
+      ".env*",
+      "data/**",
+      "theadminpage_deploy/**",
+      "server.js"
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+# Exclude dependencies and build artifacts
+node_modules
+.git
+.agents
+.env*
+data
+theadminpage_deploy
+
+# Exclude backend and config files from public static CDN
+server.js
+package.json
+package-lock.json

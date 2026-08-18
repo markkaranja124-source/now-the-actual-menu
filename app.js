@@ -1347,7 +1347,6 @@ function initMenuDishSearch() {
                     </div>
                     <div class="sugg-content-box">
                         <div class="sugg-title-line">${highlightedTitle}</div>
-                        <div class="sugg-subtitle-line">${item.category || 'Rib House Menu'}</div>
                     </div>
                     ${item.price ? `<span class="sugg-price-pill">${item.price}</span>` : ''}
                 </div>

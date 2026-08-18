@@ -4006,13 +4006,12 @@ function openWaiterSlipModal(customData = {}) {
             </div>
 
             <div class="waiter-slip-notice">
-                <span class="emoji">🧾</span>
                 <strong>Customer Order Receipt</strong><br>
                 Please present this receipt to your waiter or cashier to place and serve your order.
             </div>
 
             <div class="waiter-slip-actions-grid">
-                <button type="button" class="btn-slip-action secondary" onclick="printOrderReceipt()">🖨️ Print / Save</button>
+                <button type="button" class="btn-slip-action secondary" onclick="printOrderReceipt()">Print / Save Receipt</button>
                 <button type="button" class="btn-slip-action primary" onclick="handleFinishWaiterOrder()">Done / Placed</button>
             </div>
         </div>

@@ -1527,7 +1527,8 @@ function calculateCartPackagingTotal(cart, diningType = getDiningType()) {
 // SessionStorage Cart Helper Functions (Resets to 0 on fresh page run)
 function getSelectedCart() {
     try {
-        return JSON.parse(sessionStorage.getItem('ribhouse_selected_cart')) || [];
+        const raw = JSON.parse(sessionStorage.getItem('ribhouse_selected_cart')) || [];
+        return raw.filter(item => item && item.name && String(item.name).trim() !== '' && String(item.name).toLowerCase() !== 'dish' && (item.basePrice > 0 || item.name === 'TEST DISH'));
     } catch(e) {
         return [];
     }
@@ -1603,6 +1604,10 @@ function calculateItemSubtotal(item) {
 function toggleSelectItem(dishDataStr) {
     try {
         const dish = typeof dishDataStr === 'string' ? JSON.parse(decodeURIComponent(dishDataStr)) : dishDataStr;
+        if (!dish || !dish.name || String(dish.name).trim() === '' || String(dish.name).toLowerCase() === 'dish') {
+            return;
+        }
+
         let cart = getSelectedCart();
         const normName = normalizeDishName(dish.name);
         const existingIndex = cart.findIndex(item => normalizeDishName(item.name) === normName);
@@ -1610,17 +1615,17 @@ function toggleSelectItem(dishDataStr) {
         if (existingIndex > -1) {
             cart.splice(existingIndex, 1);
         } else {
-            const numericPrice = parseInt(dish.price.toString().replace(/[^0-9]/g, ''), 10) || 0;
-            const nameLower = (dish.name || '').toLowerCase();
+            const numericPrice = parseInt((dish.price || '0').toString().replace(/[^0-9]/g, ''), 10) || 0;
+            if (numericPrice === 0 && dish.name !== 'TEST DISH') {
+                return;
+            }
 
-            // Extract dynamic side choices (e.g. Ugali / Chapati -> ['Ugali', 'Chapati'], Rice / Mukimo -> ['Rice', 'Mukimo'])
+            const nameLower = (dish.name || '').toLowerCase();
             const sideOptions = extractSideOptions(dish.name, dish.desc);
             const hasSide = sideOptions.length > 1;
             const defaultSide = hasSide ? sideOptions[0] : null;
 
-            // Prep option (e.g. Tilapia / Fish)
             const hasPrep = nameLower.includes('tilapia') || nameLower.includes('fish');
-            // Pairing option for Choma / Chemsha / Tumbukiza
             const hasPairing = nameLower.includes('choma') || nameLower.includes('chemsha') || nameLower.includes('tumbukiza');
 
             const defaultPrep = hasPrep ? 'Wet Fry' : null;
@@ -1648,18 +1653,21 @@ function toggleSelectItem(dishDataStr) {
         saveSelectedCart(cart);
 
         // Update button UI in AI drawer
-        const encodedName = encodeURIComponent(dish.name);
-        document.querySelectorAll(`button[data-dish-name="${encodedName}"]`).forEach(btn => {
-            const isSel = isDishSelected(dish.name);
-            btn.classList.toggle('active', isSel);
-            btn.innerHTML = isSel ? '✓ Selected' : '+ Select Item';
-        });
+        if (typeof document !== 'undefined' && typeof document.querySelectorAll === 'function') {
+            const encodedName = encodeURIComponent(dish.name);
+            document.querySelectorAll(`button[data-dish-name="${encodedName}"]`).forEach(btn => {
+                const isSel = isDishSelected(dish.name);
+                btn.classList.toggle('active', isSel);
+                btn.innerHTML = isSel ? '✓ Selected' : '+ Select Item';
+            });
+        }
     } catch(e) {
         console.error("Selection error:", e);
     }
 }
 
 function updateSelectionBarUI() {
+    if (typeof document === 'undefined') return;
     const cart = getSelectedCart();
     const totalDishes = cart.length;
     const totalQuantity = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
@@ -1996,7 +2004,10 @@ function initClickableMenuDishes() {
 
     allCards.forEach(card => {
         const h3Header = card.querySelector('h3, h4');
-        const mainTitle = h3Header ? h3Header.innerText.replace(/\s+/g, ' ').trim() : 'Dish';
+        if (!h3Header || !h3Header.innerText.trim()) return;
+
+        const mainTitle = h3Header.innerText.replace(/\s+/g, ' ').trim();
+        if (!mainTitle || mainTitle.toLowerCase() === 'dish') return;
 
         // Detect if this card has sub-item option rows (like Matumbo Fry with sides)
         const subContainers = card.querySelectorAll('div > div');
@@ -2034,13 +2045,11 @@ function initClickableMenuDishes() {
                 if (!sideName || !sidePrice) return;
                 const fullDishName = `${mainTitle} (${sideName})`;
 
-                // Check Inventory Status for this option / side
                 let itemStatus = getItemAvailability(fullDishName);
                 if (itemStatus === 'ready') {
                     itemStatus = getItemAvailability(sideName);
                 }
 
-                // If Unavailable: Disappear completely from the customer's view!
                 if (itemStatus === 'unavailable') {
                     row.style.display = 'none';
                     return;
@@ -2059,7 +2068,6 @@ function initClickableMenuDishes() {
                 row.style.margin = '3px 0';
                 row.style.transition = 'all 0.2s ease';
 
-                // Find or create inline action pill button inside the row
                 let rowPill = row.querySelector('.row-order-pill');
                 if (!rowPill) {
                     rowPill = document.createElement('button');
@@ -2084,7 +2092,6 @@ function initClickableMenuDishes() {
                 spans[1].style.fontWeight = 'bold';
                 spans[1].style.color = '#B8860B';
 
-                // If on Hold: Show Hold badge and disable clicking
                 if (itemStatus === 'hold') {
                     row.style.opacity = '0.65';
                     row.style.cursor = 'not-allowed';
@@ -2097,7 +2104,6 @@ function initClickableMenuDishes() {
                     return;
                 }
 
-                // Normal Available / Ready state
                 row.style.opacity = '1';
                 row.style.cursor = 'pointer';
                 rowPill.style.cursor = 'pointer';
@@ -2120,19 +2126,17 @@ function initClickableMenuDishes() {
                     row.addEventListener('click', (e) => {
                         e.stopPropagation();
                         if (getItemAvailability(fullDishName) === 'hold' || getItemAvailability(sideName) === 'hold') return;
-                        const dishObj = {
+                        toggleSelectItem({
                             name: fullDishName,
                             price: sidePrice,
                             desc: mainTitle,
                             category: 'main'
-                        };
-                        toggleSelectItem(JSON.stringify(dishObj));
+                        });
                         refreshAllDishCardsUI();
                     });
                 }
             });
 
-            // Also add full-width action button to the bottom of the card
             let cardBtn = card.querySelector('.card-order-action-btn');
             if (!cardBtn) {
                 cardBtn = document.createElement('button');
@@ -2164,7 +2168,6 @@ function initClickableMenuDishes() {
                 cardBtn.style.display = 'block';
                 cardBtn.style.cursor = 'pointer';
 
-                // Check if any option of this dish is selected
                 const anySelected = optionRows.some(row => {
                     const spans = row.querySelectorAll('span');
                     if (spans.length < 2) return false;
@@ -2187,12 +2190,12 @@ function initClickableMenuDishes() {
                     cardBtn.addEventListener('click', (e) => {
                         e.stopPropagation();
                         if (firstAvailableOption) {
-                            toggleSelectItem(JSON.stringify({
+                            toggleSelectItem({
                                 name: firstAvailableOption.name,
                                 price: firstAvailableOption.price,
                                 desc: firstAvailableOption.desc,
                                 category: 'main'
-                            }));
+                            });
                             refreshAllDishCardsUI();
                         }
                     });
@@ -2200,17 +2203,16 @@ function initClickableMenuDishes() {
             }
 
         } else {
-            // SINGLE DISH CARD (e.g., Pancake Breakfast, Barista Hot & Cold Drinks, Extra Sides, Meat Portions)
+            // SINGLE DISH CARD (Choma cuts, Chemsha cuts, Breakfast, Barista, Extra Sides)
             const priceSpan = card.querySelector('span');
             const descP = card.querySelector('p');
 
-            if (!h3Header || !priceSpan) return;
+            if (!priceSpan) return;
 
             const dishName = mainTitle;
             const priceText = priceSpan.innerText.replace(/\s+/g, ' ').trim();
             const descText = descP ? descP.innerText.replace(/\s+/g, ' ').trim() : '';
 
-            // Check Inventory Status
             const itemStatus = getItemAvailability(dishName);
 
             card.style.display = 'flex';
@@ -2218,10 +2220,6 @@ function initClickableMenuDishes() {
             card.style.justifyContent = 'space-between';
             card.style.alignItems = 'stretch';
             card.style.borderRadius = '0 !important';
-
-            // Remove any status badges if present
-            const existingBadge = card.querySelector('.dish-status-pill');
-            if (existingBadge) existingBadge.remove();
 
             let orderBtn = card.querySelector('.card-order-action-btn');
             if (!orderBtn) {
@@ -2238,22 +2236,18 @@ function initClickableMenuDishes() {
                 card.appendChild(orderBtn);
             }
 
-            // 1. UNAVAILABLE STATE -> Remove add button completely, dish stays normally visible but unclickable
             if (itemStatus === 'unavailable') {
                 card.style.opacity = '1';
                 card.style.cursor = 'default';
                 card.style.border = '1px solid var(--color-border-gold)';
-                card.style.background = 'var(--color-card-bg)';
                 orderBtn.style.display = 'none';
                 return;
             }
 
-            // 2. HOLD STATE -> Shows "On Hold" button, disabled
             if (itemStatus === 'hold') {
                 card.style.opacity = '1';
                 card.style.cursor = 'not-allowed';
                 card.style.border = '1px solid var(--color-border-gold)';
-                card.style.background = 'var(--color-card-bg)';
                 orderBtn.style.display = 'block';
                 orderBtn.innerHTML = 'On Hold';
                 orderBtn.style.background = '#F59E0B';
@@ -2263,11 +2257,8 @@ function initClickableMenuDishes() {
                 return;
             }
 
-            // 3. READY STATE -> Normal ordering
             card.style.opacity = '1';
             card.style.cursor = 'pointer';
-            card.style.border = '1px solid var(--color-border-gold)';
-            card.style.background = 'var(--color-card-bg)';
             orderBtn.style.display = 'block';
             orderBtn.style.cursor = 'pointer';
 
@@ -2284,35 +2275,18 @@ function initClickableMenuDishes() {
                 card.style.borderColor = 'var(--color-border-gold)';
             }
 
-            if (!orderBtn.dataset.hasClickListener) {
-                orderBtn.dataset.hasClickListener = 'true';
-                orderBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    if (getItemAvailability(dishName) === 'hold' || getItemAvailability(dishName) === 'unavailable') return;
-                    const dishObj = {
-                        name: dishName,
-                        price: priceText,
-                        desc: descText,
-                        category: 'main'
-                    };
-                    toggleSelectItem(JSON.stringify(dishObj));
-                    refreshAllDishCardsUI();
-                });
-            }
-
+            // Bind single unified click listener to the card (clicking card or button triggers exact single toggle)
             if (!card.dataset.hasClickListener) {
                 card.dataset.hasClickListener = 'true';
                 card.addEventListener('click', (e) => {
-                    if (e.target.closest('.card-order-action-btn')) return;
+                    e.stopPropagation();
                     if (getItemAvailability(dishName) === 'hold' || getItemAvailability(dishName) === 'unavailable') return;
-                    const dishObj = {
+                    toggleSelectItem({
                         name: dishName,
                         price: priceText,
                         desc: descText,
                         category: 'main'
-                    };
-                    toggleSelectItem(JSON.stringify(dishObj));
+                    });
                     refreshAllDishCardsUI();
                 });
             }

@@ -3095,7 +3095,7 @@ function renderSelectedOrderPage() {
         if (diningType === 'takeaway') {
             totalAmountEl.innerHTML = `KSh ${grandTotal.toLocaleString()}/= <span style="font-size: 0.85rem; font-weight: 500; color: #64748B; display: block; margin-top: 4px;">(Includes KSh ${packagingTotal.toLocaleString()}/= Takeaway Packaging)</span>`;
         } else {
-            totalAmountEl.textContent = `KSh ${grandTotal.toLocaleString()}/=`;
+            totalAmountEl.innerHTML = `<span style="color: #EA580C !important; font-weight: 800;">KSh ${grandTotal.toLocaleString()}/=</span>`;
         }
     }
 }
@@ -3336,7 +3336,7 @@ function renderOrderSummaryPage() {
         if (diningType === 'takeaway') {
             grandTotalEl.innerHTML = `KSh ${grandTotal.toLocaleString()}/= <span style="font-size: 0.82rem; font-weight: 500; color: #64748B; display: block; margin-top: 4px;">(Includes KSh ${packagingTotal.toLocaleString()}/= Takeaway Packaging)</span>`;
         } else {
-            grandTotalEl.textContent = `KSh ${grandTotal.toLocaleString()}/=`;
+            grandTotalEl.innerHTML = `<span style="color: #EA580C !important; font-weight: 800;">KSh ${grandTotal.toLocaleString()}/=</span>`;
         }
     }
 }
@@ -3670,19 +3670,13 @@ function openWaiterSlipModal(customData = {}) {
     const specialNotes = customData.specialNotes || '';
     const custName = customData.name || '';
 
-    // Retrieve from input or graceful prompt
+    // Retrieve from input or default seamlessly without any intrusive prompts
     if (!locationNote) {
         const tableInput = document.getElementById('cust-table-location') || document.getElementById('table-notes');
         if (tableInput && tableInput.value.trim()) {
             locationNote = tableInput.value.trim();
         } else {
-            if (diningType === 'dine_in') {
-                const promptVal = prompt('Enter Table Number for your Order Receipt:', 'Table 1');
-                locationNote = promptVal ? promptVal.trim() : 'Table Service';
-            } else if (diningType === 'takeaway') {
-                const promptVal = prompt('Enter Customer Name for Takeaway Receipt:', custName || 'Counter Pickup');
-                locationNote = promptVal ? promptVal.trim() : 'Takeaway';
-            }
+            locationNote = (diningType === 'dine_in') ? 'Table Service' : 'Pickup';
         }
     }
 

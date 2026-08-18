@@ -18,7 +18,7 @@
     <link rel="apple-touch-icon" href="logo.png">
     <meta property="og:image" content="logo.png">
 
-    <link rel="stylesheet" href="style.css?v=20260818_receipt_clean_v2">
+    <link rel="stylesheet" href="style.css?v=20260818_orange_totals_v1">
 
     <!-- Leaflet Interactive Map for Custom Pin Location -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -1571,13 +1571,13 @@
                     <!-- Full Name -->
                     <div class="form-group">
                         <label for="cust-name" class="form-label">Your Full Name <span class="req">*</span></label>
-                        <input type="text" id="cust-name" class="form-control" placeholder="e.g. Kelvin Mwangi" required autocomplete="name">
+                        <input type="text" id="cust-name" class="form-control" placeholder="e.g. Kelvin Mwangi" autocomplete="name">
                     </div>
 
                     <!-- Phone Number -->
                     <div class="form-group">
                         <label for="cust-phone" class="form-label">Phone Number <span class="req">*</span></label>
-                        <input type="tel" id="cust-phone" class="form-control" placeholder="e.g. 0724 594 204" required autocomplete="tel">
+                        <input type="tel" id="cust-phone" class="form-control" placeholder="e.g. 0724 594 204" autocomplete="tel">
                     </div>
 
                     <!-- Dining Option Selector -->
@@ -1870,7 +1870,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="app.js?v=20260818_receipt_clean_v2"></script>
+    <script src="app.js?v=20260818_orange_totals_v1"></script>
     <script>
         // --- 1. LOCAL CART LOADER & CALCULATOR ---
         function getCartItems() {
@@ -2029,27 +2029,43 @@
 
             const mpesaBox = document.querySelector('.mpesa-instruction-box');
             const submitBtn = document.getElementById('btn-submit-order');
+            const nameGroup = document.getElementById('cust-name') ? document.getElementById('cust-name').closest('.form-group') : null;
+            const phoneGroup = document.getElementById('cust-phone') ? document.getElementById('cust-phone').closest('.form-group') : null;
+            const nameInput = document.getElementById('cust-name');
+            const phoneInput = document.getElementById('cust-phone');
 
             if (type === 'dine-in') {
-                if (label) label.innerHTML = 'Table Number <span class="req">*</span>';
-                if (input) input.placeholder = 'e.g. Table 4 (Inside or Terrace)';
+                if (label) label.innerHTML = 'Table Number (Optional)';
+                if (input) { input.placeholder = 'e.g. Table 4 (or leave blank for open table)'; input.required = false; }
                 if (serviceSummary) serviceSummary.textContent = 'Dine In';
                 if (gpsContainer) gpsContainer.style.display = 'none';
                 if (mpesaBox) mpesaBox.style.display = 'none';
+                if (nameGroup) nameGroup.style.display = 'none';
+                if (phoneGroup) phoneGroup.style.display = 'none';
+                if (nameInput) nameInput.required = false;
+                if (phoneInput) phoneInput.required = false;
                 if (submitBtn) submitBtn.innerHTML = '<span>GENERATE ORDER RECEIPT</span> <span>&rarr;</span>';
             } else if (type === 'takeaway') {
-                if (label) label.innerHTML = 'Pickup Name & Notes <span class="req">*</span>';
-                if (input) input.placeholder = 'e.g. Ready in 15 mins for Kelvin';
+                if (label) label.innerHTML = 'Pickup Notes (Optional)';
+                if (input) { input.placeholder = 'e.g. Pack hot / Counter Pickup'; input.required = false; }
                 if (serviceSummary) serviceSummary.textContent = 'Takeaway';
                 if (gpsContainer) gpsContainer.style.display = 'none';
                 if (mpesaBox) mpesaBox.style.display = 'none';
+                if (nameGroup) nameGroup.style.display = 'none';
+                if (phoneGroup) phoneGroup.style.display = 'none';
+                if (nameInput) nameInput.required = false;
+                if (phoneInput) phoneInput.required = false;
                 if (submitBtn) submitBtn.innerHTML = '<span>GENERATE ORDER RECEIPT</span> <span>&rarr;</span>';
             } else if (type === 'delivery') {
                 if (label) label.innerHTML = 'Delivery Address & Landmark <span class="req">*</span>';
-                if (input) input.placeholder = 'e.g. Development House, 3rd Floor, Moi Ave';
+                if (input) { input.placeholder = 'e.g. Development House, 3rd Floor, Moi Ave'; input.required = true; }
                 if (serviceSummary) serviceSummary.textContent = 'Direct Delivery';
                 if (gpsContainer) gpsContainer.style.display = 'block';
                 if (mpesaBox) mpesaBox.style.display = 'block';
+                if (nameGroup) nameGroup.style.display = 'block';
+                if (phoneGroup) phoneGroup.style.display = 'block';
+                if (nameInput) nameInput.required = true;
+                if (phoneInput) phoneInput.required = true;
                 if (submitBtn) submitBtn.innerHTML = '<span>PAY WITH M-PESA & DISPATCH</span> <span>&rarr;</span>';
             }
         }

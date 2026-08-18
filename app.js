@@ -67,20 +67,30 @@ window.addEventListener('beforeunload', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     forceScrollToTop();
-    // Microtask delays to prevent mobile Safari/Chrome anchor jumping on load
     setTimeout(forceScrollToTop, 10);
     setTimeout(forceScrollToTop, 150);
 
-    initLiveInventoryListener();
-    initSideDrawerNavigation();
-    initMenuDishSearch();
-    initScrollNavbar();
-    initSectionSlideshows();
-    initMenuAIAssistant();
-    initCustomerFeedbackSystem();
-    initClickableMenuDishes();
-    updateSelectionBarUI();
-    initLocationSection();
+    const safeRun = (name, fn) => {
+        try {
+            if (typeof fn === 'function') fn();
+        } catch(e) {
+            console.warn('[RibHouse Init Error in ' + name + ']:', e);
+        }
+    };
+
+    // Priority 1: Interactive Menu Selection & Inventory
+    safeRun('initLiveInventoryListener', initLiveInventoryListener);
+    safeRun('initClickableMenuDishes', initClickableMenuDishes);
+    safeRun('updateSelectionBarUI', updateSelectionBarUI);
+
+    // Priority 2: Navigation & Search
+    safeRun('initSideDrawerNavigation', initSideDrawerNavigation);
+    safeRun('initMenuDishSearch', initMenuDishSearch);
+    safeRun('initScrollNavbar', initScrollNavbar);
+    safeRun('initSectionSlideshows', initSectionSlideshows);
+    safeRun('initMenuAIAssistant', initMenuAIAssistant);
+    safeRun('initCustomerFeedbackSystem', initCustomerFeedbackSystem);
+    safeRun('initLocationSection', initLocationSection);
 });
 
 window.addEventListener('load', () => {
@@ -1997,6 +2007,8 @@ function getItemAvailability(name) {
 
 // --- 4. CLICKABLE DISH CARDS & ADD TO ORDER SYSTEM ---
 function initClickableMenuDishes() {
+    if (typeof document === 'undefined') return;
+
     // Globally clean up any old status pills or badges
     document.querySelectorAll('.dish-status-pill, [class*="status-pill"], [class*="pill-hold"], [class*="pill-unavailable"]').forEach(el => el.remove());
 
@@ -2101,6 +2113,8 @@ function initClickableMenuDishes() {
                     rowPill.style.color = '#000000';
                     rowPill.style.borderColor = '#D97706';
                     rowPill.style.cursor = 'not-allowed';
+                    row.onclick = null;
+                    rowPill.onclick = null;
                     return;
                 }
 
@@ -2121,20 +2135,23 @@ function initClickableMenuDishes() {
                     rowPill.style.color = '#B8860B';
                 }
 
-                if (!row.dataset.hasClickListener) {
-                    row.dataset.hasClickListener = 'true';
-                    row.addEventListener('click', (e) => {
+                const handleRowClick = (e) => {
+                    if (e) {
                         e.stopPropagation();
-                        if (getItemAvailability(fullDishName) === 'hold' || getItemAvailability(sideName) === 'hold') return;
-                        toggleSelectItem({
-                            name: fullDishName,
-                            price: sidePrice,
-                            desc: mainTitle,
-                            category: 'main'
-                        });
-                        refreshAllDishCardsUI();
+                        e.preventDefault();
+                    }
+                    if (getItemAvailability(fullDishName) === 'hold' || getItemAvailability(sideName) === 'hold') return;
+                    toggleSelectItem({
+                        name: fullDishName,
+                        price: sidePrice,
+                        desc: mainTitle,
+                        category: 'main'
                     });
-                }
+                    refreshAllDishCardsUI();
+                };
+
+                row.onclick = handleRowClick;
+                rowPill.onclick = handleRowClick;
             });
 
             let cardBtn = card.querySelector('.card-order-action-btn');
@@ -2155,6 +2172,7 @@ function initClickableMenuDishes() {
             if (visibleOptionCount === 0) {
                 card.style.opacity = '1';
                 cardBtn.style.display = 'none';
+                cardBtn.onclick = null;
             } else if (!firstAvailableOption) {
                 card.style.opacity = '1';
                 cardBtn.style.display = 'block';
@@ -2163,6 +2181,7 @@ function initClickableMenuDishes() {
                 cardBtn.style.color = '#000000';
                 cardBtn.style.borderColor = '#D97706';
                 cardBtn.style.cursor = 'not-allowed';
+                cardBtn.onclick = null;
             } else {
                 card.style.opacity = '1';
                 cardBtn.style.display = 'block';
@@ -2185,21 +2204,21 @@ function initClickableMenuDishes() {
                     cardBtn.style.color = '#B8860B';
                 }
 
-                if (!cardBtn.dataset.hasClickListener) {
-                    cardBtn.dataset.hasClickListener = 'true';
-                    cardBtn.addEventListener('click', (e) => {
+                cardBtn.onclick = (e) => {
+                    if (e) {
                         e.stopPropagation();
-                        if (firstAvailableOption) {
-                            toggleSelectItem({
-                                name: firstAvailableOption.name,
-                                price: firstAvailableOption.price,
-                                desc: firstAvailableOption.desc,
-                                category: 'main'
-                            });
-                            refreshAllDishCardsUI();
-                        }
-                    });
-                }
+                        e.preventDefault();
+                    }
+                    if (firstAvailableOption) {
+                        toggleSelectItem({
+                            name: firstAvailableOption.name,
+                            price: firstAvailableOption.price,
+                            desc: firstAvailableOption.desc,
+                            category: 'main'
+                        });
+                        refreshAllDishCardsUI();
+                    }
+                };
             }
 
         } else {
@@ -2241,6 +2260,8 @@ function initClickableMenuDishes() {
                 card.style.cursor = 'default';
                 card.style.border = '1px solid var(--color-border-gold)';
                 orderBtn.style.display = 'none';
+                card.onclick = null;
+                orderBtn.onclick = null;
                 return;
             }
 
@@ -2254,6 +2275,8 @@ function initClickableMenuDishes() {
                 orderBtn.style.color = '#000000';
                 orderBtn.style.borderColor = '#D97706';
                 orderBtn.style.cursor = 'not-allowed';
+                card.onclick = null;
+                orderBtn.onclick = null;
                 return;
             }
 
@@ -2275,21 +2298,24 @@ function initClickableMenuDishes() {
                 card.style.borderColor = 'var(--color-border-gold)';
             }
 
-            // Bind single unified click listener to the card (clicking card or button triggers exact single toggle)
-            if (!card.dataset.hasClickListener) {
-                card.dataset.hasClickListener = 'true';
-                card.addEventListener('click', (e) => {
+            // Bulletproof onclick assignment on both card and button with stopPropagation
+            const handleSingleDishSelect = (e) => {
+                if (e) {
                     e.stopPropagation();
-                    if (getItemAvailability(dishName) === 'hold' || getItemAvailability(dishName) === 'unavailable') return;
-                    toggleSelectItem({
-                        name: dishName,
-                        price: priceText,
-                        desc: descText,
-                        category: 'main'
-                    });
-                    refreshAllDishCardsUI();
+                    e.preventDefault();
+                }
+                if (getItemAvailability(dishName) === 'hold' || getItemAvailability(dishName) === 'unavailable') return;
+                toggleSelectItem({
+                    name: dishName,
+                    price: priceText,
+                    desc: descText,
+                    category: 'main'
                 });
-            }
+                refreshAllDishCardsUI();
+            };
+
+            card.onclick = handleSingleDishSelect;
+            orderBtn.onclick = handleSingleDishSelect;
         }
     });
 }

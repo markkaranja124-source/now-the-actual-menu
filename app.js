@@ -1,3 +1,79 @@
+
+// Phase: Instant 0ms Global Event Delegation for all Dish Cards and Rows
+if (typeof document !== 'undefined') {
+    document.addEventListener('click', function(e) {
+        // 1. Check if clicked a row-order-pill or option row
+        const rowPill = e.target.closest('.row-order-pill');
+        const optionRow = e.target.closest('.menu-dish-card div[style*="display: flex"], .menu-dish-card div[style*="display:flex"]');
+        
+        if (rowPill || optionRow) {
+            const targetRow = rowPill ? rowPill.closest('div[style*="justify-content: space-between"]') : optionRow;
+            if (targetRow) {
+                const spans = targetRow.querySelectorAll('span');
+                const card = targetRow.closest('.menu-dish-card');
+                const h3 = card ? card.querySelector('h3, h4') : null;
+                
+                if (spans.length >= 2 && h3) {
+                    e.stopPropagation();
+                    const mainTitle = h3.innerText.replace(/\s+/g, ' ').trim();
+                    const sideName = spans[0].innerText.replace(/\s+/g, ' ').trim();
+                    const sidePrice = spans[1].innerText.replace(/\s+/g, ' ').trim();
+                    const fullDishName = `${mainTitle} (${sideName})`;
+                    
+                    if (typeof getItemAvailability === 'function') {
+                        if (getItemAvailability(fullDishName) === 'hold' || getItemAvailability(sideName) === 'hold') return;
+                    }
+                    
+                    if (typeof toggleSelectItem === 'function') {
+                        toggleSelectItem({
+                            name: fullDishName,
+                            price: sidePrice,
+                            desc: mainTitle,
+                            category: 'main'
+                        });
+                    }
+                    if (typeof refreshAllDishCardsUI === 'function') {
+                        refreshAllDishCardsUI();
+                    }
+                    return;
+                }
+            }
+        }
+
+        // 2. Check if clicked a card action button
+        const actionBtn = e.target.closest('.card-order-action-btn');
+        if (actionBtn) {
+            const card = actionBtn.closest('.menu-card-luxury-wrapper, .menu-dish-card');
+            const h3 = card ? card.querySelector('h3, h4') : null;
+            const priceSpan = card ? card.querySelector('span') : null;
+            const descP = card ? card.querySelector('p') : null;
+            
+            if (h3 && priceSpan) {
+                e.stopPropagation();
+                const dishName = h3.innerText.replace(/\s+/g, ' ').trim();
+                const priceText = priceSpan.innerText.replace(/\s+/g, ' ').trim();
+                const descText = descP ? descP.innerText.replace(/\s+/g, ' ').trim() : '';
+                
+                if (typeof getItemAvailability === 'function') {
+                    if (getItemAvailability(dishName) === 'hold' || getItemAvailability(dishName) === 'unavailable') return;
+                }
+                
+                if (typeof toggleSelectItem === 'function') {
+                    toggleSelectItem({
+                        name: dishName,
+                        price: priceText,
+                        desc: descText,
+                        category: 'main'
+                    });
+                }
+                if (typeof refreshAllDishCardsUI === 'function') {
+                    refreshAllDishCardsUI();
+                }
+            }
+        }
+    }, true);
+}
+
 // Helper: Robust String Normalizer for resilient dish matching
 function normalizeDishName(name) {
     if (!name) return '';
@@ -3915,4 +3991,13 @@ function closeWaiterSlipModal() {
 function handleFinishWaiterOrder() {
     closeWaiterSlipModal();
     alert('Thank you! Your order receipt has been noted. Your food is being prepared freshly over the wood-fired grill.');
+}
+
+
+// Immediate execution if script loads when DOM is already parsing
+if (typeof document !== 'undefined' && (document.readyState === 'interactive' || document.readyState === 'complete')) {
+    try {
+        initClickableMenuDishes();
+        updateSelectionBarUI();
+    } catch(e) {}
 }

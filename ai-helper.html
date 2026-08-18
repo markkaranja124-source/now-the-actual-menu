@@ -18,7 +18,7 @@
     <link rel="apple-touch-icon" href="logo.png">
     <meta property="og:image" content="logo.png">
 
-    <link rel="stylesheet" href="style.css?v=20260818_delivery_only_button_v1">
+    <link rel="stylesheet" href="style.css?v=20260818_delivery_section_isolated_v2">
 
     <!-- Leaflet Interactive Map for Custom Pin Location -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -1568,24 +1568,12 @@
 
                 <form id="order-placement-form" onsubmit="handlePlaceOrderSubmit(event)">
 
-                    <!-- Full Name -->
-                    <div class="form-group">
-                        <label for="cust-name" class="form-label">Your Full Name <span class="req">*</span></label>
-                        <input type="text" id="cust-name" class="form-control" placeholder="e.g. Kelvin Mwangi" autocomplete="name">
-                    </div>
-
-                    <!-- Phone Number -->
-                    <div class="form-group">
-                        <label for="cust-phone" class="form-label">Phone Number <span class="req">*</span></label>
-                        <input type="tel" id="cust-phone" class="form-control" placeholder="e.g. 0724 594 204" autocomplete="tel">
-                    </div>
-
-                    <!-- Dining Option Selector -->
-                    <div class="form-group">
-                        <label class="form-label">Dining Option <span class="req">*</span></label>
+                    <!-- Dining Option Selector (Always Visible) -->
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label class="form-label" style="font-weight: 700; color: #0F172A; margin-bottom: 8px; display: block;">Select Service Mode</label>
                         <div class="dining-type-options">
                             <button type="button" class="dining-option-btn active" data-type="dine-in" onclick="selectDiningOption('dine-in')">
-                                <span class="opt-title">Dine-In</span>
+                                <span class="opt-title">Dine In</span>
                             </button>
                             <button type="button" class="dining-option-btn" data-type="takeaway" onclick="selectDiningOption('takeaway')">
                                 <span class="opt-title">Takeaway</span>
@@ -1597,64 +1585,81 @@
                         <input type="hidden" id="selected-dining-type" value="dine-in">
                     </div>
 
-                    <!-- Dynamic Table Number / Address / Notes -->
-                    <div class="form-group">
-                        <label for="cust-table-location" class="form-label" id="table-location-label">
-                            Table Number <span class="req">*</span>
-                        </label>
-                        <input type="text" id="cust-table-location" class="form-control" placeholder="e.g. Table 4 (Inside or Terrace)" required>
-                    </div>
-
-                    <!-- Dual Location Selection (Shown when Delivery is chosen) -->
-                    <div class="form-group" id="delivery-gps-container" style="display: none;">
-                        <label class="form-label">Delivery Location Pin (Optional for Faster Rider Dispatch)</label>
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
-                            <button type="button" class="btn-pin-action" id="btn-pin-current-gps" onclick="handlePinCurrentLocation()">
-                                <span>Use My Current Location</span>
-                            </button>
-                            <button type="button" class="btn-pin-action outline" id="btn-pin-custom-map" onclick="openMapPinModal()">
-                                <span>Pin Another Location on Map</span>
-                            </button>
-                        </div>
-                        <div id="gps-status-badge" style="font-size: 0.82rem; color: #059669; font-weight: 700; display: none;"></div>
-                        <input type="hidden" id="cust-gps-url" value="">
-                    </div>
-
-                    <!-- Special Cooking Instructions -->
-                    <div class="form-group">
-                        <label for="cust-notes" class="form-label">Special Kitchen Instructions (Optional)</label>
-                        <input type="text" id="cust-notes" class="form-control" placeholder="e.g. Extra kachumbari, mild pepper, hot coffee">
-                    </div>
-
-                    <!-- M-Pesa Payment Card -->
-                    <div class="mpesa-instruction-box">
-                        <div class="mpesa-header">
-                            <span class="mpesa-badge">M-PESA BUY GOODS</span>
-                            <span style="font-size: 0.78rem; color: var(--subtle-text); text-transform: uppercase; font-weight: 700;">Instant Payment</span>
-                        </div>
-                        <div class="mpesa-details-grid" style="grid-template-columns: 1fr;">
-                            <div class="mpesa-detail-card">
-                                <span class="label">Till Number (Buy Goods)</span>
-                                <span class="val" id="till-number-val">4977556</span>
-                            </div>
-                        </div>
-                        <button type="button" class="btn-copy-till" onclick="copyTillNumber()">
-                            <span>Copy Till (4977556)</span>
-                        </button>
-                    </div>
-
-                    <div id="waiter-order-guide-box" style="background: #FFF7ED; border: 1.5px solid #FDBA74; padding: 18px 20px; margin-top: 16px; text-align: center;">
-                        <span style="font-size: 0.88rem; font-weight: 800; color: #EA580C; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 6px;">TABLE & TAKEAWAY SERVICE</span>
-                        <p style="font-size: 0.95rem; color: #334155; line-height: 1.5; margin: 0;">
-                            Your selected meals and bright grand total are shown on the right. Simply show your phone screen to your waiter to place your order with the kitchen!
+                    <!-- Dine-In & Takeaway Instant Guide Box (Visible ONLY on Dine-In / Takeaway) -->
+                    <div id="waiter-order-guide-box" style="background: #FFF7ED; border: 2px solid #EA580C; padding: 22px; text-align: center; margin-top: 10px;">
+                        <span style="font-size: 0.95rem; font-weight: 800; color: #EA580C; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 8px;">DINE IN & TAKEAWAY SERVICE</span>
+                        <p style="font-size: 0.95rem; color: #1E293B; line-height: 1.6; margin: 0; font-weight: 500;">
+                            Your chosen meals and bright grand total are shown on the right. <strong>Simply show your phone screen to your waiter</strong> to place and serve your order freshly over the wood-fired grill!
                         </p>
                     </div>
 
-                    <!-- Submit Order Button -->
-                    <button type="submit" class="btn-confirm-order" id="btn-submit-order">
-                        <span>CONFIRM & PLACE ORDER</span>
-                        <span>&rarr;</span>
-                    </button>
+                    <!-- Delivery ONLY Form & Payment Section (Hidden by Default for Dine-In/Takeaway) -->
+                    <div id="delivery-details-section" style="display: none; flex-direction: column; gap: 16px;">
+                        <!-- Full Name -->
+                        <div class="form-group">
+                            <label for="cust-name" class="form-label">Full Name <span class="req">*</span></label>
+                            <input type="text" id="cust-name" class="form-control" placeholder="e.g. Kelvin Mwangi" autocomplete="name">
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="form-group">
+                            <label for="cust-phone" class="form-label">M-Pesa Phone Number <span class="req">*</span></label>
+                            <input type="tel" id="cust-phone" class="form-control" placeholder="e.g. 0724 594 204" autocomplete="tel">
+                        </div>
+
+                        <!-- Delivery Address / Notes -->
+                        <div class="form-group">
+                            <label for="cust-table-location" class="form-label" id="table-location-label">
+                                Delivery Address & Landmark <span class="req">*</span>
+                            </label>
+                            <input type="text" id="cust-table-location" class="form-control" placeholder="e.g. Development House, 3rd Floor, Moi Ave">
+                        </div>
+
+                        <!-- GPS Location Pin -->
+                        <div class="form-group" id="delivery-gps-container">
+                            <label class="form-label">Location Pin (Optional for Faster Rider Dispatch)</label>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
+                                <button type="button" class="btn-pin-action" id="btn-pin-current-gps" onclick="handlePinCurrentLocation()">
+                                    <span>Use My Current Location</span>
+                                </button>
+                                <button type="button" class="btn-pin-action outline" id="btn-pin-custom-map" onclick="openMapPinModal()">
+                                    <span>Pin Another Location on Map</span>
+                                </button>
+                            </div>
+                            <div id="gps-status-badge" style="font-size: 0.82rem; color: #059669; font-weight: 700; display: none;"></div>
+                            <input type="hidden" id="cust-gps-url" value="">
+                        </div>
+
+                        <!-- Special Cooking Instructions (Delivery Only) -->
+                        <div class="form-group">
+                            <label for="cust-notes" class="form-label">Special Cooking Instructions (Optional)</label>
+                            <input type="text" id="cust-notes" class="form-control" placeholder="e.g. Extra kachumbari, mild pepper, hot coffee">
+                        </div>
+
+                        <!-- M-Pesa Payment Box -->
+                        <div class="mpesa-instruction-box">
+                            <div class="mpesa-header">
+                                <span class="mpesa-badge">M-PESA BUY GOODS</span>
+                                <span style="font-size: 0.78rem; color: var(--subtle-text); text-transform: uppercase; font-weight: 700;">Instant Payment</span>
+                            </div>
+                            <div class="mpesa-details-grid" style="grid-template-columns: 1fr;">
+                                <div class="mpesa-detail-card">
+                                    <span class="label">Till Number (Buy Goods)</span>
+                                    <span class="val" id="till-number-val">4977556</span>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-copy-till" onclick="copyTillNumber()">
+                                <span>Copy Till (4977556)</span>
+                            </button>
+                        </div>
+
+                        <!-- Submit Order Button (Delivery Only) -->
+                        <button type="submit" class="btn-confirm-order" id="btn-submit-order" style="display: flex;">
+                            <span>PAY WITH M-PESA & DISPATCH</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+
                 </form>
             </div>
 
@@ -1877,7 +1882,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="app.js?v=20260818_delivery_only_button_v1"></script>
+    <script src="app.js?v=20260818_delivery_section_isolated_v2"></script>
     <script>
         // --- 1. LOCAL CART LOADER & CALCULATOR ---
         function getCartItems() {
@@ -2029,52 +2034,31 @@
             const diningInput = document.getElementById('selected-dining-type');
             if (diningInput) diningInput.value = type;
 
-            const label = document.getElementById('table-location-label');
-            const input = document.getElementById('cust-table-location');
-            const tableGroup = input ? input.closest('.form-group') : null;
             const serviceSummary = document.getElementById('totals-service-type');
-            const gpsContainer = document.getElementById('delivery-gps-container');
-            const mpesaBox = document.querySelector('.mpesa-instruction-box');
-            const submitBtn = document.getElementById('btn-submit-order');
             const guideBox = document.getElementById('waiter-order-guide-box');
-            const notesGroup = document.getElementById('cust-notes') ? document.getElementById('cust-notes').closest('.form-group') : null;
-            const nameGroup = document.getElementById('cust-name') ? document.getElementById('cust-name').closest('.form-group') : null;
-            const phoneGroup = document.getElementById('cust-phone') ? document.getElementById('cust-phone').closest('.form-group') : null;
+            const deliverySection = document.getElementById('delivery-details-section');
             const nameInput = document.getElementById('cust-name');
             const phoneInput = document.getElementById('cust-phone');
+            const addressInput = document.getElementById('cust-table-location');
 
             if (type === 'dine-in' || type === 'takeaway') {
-                // HIDE all input fields, M-Pesa box, and submit button for Dine-In & Takeaway
+                // Dine-In & Takeaway: Clean, button-free presentation
                 if (serviceSummary) serviceSummary.textContent = (type === 'dine-in') ? 'Dine In' : 'Takeaway';
-                if (tableGroup) tableGroup.style.display = 'none';
-                if (nameGroup) nameGroup.style.display = 'none';
-                if (phoneGroup) phoneGroup.style.display = 'none';
-                if (notesGroup) notesGroup.style.display = 'none';
-                if (gpsContainer) gpsContainer.style.display = 'none';
-                if (mpesaBox) mpesaBox.style.display = 'none';
-                if (submitBtn) submitBtn.style.display = 'none';
                 if (guideBox) guideBox.style.display = 'block';
+                if (deliverySection) deliverySection.style.display = 'none';
 
                 if (nameInput) nameInput.required = false;
                 if (phoneInput) phoneInput.required = false;
-                if (input) input.required = false;
+                if (addressInput) addressInput.required = false;
             } else if (type === 'delivery') {
-                // SHOW Delivery fields and M-Pesa payment button
+                // Delivery: Show Delivery Form & M-Pesa Payment Button
                 if (serviceSummary) serviceSummary.textContent = 'Direct Delivery';
-                if (tableGroup) tableGroup.style.display = 'none';
-                if (nameGroup) nameGroup.style.display = 'block';
-                if (phoneGroup) phoneGroup.style.display = 'block';
-                if (notesGroup) notesGroup.style.display = 'block';
-                if (gpsContainer) gpsContainer.style.display = 'block';
-                if (mpesaBox) mpesaBox.style.display = 'block';
-                if (submitBtn) {
-                    submitBtn.style.display = 'flex';
-                    submitBtn.innerHTML = '<span>PAY WITH M-PESA & DISPATCH</span> <span>&rarr;</span>';
-                }
                 if (guideBox) guideBox.style.display = 'none';
+                if (deliverySection) deliverySection.style.display = 'flex';
 
                 if (nameInput) nameInput.required = true;
                 if (phoneInput) phoneInput.required = true;
+                if (addressInput) addressInput.required = true;
             }
         }
 

@@ -1,3 +1,79 @@
+
+// 0ms Instant Capture Delegation for Dish Rows and Action Buttons
+if (typeof document !== 'undefined') {
+    document.addEventListener('click', function(e) {
+        const rowPill = e.target.closest('.row-order-pill');
+        const optionRow = e.target.closest('.menu-dish-card div[style*="justify-content: space-between"]');
+        
+        if (rowPill || optionRow) {
+            const targetRow = rowPill ? rowPill.closest('div[style*="justify-content: space-between"]') : optionRow;
+            if (targetRow) {
+                const spans = targetRow.querySelectorAll('span');
+                const card = targetRow.closest('.menu-dish-card');
+                const h3 = card ? card.querySelector('h3, h4') : null;
+                
+                if (spans.length >= 2 && h3) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    const mainTitle = h3.innerText.replace(/\s+/g, ' ').trim();
+                    const sideName = spans[0].innerText.replace(/\s+/g, ' ').trim();
+                    const sidePrice = spans[1].innerText.replace(/\s+/g, ' ').trim();
+                    const fullDishName = `${mainTitle} (${sideName})`;
+                    
+                    if (typeof getItemAvailability === 'function') {
+                        if (getItemAvailability(fullDishName) === 'hold' || getItemAvailability(sideName) === 'hold') return;
+                    }
+                    
+                    if (typeof toggleSelectItem === 'function') {
+                        toggleSelectItem({
+                            name: fullDishName,
+                            price: sidePrice,
+                            desc: mainTitle,
+                            category: 'main'
+                        });
+                    }
+                    if (typeof refreshAllDishCardsUI === 'function') {
+                        refreshAllDishCardsUI();
+                    }
+                    return;
+                }
+            }
+        }
+
+        const actionBtn = e.target.closest('.card-order-action-btn');
+        if (actionBtn) {
+            const card = actionBtn.closest('.menu-card-luxury-wrapper, .menu-dish-card');
+            const h3 = card ? card.querySelector('h3, h4') : null;
+            const priceSpan = card ? card.querySelector('span') : null;
+            const descP = card ? card.querySelector('p') : null;
+            
+            if (h3 && priceSpan) {
+                e.stopPropagation();
+                e.preventDefault();
+                const dishName = h3.innerText.replace(/\s+/g, ' ').trim();
+                const priceText = priceSpan.innerText.replace(/\s+/g, ' ').trim();
+                const descText = descP ? descP.innerText.replace(/\s+/g, ' ').trim() : '';
+                
+                if (typeof getItemAvailability === 'function') {
+                    if (getItemAvailability(dishName) === 'hold' || getItemAvailability(dishName) === 'unavailable') return;
+                }
+                
+                if (typeof toggleSelectItem === 'function') {
+                    toggleSelectItem({
+                        name: dishName,
+                        price: priceText,
+                        desc: descText,
+                        category: 'main'
+                    });
+                }
+                if (typeof refreshAllDishCardsUI === 'function') {
+                    refreshAllDishCardsUI();
+                }
+            }
+        }
+    }, true);
+}
+
 function getDishImage(dishName, dishDesc) {
     const textLower = ((dishName || '') + ' ' + (dishDesc || '')).toLowerCase();
     
@@ -178,10 +254,23 @@ if (typeof document !== 'undefined') {
 }
 
 if (typeof window !== 'undefined') {
-    window.addEventListener('load', forceScrollToTop);
-    window.addEventListener('pageshow', () => {
+    window.addEventListener('load', () => {
         forceScrollToTop();
+        if (typeof initClickableMenuDishes === 'function') initClickableMenuDishes();
+        if (typeof refreshAllDishCardsUI === 'function') refreshAllDishCardsUI();
         if (typeof updateSelectionBarUI === 'function') updateSelectionBarUI();
+    });
+    window.addEventListener('pageshow', (event) => {
+        forceScrollToTop();
+        if (typeof initClickableMenuDishes === 'function') initClickableMenuDishes();
+        if (typeof refreshAllDishCardsUI === 'function') refreshAllDishCardsUI();
+        if (typeof updateSelectionBarUI === 'function') updateSelectionBarUI();
+    });
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            if (typeof refreshAllDishCardsUI === 'function') refreshAllDishCardsUI();
+            if (typeof updateSelectionBarUI === 'function') updateSelectionBarUI();
+        }
     });
 }
 

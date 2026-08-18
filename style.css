@@ -375,11 +375,17 @@ img {
 }
 
 .sugg-price-pill {
-    font-size: 0.75rem;
+    font-size: 0.88rem;
     font-weight: 700;
     color: #B8860B;
+    background: rgba(184, 134, 11, 0.08);
+    border: 1px solid rgba(184, 134, 11, 0.25);
+    padding: 3px 8px;
     flex-shrink: 0;
     margin-left: auto;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    letter-spacing: 0.02em;
+    display: inline-block;
 }
 
 /* Card Pulse Glow when selected from search */

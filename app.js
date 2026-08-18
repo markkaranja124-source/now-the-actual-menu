@@ -1205,38 +1205,20 @@ function initMenuDishSearch() {
 
         let html = '';
         recommendations.forEach((item, index) => {
-            const isTop = index === 0;
-            const dishImg = item.image || getDishImage(item.name, item.desc);
             const highlightedTitle = highlightMatchLetters(item.name, query);
 
-            if (isTop && dishImg) {
-                html += `
-                    <div class="search-suggestion-item sugg-featured" data-index="${index}" role="option" tabindex="0">
-                        <div class="sugg-row-icon-box">
-                            ${searchIconSvg}
-                        </div>
-                        <div class="sugg-content-box">
-                            <div class="sugg-title-line">${highlightedTitle}</div>
-                            <div class="sugg-subtitle-line">${item.category || 'Menu'}${item.price ? ` • <strong style="color: #B8860B;">${item.price}</strong>` : ''}</div>
-                        </div>
-                        <div class="sugg-thumb-box">
-                            <img src="${dishImg}" alt="${item.name}" class="sugg-thumb-img">
-                        </div>
+            html += `
+                <div class="search-suggestion-item" data-index="${index}" role="option" tabindex="0">
+                    <div class="sugg-row-icon-box">
+                        ${searchIconSvg}
                     </div>
-                `;
-            } else {
-                html += `
-                    <div class="search-suggestion-item" data-index="${index}" role="option" tabindex="0">
-                        <div class="sugg-row-icon-box">
-                            ${searchIconSvg}
-                        </div>
-                        <div class="sugg-content-box">
-                            <div class="sugg-title-line">${highlightedTitle}</div>
-                        </div>
-                        ${item.price ? `<span class="sugg-price-pill">${item.price}</span>` : ''}
+                    <div class="sugg-content-box">
+                        <div class="sugg-title-line">${highlightedTitle}</div>
+                        <div class="sugg-subtitle-line">${item.category || 'Rib House Menu'}</div>
                     </div>
-                `;
-            }
+                    ${item.price ? `<span class="sugg-price-pill">${item.price}</span>` : ''}
+                </div>
+            `;
         });
 
         suggestionsDropdown.innerHTML = html;

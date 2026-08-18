@@ -1320,7 +1320,10 @@ img {
 }
 
 @keyframes scrollLine {
-    0% { transform: scaleY(0); transform-origin: top; }
+    0% { transform: scaleY(0); opacity: 0; }
+    50% { transform: scaleY(1); opacity: 1; }
+    100% { transform: translateY(20px) scaleY(0); opacity: 0; }
+}
     50% { transform: scaleY(1); transform-origin: top; }
     50.1% { transform-origin: bottom; }
     100% { transform: scaleY(0); transform-origin: bottom; }
@@ -4531,7 +4534,7 @@ img {
         text-transform: uppercase !important;
         border-radius: 4px !important;
         cursor: pointer !important;
-        transition: all 0.2s ease !important;
+        transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, opacity 0.2s ease !important;
         box-sizing: border-box !important;
         margin-top: 2px !important;
     }
@@ -6583,4 +6586,11 @@ img {
     .dining-toggle-pills {
         grid-template-columns: 1fr;
     }
+}
+
+
+/* Performance: Off-screen Content Rendering Optimization */
+.menu-catalog-section:not(#breakfast-section) {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 800px;
 }

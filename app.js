@@ -39,15 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.addEventListener('load', () => {
     forceScrollToTop();
-    initLiveInventoryListener();
 });
 
 window.addEventListener('pageshow', () => {
     forceScrollToTop();
-    initLiveInventoryListener();
-    initClickableMenuDishes();
     updateSelectionBarUI();
-    initLocationSection();
 });
 
 // Helper: Map dish names to their corresponding photo assets (Available globally)
@@ -56,55 +52,55 @@ function getDishImage(dishName, dishDesc) {
     
     // 1. Bacon orders (e.g. Pancake Breakfast with Bacon, Main Breakfast with Beef Bacon, etc.)
     if (textLower.includes('bacon')) {
-        return 'breakfastbreadwithbacon1.png';
+        return 'breakfastbreadwithbacon1.webp';
     }
     // 2. Goat Choma
     if (textLower.includes('goat') || textLower.includes('choma goat') || textLower.includes('goat choma')) {
-        return 'Goatchoma1kg.png';
+        return 'Goatchoma1kg.webp';
     }
     // 3. Sizzling Beef
     if (textLower.includes('sizzling') || textLower.includes('beef sizzling')) {
-        return 'beefsizzling.png';
+        return 'beefsizzling.webp';
     }
     // 4. Chips Special with Meat
     if (textLower.includes('chips special') || textLower.includes('special with meat')) {
-        return 'Chips special with meat.png';
+        return 'Chips special with meat.webp';
     }
     // 5. Chips Matumbo Combo
     if (textLower.includes('chips matumbo') || textLower.includes('chipsmatumbo') || textLower.includes('matumbo')) {
-        return 'Chipsmatumbocombo.png';
+        return 'Chipsmatumbocombo.webp';
     }
     // 6. Fries with Salad
     if (textLower.includes('fries with salad') || textLower.includes('chips with salad')) {
-        return 'Fries with salad.png';
+        return 'Fries with salad.webp';
     }
     // 7. Beef Fry / Stew
     if (textLower.includes('beef fry') || textLower.includes('beef') || textLower.includes('stew')) {
-        return 'beef.png';
+        return 'beef.webp';
     }
     // 8. Sausages
     if (textLower.includes('sausage') || textLower.includes('sauseges')) {
-        return 'Sauseges.png';
+        return 'Sauseges.webp';
     }
     // 9. Coffee & Barista
     if (textLower.includes('coffee') || textLower.includes('cappuccino') || textLower.includes('tea') || textLower.includes('latte') || textLower.includes('espresso')) {
-        return 'housecoffee.png';
+        return 'housecoffee.webp';
     }
     // 10. Ice Cream
     if (textLower.includes('ice cream') || textLower.includes('icecream')) {
-        return 'icecream.png';
+        return 'icecream.webp';
     }
     // 11. Bread and Eggs
     if (textLower.includes('bread and eggs') || textLower.includes('eggs') || textLower.includes('egg')) {
-        return 'breakfastbreadandeggs1.png';
+        return 'breakfastbreadandeggs1.webp';
     }
     // 12. Brown Bread / Toast
     if (textLower.includes('brown bread') || textLower.includes('toast')) {
-        return 'brownbread1.png';
+        return 'brownbread1.webp';
     }
     // 13. General Breakfast Combos
     if (textLower.includes('breakfast') || textLower.includes('pancake')) {
-        return 'Breakfast1.png';
+        return 'Breakfast1.webp';
     }
     return null;
 }
@@ -182,7 +178,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-pancake-breakfast",
     "id": "dish-pancake-breakfast",
-    "image": "Breakfast1.png",
+    "image": "Breakfast1.webp",
     "name": "PANCAKE BREAKFAST",
     "price": "400/=",
     "priceNum": 400
@@ -192,7 +188,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-mini-breakfast",
     "id": "dish-mini-breakfast",
-    "image": "Breakfast1.png",
+    "image": "Breakfast1.webp",
     "name": "MINI BREAKFAST",
     "price": "310/=",
     "priceNum": 310
@@ -202,7 +198,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-rib-house-breakfast",
     "id": "dish-rib-house-breakfast",
-    "image": "Breakfast1.png",
+    "image": "Breakfast1.webp",
     "name": "RIB HOUSE BREAKFAST",
     "price": "300/=",
     "priceNum": 300
@@ -212,7 +208,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-main-breakfast",
     "id": "dish-main-breakfast",
-    "image": "Breakfast1.png",
+    "image": "Breakfast1.webp",
     "name": "MAIN BREAKFAST",
     "price": "400/=",
     "priceNum": 400
@@ -222,7 +218,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-goat-soup-breakfast",
     "id": "dish-goat-soup-breakfast",
-    "image": "Goatchoma1kg.png",
+    "image": "Goatchoma1kg.webp",
     "name": "GOAT SOUP BREAKFAST",
     "price": "300/=",
     "priceNum": 300
@@ -232,7 +228,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-chicken-soup-breakfast",
     "id": "dish-chicken-soup-breakfast",
-    "image": "Breakfast1.png",
+    "image": "Breakfast1.webp",
     "name": "CHICKEN SOUP BREAKFAST",
     "price": "300/=",
     "priceNum": 300
@@ -260,7 +256,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-traditional-breakfast",
     "id": "dish-traditional-breakfast",
-    "image": "Breakfast1.png",
+    "image": "Breakfast1.webp",
     "name": "TRADITIONAL BREAKFAST",
     "price": "300/=",
     "priceNum": 300
@@ -288,7 +284,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-special-breakfast",
     "id": "dish-special-breakfast",
-    "image": "Breakfast1.png",
+    "image": "Breakfast1.webp",
     "name": "SPECIAL BREAKFAST",
     "price": "220/=",
     "priceNum": 220
@@ -307,7 +303,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-british-breakfast",
     "id": "dish-british-breakfast",
-    "image": "Breakfast1.png",
+    "image": "Breakfast1.webp",
     "name": "BRITISH BREAKFAST",
     "price": "320/=",
     "priceNum": 320
@@ -317,7 +313,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-house-coffee-white",
     "id": "dish-house-coffee-white",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "House Coffee white",
     "price": "150/=",
     "priceNum": 150
@@ -327,7 +323,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-house-coffee-black",
     "id": "dish-house-coffee-black",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "House Coffee Black",
     "price": "100/=",
     "priceNum": 100
@@ -337,7 +333,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-black-coffee-w-lemon",
     "id": "dish-black-coffee-w-lemon",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "Black Coffee W lemon",
     "price": "110/=",
     "priceNum": 110
@@ -356,7 +352,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-latte-mocha",
     "id": "dish-latte-mocha",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "Latte Mocha",
     "price": "150/=",
     "priceNum": 150
@@ -366,7 +362,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-latte-machiatto",
     "id": "dish-latte-machiatto",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "Latte Machiatto",
     "price": "180/=",
     "priceNum": 180
@@ -376,7 +372,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-coffee-latte",
     "id": "dish-coffee-latte",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "Coffee Latte",
     "price": "150/=",
     "priceNum": 150
@@ -386,7 +382,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-lemon-tea",
     "id": "dish-lemon-tea",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "Lemon Tea",
     "price": "100/=",
     "priceNum": 100
@@ -396,7 +392,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-lemon-tea-w-honey",
     "id": "dish-lemon-tea-w-honey",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "Lemon Tea W Honey",
     "price": "150/=",
     "priceNum": 150
@@ -415,7 +411,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-tea-special",
     "id": "dish-tea-special",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "Tea special",
     "price": "100/=",
     "priceNum": 100
@@ -425,7 +421,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-tea-masala-white",
     "id": "dish-tea-masala-white",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "Tea Masala White",
     "price": "130/=",
     "priceNum": 130
@@ -435,7 +431,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-tea-masala-black",
     "id": "dish-tea-masala-black",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "Tea Masala Black",
     "price": "100/=",
     "priceNum": 100
@@ -445,7 +441,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-ginger-tea",
     "id": "dish-ginger-tea",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "Ginger Tea",
     "price": "130/=",
     "priceNum": 130
@@ -464,7 +460,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-honey-espresso",
     "id": "dish-honey-espresso",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "Honey Espresso",
     "price": "110/=",
     "priceNum": 110
@@ -492,7 +488,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-cappuccino-single",
     "id": "dish-cappuccino-single",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "Cappuccino (Single)",
     "price": "150/=",
     "priceNum": 150
@@ -502,7 +498,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-cappuccino-double",
     "id": "dish-cappuccino-double",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "Cappuccino (Double)",
     "price": "180/=",
     "priceNum": 180
@@ -512,7 +508,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-espresso-single",
     "id": "dish-espresso-single",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "Espresso (Single)",
     "price": "120/=",
     "priceNum": 120
@@ -522,7 +518,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-espresso-double",
     "id": "dish-espresso-double",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "Espresso (Double)",
     "price": "150/=",
     "priceNum": 150
@@ -541,7 +537,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-espresso-cold",
     "id": "dish-espresso-cold",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "Espresso (Cold)",
     "price": "250/=",
     "priceNum": 250
@@ -569,7 +565,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-ice-cream-scoops",
     "id": "dish-ice-cream-scoops",
-    "image": "icecream.png",
+    "image": "icecream.webp",
     "name": "Ice Cream Scoops",
     "price": "150/=",
     "priceNum": 150
@@ -588,7 +584,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-iced-coffee",
     "id": "dish-iced-coffee",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "Iced Coffee",
     "price": "180/=",
     "priceNum": 180
@@ -598,7 +594,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-matumbo-fry",
     "id": "dish-matumbo-fry",
-    "image": "Chipsmatumbocombo.png",
+    "image": "Chipsmatumbocombo.webp",
     "name": "MATUMBO FRY",
     "price": "Price on request",
     "priceNum": 0
@@ -608,7 +604,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-beef-stew-fry",
     "id": "dish-beef-stew-fry",
-    "image": "beef.png",
+    "image": "beef.webp",
     "name": "BEEF STEW / FRY",
     "price": "Price on request",
     "priceNum": 0
@@ -618,7 +614,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-goat-stew-fry",
     "id": "dish-goat-stew-fry",
-    "image": "Goatchoma1kg.png",
+    "image": "Goatchoma1kg.webp",
     "name": "GOAT STEW / FRY",
     "price": "Price on request",
     "priceNum": 0
@@ -655,7 +651,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-beef-steak",
     "id": "dish-beef-steak",
-    "image": "beef.png",
+    "image": "beef.webp",
     "name": "BEEF STEAK",
     "price": "Price on request",
     "priceNum": 0
@@ -683,7 +679,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-tilapia-stew",
     "id": "dish-tilapia-stew",
-    "image": "beef.png",
+    "image": "beef.webp",
     "name": "TILAPIA STEW",
     "price": "Price on request",
     "priceNum": 0
@@ -711,7 +707,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-choma-beef-1-kg",
     "id": "dish-choma-beef-1-kg",
-    "image": "beef.png",
+    "image": "beef.webp",
     "name": "CHOMA BEEF (1 KG)",
     "price": "1100/=",
     "priceNum": 1100
@@ -721,7 +717,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-choma-beef-0-5-kg",
     "id": "dish-choma-beef-0-5-kg",
-    "image": "beef.png",
+    "image": "beef.webp",
     "name": "CHOMA BEEF (0.5 KG)",
     "price": "550/=",
     "priceNum": 550
@@ -731,7 +727,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-choma-goat-1-kg",
     "id": "dish-choma-goat-1-kg",
-    "image": "Goatchoma1kg.png",
+    "image": "Goatchoma1kg.webp",
     "name": "CHOMA GOAT (1 KG)",
     "price": "1200/=",
     "priceNum": 1200
@@ -741,7 +737,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-choma-goat-0-5-kg",
     "id": "dish-choma-goat-0-5-kg",
-    "image": "Goatchoma1kg.png",
+    "image": "Goatchoma1kg.webp",
     "name": "CHOMA GOAT (0.5 KG)",
     "price": "600/=",
     "priceNum": 600
@@ -751,7 +747,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-chemsha-beef-1-kg",
     "id": "dish-chemsha-beef-1-kg",
-    "image": "beef.png",
+    "image": "beef.webp",
     "name": "CHEMSHA BEEF (1 KG)",
     "price": "1200/=",
     "priceNum": 1200
@@ -761,7 +757,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-chemsha-beef-0-5-kg",
     "id": "dish-chemsha-beef-0-5-kg",
-    "image": "beef.png",
+    "image": "beef.webp",
     "name": "CHEMSHA BEEF (0.5 KG)",
     "price": "600/=",
     "priceNum": 600
@@ -771,7 +767,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-chemsha-goat-1-kg",
     "id": "dish-chemsha-goat-1-kg",
-    "image": "Goatchoma1kg.png",
+    "image": "Goatchoma1kg.webp",
     "name": "CHEMSHA GOAT (1 KG)",
     "price": "1300/=",
     "priceNum": 1300
@@ -781,7 +777,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-chemsha-goat-0-5-kg",
     "id": "dish-chemsha-goat-0-5-kg",
-    "image": "Goatchoma1kg.png",
+    "image": "Goatchoma1kg.webp",
     "name": "CHEMSHA GOAT (0.5 KG)",
     "price": "650/=",
     "priceNum": 650
@@ -791,7 +787,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-beef-fry-tumbukiza-1-kg",
     "id": "dish-beef-fry-tumbukiza-1-kg",
-    "image": "beef.png",
+    "image": "beef.webp",
     "name": "BEEF FRY / TUMBUKIZA (1 KG)",
     "price": "1300/=",
     "priceNum": 1300
@@ -801,7 +797,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-goat-fry-tumbukiza-1-kg",
     "id": "dish-goat-fry-tumbukiza-1-kg",
-    "image": "Goatchoma1kg.png",
+    "image": "Goatchoma1kg.webp",
     "name": "GOAT FRY / TUMBUKIZA (1 KG)",
     "price": "1400/=",
     "priceNum": 1400
@@ -811,7 +807,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-chicken-platter-for-4-on-order",
     "id": "dish-chicken-platter-for-4-on-order",
-    "image": "housecoffee.png",
+    "image": "housecoffee.webp",
     "name": "CHICKEN PLATTER FOR 4 (ON ORDER)",
     "price": "1900/=",
     "priceNum": 1900
@@ -1801,7 +1797,7 @@ function initLiveInventoryListener() {
     
     // Auto sync periodically in background every 2 seconds as backup
     if (!window._ribhouse_sync_interval) {
-        window._ribhouse_sync_interval = setInterval(fetchCloudInventory, 2000);
+        window._ribhouse_sync_interval = setInterval(fetchCloudInventory, 45000);
     }
 
     // Native Realtime EventSource (SSE Stream) for 0.05-second instant live updates

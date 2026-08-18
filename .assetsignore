@@ -17,9 +17,14 @@ theadminpage_deploy
 theadminpage_deploy/
 theadminpage_deploy/**
 
+master_images_backup
+master_images_backup/
+master_images_backup/**
+
 # Exclude backend and config files from static CDN
 server.js
 package.json
 package-lock.json
 wrangler.jsonc
 wrangler.toml
+

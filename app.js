@@ -2955,7 +2955,7 @@ function renderSelectedOrderPage() {
             <div style="text-align: center; padding: 60px 20px;">
                 <p style="font-size: 1.2rem; color: #0F172A; margin-bottom: 12px; font-weight: 700;">Your order selection is currently empty!</p>
                 <p style="font-size: 0.9rem; color: #475569; margin-bottom: 24px;">Browse the menu to add your favorite wood-fired dishes and brews.</p>
-                <a href="index.html" class="btn-hero-secondary" style="display: inline-flex; padding: 14px 28px;">&larr; Return to Menu</a>
+                <a href="index.html" class="btn-hero-secondary" style="display: inline-flex; padding: 14px 28px;"><span>&larr; Return to Menu</span></a>
             </div>
         `;
         if (itemsCountEl) itemsCountEl.textContent = "0 Dishes";

@@ -3838,3 +3838,203 @@ function handleFinishWaiterOrder() {
     closeWaiterSlipModal();
     alert('Thank you! Your waiter will have your food prepared freshly over the wood-fired grill.');
 }
+
+// ==========================================================================
+// ALL-WHITE & ORANGE OFFICIAL DIGITAL ORDER RECEIPT GENERATOR
+// ==========================================================================
+
+function openWaiterSlipModal(customData = {}) {
+    const cart = getCartItems();
+    if (!cart || cart.length === 0) {
+        alert('Your order selection is empty. Please select dishes from the menu first.');
+        return;
+    }
+
+    const diningType = customData.diningType || getSelectedDiningType();
+    let locationNote = customData.locationNote || '';
+    const specialNotes = customData.specialNotes || '';
+    const custName = customData.name || '';
+
+    // If no table/notes provided yet, retrieve from session/input or prompt gracefully
+    if (!locationNote) {
+        const tableInput = document.getElementById('cust-table-location') || document.getElementById('table-notes');
+        if (tableInput && tableInput.value.trim()) {
+            locationNote = tableInput.value.trim();
+        } else {
+            if (diningType === 'dine_in') {
+                const promptVal = prompt('Enter Table Number for your Order Receipt:', 'Table 1');
+                locationNote = promptVal ? promptVal.trim() : 'Table Service';
+            } else if (diningType === 'takeaway') {
+                const promptVal = prompt('Enter Customer Name for Takeaway Receipt:', custName || 'Counter Pickup');
+                locationNote = promptVal ? promptVal.trim() : 'Takeaway';
+            }
+        }
+    }
+
+    // Generate formatted timestamp & Receipt No
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const dateStr = now.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
+    
+    // Receipt Reference Number
+    const yy = String(now.getFullYear()).slice(-2);
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+    const hh = String(now.getHours()).padStart(2, '0');
+    const min = String(now.getMinutes()).padStart(2, '0');
+    const seq = Math.floor(10 + Math.random() * 90);
+    const receiptRef = 'REC-RH' + yy + mm + dd + hh + min + seq;
+
+    // Calculate totals and items HTML
+    let grandTotal = 0;
+    let itemsHtml = '';
+
+    cart.forEach(item => {
+        const itemSubtotal = calculateItemSubtotal(item);
+        grandTotal += itemSubtotal;
+
+        let sideHtml = '';
+        if (item.sideOption) {
+            sideHtml = `<div class="waiter-slip-item-side">&bull; Side Choice: <strong>${item.sideOption}</strong></div>`;
+        }
+
+        itemsHtml += `
+            <div class="waiter-slip-item-row">
+                <div class="waiter-slip-item-main">
+                    <div class="waiter-slip-item-title-row">
+                        <span class="waiter-slip-qty-tag">x${item.qty}</span>
+                        <span class="waiter-slip-item-name">${item.name}</span>
+                    </div>
+                    ${sideHtml}
+                </div>
+                <div class="waiter-slip-item-price">KSh ${itemSubtotal.toLocaleString()}/=</div>
+            </div>
+        `;
+    });
+
+    // Handle Packaging fee if takeaway
+    let packagingHtml = '';
+    if (diningType === 'takeaway') {
+        const pkgDetails = getOrderPackagingSummary(cart);
+        if (pkgDetails && pkgDetails.totalPackagingFee > 0) {
+            grandTotal += pkgDetails.totalPackagingFee;
+            packagingHtml = `
+                <div class="waiter-slip-item-row" style="background: #FFF7ED; padding: 8px; margin-top: 4px;">
+                    <div class="waiter-slip-item-main">
+                        <span class="waiter-slip-item-name" style="color: #EA580C; font-size: 0.88rem;">Takeaway Eco-Packaging</span>
+                    </div>
+                    <div class="waiter-slip-item-price" style="color: #EA580C;">+KSh ${pkgDetails.totalPackagingFee.toLocaleString()}/=</div>
+                </div>
+            `;
+        }
+    }
+
+    // Badge Title
+    let badgeText = '';
+    if (diningType === 'dine_in') {
+        badgeText = locationNote ? `DINE IN &bull; ${locationNote.toUpperCase()}` : 'DINE IN &bull; TABLE SERVICE';
+    } else {
+        badgeText = locationNote ? `TAKEAWAY &bull; ${locationNote.toUpperCase()}` : 'TAKEAWAY &bull; PICKUP';
+    }
+
+    // Notes Box
+    let notesHtml = '';
+    if (specialNotes) {
+        notesHtml = `
+            <div class="waiter-slip-notes-box">
+                <strong>Kitchen Instructions / Customer Notes:</strong>
+                ${specialNotes}
+            </div>
+        `;
+    }
+
+    // Modal Markup
+    let overlay = document.getElementById('waiter-slip-modal-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'waiter-slip-modal-overlay';
+        overlay.className = 'waiter-slip-overlay';
+        document.body.appendChild(overlay);
+    }
+
+    overlay.innerHTML = `
+        <div class="waiter-slip-modal" role="dialog" aria-modal="true" aria-label="Official Order Receipt">
+            <button type="button" class="waiter-slip-close-btn" onclick="closeWaiterSlipModal()" aria-label="Close Receipt">&times;</button>
+            
+            <div class="waiter-slip-brand">
+                <img src="logo.webp" alt="Rib House Logo" width="48" height="48" decoding="async">
+                <div class="waiter-slip-brand-title">RIB HOUSE</div>
+                <div class="waiter-slip-brand-sub">WOOD-FIRED GRILL &bull; ORDER RECEIPT</div>
+            </div>
+
+            <div class="waiter-slip-badge-bar">
+                <div class="waiter-slip-table-badge">${badgeText}</div>
+            </div>
+
+            <div class="waiter-slip-meta-row">
+                <span>Receipt No: <strong style="color: #0F172A;">${receiptRef}</strong></span>
+                <span>${dateStr} &bull; ${timeStr}</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; font-size: 0.78rem; color: #475569; margin-bottom: 8px; font-weight: 600;">
+                <span>Till Number: <strong style="color: #EA580C;">4977556</strong></span>
+                <span>Tel: <strong>0724 594 204</strong></span>
+            </div>
+
+            <div class="waiter-slip-dashed-line"></div>
+
+            <div class="waiter-slip-items-header">
+                <span>Ordered Courses</span>
+                <span>Amount</span>
+            </div>
+
+            <div class="waiter-slip-items-list">
+                ${itemsHtml}
+                ${packagingHtml}
+            </div>
+
+            ${notesHtml}
+
+            <div class="waiter-slip-dashed-line"></div>
+
+            <div class="waiter-slip-total-banner">
+                <div>
+                    <span class="waiter-slip-total-title">TOTAL RECEIPT AMOUNT</span>
+                    <span style="display: block; font-size: 0.75rem; color: #64748B; font-weight: 500; margin-top: 2px;">All Prices Inclusive of VAT</span>
+                </div>
+                <span class="waiter-slip-total-amount">KSh ${grandTotal.toLocaleString()}/=</span>
+            </div>
+
+            <div class="waiter-slip-notice">
+                <span class="emoji">🧾</span>
+                <strong>Customer Order Receipt</strong><br>
+                Please present this receipt to your waiter or cashier to place and serve your order.
+            </div>
+
+            <div class="waiter-slip-actions-grid">
+                <button type="button" class="btn-slip-action secondary" onclick="printOrderReceipt()">🖨️ Print / Save</button>
+                <button type="button" class="btn-slip-action primary" onclick="handleFinishWaiterOrder()">Done / Placed</button>
+            </div>
+        </div>
+    `;
+
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function printOrderReceipt() {
+    window.print();
+}
+
+function closeWaiterSlipModal() {
+    const overlay = document.getElementById('waiter-slip-modal-overlay');
+    if (overlay) {
+        overlay.classList.remove('active');
+    }
+    document.body.style.overflow = '';
+}
+
+function handleFinishWaiterOrder() {
+    closeWaiterSlipModal();
+    alert('Thank you! Your order receipt has been noted. Your food is being prepared freshly over the wood-fired grill.');
+}

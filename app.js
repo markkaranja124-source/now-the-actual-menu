@@ -1042,12 +1042,12 @@ function initMenuDishSearch() {
 
     if (!searchInput) return;
 
-    // Layer 1: Instant In-Memory Embedded Master Catalogue (0ms delay)
+    // In-Memory Master Catalogue
     let databaseDishes = (window._ribhouseMenuDishes && window._ribhouseMenuDishes.length > 0)
         ? window._ribhouseMenuDishes
         : [...RIBHOUSE_MASTER_DISHES];
 
-    // Layer 2: Live Firebase RTDB Background Sync (if online and network allows)
+    // Background Firebase Sync
     const syncDishesFromFirebase = async () => {
         try {
             const resp = await fetch('https://ribhouse-admin-default-rtdb.firebaseio.com/menu/dishes.json');
@@ -1058,104 +1058,109 @@ function initMenuDishSearch() {
                     window._ribhouseMenuDishes = data;
                 }
             }
-        } catch (e) {
-            // Fails silently; embedded fallback continues with 0ms interruption
-        }
+        } catch (e) {}
     };
     syncDishesFromFirebase();
 
-    // Layer 3: Scan all live DOM cards across all sections in index.html
-    const getDishCards = () => {
-        const cardList = [];
-        const headings = document.querySelectorAll('section h3, section h4, main h3, main h4');
-        headings.forEach(h => {
-            const rawName = (h.innerText || '').replace(/\s+/g, ' ').trim().toUpperCase();
-            if (rawName.includes('MENU / PART') || rawName.includes('RIB HOUSE') || rawName.includes('AUTHENTIC TASTE') || rawName.includes('OUR HERITAGE')) return;
-            let card = h.closest('div[style*="padding"], div[style*="background"], div[style*="border"], [id^="dish-"]') || h.parentElement;
-            if (card && !cardList.includes(card)) {
-                cardList.push(card);
+    // Fuzzy matching helper (Levenshtein Distance <= 2 for typos like gota -> goat, chma -> choma)
+    function isFuzzyMatch(s1, s2) {
+        if (!s1 || !s2) return false;
+        const a = s1.toLowerCase();
+        const b = s2.toLowerCase();
+        if (a === b || a.includes(b) || b.includes(a)) return true;
+        if (Math.abs(a.length - b.length) > 2) return false;
+        
+        // Levenshtein distance calculation
+        const matrix = [];
+        for (let i = 0; i <= b.length; i++) { matrix[i] = [i]; }
+        for (let j = 0; j <= a.length; j++) { matrix[0][j] = j; }
+        for (let i = 1; i <= b.length; i++) {
+            for (let j = 1; j <= a.length; j++) {
+                if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                    matrix[i][j] = matrix[i - 1][j - 1];
+                } else {
+                    matrix[i][j] = Math.min(
+                        matrix[i - 1][j - 1] + 1, // substitution
+                        matrix[i][j - 1] + 1,     // insertion
+                        matrix[i - 1][j] + 1      // deletion
+                    );
+                }
             }
-        });
-        return cardList;
-    };
+        }
+        const dist = matrix[b.length][a.length];
+        return dist <= 2;
+    }
 
-    // Calculate YouTube-Style Recommendations from Database
+    // Calculate smart recommendations with typo tolerance
     const get10Recommendations = (query) => {
         const list = (databaseDishes && databaseDishes.length > 0) ? databaseDishes : RIBHOUSE_MASTER_DISHES;
 
-        // If empty query (on click/focus), return top signature dishes
         if (!query || query.trim().length === 0) {
-            return list.slice(0, 6);
+            return list.filter(d => d.name !== 'TEST DISH').slice(0, 6);
         }
 
         const q = query.toLowerCase().trim();
         const qTokens = q.split(/\s+/).filter(t => t.length > 0);
 
         const scored = list.map(dish => {
+            if (dish.name === 'TEST DISH' && !q.includes('test')) return { dish, score: 0 };
+            
             const nameLower = (dish.name || '').toLowerCase();
             const descLower = (dish.desc || '').toLowerCase();
             const catLower = (dish.category || '').toLowerCase();
+            const dishWords = nameLower.split(/[\s\/\(\),]+/).filter(w => w.length > 0);
+            
             let score = 0;
 
-            // 1. Exact prefix match on full name
-            if (nameLower.startsWith(q)) {
-                score += 150;
+            // 1. Exact full query substring match in title
+            if (nameLower.includes(q)) {
+                score += 200;
             }
 
-            // 2. Word prefix matches in title
-            const words = nameLower.split(/[\s\/\(\)]+/).filter(w => w.length > 0);
-            words.forEach((word, idx) => {
-                if (word.startsWith(q)) {
-                    score += (100 - idx * 5);
-                } else if (word.includes(q)) {
-                    score += 40;
+                        // 2. All tokens present in title (exact or fuzzy)
+            let tokenMatchCount = 0;
+
+            qTokens.forEach(token => {
+                const exactInTitle = nameLower.includes(token);
+                const fuzzyInWords = dishWords.some(w => isFuzzyMatch(w, token));
+                
+                if (exactInTitle) {
+                    score += 100;
+                    tokenMatchCount++;
+                } else if (fuzzyInWords) {
+                    score += 85; // High score for typo match (e.g. gota -> goat)
+                    tokenMatchCount++;
+                } else if (descLower.includes(token) || catLower.includes(token)) {
+                    score += 25;
                 }
             });
 
-            // 3. Multi-word full inclusion
-            if (qTokens.length > 1 && qTokens.every(t => nameLower.includes(t))) {
-                score += 120;
-            }
-
-            // 4. Description / Ingredients inclusion
-            if (descLower.includes(q)) {
-                score += 45;
-            }
-
-            // 5. Category match
-            if (catLower.includes(q)) {
-                score += 35;
+            // Huge boost if all query tokens matched the dish!
+            if (tokenMatchCount >= qTokens.length) {
+                score += 250;
             }
 
             return { dish, score };
         });
 
-        // Filter dishes with positive score and sort descending
-        const directMatches = scored
+        const matches = scored
             .filter(entry => entry.score > 0)
             .sort((a, b) => b.score - a.score)
             .map(entry => entry.dish);
 
-        // If fewer than 8 matches, fill with closely related dishes from the same categories
-        if (directMatches.length < 8 && directMatches.length > 0) {
-            const matchedCategories = [...new Set(directMatches.map(d => d.category))];
-            list.forEach(dish => {
-                if (directMatches.length >= 8) return;
-                if (!directMatches.some(d => d.name === dish.name) && matchedCategories.includes(dish.category)) {
-                    directMatches.push(dish);
-                }
-            });
-        }
-
-        return directMatches.slice(0, 8);
+        return matches.slice(0, 8);
     };
 
-    // Helper to highlight matching query letters in dish title
     const highlightMatchLetters = (text, query) => {
         if (!query) return text;
-        const qClean = query.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const regex = new RegExp(`(${qClean})`, 'gi');
-        return text.replace(regex, '<span class="sugg-match-bold">$1</span>');
+        const qTokens = query.trim().split(/\s+/).filter(t => t.length > 0);
+        let out = text;
+        qTokens.forEach(t => {
+            const qClean = t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const regex = new RegExp(`(${qClean})`, 'gi');
+            out = out.replace(regex, '<span class="sugg-match-bold">$1</span>');
+        });
+        return out;
     };
 
     let activeSuggestionIndex = -1;
@@ -1176,7 +1181,18 @@ function initMenuDishSearch() {
         activeSuggestionIndex = -1;
 
         if (recommendations.length === 0) {
-            hideSuggestions();
+            if (query && query.trim().length > 0) {
+                suggestionsDropdown.innerHTML = `
+                    <div style="padding: 16px 20px; color: #64748B; font-size: 0.88rem; text-align: center;">
+                        No dishes found for "<strong>${query}</strong>"
+                    </div>
+                `;
+                suggestionsDropdown.style.setProperty('display', 'flex', 'important');
+                suggestionsDropdown.style.setProperty('visibility', 'visible', 'important');
+                suggestionsDropdown.style.setProperty('opacity', '1', 'important');
+            } else {
+                hideSuggestions();
+            }
             return;
         }
 
@@ -1188,14 +1204,12 @@ function initMenuDishSearch() {
         `;
 
         let html = '';
-
         recommendations.forEach((item, index) => {
             const isTop = index === 0;
             const dishImg = item.image || getDishImage(item.name, item.desc);
             const highlightedTitle = highlightMatchLetters(item.name, query);
 
             if (isTop && dishImg) {
-                // Top Featured Entity Row with photo thumbnail
                 html += `
                     <div class="search-suggestion-item sugg-featured" data-index="${index}" role="option" tabindex="0">
                         <div class="sugg-row-icon-box">
@@ -1211,7 +1225,6 @@ function initMenuDishSearch() {
                     </div>
                 `;
             } else {
-                // YouTube-Style Autocomplete Keyword Suggestion Row
                 html += `
                     <div class="search-suggestion-item" data-index="${index}" role="option" tabindex="0">
                         <div class="sugg-row-icon-box">
@@ -1231,7 +1244,6 @@ function initMenuDishSearch() {
         suggestionsDropdown.style.setProperty('visibility', 'visible', 'important');
         suggestionsDropdown.style.setProperty('opacity', '1', 'important');
 
-        // Attach click listeners to all suggestion items
         const itemEls = suggestionsDropdown.querySelectorAll('.search-suggestion-item');
         itemEls.forEach(el => {
             el.addEventListener('click', (e) => {
@@ -1245,64 +1257,76 @@ function initMenuDishSearch() {
     };
 
     const selectDishSuggestion = (dishItem) => {
+        if (!dishItem) return;
         searchInput.value = dishItem.name;
         hideSuggestions();
         if (clearBtn) clearBtn.style.display = 'inline-flex';
 
-        // Find the target dish card element by domId or heading name
-        let targetCard = dishItem.domId ? document.getElementById(dishItem.domId) : null;
-        
+        // Unhide all sections and cards before scrolling
+        document.querySelectorAll('.menu-dish-card, [id^="dish-"], .menu-card-luxury-wrapper').forEach(c => {
+            c.classList.remove('dish-card-hidden');
+            c.style.display = '';
+        });
+        document.querySelectorAll('.menu-grid, [id^="bk-"], [id$="-section"], .menu-catalog-section').forEach(el => {
+            el.style.display = '';
+        });
+
+        // 1. Search by direct DOM ID
+        let targetCard = null;
+        if (dishItem.domId) {
+            targetCard = document.getElementById(dishItem.domId);
+        }
+        if (!targetCard && dishItem.id) {
+            targetCard = document.getElementById(dishItem.id);
+        }
+
+        // 2. Search by Heading text match
         if (!targetCard) {
-            const headings = document.querySelectorAll('section h3, section h4, main h3, main h4');
+            const headings = document.querySelectorAll('h3, h4');
+            const targetNorm = (dishItem.name || '').toLowerCase().replace(/\s+/g, ' ').trim();
             for (let h of headings) {
-                if ((h.innerText || '').replace(/\s+/g, ' ').trim().toLowerCase() === dishItem.name.toLowerCase()) {
-                    targetCard = h.closest('div[style*="padding"], div[style*="background"], div[style*="border"], [id^="dish-"]') || h.parentElement;
+                const hText = (h.innerText || '').toLowerCase().replace(/\s+/g, ' ').trim();
+                if (hText === targetNorm || hText.startsWith(targetNorm) || targetNorm.startsWith(hText)) {
+                    targetCard = h.closest('.menu-card-luxury-wrapper, .menu-dish-card, div[style*="border"], div[style*="padding"]') || h.parentElement;
                     break;
                 }
             }
         }
 
-        // Restore visibility on all cards
-        document.querySelectorAll('.menu-dish-card, [id^="dish-"]').forEach(c => {
-            c.classList.remove('dish-card-hidden');
-        });
-        document.querySelectorAll('.menu-grid, [id^="bk-"], [id$="-section"]').forEach(el => {
-            el.style.display = '';
-        });
-
         if (targetCard) {
-            targetCard.classList.remove('dish-card-hidden');
             targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
             
-            // Golden Spotlight Pulse Glow Animation on selected card
-            targetCard.classList.remove('dish-card-pulse-highlight');
-            void targetCard.offsetWidth; // Trigger reflow for animation restart
-            targetCard.classList.add('dish-card-pulse-highlight');
+            // Ultra-visible Spotlight Pulse Highlight Animation
+            const origBorder = targetCard.style.border;
+            const origShadow = targetCard.style.boxShadow;
+            
+            targetCard.style.outline = '3px solid #EA580C';
+            targetCard.style.boxShadow = '0 0 30px rgba(234, 88, 12, 0.7)';
+            targetCard.style.transition = 'all 0.3s ease';
+
             setTimeout(() => {
-                targetCard.classList.remove('dish-card-pulse-highlight');
-            }, 2500);
+                targetCard.style.outline = '';
+                targetCard.style.boxShadow = origShadow;
+                targetCard.style.border = origBorder;
+            }, 3000);
         }
     };
 
     const performSearch = (renderDropdown = true) => {
         const rawVal = searchInput.value.trim();
         const query = rawVal.toLowerCase();
-        const cards = getDishCards();
-        let matchCount = 0;
-
+        
         if (clearBtn) clearBtn.style.display = query.length > 0 ? 'inline-flex' : 'none';
 
         if (!query) {
             if (countText) countText.textContent = 'All Dishes';
-            cards.forEach(card => {
-                card.classList.remove('dish-card-hidden', 'dish-card-search-match');
+            document.querySelectorAll('.menu-dish-card, [id^="dish-"], .menu-card-luxury-wrapper').forEach(c => {
+                c.classList.remove('dish-card-hidden');
+                c.style.display = '';
             });
-
             document.querySelectorAll('.menu-grid, [id^="bk-"], [id$="-section"]').forEach(el => {
                 el.style.display = '';
             });
-
-            // Show top recommendations on click / focus
             if (renderDropdown) {
                 const recs = get10Recommendations('');
                 renderSuggestions(recs, '');
@@ -1310,60 +1334,20 @@ function initMenuDishSearch() {
             return;
         }
 
-        // Multi-word matching
-        const queryTokens = query.split(/\s+/).filter(t => t.length > 0);
-
-        cards.forEach(card => {
-            const content = card.innerText.toLowerCase();
-            const isMatch = queryTokens.every(token => content.includes(token));
-
-            if (isMatch) {
-                card.classList.remove('dish-card-hidden');
-                card.classList.add('dish-card-search-match');
-                matchCount++;
-            } else {
-                card.classList.add('dish-card-hidden');
-                card.classList.remove('dish-card-search-match');
-            }
-        });
-
-        // Hide empty section grids where 0 items match
-        document.querySelectorAll('.menu-grid').forEach(grid => {
-            const visibleItems = grid.querySelectorAll('> div:not(.dish-card-hidden)');
-            if (visibleItems.length === 0) {
-                grid.style.display = 'none';
-            } else {
-                grid.style.display = '';
-            }
-        });
-
+        const recs = get10Recommendations(query);
         if (countText) {
-            countText.textContent = matchCount === 0 ? '0 Found' : `${matchCount} Found`;
+            countText.textContent = recs.length === 0 ? '0 Found' : `${recs.length} Found`;
         }
 
         if (renderDropdown) {
-            const recs = get10Recommendations(query);
             renderSuggestions(recs, query);
         }
     };
 
-    searchInput.addEventListener('input', () => {
-        performSearch(true);
-    });
+    searchInput.addEventListener('input', () => performSearch(true));
+    searchInput.addEventListener('focus', () => performSearch(true));
+    searchInput.addEventListener('click', () => performSearch(true));
 
-    searchInput.addEventListener('keyup', () => {
-        performSearch(true);
-    });
-
-    searchInput.addEventListener('focus', () => {
-        performSearch(true);
-    });
-
-    searchInput.addEventListener('click', () => {
-        performSearch(true);
-    });
-
-    // Keyboard Navigation: ArrowUp, ArrowDown, Enter, Escape
     searchInput.addEventListener('keydown', (e) => {
         const itemEls = suggestionsDropdown ? suggestionsDropdown.querySelectorAll('.search-suggestion-item') : [];
 
@@ -1385,12 +1369,6 @@ function initMenuDishSearch() {
                 selectDishSuggestion(currentRecommendations[activeSuggestionIndex]);
             } else if (currentRecommendations.length > 0) {
                 selectDishSuggestion(currentRecommendations[0]);
-            } else {
-                const firstMatch = document.querySelector('.dish-card-search-match');
-                if (firstMatch) {
-                    firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-                hideSuggestions();
             }
         } else if (e.key === 'Escape') {
             hideSuggestions();
@@ -1408,7 +1386,6 @@ function initMenuDishSearch() {
         });
     }
 
-    // Dismiss suggestions when clicking anywhere outside
     document.addEventListener('click', (e) => {
         const searchBox = document.querySelector('.nav-search-box');
         if (searchBox && !searchBox.contains(e.target)) {
@@ -1419,15 +1396,14 @@ function initMenuDishSearch() {
     if (clearBtn) {
         clearBtn.addEventListener('click', () => {
             searchInput.value = '';
-            hideSuggestions();
             performSearch(false);
+            hideSuggestions();
             searchInput.focus();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
 }
 
-// --- 3. NAVBAR SCROLL OBSERVER ---
+
 function initScrollNavbar() {
     // Navbar moves naturally with scroll
 }

@@ -1,3 +1,49 @@
+// Helper: Robust String Normalizer for resilient dish matching
+function normalizeDishName(name) {
+    if (!name) return '';
+    return String(name)
+        .toLowerCase()
+        .replace(/\s+/g, ' ')
+        .replace(/\s*\(\s*/g, ' (')
+        .replace(/\s*\)\s*/g, ')')
+        .trim();
+}
+
+// Phase 3: Direct Robust Dish Selection Handler (Called directly via onclick on cards/buttons)
+function handleDirectDishSelect(element, dishName, dishPrice, dishDesc, dishCategory) {
+    if (typeof event !== 'undefined' && event) {
+        event.stopPropagation();
+    }
+    
+    // Safety check availability
+    if (typeof getItemAvailability === 'function') {
+        const status = getItemAvailability(dishName);
+        if (status === 'hold' || status === 'unavailable') {
+            return;
+        }
+    }
+
+    const dishObj = {
+        name: dishName,
+        price: dishPrice,
+        desc: dishDesc || '',
+        category: dishCategory || 'main'
+    };
+
+    if (typeof toggleSelectItem === 'function') {
+        toggleSelectItem(JSON.stringify(dishObj));
+    }
+    
+    if (typeof refreshAllDishCardsUI === 'function') {
+        refreshAllDishCardsUI();
+    }
+}
+
+if (typeof window !== 'undefined') {
+    window.normalizeDishName = normalizeDishName;
+    window.handleDirectDishSelect = handleDirectDishSelect;
+}
+
 /* ==========================================================================
    RIB HOUSE - OFFICIAL DIGITAL MENU (PURE MENU SHOWCASE)
    OFFLINE RIB HOUSE MENU AI ASSISTANT & KNOWLEDGE BASE
@@ -1484,8 +1530,10 @@ function saveSelectedCart(cart) {
 }
 
 function isDishSelected(dishName) {
+    if (!dishName) return false;
+    const normTarget = normalizeDishName(dishName);
     const cart = getSelectedCart();
-    return cart.some(item => item.name === dishName);
+    return cart.some(item => normalizeDishName(item.name) === normTarget);
 }
 
 // Extract accompaniment choices separated by slash '/' (e.g. Ugali / Chapati -> ['Ugali', 'Chapati'], Rice / Mukimo -> ['Rice', 'Mukimo'])
@@ -1545,7 +1593,8 @@ function toggleSelectItem(dishDataStr) {
     try {
         const dish = typeof dishDataStr === 'string' ? JSON.parse(decodeURIComponent(dishDataStr)) : dishDataStr;
         let cart = getSelectedCart();
-        const existingIndex = cart.findIndex(item => item.name === dish.name);
+        const normName = normalizeDishName(dish.name);
+        const existingIndex = cart.findIndex(item => normalizeDishName(item.name) === normName);
         
         if (existingIndex > -1) {
             cart.splice(existingIndex, 1);
@@ -1742,14 +1791,18 @@ const DISH_NAME_TO_INVENTORY_KEY = {
     "ugali with sukuma / cabbage": "ugali_sukuma_cabbage",
     "ugali with managu": "ugali_managu",
     "ugali & vegetables": "ugali_sukuma_cabbage",
-    "choma beef (1 kg)": "choma_beef_1kg",
+        "choma beef (1 kg)": "choma_beef_1kg",
     "choma beef (0.5 kg)": "choma_beef_half_kg",
     "choma beef 1kg": "choma_beef_1kg",
     "choma beef 0.5kg": "choma_beef_half_kg",
+    "choma beef (0.5kg)": "choma_beef_half_kg",
+    "choma beef (1kg)": "choma_beef_1kg",
     "choma goat (1 kg)": "choma_goat_1kg",
     "choma goat (0.5 kg)": "choma_goat_half_kg",
     "choma goat 1kg": "choma_goat_1kg",
     "choma goat 0.5kg": "choma_goat_half_kg",
+    "choma goat (0.5kg)": "choma_goat_half_kg",
+    "choma goat (1kg)": "choma_goat_1kg",
     "chemsha beef (1 kg)": "chemsha_beef_1kg",
     "chemsha beef (0.5 kg)": "chemsha_beef_half_kg",
     "chemsha beef 1kg": "chemsha_beef_1kg",
@@ -1912,9 +1965,14 @@ if (typeof window !== 'undefined') {
 }
 
 function getItemAvailability(name) {
-    const inv = getDishInventoryState();
-    const key = resolveInventoryKey(name);
-    return inv[key] || 'ready'; // 'ready', 'hold', 'unavailable'
+    if (!name) return 'ready';
+    try {
+        const inv = getDishInventoryState();
+        const key = resolveInventoryKey(name);
+        return inv[key] || 'ready';
+    } catch(e) {
+        return 'ready';
+    }
 }
 
 // --- 4. CLICKABLE DISH CARDS & ADD TO ORDER SYSTEM ---

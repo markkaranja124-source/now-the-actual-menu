@@ -219,6 +219,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "domId": "dish-goat-soup-breakfast",
     "id": "dish-goat-soup-breakfast",
     "image": "Goatchoma1kg.webp",
+    "image": "Goatsoup.webp",
     "name": "GOAT SOUP BREAKFAST",
     "price": "300/=",
     "priceNum": 300
@@ -229,6 +230,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "domId": "dish-chicken-soup-breakfast",
     "id": "dish-chicken-soup-breakfast",
     "image": "Breakfast1.webp",
+    "image": "Goatsoup.webp",
     "name": "CHICKEN SOUP BREAKFAST",
     "price": "300/=",
     "priceNum": 300
@@ -247,6 +249,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-samosa-combo",
     "id": "dish-samosa-combo",
+    "image": "Andazisamosawitheggs.webp",
     "name": "SAMOSA COMBO",
     "price": "280/=",
     "priceNum": 280
@@ -266,6 +269,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-farmers-choice",
     "id": "dish-farmers-choice",
+    "image": "Kebabs.webp",
     "name": "FARMERS CHOICE",
     "price": "380/=",
     "priceNum": 380
@@ -275,6 +279,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-rib-house-bite",
     "id": "dish-rib-house-bite",
+    "image": "Samosa.webp",
     "name": "RIB HOUSE BITE",
     "price": "200/=",
     "priceNum": 200
@@ -294,6 +299,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-rib-house-special",
     "id": "dish-rib-house-special",
+    "image": "Andazisamosawitheggs.webp",
     "name": "RIB HOUSE SPECIAL",
     "price": "310/=",
     "priceNum": 310
@@ -383,6 +389,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "domId": "dish-lemon-tea",
     "id": "dish-lemon-tea",
     "image": "housecoffee.webp",
+    "image": "Lemontea.webp",
     "name": "Lemon Tea",
     "price": "100/=",
     "priceNum": 100
@@ -393,6 +400,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "domId": "dish-lemon-tea-w-honey",
     "id": "dish-lemon-tea-w-honey",
     "image": "housecoffee.webp",
+    "image": "Lemontea.webp",
     "name": "Lemon Tea W Honey",
     "price": "150/=",
     "priceNum": 150
@@ -528,6 +536,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-milkshake-flavored",
     "id": "dish-milkshake-flavored",
+    "image": "Oreoshake.webp",
     "name": "Milkshake (Flavored)",
     "price": "250/=",
     "priceNum": 250
@@ -547,6 +556,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-oreo-shake",
     "id": "dish-oreo-shake",
+    "image": "Oreoshake.webp",
     "name": "Oreo shake",
     "price": "300/=",
     "priceNum": 300
@@ -595,6 +605,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "domId": "dish-matumbo-fry",
     "id": "dish-matumbo-fry",
     "image": "Chipsmatumbocombo.webp",
+    "image": "matumboplainwetfry.webp",
     "name": "MATUMBO FRY",
     "price": "Price on request",
     "priceNum": 0
@@ -633,6 +644,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-chicken-kienyeji-quarter",
     "id": "dish-chicken-kienyeji-quarter",
+    "image": "chickenquaterwithchips.webp",
     "name": "CHICKEN KIENYEJI QUARTER",
     "price": "Price on request",
     "priceNum": 0
@@ -642,6 +654,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-chicken-wet-fry",
     "id": "dish-chicken-wet-fry",
+    "image": "chickenquaterwithchips.webp",
     "name": "CHICKEN WET FRY",
     "price": "Price on request",
     "priceNum": 0
@@ -661,6 +674,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-deep-fried-chicken",
     "id": "dish-deep-fried-chicken",
+    "image": "chickenquaterwithchips.webp",
     "name": "DEEP FRIED CHICKEN",
     "price": "Price on request",
     "priceNum": 0
@@ -670,6 +684,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-fish-fillet",
     "id": "dish-fish-fillet",
+    "image": "fishwetfry.webp",
     "name": "FISH FILLET",
     "price": "Price on request",
     "priceNum": 0
@@ -680,6 +695,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "domId": "dish-tilapia-stew",
     "id": "dish-tilapia-stew",
     "image": "beef.webp",
+    "image": "fishwetfry.webp",
     "name": "TILAPIA STEW",
     "price": "Price on request",
     "priceNum": 0
@@ -689,6 +705,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-tilapia-fry",
     "id": "dish-tilapia-fry",
+    "image": "fishwetfry.webp",
     "name": "TILAPIA FRY",
     "price": "Price on request",
     "priceNum": 0
@@ -808,6 +825,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "domId": "dish-chicken-platter-for-4-on-order",
     "id": "dish-chicken-platter-for-4-on-order",
     "image": "housecoffee.webp",
+    "image": "chickenquaterwithchips.webp",
     "name": "CHICKEN PLATTER FOR 4 (ON ORDER)",
     "price": "1900/=",
     "priceNum": 1900
@@ -826,6 +844,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-pilau-special",
     "id": "dish-pilau-special",
+    "image": "Pilauplain.webp",
     "name": "Pilau Special",
     "price": "270/=",
     "priceNum": 270

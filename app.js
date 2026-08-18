@@ -98,10 +98,10 @@ function getDishImage(dishName, dishDesc) {
     
         // Chemsha Dishes (Simmered Beef & Herbal Goat Broth)
     if (textLower.includes('chemsha goat') || textLower.includes('goat chemsha') || textLower.includes('goat fry / tumbukiza')) {
-        return 'Goatsoup.webp';
+        return 'Chemshagoat.webp';
     }
     if (textLower.includes('chemsha beef') || textLower.includes('beef chemsha') || textLower.includes('beef fry / tumbukiza')) {
-        return 'beef.webp';
+        return 'chemshabeef.webp';
     }
     // 1. Soup Dishes (Priority before meat)
     if (textLower.includes('soup')) {
@@ -865,7 +865,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "name": "CHEMSHA BEEF (1 KG)",
     "price": "1200/=",
     "priceNum": 1200,
-    "image": "beef.webp"
+    "image": "chemshabeef.webp"
   },
   {
     "category": "Wood-Fired Choma & Grill",
@@ -876,7 +876,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "name": "CHEMSHA BEEF (0.5 KG)",
     "price": "600/=",
     "priceNum": 600,
-    "image": "beef.webp"
+    "image": "chemshabeef.webp"
   },
   {
     "category": "Wood-Fired Choma & Grill",
@@ -887,7 +887,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "name": "CHEMSHA GOAT (1 KG)",
     "price": "1300/=",
     "priceNum": 1300,
-    "image": "Goatsoup.webp"
+    "image": "Chemshagoat.webp"
   },
   {
     "category": "Wood-Fired Choma & Grill",
@@ -898,7 +898,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "name": "CHEMSHA GOAT (0.5 KG)",
     "price": "650/=",
     "priceNum": 650,
-    "image": "Goatsoup.webp"
+    "image": "Chemshagoat.webp"
   },
   {
     "category": "Wood-Fired Choma & Grill",

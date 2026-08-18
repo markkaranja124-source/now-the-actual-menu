@@ -3113,6 +3113,7 @@ function renderSelectedOrderPage() {
     const totalQtyEl = document.getElementById('summary-total-qty');
     const totalAmountEl = document.getElementById('summary-total-amount');
     const checkoutBtn = document.getElementById('btn-proceed-order-summary') || document.getElementById('btn-proceed-checkout');
+    const placeOrderBtn = document.getElementById('btn-proceed-place-order');
 
     if (!listContainer) return;
 
@@ -3134,12 +3135,20 @@ function renderSelectedOrderPage() {
             checkoutBtn.style.opacity = '0.5';
             checkoutBtn.style.pointerEvents = 'none';
         }
+        if (placeOrderBtn) {
+            placeOrderBtn.style.opacity = '0.5';
+            placeOrderBtn.style.pointerEvents = 'none';
+        }
         return;
     }
 
     if (checkoutBtn) {
         checkoutBtn.style.opacity = '1';
         checkoutBtn.style.pointerEvents = 'auto';
+    }
+    if (placeOrderBtn) {
+        placeOrderBtn.style.opacity = '1';
+        placeOrderBtn.style.pointerEvents = 'auto';
     }
 
     let html = '';

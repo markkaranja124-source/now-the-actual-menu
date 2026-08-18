@@ -2917,10 +2917,10 @@ function renderSelectedOrderPage() {
             </div>
             <div class="dining-toggle-pills">
                 <button type="button" class="dining-pill ${diningType === 'dine_in' ? 'active' : ''}" onclick="setDiningType('dine_in')">
-                    <span class="pill-radio">${diningType === 'dine_in' ? '■' : '□'}</span> Dine-In (Table Service - KSh 0)
+                    <span class="pill-radio">${diningType === 'dine_in' ? '■' : '□'}</span> Dine In
                 </button>
                 <button type="button" class="dining-pill ${diningType === 'takeaway' ? 'active' : ''}" onclick="setDiningType('takeaway')">
-                    <span class="pill-radio">${diningType === 'takeaway' ? '■' : '□'}</span> Takeaway (Packed To-Go)
+                    <span class="pill-radio">${diningType === 'takeaway' ? '■' : '□'}</span> Takeaway
                 </button>
             </div>
         </div>
@@ -3237,10 +3237,10 @@ function renderOrderSummaryPage() {
             </div>
             <div class="dining-toggle-pills">
                 <button type="button" class="dining-pill ${diningType === 'dine_in' ? 'active' : ''}" onclick="setDiningType('dine_in')">
-                    <span class="pill-radio">${diningType === 'dine_in' ? '■' : '□'}</span> Dine-In (Table Service - KSh 0)
+                    <span class="pill-radio">${diningType === 'dine_in' ? '■' : '□'}</span> Dine In
                 </button>
                 <button type="button" class="dining-pill ${diningType === 'takeaway' ? 'active' : ''}" onclick="setDiningType('takeaway')">
-                    <span class="pill-radio">${diningType === 'takeaway' ? '■' : '□'}</span> Takeaway (Packed To-Go)
+                    <span class="pill-radio">${diningType === 'takeaway' ? '■' : '□'}</span> Takeaway
                 </button>
             </div>
         </div>

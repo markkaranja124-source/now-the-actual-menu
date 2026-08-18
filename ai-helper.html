@@ -18,7 +18,7 @@
     <link rel="apple-touch-icon" href="logo.png">
     <meta property="og:image" content="logo.png">
 
-    <link rel="stylesheet" href="style.css?v=20260818_orange_totals_v1">
+    <link rel="stylesheet" href="style.css?v=20260818_delivery_only_button_v1">
 
     <!-- Leaflet Interactive Map for Custom Pin Location -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -1643,6 +1643,13 @@
                         </button>
                     </div>
 
+                    <div id="waiter-order-guide-box" style="background: #FFF7ED; border: 1.5px solid #FDBA74; padding: 18px 20px; margin-top: 16px; text-align: center;">
+                        <span style="font-size: 0.88rem; font-weight: 800; color: #EA580C; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 6px;">TABLE & TAKEAWAY SERVICE</span>
+                        <p style="font-size: 0.95rem; color: #334155; line-height: 1.5; margin: 0;">
+                            Your selected meals and bright grand total are shown on the right. Simply show your phone screen to your waiter to place your order with the kitchen!
+                        </p>
+                    </div>
+
                     <!-- Submit Order Button -->
                     <button type="submit" class="btn-confirm-order" id="btn-submit-order">
                         <span>CONFIRM & PLACE ORDER</span>
@@ -1870,7 +1877,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="app.js?v=20260818_orange_totals_v1"></script>
+    <script src="app.js?v=20260818_delivery_only_button_v1"></script>
     <script>
         // --- 1. LOCAL CART LOADER & CALCULATOR ---
         function getCartItems() {
@@ -2019,54 +2026,55 @@
                 btn.classList.toggle('active', btn.getAttribute('data-type') === type);
             });
 
-            const typeInput = document.getElementById('selected-dining-type');
-            if (typeInput) typeInput.value = type;
+            const diningInput = document.getElementById('selected-dining-type');
+            if (diningInput) diningInput.value = type;
 
             const label = document.getElementById('table-location-label');
             const input = document.getElementById('cust-table-location');
+            const tableGroup = input ? input.closest('.form-group') : null;
             const serviceSummary = document.getElementById('totals-service-type');
             const gpsContainer = document.getElementById('delivery-gps-container');
-
             const mpesaBox = document.querySelector('.mpesa-instruction-box');
             const submitBtn = document.getElementById('btn-submit-order');
+            const guideBox = document.getElementById('waiter-order-guide-box');
+            const notesGroup = document.getElementById('cust-notes') ? document.getElementById('cust-notes').closest('.form-group') : null;
             const nameGroup = document.getElementById('cust-name') ? document.getElementById('cust-name').closest('.form-group') : null;
             const phoneGroup = document.getElementById('cust-phone') ? document.getElementById('cust-phone').closest('.form-group') : null;
             const nameInput = document.getElementById('cust-name');
             const phoneInput = document.getElementById('cust-phone');
 
-            if (type === 'dine-in') {
-                if (label) label.innerHTML = 'Table Number (Optional)';
-                if (input) { input.placeholder = 'e.g. Table 4 (or leave blank for open table)'; input.required = false; }
-                if (serviceSummary) serviceSummary.textContent = 'Dine In';
-                if (gpsContainer) gpsContainer.style.display = 'none';
-                if (mpesaBox) mpesaBox.style.display = 'none';
+            if (type === 'dine-in' || type === 'takeaway') {
+                // HIDE all input fields, M-Pesa box, and submit button for Dine-In & Takeaway
+                if (serviceSummary) serviceSummary.textContent = (type === 'dine-in') ? 'Dine In' : 'Takeaway';
+                if (tableGroup) tableGroup.style.display = 'none';
                 if (nameGroup) nameGroup.style.display = 'none';
                 if (phoneGroup) phoneGroup.style.display = 'none';
-                if (nameInput) nameInput.required = false;
-                if (phoneInput) phoneInput.required = false;
-                if (submitBtn) submitBtn.innerHTML = '<span>GENERATE ORDER RECEIPT</span> <span>&rarr;</span>';
-            } else if (type === 'takeaway') {
-                if (label) label.innerHTML = 'Pickup Notes (Optional)';
-                if (input) { input.placeholder = 'e.g. Pack hot / Counter Pickup'; input.required = false; }
-                if (serviceSummary) serviceSummary.textContent = 'Takeaway';
+                if (notesGroup) notesGroup.style.display = 'none';
                 if (gpsContainer) gpsContainer.style.display = 'none';
                 if (mpesaBox) mpesaBox.style.display = 'none';
-                if (nameGroup) nameGroup.style.display = 'none';
-                if (phoneGroup) phoneGroup.style.display = 'none';
+                if (submitBtn) submitBtn.style.display = 'none';
+                if (guideBox) guideBox.style.display = 'block';
+
                 if (nameInput) nameInput.required = false;
                 if (phoneInput) phoneInput.required = false;
-                if (submitBtn) submitBtn.innerHTML = '<span>GENERATE ORDER RECEIPT</span> <span>&rarr;</span>';
+                if (input) input.required = false;
             } else if (type === 'delivery') {
-                if (label) label.innerHTML = 'Delivery Address & Landmark <span class="req">*</span>';
-                if (input) { input.placeholder = 'e.g. Development House, 3rd Floor, Moi Ave'; input.required = true; }
+                // SHOW Delivery fields and M-Pesa payment button
                 if (serviceSummary) serviceSummary.textContent = 'Direct Delivery';
-                if (gpsContainer) gpsContainer.style.display = 'block';
-                if (mpesaBox) mpesaBox.style.display = 'block';
+                if (tableGroup) tableGroup.style.display = 'none';
                 if (nameGroup) nameGroup.style.display = 'block';
                 if (phoneGroup) phoneGroup.style.display = 'block';
+                if (notesGroup) notesGroup.style.display = 'block';
+                if (gpsContainer) gpsContainer.style.display = 'block';
+                if (mpesaBox) mpesaBox.style.display = 'block';
+                if (submitBtn) {
+                    submitBtn.style.display = 'flex';
+                    submitBtn.innerHTML = '<span>PAY WITH M-PESA & DISPATCH</span> <span>&rarr;</span>';
+                }
+                if (guideBox) guideBox.style.display = 'none';
+
                 if (nameInput) nameInput.required = true;
                 if (phoneInput) phoneInput.required = true;
-                if (submitBtn) submitBtn.innerHTML = '<span>PAY WITH M-PESA & DISPATCH</span> <span>&rarr;</span>';
             }
         }
 

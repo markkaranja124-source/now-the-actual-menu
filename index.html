@@ -28,13 +28,13 @@
     <meta property="og:image" content="logo.png">
     <meta property="og:title" content="RIB HOUSE | Official Menu">
 
-    <link rel="stylesheet" href="style.css?v=20260819_side_drawer_active_v23_1787088282048">
+    <link rel="stylesheet" href="style.css?v=20260819_side_drawer_rock_solid_v24_1787088896873">
 </head>
 
 <body>
 
     <!-- LUXURY SIDE DRAWER NAVIGATION & BACKDROP -->
-    <div class="drawer-backdrop" id="drawer-backdrop"></div>
+    <div class="drawer-backdrop" id="drawer-backdrop" onclick="if(window.closeSideDrawer) window.closeSideDrawer(event); else { document.getElementById('side-drawer')?.classList.remove('active'); document.getElementById('drawer-backdrop')?.classList.remove('active'); document.body.style.overflow=''; }"></div>
     <aside class="side-drawer" id="side-drawer" aria-hidden="true" role="dialog" aria-label="Navigation Menu Drawer">
         <div class="drawer-header">
             <div class="drawer-brand">
@@ -44,7 +44,7 @@
                     <span class="drawer-brand-sub">WOOD-FIRED GRILL</span>
                 </div>
             </div>
-            <button class="drawer-close-btn" id="drawer-close-btn" aria-label="Close Menu">
+            <button class="drawer-close-btn" id="drawer-close-btn" aria-label="Close Menu" onclick="if(window.closeSideDrawer) window.closeSideDrawer(event); else { document.getElementById('side-drawer')?.classList.remove('active'); document.getElementById('drawer-backdrop')?.classList.remove('active'); document.body.style.overflow=''; }">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -120,7 +120,7 @@
         <div class="nav-container">
             <!-- Left: MENU Trigger Box -->
             <div class="nav-left-box">
-                <button class="menu-box-btn" id="side-drawer-toggle" aria-label="Open Navigation Menu">
+                <button class="menu-box-btn" id="side-drawer-toggle" aria-label="Open Navigation Menu" onclick="if(window.openSideDrawer) window.openSideDrawer(event); else { document.getElementById('side-drawer')?.classList.add('active'); document.getElementById('drawer-backdrop')?.classList.add('active'); document.body.style.overflow='hidden'; }">
                     <span class="menu-box-text">MENU</span>
                     <span class="menu-box-icon">
                         <span></span>
@@ -2004,7 +2004,7 @@
         </div>
     </div>
 
-    <script src="app.js?v=20260819_side_drawer_active_v23_1787088282048"></script>
+    <script src="app.js?v=20260819_side_drawer_rock_solid_v24_1787088896873"></script>
 </body>
 
 </html>

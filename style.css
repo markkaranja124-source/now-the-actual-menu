@@ -478,15 +478,17 @@ img {
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    z-index: 3000;
+    z-index: 999998 !important;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+    pointer-events: none;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
 }
 
 .drawer-backdrop.active {
-    opacity: 1;
-    visibility: visible;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
 }
 
 .side-drawer {
@@ -497,20 +499,20 @@ img {
     max-width: 85vw;
     height: 100vh;
     height: 100dvh;
-    background: #FFFFFF;
-    color: #111114;
-    z-index: 3001;
+    background: #FFFFFF !important;
+    color: #111114 !important;
+    z-index: 999999 !important;
     display: flex;
     flex-direction: column;
-    transform: translateX(-100%);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.35);
+    transform: translateX(-100%) !important;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 10px 0 50px rgba(0, 0, 0, 0.4) !important;
     overflow-y: auto;
     font-family: var(--font-sans);
 }
 
 .side-drawer.active {
-    transform: translateX(0);
+    transform: translateX(0) !important;
 }
 
 /* Drawer Header */

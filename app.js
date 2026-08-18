@@ -1,4 +1,38 @@
 
+window.openSideDrawer = function(e) {
+    if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    }
+    const drawer = document.getElementById('side-drawer');
+    const backdrop = document.getElementById('drawer-backdrop');
+    if (drawer) {
+        drawer.classList.add('active');
+        drawer.setAttribute('aria-hidden', 'false');
+    }
+    if (backdrop) {
+        backdrop.classList.add('active');
+    }
+    document.body.style.overflow = 'hidden';
+};
+
+window.closeSideDrawer = function(e) {
+    if (e) {
+        e.stopPropagation();
+    }
+    const drawer = document.getElementById('side-drawer');
+    const backdrop = document.getElementById('drawer-backdrop');
+    if (drawer) {
+        drawer.classList.remove('active');
+        drawer.setAttribute('aria-hidden', 'true');
+    }
+    if (backdrop) {
+        backdrop.classList.remove('active');
+    }
+    document.body.style.overflow = '';
+};
+
+
 // 0ms Instant Capture Delegation for Dish Rows and Action Buttons
 if (typeof document !== 'undefined') {
     document.addEventListener('click', function(e) {
@@ -1484,358 +1518,6 @@ function initMenuDishSearch() {
     }
 }
 
-
-
-function initMenuDishSearch() {
-    const searchInput = document.getElementById('menu-dish-search-input');
-    const clearBtn = document.getElementById('search-clear-btn');
-    const countText = document.getElementById('search-count-text');
-    const suggestionsDropdown = document.getElementById('search-suggestions-dropdown');
-
-    if (!searchInput) return;
-
-    // In-Memory Master Catalogue
-    let databaseDishes = (window._ribhouseMenuDishes && window._ribhouseMenuDishes.length > 0)
-        ? window._ribhouseMenuDishes
-        : [...RIBHOUSE_MASTER_DISHES];
-
-    // Background Firebase Sync
-    const syncDishesFromFirebase = async () => {
-        try {
-            const resp = await fetch('https://ribhouse-admin-default-rtdb.firebaseio.com/menu/dishes.json');
-            if (resp.ok) {
-                const data = await resp.json();
-                if (Array.isArray(data) && data.length > 0) {
-                    databaseDishes = data;
-                    window._ribhouseMenuDishes = data;
-                }
-            }
-        } catch (e) {}
-    };
-    syncDishesFromFirebase();
-
-    // Fuzzy matching helper (Levenshtein Distance <= 2 for typos like gota -> goat, chma -> choma)
-    function isFuzzyMatch(s1, s2) {
-        if (!s1 || !s2) return false;
-        const a = s1.toLowerCase();
-        const b = s2.toLowerCase();
-        if (a === b || a.includes(b) || b.includes(a)) return true;
-        if (Math.abs(a.length - b.length) > 2) return false;
-        
-        // Levenshtein distance calculation
-        const matrix = [];
-        for (let i = 0; i <= b.length; i++) { matrix[i] = [i]; }
-        for (let j = 0; j <= a.length; j++) { matrix[0][j] = j; }
-        for (let i = 1; i <= b.length; i++) {
-            for (let j = 1; j <= a.length; j++) {
-                if (b.charAt(i - 1) === a.charAt(j - 1)) {
-                    matrix[i][j] = matrix[i - 1][j - 1];
-                } else {
-                    matrix[i][j] = Math.min(
-                        matrix[i - 1][j - 1] + 1, // substitution
-                        matrix[i][j - 1] + 1,     // insertion
-                        matrix[i - 1][j] + 1      // deletion
-                    );
-                }
-            }
-        }
-        const dist = matrix[b.length][a.length];
-        return dist <= 2;
-    }
-
-    // Calculate smart recommendations with typo tolerance
-    const get10Recommendations = (query) => {
-        const list = (databaseDishes && databaseDishes.length > 0) ? databaseDishes : RIBHOUSE_MASTER_DISHES;
-
-        if (!query || query.trim().length === 0) {
-            return list.filter(d => d.name !== 'TEST DISH').slice(0, 6);
-        }
-
-        const q = query.toLowerCase().trim();
-        const qTokens = q.split(/\s+/).filter(t => t.length > 0);
-
-        const scored = list.map(dish => {
-            if (dish.name === 'TEST DISH' && !q.includes('test')) return { dish, score: 0 };
-            
-            const nameLower = (dish.name || '').toLowerCase();
-            const descLower = (dish.desc || '').toLowerCase();
-            const catLower = (dish.category || '').toLowerCase();
-            const dishWords = nameLower.split(/[\s\/\(\),]+/).filter(w => w.length > 0);
-            
-            let score = 0;
-
-            // 1. Exact full query substring match in title
-            if (nameLower.includes(q)) {
-                score += 200;
-            }
-
-                        // 2. All tokens present in title (exact or fuzzy)
-            let tokenMatchCount = 0;
-
-            qTokens.forEach(token => {
-                const exactInTitle = nameLower.includes(token);
-                const fuzzyInWords = dishWords.some(w => isFuzzyMatch(w, token));
-                
-                if (exactInTitle) {
-                    score += 100;
-                    tokenMatchCount++;
-                } else if (fuzzyInWords) {
-                    score += 85; // High score for typo match (e.g. gota -> goat)
-                    tokenMatchCount++;
-                } else if (descLower.includes(token) || catLower.includes(token)) {
-                    score += 25;
-                }
-            });
-
-            // Huge boost if all query tokens matched the dish!
-            if (tokenMatchCount >= qTokens.length) {
-                score += 250;
-            }
-
-            return { dish, score };
-        });
-
-        const matches = scored
-            .filter(entry => entry.score > 0)
-            .sort((a, b) => b.score - a.score)
-            .map(entry => entry.dish);
-
-        return matches.slice(0, 8);
-    };
-
-    const highlightMatchLetters = (text, query) => {
-        if (!query) return text;
-        const qTokens = query.trim().split(/\s+/).filter(t => t.length > 0);
-        let out = text;
-        qTokens.forEach(t => {
-            const qClean = t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            const regex = new RegExp(`(${qClean})`, 'gi');
-            out = out.replace(regex, '<span class="sugg-match-bold">$1</span>');
-        });
-        return out;
-    };
-
-    let activeSuggestionIndex = -1;
-    let currentRecommendations = [];
-
-    const hideSuggestions = () => {
-        if (suggestionsDropdown) {
-            suggestionsDropdown.style.setProperty('display', 'none', 'important');
-            suggestionsDropdown.innerHTML = '';
-        }
-        activeSuggestionIndex = -1;
-        currentRecommendations = [];
-    };
-
-    const renderSuggestions = (recommendations, query) => {
-        if (!suggestionsDropdown) return;
-        currentRecommendations = recommendations;
-        activeSuggestionIndex = -1;
-
-        if (recommendations.length === 0) {
-            if (query && query.trim().length > 0) {
-                suggestionsDropdown.innerHTML = `
-                    <div style="padding: 16px 20px; color: #64748B; font-size: 0.88rem; text-align: center;">
-                        No dishes found for "<strong>${query}</strong>"
-                    </div>
-                `;
-                suggestionsDropdown.style.setProperty('display', 'flex', 'important');
-                suggestionsDropdown.style.setProperty('visibility', 'visible', 'important');
-                suggestionsDropdown.style.setProperty('opacity', '1', 'important');
-            } else {
-                hideSuggestions();
-            }
-            return;
-        }
-
-        const searchIconSvg = `
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-        `;
-
-        let html = '';
-        recommendations.forEach((item, index) => {
-            const highlightedTitle = highlightMatchLetters(item.name, query);
-
-            html += `
-                <div class="search-suggestion-item" data-index="${index}" role="option" tabindex="0">
-                    <div class="sugg-row-icon-box">
-                        ${searchIconSvg}
-                    </div>
-                    <div class="sugg-content-box">
-                        <div class="sugg-title-line">${highlightedTitle}</div>
-                        <div class="sugg-subtitle-line">${item.category || 'Rib House Menu'}</div>
-                    </div>
-                    ${item.price ? `<span class="sugg-price-pill">${item.price}</span>` : ''}
-                </div>
-            `;
-        });
-
-        suggestionsDropdown.innerHTML = html;
-        suggestionsDropdown.style.setProperty('display', 'flex', 'important');
-        suggestionsDropdown.style.setProperty('visibility', 'visible', 'important');
-        suggestionsDropdown.style.setProperty('opacity', '1', 'important');
-
-        const itemEls = suggestionsDropdown.querySelectorAll('.search-suggestion-item');
-        itemEls.forEach(el => {
-            el.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const idx = parseInt(el.getAttribute('data-index'), 10);
-                if (recommendations[idx]) {
-                    selectDishSuggestion(recommendations[idx]);
-                }
-            });
-        });
-    };
-
-    const selectDishSuggestion = (dishItem) => {
-        if (!dishItem) return;
-        searchInput.value = dishItem.name;
-        hideSuggestions();
-        if (clearBtn) clearBtn.style.display = 'inline-flex';
-
-        // Unhide all sections and cards before scrolling
-        document.querySelectorAll('.menu-dish-card, [id^="dish-"], .menu-card-luxury-wrapper').forEach(c => {
-            c.classList.remove('dish-card-hidden');
-            c.style.display = '';
-        });
-        document.querySelectorAll('.menu-grid, [id^="bk-"], [id$="-section"], .menu-catalog-section').forEach(el => {
-            el.style.display = '';
-        });
-
-        // 1. Search by direct DOM ID
-        let targetCard = null;
-        if (dishItem.domId) {
-            targetCard = document.getElementById(dishItem.domId);
-        }
-        if (!targetCard && dishItem.id) {
-            targetCard = document.getElementById(dishItem.id);
-        }
-
-        // 2. Search by Heading text match
-        if (!targetCard) {
-            const headings = document.querySelectorAll('h3, h4');
-            const targetNorm = (dishItem.name || '').toLowerCase().replace(/\s+/g, ' ').trim();
-            for (let h of headings) {
-                const hText = (h.innerText || '').toLowerCase().replace(/\s+/g, ' ').trim();
-                if (hText === targetNorm || hText.startsWith(targetNorm) || targetNorm.startsWith(hText)) {
-                    targetCard = h.closest('.menu-card-luxury-wrapper, .menu-dish-card, div[style*="border"], div[style*="padding"]') || h.parentElement;
-                    break;
-                }
-            }
-        }
-
-        if (targetCard) {
-            targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            // Ultra-visible Spotlight Pulse Highlight Animation
-            const origBorder = targetCard.style.border;
-            const origShadow = targetCard.style.boxShadow;
-            
-            targetCard.style.outline = '3px solid #EA580C';
-            targetCard.style.boxShadow = '0 0 30px rgba(234, 88, 12, 0.7)';
-            targetCard.style.transition = 'all 0.3s ease';
-
-            setTimeout(() => {
-                targetCard.style.outline = '';
-                targetCard.style.boxShadow = origShadow;
-                targetCard.style.border = origBorder;
-            }, 3000);
-        }
-    };
-
-    const performSearch = (renderDropdown = true) => {
-        const rawVal = searchInput.value.trim();
-        const query = rawVal.toLowerCase();
-        
-        if (clearBtn) clearBtn.style.display = query.length > 0 ? 'inline-flex' : 'none';
-
-        if (!query) {
-            if (countText) countText.textContent = 'All Dishes';
-            document.querySelectorAll('.menu-dish-card, [id^="dish-"], .menu-card-luxury-wrapper').forEach(c => {
-                c.classList.remove('dish-card-hidden');
-                c.style.display = '';
-            });
-            document.querySelectorAll('.menu-grid, [id^="bk-"], [id$="-section"]').forEach(el => {
-                el.style.display = '';
-            });
-            if (renderDropdown) {
-                const recs = get10Recommendations('');
-                renderSuggestions(recs, '');
-            }
-            return;
-        }
-
-        const recs = get10Recommendations(query);
-        if (countText) {
-            countText.textContent = recs.length === 0 ? '0 Found' : `${recs.length} Found`;
-        }
-
-        if (renderDropdown) {
-            renderSuggestions(recs, query);
-        }
-    };
-
-    searchInput.addEventListener('input', () => performSearch(true));
-    searchInput.addEventListener('focus', () => performSearch(true));
-    searchInput.addEventListener('click', () => performSearch(true));
-
-    searchInput.addEventListener('keydown', (e) => {
-        const itemEls = suggestionsDropdown ? suggestionsDropdown.querySelectorAll('.search-suggestion-item') : [];
-
-        if (e.key === 'ArrowDown') {
-            if (itemEls.length > 0) {
-                e.preventDefault();
-                activeSuggestionIndex = (activeSuggestionIndex + 1) % itemEls.length;
-                updateActiveSuggestionUI(itemEls);
-            }
-        } else if (e.key === 'ArrowUp') {
-            if (itemEls.length > 0) {
-                e.preventDefault();
-                activeSuggestionIndex = (activeSuggestionIndex - 1 + itemEls.length) % itemEls.length;
-                updateActiveSuggestionUI(itemEls);
-            }
-        } else if (e.key === 'Enter') {
-            e.preventDefault();
-            if (activeSuggestionIndex >= 0 && currentRecommendations[activeSuggestionIndex]) {
-                selectDishSuggestion(currentRecommendations[activeSuggestionIndex]);
-            } else if (currentRecommendations.length > 0) {
-                selectDishSuggestion(currentRecommendations[0]);
-            }
-        } else if (e.key === 'Escape') {
-            hideSuggestions();
-        }
-    });
-
-    function updateActiveSuggestionUI(itemEls) {
-        itemEls.forEach((el, idx) => {
-            if (idx === activeSuggestionIndex) {
-                el.classList.add('active-keyboard-item');
-                el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } else {
-                el.classList.remove('active-keyboard-item');
-            }
-        });
-    }
-
-    document.addEventListener('click', (e) => {
-        const searchBox = document.querySelector('.nav-search-box');
-        if (searchBox && !searchBox.contains(e.target)) {
-            hideSuggestions();
-        }
-    });
-
-    if (clearBtn) {
-        clearBtn.addEventListener('click', () => {
-            searchInput.value = '';
-            performSearch(false);
-            hideSuggestions();
-            searchInput.focus();
-        });
-    }
-}
 
 
 function initScrollNavbar() {

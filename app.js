@@ -136,13 +136,19 @@ function getDishImage(dishName, dishDesc) {
         'traditional breakfast', 'farmers choice', 'special breakfast', 'rib house special',
         'british breakfast', 'house coffee', 'black coffee', 'americano', 'latte mocha',
         'latte machiatto', 'coffee latte', 'honey espresso', 'cappuccino', 'espresso',
-        'lemon water', 'tea special', 'tea masala', 'ginger tea', 'lemon tea', 'dawa',
+        'lemon water', 'tea special', 'tea masala', 'ginger tea', 'dawa',
         'milkshake', 'iced coffee',
         'choma beef', 'beef fry / tumbukiza', 'goat fry / tumbukiza', 'tumbukiza'
     ];
 
     if (excludeFromPlaceholders.some(ex => textLower.includes(ex))) {
         return null;
+    }
+
+    
+    // Lemon Tea
+    if (textLower.includes('lemon tea')) {
+        return 'lemontea.webp';
     }
 
     // 1. Chemsha Dishes (Simmered Beef & Herbal Goat Broth)

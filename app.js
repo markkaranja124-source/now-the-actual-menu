@@ -2214,9 +2214,27 @@ function initClickableMenuDishes() {
                 card.style.borderColor = 'var(--color-border-gold)';
             }
 
+            if (!orderBtn.dataset.hasClickListener) {
+                orderBtn.dataset.hasClickListener = 'true';
+                orderBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    if (getItemAvailability(dishName) === 'hold' || getItemAvailability(dishName) === 'unavailable') return;
+                    const dishObj = {
+                        name: dishName,
+                        price: priceText,
+                        desc: descText,
+                        category: 'main'
+                    };
+                    toggleSelectItem(JSON.stringify(dishObj));
+                    refreshAllDishCardsUI();
+                });
+            }
+
             if (!card.dataset.hasClickListener) {
                 card.dataset.hasClickListener = 'true';
                 card.addEventListener('click', (e) => {
+                    if (e.target.closest('.card-order-action-btn')) return;
                     if (getItemAvailability(dishName) === 'hold' || getItemAvailability(dishName) === 'unavailable') return;
                     const dishObj = {
                         name: dishName,

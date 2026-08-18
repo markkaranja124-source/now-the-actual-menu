@@ -2,6 +2,25 @@
 // 0ms Instant Capture Delegation for Dish Rows and Action Buttons
 if (typeof document !== 'undefined') {
     document.addEventListener('click', function(e) {
+
+        // Global Instant Trigger for Side Drawer MENU Button
+        const drawerBtn = e.target.closest('#side-drawer-toggle, .menu-box-btn');
+        if (drawerBtn) {
+            e.stopPropagation();
+            e.preventDefault();
+            const drawer = document.getElementById('side-drawer');
+            const backdrop = document.getElementById('drawer-backdrop');
+            if (drawer) {
+                drawer.classList.add('active');
+                drawer.setAttribute('aria-hidden', 'false');
+            }
+            if (backdrop) {
+                backdrop.classList.add('active');
+            }
+            document.body.style.overflow = 'hidden';
+            return;
+        }
+
         const rowPill = e.target.closest('.row-order-pill');
         const optionRow = e.target.closest('.menu-dish-card div[style*="justify-content: space-between"]');
         
@@ -1042,6 +1061,79 @@ const RIBHOUSE_MASTER_DISHES = [
 /* ==========================================================================
    2. GOOGLE-STYLE AUTO-SUGGEST & LIVE DISH SEARCH ENGINE
    ========================================================================== */
+
+/* ==========================================================================
+   1. LUXURY SIDE DRAWER NAVIGATION & OVERLAY CONTROLS
+   ========================================================================== */
+function initSideDrawerNavigation() {
+    const toggleBtn = document.getElementById('side-drawer-toggle') || document.querySelector('.menu-box-btn');
+    const sideDrawer = document.getElementById('side-drawer');
+    const backdrop = document.getElementById('drawer-backdrop');
+    const closeBtn = document.getElementById('drawer-close-btn');
+
+    if (!sideDrawer) return;
+
+    function openDrawer(e) {
+        if (e) {
+            e.stopPropagation();
+            e.preventDefault();
+        }
+        sideDrawer.classList.add('active');
+        if (backdrop) backdrop.classList.add('active');
+        sideDrawer.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer(e) {
+        if (e) {
+            e.stopPropagation();
+        }
+        sideDrawer.classList.remove('active');
+        if (backdrop) backdrop.classList.remove('active');
+        sideDrawer.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    if (toggleBtn) {
+        toggleBtn.onclick = openDrawer;
+    }
+
+    if (closeBtn) {
+        closeBtn.onclick = closeDrawer;
+    }
+
+    if (backdrop) {
+        backdrop.onclick = closeDrawer;
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sideDrawer.classList.contains('active')) {
+            closeDrawer();
+        }
+    });
+
+    const drawerLinks = sideDrawer.querySelectorAll('.drawer-link, a[href]');
+    drawerLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            closeDrawer();
+            if (href && href.startsWith('#')) {
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        });
+    });
+
+    if (typeof window !== 'undefined') {
+        window.openSideDrawer = openDrawer;
+        window.closeSideDrawer = closeDrawer;
+    }
+}
+
+
 function initMenuDishSearch() {
     const searchInput = document.getElementById('menu-dish-search-input');
     const clearBtn = document.getElementById('search-clear-btn');

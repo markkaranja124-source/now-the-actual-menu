@@ -1860,6 +1860,9 @@ function getItemAvailability(name) {
 
 // --- 4. CLICKABLE DISH CARDS & ADD TO ORDER SYSTEM ---
 function initClickableMenuDishes() {
+    // Globally clean up any old status pills or badges
+    document.querySelectorAll('.dish-status-pill, [class*="status-pill"], [class*="pill-hold"], [class*="pill-unavailable"]').forEach(el => el.remove());
+
     const allCards = document.querySelectorAll('.menu-grid > div');
 
     allCards.forEach(card => {

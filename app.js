@@ -1892,10 +1892,8 @@ function initClickableMenuDishes() {
 
         if (optionRows.length >= 2) {
             // MULTI-OPTION CARD (e.g. Matumbo Fry, Beef Stew, Goat Stew, etc.)
-            const existingCardBtn = card.querySelector('.card-order-action-btn');
-            if (existingCardBtn) existingCardBtn.remove();
-
             let visibleOptionCount = 0;
+            let firstAvailableOption = null;
 
             optionRows.forEach(row => {
                 const spans = row.querySelectorAll('span');
@@ -1920,11 +1918,16 @@ function initClickableMenuDishes() {
                 }
 
                 visibleOptionCount++;
+                if (!firstAvailableOption && itemStatus !== 'hold') {
+                    firstAvailableOption = { name: fullDishName, price: sidePrice, desc: mainTitle, side: sideName };
+                }
+
                 row.style.display = 'flex';
                 row.style.justifyContent = 'space-between';
                 row.style.alignItems = 'center';
                 row.style.borderRadius = '0 !important';
-                row.style.padding = '6px 8px';
+                row.style.padding = '8px 10px';
+                row.style.margin = '3px 0';
                 row.style.transition = 'all 0.2s ease';
 
                 // Find or create inline action pill button inside the row
@@ -1932,10 +1935,10 @@ function initClickableMenuDishes() {
                 if (!rowPill) {
                     rowPill = document.createElement('button');
                     rowPill.className = 'row-order-pill';
-                    rowPill.style.marginLeft = '10px';
-                    rowPill.style.padding = '3px 8px';
+                    rowPill.style.marginLeft = '12px';
+                    rowPill.style.padding = '4px 10px';
                     rowPill.style.borderRadius = '0 !important';
-                    rowPill.style.fontSize = '0.725rem';
+                    rowPill.style.fontSize = '0.75rem';
                     rowPill.style.fontWeight = '700';
                     rowPill.style.border = '1px solid #B8860B';
                     rowPill.style.transition = 'all 0.2s ease';
@@ -2000,10 +2003,71 @@ function initClickableMenuDishes() {
                 }
             });
 
+            // Also add full-width action button to the bottom of the card
+            let cardBtn = card.querySelector('.card-order-action-btn');
+            if (!cardBtn) {
+                cardBtn = document.createElement('button');
+                cardBtn.className = 'card-order-action-btn';
+                cardBtn.style.marginTop = '16px';
+                cardBtn.style.width = '100%';
+                cardBtn.style.padding = '10px 14px';
+                cardBtn.style.borderRadius = '0 !important';
+                cardBtn.style.fontSize = '0.82rem';
+                cardBtn.style.fontWeight = '700';
+                cardBtn.style.border = '1px solid #B8860B';
+                cardBtn.style.transition = 'all 0.2s ease';
+                card.appendChild(cardBtn);
+            }
+
             if (visibleOptionCount === 0) {
-                card.style.opacity = '0.4';
+                card.style.opacity = '1';
+                cardBtn.style.display = 'none';
+            } else if (!firstAvailableOption) {
+                card.style.opacity = '1';
+                cardBtn.style.display = 'block';
+                cardBtn.innerHTML = 'On Hold';
+                cardBtn.style.background = '#F59E0B';
+                cardBtn.style.color = '#000000';
+                cardBtn.style.borderColor = '#D97706';
+                cardBtn.style.cursor = 'not-allowed';
             } else {
                 card.style.opacity = '1';
+                cardBtn.style.display = 'block';
+                cardBtn.style.cursor = 'pointer';
+
+                // Check if any option of this dish is selected
+                const anySelected = optionRows.some(row => {
+                    const spans = row.querySelectorAll('span');
+                    if (spans.length < 2) return false;
+                    const sideName = spans[0].innerText.replace(/\s+/g, ' ').trim();
+                    return isDishSelected(`${mainTitle} (${sideName})`);
+                });
+
+                if (anySelected) {
+                    cardBtn.innerHTML = '✓ Added to Order';
+                    cardBtn.style.background = '#B8860B';
+                    cardBtn.style.color = '#FFFFFF';
+                } else {
+                    cardBtn.innerHTML = `+ Add to Order`;
+                    cardBtn.style.background = 'transparent';
+                    cardBtn.style.color = '#B8860B';
+                }
+
+                if (!cardBtn.dataset.hasClickListener) {
+                    cardBtn.dataset.hasClickListener = 'true';
+                    cardBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (firstAvailableOption) {
+                            toggleSelectItem(JSON.stringify({
+                                name: firstAvailableOption.name,
+                                price: firstAvailableOption.price,
+                                desc: firstAvailableOption.desc,
+                                category: 'main'
+                            }));
+                            refreshAllDishCardsUI();
+                        }
+                    });
+                }
             }
 
         } else {

@@ -148,7 +148,7 @@ function getDishImage(dishName, dishDesc) {
     
     // Lemon Tea
     if (textLower.includes('lemon tea')) {
-        return 'lemontea.webp';
+        return 'Lemontea.webp';
     }
 
     // 1. Chemsha Dishes (Simmered Beef & Herbal Goat Broth)

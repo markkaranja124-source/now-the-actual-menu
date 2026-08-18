@@ -21,7 +21,7 @@
     <link rel="apple-touch-icon" href="logo.png">
     <meta property="og:image" content="logo.png">
 
-    <link rel="stylesheet" href="style.css?v=20260819_oreo_shake_v31_1787092382115">
+    <link rel="stylesheet" href="style.css?v=20260819_wa_text_clean_v32_1787092931582">
 
     <!-- Leaflet Interactive Map for Custom Pin Location -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -1885,7 +1885,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="app.js?v=20260819_oreo_shake_v31_1787092382115"></script>
+    <script src="app.js?v=20260819_wa_text_clean_v32_1787092931582"></script>
     <script>
         // --- 1. LOCAL CART LOADER & CALCULATOR ---
         function getCartItems() {
@@ -2422,8 +2422,7 @@ ${receiptLines.join('\n\n')}
 ----------------------------------------
 *Grand Total:* *KSh ${o.totalAmount.toLocaleString()}/=*
 *Payment:*     ${paymentDisplay}
-${o.specialNotes ? `*Notes:*       ${o.specialNotes}\n` : ''}----------------------------------------
-*Waiter:* ONLINE ORDER SYSTEM`;
+${o.specialNotes ? `*Notes:*       ${o.specialNotes}\n` : ''}`;
 
             const waUrl = `https://wa.me/254793382017?text=${encodeURIComponent(waText)}`;
             const waLinkEl = document.getElementById('modal-whatsapp-link');

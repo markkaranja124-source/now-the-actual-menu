@@ -106,109 +106,73 @@ window.addEventListener('pageshow', () => {
 function getDishImage(dishName, dishDesc) {
     const textLower = ((dishName || '') + ' ' + (dishDesc || '')).toLowerCase();
     
-        // Chemsha Dishes (Simmered Beef & Herbal Goat Broth)
+    // Explicit exclusions (Dishes waiting for exact customer photos)
+    const excludeFromPlaceholders = [
+        'pancake breakfast', 'chicken soup breakfast', 'chips combo', 'rib house breakfast',
+        'traditional breakfast', 'farmers choice', 'special breakfast', 'rib house special',
+        'british breakfast', 'house coffee', 'black coffee', 'americano', 'latte mocha',
+        'latte machiatto', 'coffee latte', 'honey espresso', 'cappuccino', 'espresso',
+        'lemon water', 'tea special', 'tea masala', 'ginger tea', 'lemon tea', 'dawa',
+        'milkshake', 'iced coffee'
+    ];
+
+    if (excludeFromPlaceholders.some(ex => textLower.includes(ex))) {
+        return null;
+    }
+
+    // 1. Chemsha Dishes (Simmered Beef & Herbal Goat Broth)
     if (textLower.includes('chemsha goat') || textLower.includes('goat chemsha') || textLower.includes('goat fry / tumbukiza')) {
         return 'Chemshagoat.webp';
     }
     if (textLower.includes('chemsha beef') || textLower.includes('beef chemsha') || textLower.includes('beef fry / tumbukiza')) {
         return 'chemshabeef.webp';
     }
-    // 1. Soup Dishes (Priority before meat)
-    if (textLower.includes('soup')) {
+
+    // 2. Pure Soup Dishes
+    if (textLower.includes('goat soup')) {
         return 'Goatsoup.webp';
     }
-    // 2. Shakes & Cold Beverages
-    if (textLower.includes('oreo') || textLower.includes('shake') || textLower.includes('milkshake')) {
-        return 'Oreoshake.webp';
-    }
-    // 3. Lemon Tea & Specialty Teas (Priority before generic tea/coffee)
-    if (textLower.includes('lemon tea') || textLower.includes('lemon water') || textLower.includes('dawa')) {
-        return 'Lemontea.webp';
-    }
-    // 4. Fish & Tilapia (Wet Fry / Fillet / Stew - Priority before generic stew)
+
+    // 3. Fish & Tilapia (Wet Fry / Fillet / Stew)
     if (textLower.includes('fish') || textLower.includes('tilapia') || textLower.includes('fillet')) {
         return 'fishwetfry.webp';
     }
-    // 5. Chicken Dishes
-    if (textLower.includes('chicken') || textLower.includes('kienyeji')) {
+
+    // 4. Chicken Dishes (Whole / Wet Fry / Platter)
+    if (textLower.includes('chicken platter') || textLower.includes('chicken wet fry') || textLower.includes('chicken kienyeji')) {
         return 'chickenquaterwithchips.webp';
     }
-    // 6. Matumbo Dishes (Wet Fry / Tripe)
+
+    // 5. Matumbo Dishes (Wet Fry / Tripe)
     if (textLower.includes('matumbo')) {
         return textLower.includes('chips matumbo') ? 'Chipsmatumbocombo.webp' : 'matumboplainwetfry.webp';
     }
-    // 7. Pilau Dishes
+
+    // 6. Pilau Dishes
     if (textLower.includes('pilau')) {
         return 'Pilauplain.webp';
     }
-    // 8. Kebabs & Meat Bites
-    if (textLower.includes('kebab') || textLower.includes('farmers choice')) {
-        return 'Kebabs.webp';
-    }
-    // 9. Samosas & Mandazi Combos
-    if (textLower.includes('samosa combo') || textLower.includes('andazi') || textLower.includes('mandazi') || textLower.includes('rib house special')) {
-        return 'Andazisamosawitheggs.webp';
-    }
-    if (textLower.includes('samosa') || textLower.includes('rib house bite')) {
-        return 'Samosa.webp';
-    }
-    // 10. Chapati Dishes
-    if (textLower.includes('chapati with egg') || textLower.includes('chapati and egg') || textLower.includes('rolex') || textLower.includes('chapatiwitheggs')) {
-        return 'chapatiwitheggs.webp';
-    }
-    if (textLower.includes('chapati')) {
-        return 'chapatiplain.webp';
-    }
-    // 11. Bacon orders
-    if (textLower.includes('bacon')) {
-        return 'breakfastbreadwithbacon1.webp';
-    }
-    // 12. Goat Choma / Stew / Fry
-    if (textLower.includes('goat') || textLower.includes('choma goat') || textLower.includes('goat choma')) {
+
+    // 7. Goat Choma Cuts
+    if (textLower.includes('choma goat') || textLower.includes('goat choma') || textLower.includes('choma goat (1 kg)') || textLower.includes('choma goat (0.5 kg)')) {
         return 'Goatchoma1kg.webp';
     }
-    // 13. Sizzling Beef
+
+    // 8. Sizzling Beef
     if (textLower.includes('sizzling') || textLower.includes('beef sizzling')) {
         return 'beefsizzling.webp';
     }
-    // 14. Chips Combos
-    if (textLower.includes('chips special') || textLower.includes('special with meat')) {
-        return 'Chips special with meat.webp';
-    }
-    if (textLower.includes('fries with salad') || textLower.includes('chips with salad')) {
-        return 'Fries with salad.webp';
-    }
-    if (textLower.includes('chips')) {
-        return 'Chips special with meat.webp';
-    }
-    // 15. Beef Fry / Stew / Steak
-    if (textLower.includes('beef fry') || textLower.includes('beef') || textLower.includes('stew') || textLower.includes('steak') || textLower.includes('liver')) {
+
+    // 9. Beef Choma / Stew / Fry Cuts
+    if (textLower.includes('choma beef') || textLower.includes('beef choma') || textLower.includes('beef fry') || textLower.includes('beef stew')) {
         return 'beef.webp';
     }
-    // 16. Sausages
-    if (textLower.includes('sausage') || textLower.includes('sauseges')) {
-        return 'Sauseges.webp';
+
+    // 10. Chapati Dishes (Single)
+    if (textLower.includes('chapati plain')) {
+        return 'chapatiplain.webp';
     }
-    // 17. Coffee & Barista
-    if (textLower.includes('coffee') || textLower.includes('cappuccino') || textLower.includes('tea') || textLower.includes('latte') || textLower.includes('espresso') || textLower.includes('americano')) {
-        return 'housecoffee.webp';
-    }
-    // 18. Ice Cream
-    if (textLower.includes('ice cream') || textLower.includes('icecream')) {
-        return 'icecream.webp';
-    }
-    // 19. Bread and Eggs
-    if (textLower.includes('bread and eggs') || textLower.includes('eggs') || textLower.includes('egg')) {
-        return 'breakfastbreadandeggs1.webp';
-    }
-    // 20. Brown Bread / Toast
-    if (textLower.includes('brown bread') || textLower.includes('toast')) {
-        return 'brownbread1.webp';
-    }
-    // 21. General Breakfast Combos
-    if (textLower.includes('breakfast') || textLower.includes('pancake')) {
-        return 'Breakfast1.webp';
-    }
+
     return null;
 }
 
@@ -295,7 +259,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-mini-breakfast",
     "id": "dish-mini-breakfast",
-    "image": "Breakfast1.webp",
+    
     "name": "MINI BREAKFAST",
     "price": "310/=",
     "priceNum": 310
@@ -305,7 +269,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-rib-house-breakfast",
     "id": "dish-rib-house-breakfast",
-    "image": "Breakfast1.webp",
+    
     "name": "RIB HOUSE BREAKFAST",
     "price": "300/=",
     "priceNum": 300
@@ -315,7 +279,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-main-breakfast",
     "id": "dish-main-breakfast",
-    "image": "Breakfast1.webp",
+    
     "name": "MAIN BREAKFAST",
     "price": "400/=",
     "priceNum": 400
@@ -325,7 +289,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-goat-soup-breakfast",
     "id": "dish-goat-soup-breakfast",
-    "image": "Goatchoma1kg.webp",
+    
     "image": "Goatsoup.webp",
     "name": "GOAT SOUP BREAKFAST",
     "price": "300/=",
@@ -336,7 +300,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-chicken-soup-breakfast",
     "id": "dish-chicken-soup-breakfast",
-    "image": "Breakfast1.webp",
+    
     "image": "Goatsoup.webp",
     "name": "CHICKEN SOUP BREAKFAST",
     "price": "300/=",
@@ -356,7 +320,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-samosa-combo",
     "id": "dish-samosa-combo",
-    "image": "Andazisamosawitheggs.webp",
+    
     "name": "SAMOSA COMBO",
     "price": "280/=",
     "priceNum": 280
@@ -366,7 +330,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-traditional-breakfast",
     "id": "dish-traditional-breakfast",
-    "image": "Breakfast1.webp",
+    
     "name": "TRADITIONAL BREAKFAST",
     "price": "300/=",
     "priceNum": 300
@@ -376,7 +340,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-farmers-choice",
     "id": "dish-farmers-choice",
-    "image": "Kebabs.webp",
+    
     "name": "FARMERS CHOICE",
     "price": "380/=",
     "priceNum": 380
@@ -386,7 +350,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-rib-house-bite",
     "id": "dish-rib-house-bite",
-    "image": "Samosa.webp",
+    
     "name": "RIB HOUSE BITE",
     "price": "200/=",
     "priceNum": 200
@@ -396,7 +360,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-special-breakfast",
     "id": "dish-special-breakfast",
-    "image": "Breakfast1.webp",
+    
     "name": "SPECIAL BREAKFAST",
     "price": "220/=",
     "priceNum": 220
@@ -406,7 +370,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-rib-house-special",
     "id": "dish-rib-house-special",
-    "image": "Andazisamosawitheggs.webp",
+    
     "name": "RIB HOUSE SPECIAL",
     "price": "310/=",
     "priceNum": 310
@@ -416,7 +380,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-british-breakfast",
     "id": "dish-british-breakfast",
-    "image": "Breakfast1.webp",
+    
     "name": "BRITISH BREAKFAST",
     "price": "320/=",
     "priceNum": 320
@@ -426,7 +390,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-house-coffee-white",
     "id": "dish-house-coffee-white",
-    "image": "housecoffee.webp",
+    
     "name": "House Coffee white",
     "price": "150/=",
     "priceNum": 150
@@ -3147,9 +3111,9 @@ function renderSelectedOrderPage() {
 
         const baseVal = item.basePrice || parseInt((item.price || '0').toString().replace(/[^0-9]/g, ''), 10) || 0;
         const dishImg = getDishImage(item.name, item.desc) || item.image;
-        const imageHtml = dishImg 
-            ? `<img src="${dishImg}" alt="${item.name}" class="order-dish-img">`
-            : `<div class="dish-placeholder-box"><span class="dish-placeholder-label">PHOTO</span></div>`;
+        const imageFrameHtml = dishImg 
+            ? `<div class="order-dish-image-frame"><img src="${dishImg}" alt="${item.name}" class="order-dish-img"></div>`
+            : '';
 
         // Packaging badge if takeaway
         const packagingBadgeHtml = (diningType === 'takeaway') 
@@ -3159,9 +3123,7 @@ function renderSelectedOrderPage() {
         html += `
             <div class="order-item-row-luxury" data-id="${item.id}">
                 <div class="order-item-main-info">
-                    <div class="order-dish-image-frame">
-                        ${imageHtml}
-                    </div>
+                    ${imageFrameHtml}
                     <div class="order-dish-text-block">
                         <h3 class="order-dish-title">${item.name}</h3>
                         ${item.desc ? `<p class="order-dish-desc">${item.desc}</p>` : ''}

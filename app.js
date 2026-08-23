@@ -188,6 +188,10 @@ function autoInjectDishCardThumbnails() {
     // 1. Grid Cards
     const cards = document.querySelectorAll('.menu-dish-card, [id^="dish-"], .menu-card-luxury-wrapper, .menu-grid > div');
     cards.forEach(cardContainer => {
+        if (cardContainer.classList.contains('main-dish-section-block') || cardContainer.closest('.main-dish-section-block, #main-dishes-grid')) {
+            return;
+        }
+
         const cardBox = (cardContainer.parentElement && cardContainer.parentElement.children.length > 0 && cardContainer.parentElement.style.background) 
             ? cardContainer.parentElement 
             : cardContainer;

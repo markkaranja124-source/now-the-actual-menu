@@ -7181,18 +7181,31 @@ img {
     justify-content: space-between !important;
     background: #FFFFFF !important;
     border: 1px solid #ECECEC !important;
-    border-radius: 16px !important;
+    border-radius: 0 !important;
     padding: 14px 20px !important;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02) !important;
-    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
     box-sizing: border-box !important;
     width: 100% !important;
     gap: 10px !important;
+    cursor: pointer !important;
 }
 
 .main-dish-side-row:hover {
     border-color: var(--color-border-gold, #D4AF37) !important;
     box-shadow: 0 4px 14px rgba(184, 134, 11, 0.1) !important;
+}
+
+.main-dish-side-row.selected-item-active {
+    background: #FFFDF0 !important;
+    border-color: #B8860B !important;
+    box-shadow: 0 4px 14px rgba(184, 134, 11, 0.15) !important;
+}
+
+.main-dish-side-row.selected-item-active .main-dish-side-add-btn {
+    background: #B8860B !important;
+    color: #FFFFFF !important;
+    border-color: #B8860B !important;
 }
 
 .main-dish-side-name {
@@ -7227,7 +7240,7 @@ img {
 
 .main-dish-side-add-btn {
     padding: 6px 14px !important;
-    border-radius: 8px !important;
+    border-radius: 0 !important;
     border: 1px solid #B8860B !important;
     background: transparent !important;
     color: #B8860B !important;
@@ -7250,12 +7263,12 @@ img {
     justify-content: space-between !important;
     background: #FFFDF0 !important;
     border: 1px solid #FDE68A !important;
-    border-radius: 18px !important;
+    border-radius: 0 !important;
     padding: 14px 20px !important;
     margin-top: 6px !important;
     cursor: pointer !important;
     box-shadow: 0 4px 14px rgba(217, 119, 6, 0.08) !important;
-    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
     box-sizing: border-box !important;
     width: 100% !important;
 }
@@ -7263,6 +7276,16 @@ img {
 .main-dish-featured-banner:hover {
     transform: translateY(-2px) !important;
     box-shadow: 0 6px 20px rgba(217, 119, 6, 0.16) !important;
+}
+
+.main-dish-featured-banner.selected-item-active {
+    background: #FEF3C7 !important;
+    border-color: #D97706 !important;
+    box-shadow: 0 4px 16px rgba(217, 119, 6, 0.2) !important;
+}
+
+.main-dish-featured-banner.selected-item-active .main-dish-featured-arrow-btn {
+    background: #B45309 !important;
 }
 
 .main-dish-featured-img {
@@ -7287,7 +7310,7 @@ img {
 .main-dish-featured-arrow-btn {
     width: 42px !important;
     height: 42px !important;
-    border-radius: 50% !important;
+    border-radius: 0 !important;
     background: #D97706 !important;
     border: none !important;
     color: #FFFFFF !important;

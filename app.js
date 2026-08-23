@@ -176,10 +176,81 @@ function handleDirectDishSelect(element, dishName, dishPrice, dishDesc, dishCate
     if (typeof toggleSelectItem === 'function') {
         toggleSelectItem(JSON.stringify(dishObj));
     }
-    
-    if (typeof refreshAllDishCardsUI === 'function') {
-        refreshAllDishCardsUI();
+
+    // Immediate visual click pulse on element
+    if (element) {
+        element.style.transform = 'scale(0.98)';
+        setTimeout(() => { element.style.transform = ''; }, 150);
     }
+    
+    if (typeof syncMainDishesUIState === 'function') {
+        syncMainDishesUIState();
+    }
+
+    if (typeof updateSelectionBarUI === 'function') {
+        updateSelectionBarUI();
+    }
+}
+
+function syncMainDishesUIState() {
+    if (typeof document === 'undefined') return;
+    const cart = typeof getSelectedCart === 'function' ? getSelectedCart() : [];
+    
+    // 1. Sync Side Option Rows
+    const sideRows = document.querySelectorAll('.main-dish-side-row');
+    sideRows.forEach(row => {
+        const nameEl = row.querySelector('.main-dish-side-name');
+        const btnEl = row.querySelector('.main-dish-side-add-btn');
+        if (!nameEl || !btnEl) return;
+        
+        const sideName = nameEl.innerText.trim();
+        const isSelected = cart.some(item => {
+            const itemNorm = (item.name || '').toLowerCase();
+            const sideNorm = sideName.toLowerCase();
+            return itemNorm.includes(sideNorm) || sideNorm.includes(itemNorm);
+        });
+
+        if (isSelected) {
+            row.classList.add('selected-item-active');
+            btnEl.innerText = '✓ ADDED';
+            btnEl.style.background = '#B8860B';
+            btnEl.style.color = '#FFFFFF';
+            btnEl.style.borderColor = '#B8860B';
+        } else {
+            row.classList.remove('selected-item-active');
+            btnEl.innerText = '+ ADD';
+            btnEl.style.background = 'transparent';
+            btnEl.style.color = '#B8860B';
+            btnEl.style.borderColor = '#B8860B';
+        }
+    });
+
+    // 2. Sync Featured Banners
+    const banners = document.querySelectorAll('.main-dish-featured-banner');
+    banners.forEach(banner => {
+        const titleHeader = banner.parentElement ? banner.parentElement.querySelector('.main-dish-title-header h3') : null;
+        if (!titleHeader) return;
+        const mainDishName = titleHeader.innerText.trim();
+        
+        const isSelected = cart.some(item => {
+            const itemNorm = (item.name || '').toLowerCase();
+            const dishNorm = mainDishName.toLowerCase();
+            return itemNorm.includes(dishNorm) || dishNorm.includes(itemNorm);
+        });
+
+        const textEl = banner.querySelector('.main-dish-featured-text');
+        const arrowEl = banner.querySelector('.main-dish-featured-arrow-btn');
+
+        if (isSelected) {
+            banner.classList.add('selected-item-active');
+            if (textEl) textEl.innerHTML = `✓ ${mainDishName}<br>ADDED TO ORDER`;
+            if (arrowEl) arrowEl.innerHTML = '✓';
+        } else {
+            banner.classList.remove('selected-item-active');
+            if (textEl) textEl.innerHTML = `ADD ${mainDishName}<br>TO ORDER`;
+            if (arrowEl) arrowEl.innerHTML = '➔';
+        }
+    });
 }
 
 function autoInjectDishCardThumbnails() {
@@ -1792,6 +1863,7 @@ function toggleSelectItem(dishDataStr) {
 
 function updateSelectionBarUI() {
     if (typeof document === 'undefined') return;
+    if (typeof syncMainDishesUIState === 'function') syncMainDishesUIState();
     const cart = getSelectedCart();
     const totalDishes = cart.length;
     const totalQuantity = cart.reduce((sum, item) => sum + (item.qty || 1), 0);

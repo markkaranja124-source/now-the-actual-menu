@@ -7142,18 +7142,18 @@ img {
 
 .main-dish-title-header {
     text-align: center !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 14px !important;
     width: 100% !important;
 }
 
 .main-dish-title-header h3 {
     font-family: var(--font-serif, serif) !important;
-    font-size: 1.6rem !important;
+    font-size: 1.65rem !important;
     color: var(--color-gold, #B8860B) !important;
     font-weight: 700 !important;
     text-transform: uppercase !important;
-    letter-spacing: 1px !important;
-    margin: 0 0 6px 0 !important;
+    letter-spacing: 1.5px !important;
+    margin: 0 0 4px 0 !important;
     text-align: center !important;
 }
 
@@ -7161,7 +7161,7 @@ img {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 12px !important;
+    gap: 10px !important;
     color: var(--color-border-gold, #D4AF37) !important;
     font-size: 0.85rem !important;
 }
@@ -7170,7 +7170,7 @@ img {
 .main-dish-title-header .divider-symbol::after {
     content: '' !important;
     display: block !important;
-    width: 70px !important;
+    width: 85px !important;
     height: 1px !important;
     background: var(--color-border-gold, #D4AF37) !important;
 }
@@ -7180,13 +7180,14 @@ img {
     align-items: center !important;
     justify-content: space-between !important;
     background: #FFFFFF !important;
-    border: 1px solid #E5E7EB !important;
+    border: 1px solid #ECECEC !important;
     border-radius: 16px !important;
     padding: 14px 20px !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02) !important;
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
     box-sizing: border-box !important;
     width: 100% !important;
+    gap: 10px !important;
 }
 
 .main-dish-side-row:hover {
@@ -7199,12 +7200,21 @@ img {
     font-size: 1.15rem !important;
     color: #111114 !important;
     font-weight: 700 !important;
+    white-space: nowrap !important;
+}
+
+.main-dish-dotted-spacer {
+    flex: 1 !important;
+    border-bottom: 1.5px dotted #D1D5DB !important;
+    margin: 0 4px !important;
+    align-self: center !important;
+    height: 1px !important;
 }
 
 .main-dish-side-actions {
     display: flex !important;
     align-items: center !important;
-    gap: 18px !important;
+    gap: 16px !important;
 }
 
 .main-dish-side-price {
@@ -7212,6 +7222,7 @@ img {
     font-size: 1.15rem !important;
     color: #D97706 !important;
     font-weight: 700 !important;
+    white-space: nowrap !important;
 }
 
 .main-dish-side-add-btn {
@@ -7237,7 +7248,7 @@ img {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    background: #FFFDF2 !important;
+    background: #FFFDF0 !important;
     border: 1px solid #FDE68A !important;
     border-radius: 18px !important;
     padding: 14px 20px !important;

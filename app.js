@@ -209,6 +209,15 @@ function autoInjectDishCardThumbnails() {
         if (imageFile) {
             cardBox.classList.add('has-card-thumb');
 
+            if (!cardBox.querySelector('.card-info-col')) {
+                const infoCol = document.createElement('div');
+                infoCol.className = 'card-info-col';
+                while (cardBox.firstChild) {
+                    infoCol.appendChild(cardBox.firstChild);
+                }
+                cardBox.appendChild(infoCol);
+            }
+
             const wrapper = document.createElement('div');
             wrapper.className = 'card-thumb-wrapper';
             wrapper.title = name;

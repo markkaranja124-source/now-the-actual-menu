@@ -7008,21 +7008,50 @@ img {
 }
 
 /* Right Content Stack */
-.has-card-thumb > div:not(.card-thumb-wrapper) {
+.has-card-thumb .card-info-col {
     flex: 1 !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
-    gap: 6px !important;
-    padding-right: 0 !important;
+    gap: 4px !important;
+    min-width: 0 !important;
     order: 2 !important;
+    width: auto !important;
 }
 
-.has-card-thumb .menu-dish-card,
-.has-card-thumb h3,
-.has-card-thumb div[style*="justify-content: space-between"] {
+.has-card-thumb .card-info-col .menu-dish-card,
+.has-card-thumb .card-info-col div[style*="justify-content: space-between"] {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 2px !important;
+    margin-bottom: 4px !important;
     padding-right: 0 !important;
-    max-width: 100% !important;
+    width: 100% !important;
+}
+
+.has-card-thumb .card-info-col h3 {
+    margin: 0 !important;
+    padding-right: 0 !important;
+    font-size: 1.15rem !important;
+    word-break: break-word !important;
+}
+
+.has-card-thumb .card-info-col span {
+    font-size: 1.1rem !important;
+}
+
+.has-card-thumb .card-info-col p {
+    margin: 0 !important;
+    font-size: 0.8rem !important;
+    line-height: 1.35 !important;
+}
+
+.has-card-thumb .card-info-col button,
+.has-card-thumb .card-info-col .card-order-action-btn {
+    margin-top: 6px !important;
+    width: 100% !important;
+    max-width: 160px !important;
 }
 
 /* Mobile Responsive Horizontal Layout */

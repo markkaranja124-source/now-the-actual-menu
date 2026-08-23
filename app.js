@@ -192,8 +192,6 @@ function autoInjectDishCardThumbnails() {
             ? cardContainer.parentElement 
             : cardContainer;
 
-        if (cardBox.querySelector('.card-thumb-wrapper')) return;
-
         const h3 = cardContainer.querySelector('h3, h4, .dish-title') || cardBox.querySelector('h3, h4');
         const descP = cardBox.querySelector('p, .dish-desc');
         if (!h3) return;
@@ -207,22 +205,27 @@ function autoInjectDishCardThumbnails() {
         }
 
         if (imageFile) {
+            // Already cleanly constructed
+            if (cardBox.querySelector('.card-thumb-wrapper') && cardBox.querySelector('.card-info-col')) return;
+
+            const priceSpanHtml = cardBox.querySelector('span') ? cardBox.querySelector('span').outerHTML : '';
+            const btnHtml = cardBox.querySelector('button') ? cardBox.querySelector('button').outerHTML : `<button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>`;
+            const cleanDesc = desc ? `<p class="dish-desc">${desc}</p>` : '';
+
             cardBox.classList.add('has-card-thumb');
-
-            if (!cardBox.querySelector('.card-info-col')) {
-                const infoCol = document.createElement('div');
-                infoCol.className = 'card-info-col';
-                while (cardBox.firstChild) {
-                    infoCol.appendChild(cardBox.firstChild);
-                }
-                cardBox.appendChild(infoCol);
-            }
-
-            const wrapper = document.createElement('div');
-            wrapper.className = 'card-thumb-wrapper';
-            wrapper.title = name;
-            wrapper.innerHTML = `<img src="${imageFile}" alt="${name}" class="card-thumb-img" loading="lazy" decoding="async" />`;
-            cardBox.prepend(wrapper);
+            cardBox.innerHTML = `
+                <div class="card-thumb-wrapper" title="${name}">
+                    <img src="${imageFile}" alt="${name}" class="card-thumb-img" loading="eager" fetchpriority="high" />
+                </div>
+                <div class="card-info-col">
+                    <div class="card-title-price-row">
+                        <h3>${name}</h3>
+                        ${priceSpanHtml}
+                    </div>
+                    ${cleanDesc}
+                    ${btnHtml}
+                </div>
+            `;
         }
     });
 

@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "convert-images": "node convert-images.js"
   },
   "keywords": [
     "mpesa",
@@ -24,6 +25,7 @@
     "jsonwebtoken": "^9.0.3"
   },
   "devDependencies": {
-    "sharp": "^0.35.3"
+    "sharp": "^0.35.3",
+    "wrangler": "^4.125.0"
   }
 }

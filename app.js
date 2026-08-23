@@ -129,87 +129,15 @@ if (typeof document !== 'undefined') {
 
 function getDishImage(dishName, dishDesc) {
     const textLower = ((dishName || '') + ' ' + (dishDesc || '')).toLowerCase();
-    
-    // Explicit exclusions (Dishes waiting for exact customer photos)
-    const excludeFromPlaceholders = [
-        'pancake breakfast', 'chicken soup breakfast', 'chips combo', 'rib house breakfast',
-        'traditional breakfast', 'farmers choice', 'special breakfast', 'rib house special',
-        'british breakfast', 'house coffee', 'black coffee', 'americano', 'latte mocha',
-        'latte machiatto', 'coffee latte', 'honey espresso', 'cappuccino', 'espresso',
-        'lemon water', 'tea special', 'tea masala', 'ginger tea', 'dawa',
-        'milkshake', 'iced coffee',
-        'choma beef', 'beef fry / tumbukiza', 'goat fry / tumbukiza', 'tumbukiza'
-    ];
 
-    if (excludeFromPlaceholders.some(ex => textLower.includes(ex))) {
-        return null;
-    }
+    // STRICT USER ASSIGNMENTS (Only dishes explicitly placed by user)
+    if (textLower.includes('samosa combo')) return 'Andazisamosawitheggs.webp';
+    if (textLower.includes('mini breakfast')) return 'Breakfast1.webp';
+    if (textLower.includes('main breakfast')) return 'breakfastbreadwithbacon1.webp';
+    if (textLower.includes('beef stew') || textLower.includes('beef fry')) return 'beef.webp';
+    if (textLower.includes('beef steak') || textLower.includes('steakbeaf')) return 'Steakbeaf.webp';
 
-    
-    // Lemon Tea
-
-    // Oreo Shake
-    if (textLower.includes('oreo shake') || textLower.includes('oreo')) {
-        return 'Oreoshake.webp';
-    }
-
-    if (textLower.includes('lemon tea')) {
-        return 'Lemontea.webp';
-    }
-
-    // 1. Chemsha Dishes (Simmered Beef & Herbal Goat Broth)
-    if (textLower.includes('chemsha goat') || textLower.includes('goat chemsha')) {
-        return 'Chemshagoat.webp';
-    }
-    if (textLower.includes('chemsha beef') || textLower.includes('beef chemsha')) {
-        return 'chemshabeef.webp';
-    }
-
-    // 2. Pure Soup Dishes
-    if (textLower.includes('goat soup')) {
-        return 'Goatsoup.webp';
-    }
-
-    // 3. Fish & Tilapia (Wet Fry / Fillet / Stew)
-    if (textLower.includes('fish') || textLower.includes('tilapia') || textLower.includes('fillet')) {
-        return 'fishwetfry.webp';
-    }
-
-    // 4. Chicken Dishes (Whole / Wet Fry / Platter)
-    if (textLower.includes('chicken platter') || textLower.includes('chicken wet fry') || textLower.includes('chicken kienyeji')) {
-        return 'chickenquaterwithchips.webp';
-    }
-
-    // 5. Matumbo Dishes (Wet Fry / Tripe)
-    if (textLower.includes('matumbo')) {
-        return textLower.includes('chips matumbo') ? 'Chipsmatumbocombo.webp' : 'matumboplainwetfry.webp';
-    }
-
-    // 6. Pilau Dishes
-    if (textLower.includes('pilau')) {
-        return 'Pilauplain.webp';
-    }
-
-    // 7. Goat Choma Cuts
-    if (textLower.includes('choma goat') || textLower.includes('goat choma')) {
-        return 'Goatchoma1kg.webp';
-    }
-
-    // 8. Sizzling Beef
-    if (textLower.includes('sizzling') || textLower.includes('beef sizzling')) {
-        return 'beefsizzling.webp';
-    }
-
-    // 9. Beef Stew / Fry Cuts
-    if (textLower.includes('beef stew') || textLower.includes('beef fry') || textLower.includes('beef wet fry')) {
-        return 'beef.webp';
-    }
-
-    // 10. Chapati Dishes (Single)
-    if (textLower.includes('chapati plain')) {
-        return 'chapatiplain.webp';
-    }
-
+    // No auto-guessing for any other dishes until explicitly requested by user
     return null;
 }
 
@@ -254,10 +182,83 @@ function handleDirectDishSelect(element, dishName, dishPrice, dishDesc, dishCate
     }
 }
 
+function autoInjectDishCardThumbnails() {
+    if (typeof document === 'undefined') return;
+
+    // 1. Grid Cards
+    const cards = document.querySelectorAll('.menu-dish-card, [id^="dish-"], .menu-card-luxury-wrapper, .menu-grid > div');
+    cards.forEach(cardContainer => {
+        const cardBox = (cardContainer.parentElement && cardContainer.parentElement.children.length > 0 && cardContainer.parentElement.style.background) 
+            ? cardContainer.parentElement 
+            : cardContainer;
+
+        if (cardBox.querySelector('.card-thumb-wrapper')) return;
+
+        const h3 = cardContainer.querySelector('h3, h4, .dish-title') || cardBox.querySelector('h3, h4');
+        const descP = cardBox.querySelector('p, .dish-desc');
+        if (!h3) return;
+
+        const name = h3.innerText.replace(/\s+/g, ' ').trim();
+        const desc = descP ? descP.innerText.replace(/\s+/g, ' ').trim() : '';
+
+        let imageFile = null;
+        if (typeof getDishImage === 'function') {
+            imageFile = getDishImage(name, desc);
+        }
+
+        if (!imageFile && typeof RIBHOUSE_MASTER_DISHES !== 'undefined' && Array.isArray(RIBHOUSE_MASTER_DISHES)) {
+            const masterMatch = RIBHOUSE_MASTER_DISHES.find(m => 
+                typeof normalizeDishName === 'function' && normalizeDishName(m.name) === normalizeDishName(name)
+            );
+            if (masterMatch && masterMatch.image) {
+                imageFile = masterMatch.image;
+            }
+        }
+
+        if (imageFile) {
+            cardBox.classList.add('has-card-thumb');
+            cardBox.style.position = 'relative';
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'card-thumb-wrapper';
+            wrapper.title = name;
+            wrapper.innerHTML = `<img src="${imageFile}" alt="${name}" class="card-thumb-img" loading="lazy" decoding="async" />`;
+            cardBox.appendChild(wrapper);
+        }
+    });
+
+    // 2. Compact Row Dish Items
+    const rowItems = document.querySelectorAll('div[style*="justify-content: space-between"]');
+    rowItems.forEach(row => {
+        if (row.querySelector('.row-thumb-img') || row.closest('.menu-dish-card, [id^="dish-"]')) return;
+        const nameSpan = row.querySelector('span[style*="font-family"]');
+        if (!nameSpan) return;
+
+        const name = nameSpan.innerText.replace(/\s+/g, ' ').trim();
+        if (!name || name.includes('/=')) return;
+
+        let imageFile = null;
+        if (typeof getDishImage === 'function') {
+            imageFile = getDishImage(name, '');
+        }
+
+        if (imageFile) {
+            const img = document.createElement('img');
+            img.src = imageFile;
+            img.alt = name;
+            img.className = 'row-thumb-img';
+            img.loading = 'lazy';
+            img.decoding = 'async';
+            row.insertBefore(img, nameSpan);
+        }
+    });
+}
+
 if (typeof window !== 'undefined') {
     window.normalizeDishName = normalizeDishName;
     window.handleDirectDishSelect = handleDirectDishSelect;
     window.getDishImage = getDishImage;
+    window.autoInjectDishCardThumbnails = autoInjectDishCardThumbnails;
 }
 
 /* ==========================================================================
@@ -300,6 +301,7 @@ function initRibHouseAppLifecycle() {
     };
 
     // Priority 1: Interactive Menu Selection & Inventory
+    safeRun('autoInjectDishCardThumbnails', () => { if (typeof autoInjectDishCardThumbnails === 'function') autoInjectDishCardThumbnails(); });
     safeRun('initLiveInventoryListener', () => { if (typeof initLiveInventoryListener === 'function') initLiveInventoryListener(); });
     safeRun('initClickableMenuDishes', () => { if (typeof initClickableMenuDishes === 'function') initClickableMenuDishes(); });
     safeRun('updateSelectionBarUI', () => { if (typeof updateSelectionBarUI === 'function') updateSelectionBarUI(); });
@@ -321,18 +323,21 @@ if (typeof document !== 'undefined') {
 if (typeof window !== 'undefined') {
     window.addEventListener('load', () => {
         forceScrollToTop();
+        if (typeof autoInjectDishCardThumbnails === 'function') autoInjectDishCardThumbnails();
         if (typeof initClickableMenuDishes === 'function') initClickableMenuDishes();
         if (typeof refreshAllDishCardsUI === 'function') refreshAllDishCardsUI();
         if (typeof updateSelectionBarUI === 'function') updateSelectionBarUI();
     });
     window.addEventListener('pageshow', (event) => {
         forceScrollToTop();
+        if (typeof autoInjectDishCardThumbnails === 'function') autoInjectDishCardThumbnails();
         if (typeof initClickableMenuDishes === 'function') initClickableMenuDishes();
         if (typeof refreshAllDishCardsUI === 'function') refreshAllDishCardsUI();
         if (typeof updateSelectionBarUI === 'function') updateSelectionBarUI();
     });
     document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'visible') {
+            if (typeof autoInjectDishCardThumbnails === 'function') autoInjectDishCardThumbnails();
             if (typeof refreshAllDishCardsUI === 'function') refreshAllDishCardsUI();
             if (typeof updateSelectionBarUI === 'function') updateSelectionBarUI();
         }

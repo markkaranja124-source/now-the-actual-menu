@@ -6964,3 +6964,61 @@ img {
     background: #B8860B !important;
     color: #FFFFFF !important;
 }
+
+/* ==========================================================================
+   MENU DISH CARD TOP-RIGHT THUMBNAIL STYLES (OPTION 2)
+   ========================================================================== */
+.card-thumb-wrapper {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 108px;
+    height: 108px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--color-border-gold);
+    box-shadow: 0 4px 16px rgba(184, 134, 11, 0.18);
+    background-color: #FFFFFF;
+    padding: 5px;
+    z-index: 2;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+.card-thumb-wrapper:hover {
+    transform: scale(1.06);
+    box-shadow: 0 8px 22px rgba(184, 134, 11, 0.35);
+}
+
+.card-thumb-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    border-radius: 10px;
+    display: block;
+}
+
+/* Add padding-right to card title wrapper so text does not collide with thumbnail */
+.has-card-thumb {
+    position: relative !important;
+    padding-right: 118px !important;
+}
+
+.row-thumb-img {
+    width: 38px;
+    height: 38px;
+    border-radius: 6px;
+    object-fit: cover;
+    margin-right: 10px;
+    flex-shrink: 0;
+    border: 1px solid var(--color-border-gold);
+    display: inline-block;
+    vertical-align: middle;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+

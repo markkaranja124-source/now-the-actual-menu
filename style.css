@@ -6968,34 +6968,43 @@ img {
 /* ==========================================================================
    HORIZONTAL CARD THUMBNAIL LAYOUT (Left Image Box + Right Info Stack)
    ========================================================================== */
+/* ==========================================================================
+   PIXEL-PERFECT HORIZONTAL CARD LAYOUT (MATCHING USER REFERENCE SCREENSHOT)
+   ========================================================================== */
 .has-card-thumb {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
     gap: 16px !important;
     padding: 16px !important;
+    background-color: var(--color-card-bg, #FFFFFF) !important;
+    border-radius: 18px !important;
+    border: 1px solid var(--color-border-gold, #D4AF37) !important;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04) !important;
     position: relative !important;
-    min-height: unset !important;
+    box-sizing: border-box !important;
 }
 
 .has-card-thumb .card-thumb-wrapper {
     position: relative !important;
     top: auto !important;
     right: auto !important;
-    width: 110px !important;
-    height: 120px !important;
+    left: auto !important;
+    bottom: auto !important;
+    width: 105px !important;
+    height: 115px !important;
     flex-shrink: 0 !important;
     border-radius: 14px !important;
     overflow: hidden !important;
-    border: 1px solid var(--color-border-gold) !important;
-    box-shadow: 0 4px 12px rgba(184, 134, 11, 0.12) !important;
+    border: 1px solid var(--color-border-gold, #D4AF37) !important;
     background-color: #FFFFFF !important;
-    padding: 4px !important;
+    padding: 5px !important;
     z-index: 2 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     order: 1 !important;
+    margin: 0 !important;
 }
 
 .has-card-thumb .card-thumb-img {
@@ -7003,11 +7012,11 @@ img {
     height: 100% !important;
     object-fit: contain !important;
     object-position: center !important;
-    border-radius: 9px !important;
+    border-radius: 10px !important;
     display: block !important;
 }
 
-/* Right Content Stack */
+/* Right Info Stack Column */
 .has-card-thumb .card-info-col {
     flex: 1 !important;
     display: flex !important;
@@ -7017,6 +7026,8 @@ img {
     min-width: 0 !important;
     order: 2 !important;
     width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 .has-card-thumb .card-info-col .menu-dish-card,
@@ -7024,34 +7035,55 @@ img {
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
+    justify-content: flex-start !important;
     gap: 2px !important;
-    margin-bottom: 4px !important;
-    padding-right: 0 !important;
+    margin: 0 0 4px 0 !important;
+    padding: 0 !important;
     width: 100% !important;
 }
 
 .has-card-thumb .card-info-col h3 {
     margin: 0 !important;
-    padding-right: 0 !important;
-    font-size: 1.15rem !important;
+    padding: 0 !important;
+    font-family: var(--font-serif, serif) !important;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    color: #111114 !important;
+    line-height: 1.25 !important;
     word-break: break-word !important;
 }
 
 .has-card-thumb .card-info-col span {
-    font-size: 1.1rem !important;
+    font-family: var(--font-serif, serif) !important;
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+    color: var(--color-gold, #B8860B) !important;
+    margin-top: 2px !important;
+    display: block !important;
 }
 
 .has-card-thumb .card-info-col p {
-    margin: 0 !important;
-    font-size: 0.8rem !important;
+    margin: 4px 0 0 0 !important;
+    font-size: 0.82rem !important;
+    color: var(--color-text-muted, #6B7280) !important;
     line-height: 1.35 !important;
 }
 
 .has-card-thumb .card-info-col button,
 .has-card-thumb .card-info-col .card-order-action-btn {
-    margin-top: 6px !important;
+    margin-top: 10px !important;
     width: 100% !important;
-    max-width: 160px !important;
+    max-width: 165px !important;
+    padding: 8px 12px !important;
+    border: 1px solid #B8860B !important;
+    background: transparent !important;
+    color: #B8860B !important;
+    font-weight: 700 !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.5px !important;
+    border-radius: 0px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
 }
 
 /* Mobile Responsive Horizontal Layout */
@@ -7059,6 +7091,7 @@ img {
     .has-card-thumb {
         padding: 12px !important;
         gap: 12px !important;
+        border-radius: 14px !important;
     }
 
     .has-card-thumb .card-thumb-wrapper {
@@ -7066,6 +7099,15 @@ img {
         height: 105px !important;
         border-radius: 10px !important;
         padding: 3px !important;
+    }
+
+    .has-card-thumb .card-info-col h3 {
+        font-size: 1.1rem !important;
+    }
+
+    .has-card-thumb .card-info-col button,
+    .has-card-thumb .card-info-col .card-order-action-btn {
+        max-width: 100% !important;
     }
 }
 

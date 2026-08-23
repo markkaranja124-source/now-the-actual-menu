@@ -6970,16 +6970,16 @@ img {
    ========================================================================== */
 .card-thumb-wrapper {
     position: absolute;
-    top: 12px;
-    right: 12px;
-    width: 108px;
-    height: 108px;
-    border-radius: 14px;
+    top: 10px;
+    right: 10px;
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
     overflow: hidden;
     border: 1px solid var(--color-border-gold);
-    box-shadow: 0 4px 16px rgba(184, 134, 11, 0.18);
+    box-shadow: 0 4px 12px rgba(184, 134, 11, 0.16);
     background-color: #FFFFFF;
-    padding: 5px;
+    padding: 3px;
     z-index: 2;
     pointer-events: auto;
     display: flex;
@@ -6989,8 +6989,8 @@ img {
 }
 
 .card-thumb-wrapper:hover {
-    transform: scale(1.06);
-    box-shadow: 0 8px 22px rgba(184, 134, 11, 0.35);
+    transform: scale(1.08);
+    box-shadow: 0 6px 18px rgba(184, 134, 11, 0.3);
 }
 
 .card-thumb-img {
@@ -6998,14 +6998,20 @@ img {
     height: 100% !important;
     object-fit: contain !important;
     object-position: center !important;
-    border-radius: 10px;
+    border-radius: 7px;
     display: block;
 }
 
-/* Add padding-right to card title wrapper so text does not collide with thumbnail */
+/* Add padding-right to card title wrapper so text & prices do not collide with thumbnail */
 .has-card-thumb {
     position: relative !important;
-    padding-right: 118px !important;
+}
+
+.has-card-thumb .menu-dish-card,
+.has-card-thumb h3,
+.has-card-thumb div[style*="justify-content: space-between"] {
+    padding-right: 76px !important;
+    box-sizing: border-box !important;
 }
 
 .row-thumb-img {

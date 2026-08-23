@@ -195,59 +195,83 @@ function handleDirectDishSelect(element, dishName, dishPrice, dishDesc, dishCate
 function syncMainDishesUIState() {
     if (typeof document === 'undefined') return;
     const cart = typeof getSelectedCart === 'function' ? getSelectedCart() : [];
+    const norm = (str) => typeof normalizeDishName === 'function' ? normalizeDishName(str) : (str || '').toLowerCase().trim();
     
     // 1. Sync Side Option Rows
     const sideRows = document.querySelectorAll('.main-dish-side-row');
     sideRows.forEach(row => {
-        const nameEl = row.querySelector('.main-dish-side-name');
-        const btnEl = row.querySelector('.main-dish-side-add-btn');
-        if (!nameEl || !btnEl) return;
-        
-        const sideName = nameEl.innerText.trim();
-        const isSelected = cart.some(item => {
-            const itemNorm = (item.name || '').toLowerCase();
-            const sideNorm = sideName.toLowerCase();
-            return itemNorm.includes(sideNorm) || sideNorm.includes(itemNorm);
-        });
+        let exactName = row.getAttribute('data-dish-name') || '';
+        if (!exactName) {
+            const onclickAttr = row.getAttribute('onclick') || '';
+            const match = onclickAttr.match(/handleDirectDishSelect\s*\(\s*this\s*,\s*['"]([^'"]+)['"]/);
+            if (match && match[1]) {
+                exactName = match[1];
+            } else {
+                const nameEl = row.querySelector('.main-dish-side-name');
+                const parentHeader = row.closest('.main-dish-section-block')?.querySelector('.main-dish-title-header h3');
+                if (nameEl && parentHeader) {
+                    exactName = `${parentHeader.innerText.trim()} with ${nameEl.innerText.trim()}`;
+                } else if (nameEl) {
+                    exactName = nameEl.innerText.trim();
+                }
+            }
+        }
 
+        if (!exactName) return;
+
+        const targetNorm = norm(exactName);
+        const isSelected = cart.some(item => norm(item.name) === targetNorm);
+
+        const btnEl = row.querySelector('.main-dish-side-add-btn');
         if (isSelected) {
             row.classList.add('selected-item-active');
-            btnEl.innerText = '✓ ADDED';
-            btnEl.style.background = '#B8860B';
-            btnEl.style.color = '#FFFFFF';
-            btnEl.style.borderColor = '#B8860B';
+            if (btnEl) {
+                btnEl.innerText = '✓ ADDED';
+                btnEl.style.background = '#B8860B';
+                btnEl.style.color = '#FFFFFF';
+                btnEl.style.borderColor = '#B8860B';
+            }
         } else {
             row.classList.remove('selected-item-active');
-            btnEl.innerText = '+ ADD';
-            btnEl.style.background = 'transparent';
-            btnEl.style.color = '#B8860B';
-            btnEl.style.borderColor = '#B8860B';
+            if (btnEl) {
+                btnEl.innerText = '+ ADD';
+                btnEl.style.background = 'transparent';
+                btnEl.style.color = '#B8860B';
+                btnEl.style.borderColor = '#B8860B';
+            }
         }
     });
 
     // 2. Sync Featured Banners
     const banners = document.querySelectorAll('.main-dish-featured-banner');
     banners.forEach(banner => {
-        const titleHeader = banner.parentElement ? banner.parentElement.querySelector('.main-dish-title-header h3') : null;
-        if (!titleHeader) return;
-        const mainDishName = titleHeader.innerText.trim();
-        
-        const isSelected = cart.some(item => {
-            const itemNorm = (item.name || '').toLowerCase();
-            const dishNorm = mainDishName.toLowerCase();
-            return itemNorm.includes(dishNorm) || dishNorm.includes(itemNorm);
-        });
+        let exactName = banner.getAttribute('data-dish-name') || '';
+        if (!exactName) {
+            const onclickAttr = banner.getAttribute('onclick') || '';
+            const match = onclickAttr.match(/handleDirectDishSelect\s*\(\s*this\s*,\s*['"]([^'"]+)['"]/);
+            if (match && match[1]) {
+                exactName = match[1];
+            } else {
+                const titleHeader = banner.parentElement ? banner.parentElement.querySelector('.main-dish-title-header h3') : null;
+                if (titleHeader) exactName = titleHeader.innerText.trim();
+            }
+        }
+
+        if (!exactName) return;
+
+        const targetNorm = norm(exactName);
+        const isSelected = cart.some(item => norm(item.name) === targetNorm);
 
         const textEl = banner.querySelector('.main-dish-featured-text');
         const arrowEl = banner.querySelector('.main-dish-featured-arrow-btn');
 
         if (isSelected) {
             banner.classList.add('selected-item-active');
-            if (textEl) textEl.innerHTML = `✓ ${mainDishName}<br>ADDED TO ORDER`;
+            if (textEl) textEl.innerHTML = `✓ ${exactName}<br>ADDED TO ORDER`;
             if (arrowEl) arrowEl.innerHTML = '✓';
         } else {
             banner.classList.remove('selected-item-active');
-            if (textEl) textEl.innerHTML = `ADD ${mainDishName}<br>TO ORDER`;
+            if (textEl) textEl.innerHTML = `ADD ${exactName}<br>TO ORDER`;
             if (arrowEl) arrowEl.innerHTML = '➔';
         }
     });

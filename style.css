@@ -7005,13 +7005,41 @@ img {
 /* Add padding-right to card title wrapper so text & prices do not collide with thumbnail */
 .has-card-thumb {
     position: relative !important;
+    min-height: 115px !important;
 }
 
 .has-card-thumb .menu-dish-card,
 .has-card-thumb h3,
 .has-card-thumb div[style*="justify-content: space-between"] {
-    padding-right: 76px !important;
+    padding-right: 78px !important;
     box-sizing: border-box !important;
+}
+
+/* Mobile responsive thumbnail layout adjustments */
+@media (max-width: 600px) {
+    .card-thumb-wrapper {
+        width: 58px !important;
+        height: 58px !important;
+        top: 8px !important;
+        right: 8px !important;
+        border-radius: 8px !important;
+        padding: 2px !important;
+    }
+    
+    .has-card-thumb {
+        min-height: 105px !important;
+    }
+
+    .has-card-thumb .menu-dish-card,
+    .has-card-thumb h3,
+    .has-card-thumb div[style*="justify-content: space-between"] {
+        padding-right: 64px !important;
+    }
+
+    .has-card-thumb .card-order-action-btn,
+    .has-card-thumb button {
+        margin-top: 14px !important;
+    }
 }
 
 .row-thumb-img {

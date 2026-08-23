@@ -206,15 +206,6 @@ function autoInjectDishCardThumbnails() {
             imageFile = getDishImage(name, desc);
         }
 
-        if (!imageFile && typeof RIBHOUSE_MASTER_DISHES !== 'undefined' && Array.isArray(RIBHOUSE_MASTER_DISHES)) {
-            const masterMatch = RIBHOUSE_MASTER_DISHES.find(m => 
-                typeof normalizeDishName === 'function' && normalizeDishName(m.name) === normalizeDishName(name)
-            );
-            if (masterMatch && masterMatch.image) {
-                imageFile = masterMatch.image;
-            }
-        }
-
         if (imageFile) {
             cardBox.classList.add('has-card-thumb');
             cardBox.style.position = 'relative';

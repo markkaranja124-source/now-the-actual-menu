@@ -208,13 +208,12 @@ function autoInjectDishCardThumbnails() {
 
         if (imageFile) {
             cardBox.classList.add('has-card-thumb');
-            cardBox.style.position = 'relative';
 
             const wrapper = document.createElement('div');
             wrapper.className = 'card-thumb-wrapper';
             wrapper.title = name;
             wrapper.innerHTML = `<img src="${imageFile}" alt="${name}" class="card-thumb-img" loading="lazy" decoding="async" />`;
-            cardBox.appendChild(wrapper);
+            cardBox.prepend(wrapper);
         }
     });
 

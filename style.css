@@ -6966,79 +6966,77 @@ img {
 }
 
 /* ==========================================================================
-   MENU DISH CARD TOP-RIGHT THUMBNAIL STYLES (OPTION 2)
+   HORIZONTAL CARD THUMBNAIL LAYOUT (Left Image Box + Right Info Stack)
    ========================================================================== */
-.card-thumb-wrapper {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 70px;
-    height: 70px;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid var(--color-border-gold);
-    box-shadow: 0 4px 12px rgba(184, 134, 11, 0.16);
-    background-color: #FFFFFF;
-    padding: 3px;
-    z-index: 2;
-    pointer-events: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+.has-card-thumb {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 16px !important;
+    padding: 16px !important;
+    position: relative !important;
+    min-height: unset !important;
 }
 
-.card-thumb-wrapper:hover {
-    transform: scale(1.08);
-    box-shadow: 0 6px 18px rgba(184, 134, 11, 0.3);
+.has-card-thumb .card-thumb-wrapper {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    width: 110px !important;
+    height: 120px !important;
+    flex-shrink: 0 !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    border: 1px solid var(--color-border-gold) !important;
+    box-shadow: 0 4px 12px rgba(184, 134, 11, 0.12) !important;
+    background-color: #FFFFFF !important;
+    padding: 4px !important;
+    z-index: 2 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    order: 1 !important;
 }
 
-.card-thumb-img {
+.has-card-thumb .card-thumb-img {
     width: 100% !important;
     height: 100% !important;
     object-fit: contain !important;
     object-position: center !important;
-    border-radius: 7px;
-    display: block;
+    border-radius: 9px !important;
+    display: block !important;
 }
 
-/* Add padding-right to card title wrapper so text & prices do not collide with thumbnail */
-.has-card-thumb {
-    position: relative !important;
-    min-height: 115px !important;
+/* Right Content Stack */
+.has-card-thumb > div:not(.card-thumb-wrapper) {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    padding-right: 0 !important;
+    order: 2 !important;
 }
 
 .has-card-thumb .menu-dish-card,
 .has-card-thumb h3,
 .has-card-thumb div[style*="justify-content: space-between"] {
-    padding-right: 78px !important;
-    box-sizing: border-box !important;
+    padding-right: 0 !important;
+    max-width: 100% !important;
 }
 
-/* Mobile responsive thumbnail layout adjustments */
+/* Mobile Responsive Horizontal Layout */
 @media (max-width: 600px) {
-    .card-thumb-wrapper {
-        width: 58px !important;
-        height: 58px !important;
-        top: 8px !important;
-        right: 8px !important;
-        border-radius: 8px !important;
-        padding: 2px !important;
-    }
-    
     .has-card-thumb {
-        min-height: 105px !important;
+        padding: 12px !important;
+        gap: 12px !important;
     }
 
-    .has-card-thumb .menu-dish-card,
-    .has-card-thumb h3,
-    .has-card-thumb div[style*="justify-content: space-between"] {
-        padding-right: 64px !important;
-    }
-
-    .has-card-thumb .card-order-action-btn,
-    .has-card-thumb button {
-        margin-top: 14px !important;
+    .has-card-thumb .card-thumb-wrapper {
+        width: 95px !important;
+        height: 105px !important;
+        border-radius: 10px !important;
+        padding: 3px !important;
     }
 }
 

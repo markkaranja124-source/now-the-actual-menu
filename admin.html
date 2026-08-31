@@ -1535,6 +1535,13 @@
             renderInventoryCards();
 
             try {
+                if ('BroadcastChannel' in window) {
+                    const invChannel = new BroadcastChannel('ribhouse_inventory_channel');
+                    invChannel.postMessage({ type: 'inventory_update', itemId, status: newStatus });
+                }
+            } catch(e) {}
+
+            try {
                 await fetch(RIBHOUSE_CLOUD_SYNC_URL, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },

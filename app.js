@@ -131,9 +131,11 @@ function getDishImage(dishName, dishDesc) {
     const textLower = ((dishName || '') + ' ' + (dishDesc || '')).toLowerCase();
 
     // STRICT USER ASSIGNMENTS (Only dishes explicitly placed by user)
+    if (textLower.includes('chicken platter') || textLower.includes('platter for 4')) return 'Chickenplatterforfour.webp';
     if (textLower.includes('samosa combo')) return 'Andazisamosawitheggs.webp';
     if (textLower.includes('mini breakfast')) return 'Breakfast1.webp';
     if (textLower.includes('main breakfast')) return 'breakfastbreadwithbacon1.webp';
+    if (textLower.includes('goat soup breakfast') || textLower.includes('goat soup')) return 'Goatsoup.webp';
     if (textLower.includes('beef stew') || textLower.includes('beef fry')) return 'beef.webp';
     if (textLower.includes('beef steak') || textLower.includes('steakbeaf')) return 'Steakbeaf.webp';
 
@@ -221,23 +223,41 @@ function syncMainDishesUIState() {
 
         const targetNorm = norm(exactName);
         const isSelected = cart.some(item => norm(item.name) === targetNorm);
+        const itemStatus = typeof getItemAvailability === 'function' ? getItemAvailability(exactName) : 'ready';
 
         const btnEl = row.querySelector('.main-dish-side-add-btn');
-        if (isSelected) {
+        if (itemStatus === 'hold') {
+            row.classList.remove('selected-item-active');
+            row.style.opacity = '0.65';
+            row.style.cursor = 'not-allowed';
+            if (btnEl) {
+                btnEl.innerText = 'ON HOLD';
+                btnEl.style.background = '#F59E0B';
+                btnEl.style.color = '#000000';
+                btnEl.style.borderColor = '#D97706';
+                btnEl.style.cursor = 'not-allowed';
+            }
+        } else if (isSelected) {
             row.classList.add('selected-item-active');
+            row.style.opacity = '1';
+            row.style.cursor = 'pointer';
             if (btnEl) {
                 btnEl.innerText = '✓ ADDED';
                 btnEl.style.background = '#B8860B';
                 btnEl.style.color = '#FFFFFF';
                 btnEl.style.borderColor = '#B8860B';
+                btnEl.style.cursor = 'pointer';
             }
         } else {
             row.classList.remove('selected-item-active');
+            row.style.opacity = '1';
+            row.style.cursor = 'pointer';
             if (btnEl) {
                 btnEl.innerText = '+ ADD';
                 btnEl.style.background = 'transparent';
                 btnEl.style.color = '#B8860B';
                 btnEl.style.borderColor = '#B8860B';
+                btnEl.style.cursor = 'pointer';
             }
         }
     });
@@ -261,18 +281,121 @@ function syncMainDishesUIState() {
 
         const targetNorm = norm(exactName);
         const isSelected = cart.some(item => norm(item.name) === targetNorm);
+        const itemStatus = typeof getItemAvailability === 'function' ? getItemAvailability(exactName) : 'ready';
 
         const textEl = banner.querySelector('.main-dish-featured-text');
         const arrowEl = banner.querySelector('.main-dish-featured-arrow-btn');
 
-        if (isSelected) {
+        if (itemStatus === 'hold') {
+            banner.classList.remove('selected-item-active');
+            banner.style.opacity = '0.65';
+            banner.style.cursor = 'not-allowed';
+            if (textEl) textEl.innerHTML = `${exactName}<br><span style="color:#F59E0B;font-weight:700;">ON HOLD IN KITCHEN</span>`;
+            if (arrowEl) {
+                arrowEl.innerHTML = 'HOLD';
+                arrowEl.style.background = '#F59E0B';
+                arrowEl.style.color = '#000000';
+            }
+        } else if (isSelected) {
             banner.classList.add('selected-item-active');
+            banner.style.opacity = '1';
+            banner.style.cursor = 'pointer';
             if (textEl) textEl.innerHTML = `✓ ${exactName}<br>ADDED TO ORDER`;
-            if (arrowEl) arrowEl.innerHTML = '✓';
+            if (arrowEl) {
+                arrowEl.innerHTML = '✓';
+                arrowEl.style.background = '#B8860B';
+                arrowEl.style.color = '#FFFFFF';
+            }
         } else {
             banner.classList.remove('selected-item-active');
+            banner.style.opacity = '1';
+            banner.style.cursor = 'pointer';
             if (textEl) textEl.innerHTML = `ADD ${exactName}<br>TO ORDER`;
-            if (arrowEl) arrowEl.innerHTML = '➔';
+            if (arrowEl) {
+                arrowEl.innerHTML = '➔';
+                arrowEl.style.background = '';
+                arrowEl.style.color = '';
+            }
+        }
+    });
+
+    // 3. Sync Standard Dish Card Buttons (.card-order-action-btn)
+    const cardBtns = document.querySelectorAll('.card-order-action-btn');
+    cardBtns.forEach(btn => {
+        const cardBox = btn.closest('.menu-card-luxury-wrapper, .menu-dish-card') || btn.parentElement;
+        if (!cardBox) return;
+
+        let exactName = btn.getAttribute('data-dish-name') || '';
+        if (!exactName) {
+            const onclickAttr = btn.getAttribute('onclick') || '';
+            const match = onclickAttr.match(/handleDirectDishSelect\s*\(\s*this\s*,\s*['"]([^'"]+)['"]/);
+            if (match && match[1]) {
+                exactName = match[1];
+            } else {
+                const h3 = cardBox.querySelector('h3, h4');
+                if (h3) exactName = h3.innerText.trim();
+            }
+        }
+
+        if (!exactName) return;
+
+        const isSelected = cart.some(item => norm(item.name) === norm(exactName));
+        const itemStatus = typeof getItemAvailability === 'function' ? getItemAvailability(exactName) : 'ready';
+
+        let badge = cardBox.querySelector('.card-hold-badge');
+
+        if (itemStatus === 'hold') {
+            btn.innerHTML = 'ON HOLD';
+            btn.classList.remove('selected-btn-active', 'is-selected');
+            btn.style.setProperty('background', '#F59E0B', 'important');
+            btn.style.setProperty('color', '#000000', 'important');
+            btn.style.setProperty('border-color', '#D97706', 'important');
+            btn.style.setProperty('cursor', 'not-allowed', 'important');
+
+            if (cardBox) {
+                cardBox.style.opacity = '0.85';
+                if (!badge) {
+                    badge = document.createElement('div');
+                    badge.className = 'card-hold-badge';
+                    badge.style.position = 'absolute';
+                    badge.style.top = '10px';
+                    badge.style.right = '10px';
+                    badge.style.background = '#F59E0B';
+                    badge.style.color = '#000000';
+                    badge.style.fontSize = '0.7rem';
+                    badge.style.fontWeight = '800';
+                    badge.style.padding = '4px 8px';
+                    badge.style.borderRadius = '3px';
+                    badge.style.zIndex = '5';
+                    badge.style.letterSpacing = '0.5px';
+                    badge.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+                    badge.innerText = 'ON HOLD';
+                    if (getComputedStyle(cardBox).position === 'static') {
+                        cardBox.style.position = 'relative';
+                    }
+                    cardBox.appendChild(badge);
+                } else {
+                    badge.style.display = 'block';
+                }
+            }
+        } else {
+            if (badge) badge.style.display = 'none';
+            if (cardBox) cardBox.style.opacity = '1';
+            btn.style.removeProperty('cursor');
+
+            if (isSelected) {
+                btn.innerHTML = '✓ ADDED TO ORDER';
+                btn.classList.add('selected-btn-active', 'is-selected');
+                btn.style.setProperty('background', '#B8860B', 'important');
+                btn.style.setProperty('color', '#FFFFFF', 'important');
+                btn.style.setProperty('border-color', '#B8860B', 'important');
+            } else {
+                btn.innerHTML = '+ ADD TO ORDER';
+                btn.classList.remove('selected-btn-active', 'is-selected');
+                btn.style.setProperty('background', 'transparent', 'important');
+                btn.style.setProperty('color', '#B8860B', 'important');
+                btn.style.setProperty('border-color', '#B8860B', 'important');
+            }
         }
     });
 }
@@ -308,13 +431,26 @@ function autoInjectDishCardThumbnails() {
             if (cardBox.querySelector('.card-thumb-wrapper') && cardBox.querySelector('.card-info-col')) return;
 
             const priceSpanHtml = cardBox.querySelector('span') ? cardBox.querySelector('span').outerHTML : '';
-            const btnHtml = cardBox.querySelector('button') ? cardBox.querySelector('button').outerHTML : `<button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>`;
             const cleanDesc = desc ? `<p class="dish-desc">${desc}</p>` : '';
+            const itemStatus = typeof getItemAvailability === 'function' ? getItemAvailability(name) : 'ready';
+
+            let btnHtml = cardBox.querySelector('button') ? cardBox.querySelector('button').outerHTML : `<button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>`;
+            let holdBadgeHtml = '';
+
+            if (itemStatus === 'hold') {
+                btnHtml = `<button type="button" class="card-order-action-btn" style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #D97706; background: #F59E0B; color: #000000; font-weight: 700; font-size: 0.82rem; cursor: not-allowed;">ON HOLD</button>`;
+                holdBadgeHtml = `<div class="card-hold-badge" style="position: absolute; top: 10px; right: 10px; background: #F59E0B; color: #000000; font-size: 0.7rem; font-weight: 800; padding: 4px 8px; border-radius: 3px; z-index: 5; letter-spacing: 0.5px; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">ON HOLD</div>`;
+            }
+
+            if (getComputedStyle(cardBox).position === 'static') {
+                cardBox.style.position = 'relative';
+            }
 
             cardBox.classList.add('has-card-thumb');
             cardBox.innerHTML = `
-                <div class="card-thumb-wrapper" title="${name}">
+                <div class="card-thumb-wrapper" style="position: relative;" title="${name}">
                     <img src="${imageFile}" alt="${name}" class="card-thumb-img" loading="eager" fetchpriority="high" />
+                    ${holdBadgeHtml}
                 </div>
                 <div class="card-info-col">
                     <div class="card-title-price-row">
@@ -1803,11 +1939,12 @@ function extractSideOptions(dishName, desc) {
     return [];
 }
 
-// Calculate total subtotal of a dish across all its customized portions
-function calculateItemSubtotal(item) {
+// Calculate total subtotal of a dish across all its customized portions (includes +20/= Takeaway Container fee if Takeaway is active)
+function calculateItemSubtotal(item, diningType = getDiningType()) {
     const base = item.basePrice || parseInt((item.price || '0').toString().replace(/[^0-9]/g, ''), 10) || 0;
+    const pkgExtra = (diningType === 'takeaway') ? 20 : 0;
     if (!item.portions || item.portions.length === 0) {
-        return base * (item.qty || 1);
+        return (base + pkgExtra) * (item.qty || 1);
     }
     let sum = 0;
     item.portions.forEach(p => {
@@ -1815,7 +1952,7 @@ function calculateItemSubtotal(item) {
         if (p && p.pairing === 'ugali_managu') extra = 100;
         else if (p && p.pairing === 'ugali_sukuma') extra = 70;
         else if (p && p.pairing === 'ugali_cabbage') extra = 70;
-        sum += (base + extra);
+        sum += (base + extra + pkgExtra);
     });
     return sum;
 }
@@ -2202,6 +2339,25 @@ function initLiveInventoryListener() {
 
 if (typeof window !== 'undefined') {
     initLiveInventoryListener();
+
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'ribhouse_dish_inventory') {
+            if (typeof refreshAllDishCardsUI === 'function') refreshAllDishCardsUI();
+            if (typeof renderSelectedOrderPage === 'function') renderSelectedOrderPage();
+        }
+    });
+
+    try {
+        if ('BroadcastChannel' in window) {
+            const invChannel = new BroadcastChannel('ribhouse_inventory_channel');
+            invChannel.onmessage = (e) => {
+                if (e.data && e.data.type === 'inventory_update') {
+                    if (typeof refreshAllDishCardsUI === 'function') refreshAllDishCardsUI();
+                    if (typeof renderSelectedOrderPage === 'function') renderSelectedOrderPage();
+                }
+            };
+        }
+    } catch (e) {}
 }
 
 function getItemAvailability(name) {
@@ -2222,7 +2378,7 @@ function initClickableMenuDishes() {
     // Globally clean up any old status pills or badges
     document.querySelectorAll('.dish-status-pill, [class*="status-pill"], [class*="pill-hold"], [class*="pill-unavailable"]').forEach(el => el.remove());
 
-    const allCards = document.querySelectorAll('.menu-grid > div');
+    const allCards = document.querySelectorAll('.menu-grid > div, .menu-card-luxury-wrapper');
 
     allCards.forEach(card => {
         const h3Header = card.querySelector('h3, h4');
@@ -2270,6 +2426,10 @@ function initClickableMenuDishes() {
                 let itemStatus = getItemAvailability(fullDishName);
                 if (itemStatus === 'ready') {
                     itemStatus = getItemAvailability(sideName);
+                }
+                const cardMainStatus = getItemAvailability(mainTitle);
+                if (cardMainStatus !== 'ready') {
+                    itemStatus = cardMainStatus;
                 }
 
                 if (itemStatus === 'unavailable') {
@@ -2379,19 +2539,48 @@ function initClickableMenuDishes() {
                 card.appendChild(cardBtn);
             }
 
-            if (visibleOptionCount === 0) {
-                card.style.opacity = '1';
-                cardBtn.style.display = 'none';
-                cardBtn.onclick = null;
-            } else if (!firstAvailableOption) {
+            const mainCardAvail = getItemAvailability(mainTitle);
+
+            let cardBadge = card.querySelector('.card-hold-badge');
+
+            if (mainCardAvail === 'hold' || !firstAvailableOption) {
                 card.style.opacity = '1';
                 cardBtn.style.display = 'block';
-                cardBtn.innerHTML = 'On Hold';
+                cardBtn.innerHTML = 'ON HOLD';
                 cardBtn.style.background = '#F59E0B';
                 cardBtn.style.color = '#000000';
                 cardBtn.style.borderColor = '#D97706';
                 cardBtn.style.cursor = 'not-allowed';
                 cardBtn.onclick = null;
+
+                if (!cardBadge && mainCardAvail === 'hold') {
+                    cardBadge = document.createElement('div');
+                    cardBadge.className = 'card-hold-badge';
+                    cardBadge.style.position = 'absolute';
+                    cardBadge.style.top = '10px';
+                    cardBadge.style.right = '10px';
+                    cardBadge.style.background = '#F59E0B';
+                    cardBadge.style.color = '#000000';
+                    cardBadge.style.fontSize = '0.7rem';
+                    cardBadge.style.fontWeight = '800';
+                    cardBadge.style.padding = '4px 8px';
+                    cardBadge.style.borderRadius = '3px';
+                    cardBadge.style.zIndex = '5';
+                    cardBadge.style.letterSpacing = '0.5px';
+                    cardBadge.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+                    cardBadge.innerText = 'ON HOLD';
+                    if (getComputedStyle(card).position === 'static') {
+                        card.style.position = 'relative';
+                    }
+                    card.appendChild(cardBadge);
+                } else if (cardBadge) {
+                    cardBadge.style.display = (mainCardAvail === 'hold') ? 'block' : 'none';
+                }
+            } else if (visibleOptionCount === 0 || mainCardAvail === 'unavailable') {
+                card.style.opacity = '1';
+                cardBtn.style.display = 'none';
+                cardBtn.onclick = null;
+                if (cardBadge) cardBadge.style.display = 'none';
             } else {
                 card.style.opacity = '1';
                 cardBtn.style.display = 'block';
@@ -2542,6 +2731,7 @@ window.addEventListener('storage', (e) => {
 
 function refreshAllDishCardsUI() {
     initClickableMenuDishes();
+    syncMainDishesUIState();
     updateSelectionBarUI();
 }
 

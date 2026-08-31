@@ -6978,7 +6978,7 @@ img {
     gap: 16px !important;
     padding: 16px !important;
     background-color: var(--color-card-bg, #FFFFFF) !important;
-    border-radius: 18px !important;
+    border-radius: 0 !important;
     border: 1px solid var(--color-border-gold, #D4AF37) !important;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04) !important;
     position: relative !important;
@@ -6994,7 +6994,7 @@ img {
     width: 105px !important;
     height: 115px !important;
     flex-shrink: 0 !important;
-    border-radius: 14px !important;
+    border-radius: 0 !important;
     overflow: hidden !important;
     border: 1px solid var(--color-border-gold, #D4AF37) !important;
     background-color: #FFFFFF !important;
@@ -7012,7 +7012,7 @@ img {
     height: 100% !important;
     object-fit: contain !important;
     object-position: center !important;
-    border-radius: 10px !important;
+    border-radius: 0 !important;
     display: block !important;
 }
 
@@ -7076,8 +7076,8 @@ img {
     max-width: 165px !important;
     padding: 8px 12px !important;
     border: 1px solid #B8860B !important;
-    background: transparent !important;
-    color: #B8860B !important;
+    background: transparent;
+    color: #B8860B;
     font-weight: 700 !important;
     font-size: 0.75rem !important;
     letter-spacing: 0.5px !important;
@@ -7086,18 +7086,32 @@ img {
     transition: all 0.2s ease !important;
 }
 
+/* Highlighted state when dish is added/selected */
+.card-order-action-btn.selected-btn-active,
+.card-order-action-btn.is-selected,
+.has-card-thumb .card-info-col button.selected-btn-active,
+.has-card-thumb .card-info-col button.is-selected,
+.has-card-thumb.selected-item-active button,
+.has-card-thumb.selected-item-active .card-order-action-btn,
+.menu-card-luxury-wrapper.selected-item-active .card-order-action-btn {
+    background: #B8860B !important;
+    color: #FFFFFF !important;
+    border-color: #B8860B !important;
+    box-shadow: 0 3px 12px rgba(184, 134, 11, 0.45) !important;
+}
+
 /* Mobile Responsive Horizontal Layout */
 @media (max-width: 600px) {
     .has-card-thumb {
         padding: 12px !important;
         gap: 12px !important;
-        border-radius: 14px !important;
+        border-radius: 0 !important;
     }
 
     .has-card-thumb .card-thumb-wrapper {
         width: 95px !important;
         height: 105px !important;
-        border-radius: 10px !important;
+        border-radius: 0 !important;
         padding: 3px !important;
     }
 
@@ -7173,6 +7187,12 @@ img {
     width: 85px !important;
     height: 1px !important;
     background: var(--color-border-gold, #D4AF37) !important;
+}
+
+.main-dish-title-header .divider-symbol img {
+    height: 22px !important;
+    width: auto !important;
+    object-fit: contain !important;
 }
 
 .main-dish-side-row {
@@ -7326,6 +7346,103 @@ img {
 .main-dish-featured-banner:hover .main-dish-featured-arrow-btn {
     transform: scale(1.08) !important;
     background: #B45309 !important;
+}
+
+/* ==========================================================================
+   MENU CARD LUXURY WRAPPER - GROUP TITLE & PRICE ON TOP
+   ========================================================================== */
+.menu-card-luxury-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+}
+
+.menu-card-luxury-wrapper > div:first-child,
+.menu-card-luxury-wrapper > .menu-dish-card {
+    margin-bottom: auto !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+}
+
+/* ==========================================================================
+   MOBILE RESPONSIVE FIXES (CONTAINED ADD BUTTONS & CENTERED OFFICIAL DETAILS)
+   ========================================================================== */
+@media (max-width: 600px) {
+    .main-dish-side-row {
+        padding: 10px 10px !important;
+        gap: 6px !important;
+        box-sizing: border-box !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+    }
+
+    .main-dish-side-name {
+        font-size: 0.95rem !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+    }
+
+    .main-dish-side-actions {
+        gap: 6px !important;
+        flex-shrink: 0 !important;
+    }
+
+    .main-dish-side-price {
+        font-size: 0.95rem !important;
+        white-space: nowrap !important;
+    }
+
+    .main-dish-side-add-btn {
+        padding: 6px 8px !important;
+        font-size: 0.75rem !important;
+        min-width: unset !important;
+        white-space: nowrap !important;
+    }
+
+    .main-dish-dotted-spacer {
+        margin: 0 2px !important;
+        min-width: 2px !important;
+    }
+
+    #location.section-wrapper {
+        padding: 40px 12px !important;
+        box-sizing: border-box !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+    }
+
+    #location .location-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+    }
+
+    #location .location-info {
+        padding: 24px 14px !important;
+        box-sizing: border-box !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        word-break: break-word !important;
+        overflow-wrap: anywhere !important;
+    }
+
+    #location .loc-detail-item {
+        padding: 12px 14px !important;
+        box-sizing: border-box !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    #location .loc-detail-item p {
+        word-break: break-word !important;
+        overflow-wrap: anywhere !important;
+    }
 }
 
 

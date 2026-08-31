@@ -45,9 +45,11 @@ async function convertAllImagesToWebp() {
 
             console.log(`⏳ Converting ${relativeInput} -> ${relativeOutput}...`);
             await sharp(inputPath)
+                .resize({ width: 1000, height: 1000, fit: 'inside', withoutEnlargement: true })
                 .webp({ quality: 82, effort: 4 })
-                .toFile(outputPath);
+                .toFile(outputPath + '.tmp');
             
+            fs.renameSync(outputPath + '.tmp', outputPath);
             console.log(`✅ Converted: ${relativeOutput}`);
             convertedCount++;
         }

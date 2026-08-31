@@ -1544,9 +1544,7 @@
     <!-- Artistic Culinary Hero Banner Header (from order.html) -->
     <section class="order-hero-banner-section">
         <div class="order-hero-content">
-            <span class="order-hero-subtitle">Wood-Fired Culinary Experience</span>
             <h1 class="order-hero-title">PLACE YOUR ORDER</h1>
-            <p class="order-hero-desc">Enter your dining and contact details below to send your order directly to our kitchen & barista crew.</p>
         </div>
     </section>
 
@@ -1898,9 +1896,16 @@
         }
 
         function calculateSubtotal(item) {
+            const currentType = (typeof getDiningType === 'function') 
+                ? getDiningType() 
+                : (sessionStorage.getItem('ribhouse_dining_type') || 'dine_in');
+            if (typeof calculateItemSubtotal === 'function') {
+                return calculateItemSubtotal(item, currentType);
+            }
             const base = item.basePrice || parseInt(item.price ? item.price.toString().replace(/[^0-9]/g, '') : '0', 10) || 0;
+            const pkgExtra = (currentType === 'takeaway') ? 20 : 0;
             if (!item.portions || item.portions.length === 0) {
-                return base * (item.qty || 1);
+                return (base + pkgExtra) * (item.qty || 1);
             }
             let sum = 0;
             item.portions.forEach(p => {
@@ -1908,7 +1913,7 @@
                 if (p.pairing === 'ugali_managu') extra = 100;
                 else if (p.pairing === 'ugali_sukuma') extra = 70;
                 else if (p.pairing === 'ugali_cabbage') extra = 70;
-                sum += (base + extra);
+                sum += (base + extra + pkgExtra);
             });
             return sum;
         }
@@ -2029,13 +2034,18 @@
         }
 
         // --- 2. DINING OPTION SWITCHER ---
-        function selectDiningOption(type) {
+        function selectDiningOption(type, skipRender = false) {
             document.querySelectorAll('.dining-option-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.getAttribute('data-type') === type);
             });
 
             const diningInput = document.getElementById('selected-dining-type');
             if (diningInput) diningInput.value = type;
+
+            try {
+                const storedType = (type === 'takeaway') ? 'takeaway' : (type === 'delivery') ? 'delivery' : 'dine_in';
+                sessionStorage.setItem('ribhouse_dining_type', storedType);
+            } catch(e) {}
 
             const serviceSummary = document.getElementById('totals-service-type');
             const guideBox = document.getElementById('waiter-order-guide-box');
@@ -2045,8 +2055,15 @@
             const addressInput = document.getElementById('cust-table-location');
 
             if (type === 'dine-in' || type === 'takeaway') {
-                // Dine-In & Takeaway: Clean, button-free presentation
-                if (serviceSummary) serviceSummary.textContent = (type === 'dine-in') ? 'Dine In' : 'Takeaway';
+                if (serviceSummary) {
+                    if (type === 'takeaway') {
+                        serviceSummary.textContent = 'Takeaway';
+                        serviceSummary.style.color = '#D97706';
+                    } else {
+                        serviceSummary.textContent = 'Dine In';
+                        serviceSummary.style.color = '#059669';
+                    }
+                }
                 if (guideBox) guideBox.style.display = 'block';
                 if (deliverySection) deliverySection.style.display = 'none';
 
@@ -2054,14 +2071,20 @@
                 if (phoneInput) phoneInput.required = false;
                 if (addressInput) addressInput.required = false;
             } else if (type === 'delivery') {
-                // Delivery: Show Delivery Form & M-Pesa Payment Button
-                if (serviceSummary) serviceSummary.textContent = 'Direct Delivery';
+                if (serviceSummary) {
+                    serviceSummary.textContent = 'Direct Delivery';
+                    serviceSummary.style.color = '#2563EB';
+                }
                 if (guideBox) guideBox.style.display = 'none';
                 if (deliverySection) deliverySection.style.display = 'flex';
 
                 if (nameInput) nameInput.required = true;
                 if (phoneInput) phoneInput.required = true;
                 if (addressInput) addressInput.required = true;
+            }
+
+            if (!skipRender && typeof renderCheckoutReview === 'function') {
+                renderCheckoutReview();
             }
         }
 
@@ -2699,8 +2722,15 @@ ${o.specialNotes ? `*Notes:*       ${o.specialNotes}\n` : ''}`;
 
         // Initialize on load
         document.addEventListener('DOMContentLoaded', () => {
+            let savedDining = 'dine-in';
+            try {
+                const raw = sessionStorage.getItem('ribhouse_dining_type');
+                if (raw === 'takeaway') savedDining = 'takeaway';
+                else if (raw === 'delivery') savedDining = 'delivery';
+            } catch(e) {}
+
             renderCheckoutReview();
-        selectDiningOption('dine-in');
+            selectDiningOption(savedDining, false);
         });
     </script>
 </body>

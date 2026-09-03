@@ -1238,6 +1238,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-mukimo-plain",
     "id": "dish-mukimo-plain",
+    "image": "mukimoplain.webp",
     "name": "Mukimo Plain",
     "price": "200/=",
     "priceNum": 200

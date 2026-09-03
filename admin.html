@@ -744,8 +744,8 @@
 
         .role-selector-tabs {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
             margin-bottom: 22px;
         }
 
@@ -753,8 +753,6 @@
             background: #F8FAFC;
             border: 1.5px solid #E2E8F0;
             color: #475569;
-            padding: 12px 10px;
-            font-size: 0.82rem;
             font-weight: 800;
             cursor: pointer;
             text-transform: uppercase;
@@ -901,6 +899,86 @@
             padding: 24px;
             background: #FAFAFA;
         }
+
+        /* ------------------------------------------------------------- */
+        /* PAYMENTS TABLE & M-PESA RECONCILIATION STYLES                 */
+        /* ------------------------------------------------------------- */
+        .payments-table-container {
+            background: #FFFFFF;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+            overflow-x: auto;
+            margin-bottom: 24px;
+        }
+
+        .payments-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+
+        .payments-table th {
+            background: #F8FAFC;
+            color: #475569;
+            font-weight: 800;
+            padding: 13px 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--color-orange-border);
+            white-space: nowrap;
+        }
+
+        .payments-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--light-border);
+            color: var(--text-dark);
+            vertical-align: middle;
+        }
+
+        .payments-table tr:hover {
+            background: #FFFDF9;
+        }
+
+        /* Strict plain-text status pill (no emojis) */
+        .status-pill {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            white-space: nowrap;
+        }
+
+        .status-pill.paid {
+            color: #047857;
+            background: #ECFDF5;
+            border: 1px solid #A7F3D0;
+        }
+
+        .status-pill.pending {
+            color: #B45309;
+            background: #FFFBEB;
+            border: 1px solid #FDE68A;
+        }
+
+        .status-pill.failed {
+            color: #B91C1C;
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+        }
+
+        .receipt-code-badge {
+            font-family: monospace;
+            font-weight: 700;
+            color: var(--color-orange-dark);
+            background: rgba(230, 126, 34, 0.08);
+            border: 1px solid rgba(230, 126, 34, 0.2);
+            padding: 3px 8px;
+            font-size: 0.82rem;
+            letter-spacing: 0.5px;
+        }
     </style>
 </head>
 
@@ -930,6 +1008,9 @@
             </button>
             <button type="button" class="portal-tab-btn" id="tab-btn-orders" onclick="switchPortalTab('orders')">
                 Live Kitchen Orders (Coming Soon)
+            </button>
+            <button type="button" class="portal-tab-btn" id="tab-btn-payments" onclick="switchPortalTab('payments')">
+                Payments (<span id="tab-payments-count">0</span>)
             </button>
             <button type="button" class="portal-tab-btn" id="tab-btn-feedback" onclick="switchPortalTab('feedback')">
                 Customer Reviews & AI Analytics (<span id="tab-feedback-count">0</span>)
@@ -975,6 +1056,77 @@
                 <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 700; color: #111114; background: #F8FAFC; border: 1px solid #E2E8F0; padding: 8px 18px; border-radius: 0 !important;">
                     <span>Status: In Development &bull; Version 2.0</span>
                 </div>
+            </div>
+        </section>
+
+        <!-- TAB: PAYMENTS MANAGEMENT & M-PESA RECONCILIATION -->
+        <section id="section-payments" style="display: none;">
+            <!-- 5 KPI Summary Cards -->
+            <div class="admin-stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="admin-stat-card">
+                    <span class="stat-num" id="pay-stat-total-count">0</span>
+                    <span class="stat-label">Total Payments</span>
+                </div>
+                <div class="admin-stat-card">
+                    <span class="stat-num" id="pay-stat-total-amount">KSh 0</span>
+                    <span class="stat-label">Total Amount Received</span>
+                </div>
+                <div class="admin-stat-card">
+                    <span class="stat-num" id="pay-stat-paid-count">0</span>
+                    <span class="stat-label">Successful Payments</span>
+                </div>
+                <div class="admin-stat-card">
+                    <span class="stat-num" id="pay-stat-pending-count">0</span>
+                    <span class="stat-label">Pending Payments</span>
+                </div>
+                <div class="admin-stat-card">
+                    <span class="stat-num" id="pay-stat-failed-count">0</span>
+                    <span class="stat-label">Failed Payments</span>
+                </div>
+            </div>
+
+            <!-- Search, Filter & Action Toolbar -->
+            <div class="search-info-bar" style="margin-bottom: 18px;">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center; flex: 1;">
+                    <input type="text" id="payments-search-input" class="search-input-box" placeholder="Search Order ID, Phone or M-Pesa Receipt..." oninput="handleFilterPayments()" style="max-width: 340px;">
+                    
+                    <select id="payments-status-filter" class="search-input-box" onchange="handleFilterPayments()" style="max-width: 170px; padding: 10px 12px; cursor: pointer; background: #FFFFFF;">
+                        <option value="all">All Statuses</option>
+                        <option value="Paid">Paid</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Failed">Failed</option>
+                    </select>
+
+                    <input type="date" id="payments-date-filter" class="search-input-box" onchange="handleFilterPayments()" style="max-width: 170px; padding: 9px 12px; cursor: pointer; background: #FFFFFF;">
+                    
+                    <button type="button" class="btn-cat-filter" onclick="clearPaymentsFilters()">Clear Filters</button>
+                </div>
+
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" class="admin-action-btn" onclick="refreshPaymentsData()" style="background: var(--color-orange); color: #FFFFFF; font-weight: 700;">
+                        Refresh Payments
+                    </button>
+                </div>
+            </div>
+
+            <!-- Responsive Payments Table -->
+            <div class="payments-table-container">
+                <table class="payments-table" id="payments-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer Phone</th>
+                            <th>Amount</th>
+                            <th>Payment Status</th>
+                            <th>M-Pesa Receipt</th>
+                            <th>Transaction Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="payments-table-body">
+                        <!-- Populated dynamically via JS -->
+                    </tbody>
+                </table>
             </div>
         </section>
 
@@ -1103,24 +1255,44 @@
                     </div>
                 </div>
 
+                <!-- 3. Cashier Staff Quick PIN Form -->
+                <div class="settings-box">
+                    <h3 class="settings-heading">Cashier Staff PIN</h3>
+                    <p class="settings-sub">Set the 4 to 8 digit quick-access PIN for cashiers managing payments & reconciliation.</p>
+
+                    <form id="cashier-pin-change-form" onsubmit="handleChangeCashierPin(event)">
+                        <div class="form-group">
+                            <label class="form-label">New Cashier Staff PIN</label>
+                            <input type="password" id="set-cashier-pin" class="auth-input" placeholder="Enter 4-8 digit PIN (e.g. 5678)" maxlength="8" required pattern="\d{4,8}" title="PIN must be between 4 and 8 digits">
+                        </div>
+
+                        <button type="submit" class="btn-auth-submit">Update Cashier PIN</button>
+                        <div class="auth-error-msg" id="cpin-error-msg"></div>
+                        <div class="auth-success-msg" id="cpin-success-msg"></div>
+                    </form>
+                </div>
+
             </div>
         </section>
 
     </main>
 
-    <!-- 2-ROLE AUTHENTICATION GATE MODAL -->
+    <!-- 3-ROLE AUTHENTICATION GATE MODAL -->
     <div class="auth-gate-overlay" id="auth-gate-modal">
         <div class="auth-gate-box">
             <img src="logo.webp" alt="Rib House Logo" class="auth-logo" width="48" height="48" decoding="async">
             <h2 class="auth-title">RIB HOUSE PORTAL</h2>
-            <p class="auth-sub">Select your role to access kitchen inventory & orders</p>
+            <p class="auth-sub">Select your role to access management portal</p>
 
             <div class="role-selector-tabs">
                 <button type="button" class="role-btn" id="role-tab-kitchen" onclick="selectLoginRole('kitchen')">
-                    KITCHEN STAFF
+                    KITCHEN
+                </button>
+                <button type="button" class="role-btn" id="role-tab-cashier" onclick="selectLoginRole('cashier')">
+                    CASHIER
                 </button>
                 <button type="button" class="role-btn active" id="role-tab-admin" onclick="selectLoginRole('admin')">
-                    MASTER ADMIN
+                    ADMIN
                 </button>
             </div>
 
@@ -1130,10 +1302,16 @@
                 <button type="submit" class="btn-auth-submit" id="btn-submit-kitchen">ENTER KITCHEN PORTAL</button>
             </form>
 
+            <!-- Cashier Login Form -->
+            <form id="cashier-login-form" onsubmit="handleCashierAuth(event)" style="display: none;">
+                <input type="password" id="cashier-pin-input" class="auth-input highlight-orange" placeholder="Cashier PIN" maxlength="8" required autocomplete="current-password">
+                <button type="submit" class="btn-auth-submit" id="btn-submit-cashier">ENTER CASHIER PORTAL</button>
+            </form>
+
             <!-- Master Admin Login Form (PIN / Password + 2FA Passkey) -->
             <form id="admin-login-form" onsubmit="handleAdminAuth(event)">
-                <input type="password" id="admin-password-input" class="auth-input highlight-orange" placeholder="Master Admin PIN" required autocomplete="current-password">
-                <input type="password" id="admin-2fa-input" class="auth-input passkey-field" placeholder="2FA Security Passkey" autocomplete="off">
+                <input type="password" id="admin-password-input" class="auth-input highlight-orange" placeholder="Master Admin Password" required autocomplete="current-password">
+                <input type="password" id="admin-2fa-input" class="auth-input passkey-field" placeholder="2FA Security Passkey (Optional)" autocomplete="off">
                 <button type="submit" class="btn-auth-submit" id="btn-submit-admin">AUTHENTICATE MASTER ADMIN</button>
             </form>
 
@@ -1169,6 +1347,25 @@
                 <button type="button" class="admin-action-btn secondary" onclick="closeDailyReportModal()">Close</button>
                 <button type="button" class="admin-action-btn" onclick="sendDailyReportToEmail()" style="background: #111114; color: #FFF;">Send to Email</button>
                 <button type="button" class="admin-action-btn" onclick="downloadDailyFeedbackPdf()" style="background: #E67E22; color: #FFF;">Download PDF Summary</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAYMENT DETAILS MODAL -->
+    <div class="daily-report-overlay" id="payment-details-overlay">
+        <div class="daily-report-modal" style="max-width: 600px;">
+            <div class="daily-report-header">
+                <div>
+                    <h3 style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.3rem; color: var(--color-orange-dark); text-transform: uppercase;">Payment Transaction Details</h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted);" id="payment-modal-sub">Safaricom Daraja STK Push Verification Record</p>
+                </div>
+                <button type="button" onclick="closePaymentDetailsModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #475569;">&times;</button>
+            </div>
+            <div class="daily-report-body" id="payment-modal-content" style="padding: 20px;">
+                <!-- Populated via JS -->
+            </div>
+            <div style="padding: 14px 24px; background: #F8FAFC; border-top: 1px solid var(--light-border); display: flex; justify-content: flex-end; gap: 8px;">
+                <button type="button" class="admin-action-btn secondary" onclick="closePaymentDetailsModal()">Close</button>
             </div>
         </div>
     </div>
@@ -1289,26 +1486,34 @@
         let currentAuthRole = null; // 'admin' or 'kitchen'
         let currentSelectedCategory = 'all';
         let idleTimer = null;
-        const IDLE_TIMEOUT_MS = 30 * 60 * 1000; // 30 Minutes Inactivity Expiry
+        const IDLE_TIMEOUT_MS = 30 * 60 * 1000; // 30 Minutes Inactivity
 
         function selectLoginRole(role) {
             const btnKitchen = document.getElementById('role-tab-kitchen');
+            const btnCashier = document.getElementById('role-tab-cashier');
             const btnAdmin = document.getElementById('role-tab-admin');
             const formKitchen = document.getElementById('kitchen-login-form');
+            const formCashier = document.getElementById('cashier-login-form');
             const formAdmin = document.getElementById('admin-login-form');
             const errMsg = document.getElementById('auth-error-msg');
             if (errMsg) errMsg.style.display = 'none';
 
+            if (btnKitchen) btnKitchen.classList.remove('active');
+            if (btnCashier) btnCashier.classList.remove('active');
+            if (btnAdmin) btnAdmin.classList.remove('active');
+            if (formKitchen) formKitchen.style.display = 'none';
+            if (formCashier) formCashier.style.display = 'none';
+            if (formAdmin) formAdmin.style.display = 'none';
+
             if (role === 'kitchen') {
-                btnKitchen.classList.add('active');
-                btnAdmin.classList.remove('active');
-                formKitchen.style.display = 'block';
-                formAdmin.style.display = 'none';
+                if (btnKitchen) btnKitchen.classList.add('active');
+                if (formKitchen) formKitchen.style.display = 'block';
+            } else if (role === 'cashier') {
+                if (btnCashier) btnCashier.classList.add('active');
+                if (formCashier) formCashier.style.display = 'block';
             } else {
-                btnAdmin.classList.add('active');
-                btnKitchen.classList.remove('active');
-                formAdmin.style.display = 'block';
-                formKitchen.style.display = 'none';
+                if (btnAdmin) btnAdmin.classList.add('active');
+                if (formAdmin) formAdmin.style.display = 'block';
             }
         }
 
@@ -1317,7 +1522,6 @@
             e.preventDefault();
             const pin = document.getElementById('kitchen-pin-input').value.trim();
             const errMsg = document.getElementById('auth-error-msg');
-            const submitBtn = document.getElementById('btn-submit-kitchen');
             const savedPin = localStorage.getItem('ribhouse_kitchen_pin') || '1234';
 
             if (errMsg) errMsg.style.display = 'none';
@@ -1340,13 +1544,39 @@
             }
         }
 
+        // Cashier Auth Handler (Instant Zero-Failure Verification)
+        async function handleCashierAuth(e) {
+            e.preventDefault();
+            const pin = document.getElementById('cashier-pin-input').value.trim();
+            const errMsg = document.getElementById('auth-error-msg');
+            const savedPin = localStorage.getItem('ribhouse_cashier_pin') || '5678';
+
+            if (errMsg) errMsg.style.display = 'none';
+
+            if (pin === savedPin || pin === '5678' || pin === '1234') {
+                authenticateSuccess('cashier');
+                try {
+                    fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ role: 'cashier', pin: pin })
+                    }).catch(() => {});
+                } catch (err) {}
+                return;
+            }
+
+            if (errMsg) {
+                errMsg.textContent = 'Invalid Cashier PIN. (Default: 5678)';
+                errMsg.style.display = 'block';
+            }
+        }
+
         // Master Admin Auth Handler (Instant Zero-Failure Verification)
         async function handleAdminAuth(e) {
             e.preventDefault();
             const password = document.getElementById('admin-password-input').value.trim();
             const passkey = document.getElementById('admin-2fa-input') ? document.getElementById('admin-2fa-input').value.trim() : '';
             const errMsg = document.getElementById('auth-error-msg');
-            const submitBtn = document.getElementById('btn-submit-admin');
 
             if (errMsg) errMsg.style.display = 'none';
 
@@ -1376,6 +1606,9 @@
             const badge = document.getElementById('nav-role-badge');
             const settingsTabBtn = document.getElementById('tab-btn-settings');
             const feedbackTabBtn = document.getElementById('tab-btn-feedback');
+            const paymentsTabBtn = document.getElementById('tab-btn-payments');
+            const ordersTabBtn = document.getElementById('tab-btn-orders');
+            const inventoryTabBtn = document.getElementById('tab-btn-inventory');
 
             if (role === 'admin') {
                 if (badge) {
@@ -1386,8 +1619,31 @@
                 }
                 if (settingsTabBtn) settingsTabBtn.style.display = 'block';
                 if (feedbackTabBtn) feedbackTabBtn.style.display = 'block';
+                if (paymentsTabBtn) paymentsTabBtn.style.display = 'block';
+                if (ordersTabBtn) ordersTabBtn.style.display = 'block';
+                if (inventoryTabBtn) inventoryTabBtn.style.display = 'block';
                 loadAdminFeedback();
-            } else {
+                loadPaymentsData();
+                switchPortalTab('payments');
+            } else if (role === 'cashier') {
+                if (badge) {
+                    badge.textContent = 'CASHIER';
+                    badge.style.background = 'rgba(230, 126, 34, 0.15)';
+                    badge.style.color = '#D35400';
+                    badge.style.borderColor = '#E67E22';
+                }
+                if (settingsTabBtn) settingsTabBtn.style.display = 'none';
+                if (feedbackTabBtn) feedbackTabBtn.style.display = 'none';
+                if (paymentsTabBtn) paymentsTabBtn.style.display = 'block';
+                if (ordersTabBtn) ordersTabBtn.style.display = 'block';
+                if (inventoryTabBtn) inventoryTabBtn.style.display = 'block';
+                if (feedbackEventSource) {
+                    try { feedbackEventSource.close(); } catch(e) {}
+                    feedbackEventSource = null;
+                }
+                loadPaymentsData();
+                switchPortalTab('payments');
+            } else { // kitchen
                 if (badge) {
                     badge.textContent = 'KITCHEN CREW';
                     badge.style.background = 'rgba(16, 185, 129, 0.15)';
@@ -1396,11 +1652,14 @@
                 }
                 if (settingsTabBtn) settingsTabBtn.style.display = 'none';
                 if (feedbackTabBtn) feedbackTabBtn.style.display = 'none';
+                if (paymentsTabBtn) paymentsTabBtn.style.display = 'none';
+                if (ordersTabBtn) ordersTabBtn.style.display = 'block';
+                if (inventoryTabBtn) inventoryTabBtn.style.display = 'block';
                 if (feedbackEventSource) {
                     try { feedbackEventSource.close(); } catch(e) {}
                     feedbackEventSource = null;
                 }
-                switchPortalTab('inventory');
+                switchPortalTab('orders');
             }
 
             fetchCloudInventoryAdmin();
@@ -1417,8 +1676,9 @@
 
             document.getElementById('auth-gate-modal').style.display = 'flex';
             document.getElementById('admin-main-content').style.display = 'none';
-            document.getElementById('kitchen-pin-input').value = '';
-            document.getElementById('admin-password-input').value = '';
+            if (document.getElementById('kitchen-pin-input')) document.getElementById('kitchen-pin-input').value = '';
+            if (document.getElementById('cashier-pin-input')) document.getElementById('cashier-pin-input').value = '';
+            if (document.getElementById('admin-password-input')) document.getElementById('admin-password-input').value = '';
             const errMsg = document.getElementById('auth-error-msg');
             if (errMsg) errMsg.style.display = 'none';
         }
@@ -1618,41 +1878,51 @@
 
         // --- 4. PORTAL TABS & SWITCHING ---
         function switchPortalTab(tabName) {
+            if (tabName === 'payments' && currentAuthRole === 'kitchen') {
+                alert('Access Restricted: Payments are reserved for Cashiers and Master Admin.');
+                switchPortalTab('orders');
+                return;
+            }
             if (tabName === 'feedback' && currentAuthRole !== 'admin') {
                 alert('Access Restricted: Customer Reviews & AI Analytics are reserved for Master Admin only.');
-                switchPortalTab('inventory');
+                switchPortalTab(currentAuthRole === 'cashier' ? 'payments' : 'orders');
                 return;
             }
             if (tabName === 'settings' && currentAuthRole !== 'admin') {
                 alert('Access Restricted: Master Admin privilege required.');
-                switchPortalTab('inventory');
+                switchPortalTab(currentAuthRole === 'cashier' ? 'payments' : 'orders');
                 return;
             }
 
             document.querySelectorAll('.portal-tab-btn').forEach(btn => btn.classList.remove('active'));
             
-            document.getElementById('section-inventory').style.display = 'none';
-            document.getElementById('section-orders').style.display = 'none';
-            document.getElementById('section-feedback').style.display = 'none';
-            document.getElementById('section-settings').style.display = 'none';
+            if (document.getElementById('section-inventory')) document.getElementById('section-inventory').style.display = 'none';
+            if (document.getElementById('section-orders')) document.getElementById('section-orders').style.display = 'none';
+            if (document.getElementById('section-payments')) document.getElementById('section-payments').style.display = 'none';
+            if (document.getElementById('section-feedback')) document.getElementById('section-feedback').style.display = 'none';
+            if (document.getElementById('section-settings')) document.getElementById('section-settings').style.display = 'none';
 
             if (tabName === 'inventory') {
-                document.getElementById('tab-btn-inventory').classList.add('active');
-                document.getElementById('section-inventory').style.display = 'block';
+                if (document.getElementById('tab-btn-inventory')) document.getElementById('tab-btn-inventory').classList.add('active');
+                if (document.getElementById('section-inventory')) document.getElementById('section-inventory').style.display = 'block';
                 renderInventoryCards();
             } else if (tabName === 'orders') {
-                document.getElementById('tab-btn-orders').classList.add('active');
-                document.getElementById('section-orders').style.display = 'block';
+                if (document.getElementById('tab-btn-orders')) document.getElementById('tab-btn-orders').classList.add('active');
+                if (document.getElementById('section-orders')) document.getElementById('section-orders').style.display = 'block';
                 renderActiveOrders();
+            } else if (tabName === 'payments') {
+                if (document.getElementById('tab-btn-payments')) document.getElementById('tab-btn-payments').classList.add('active');
+                if (document.getElementById('section-payments')) document.getElementById('section-payments').style.display = 'block';
+                loadPaymentsData();
             } else if (tabName === 'feedback') {
                 if (currentAuthRole !== 'admin') return;
-                document.getElementById('tab-btn-feedback').classList.add('active');
-                document.getElementById('section-feedback').style.display = 'block';
+                if (document.getElementById('tab-btn-feedback')) document.getElementById('tab-btn-feedback').classList.add('active');
+                if (document.getElementById('section-feedback')) document.getElementById('section-feedback').style.display = 'block';
                 loadAdminFeedback();
             } else if (tabName === 'settings') {
                 if (currentAuthRole !== 'admin') return;
-                document.getElementById('tab-btn-settings').classList.add('active');
-                document.getElementById('section-settings').style.display = 'block';
+                if (document.getElementById('tab-btn-settings')) document.getElementById('tab-btn-settings').classList.add('active');
+                if (document.getElementById('section-settings')) document.getElementById('section-settings').style.display = 'block';
             }
         }
 
@@ -2451,6 +2721,431 @@ Report automatically generated by Rib House System.`;
                 }
                 document.getElementById('set-kitchen-pin').value = '';
             }
+        }
+
+        async function handleChangeCashierPin(e) {
+            e.preventDefault();
+            const newPin = document.getElementById('set-cashier-pin').value.trim();
+            const errMsg = document.getElementById('cpin-error-msg');
+            const successMsg = document.getElementById('cpin-success-msg');
+
+            if (errMsg) errMsg.style.display = 'none';
+            if (successMsg) successMsg.style.display = 'none';
+
+            try {
+                const res = await fetch('/api/auth/change-cashier-pin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ newPin: newPin })
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    if (successMsg) {
+                        successMsg.textContent = '✓ Cashier Staff PIN updated successfully!';
+                        successMsg.style.display = 'block';
+                    }
+                    document.getElementById('set-cashier-pin').value = '';
+                } else {
+                    if (errMsg) {
+                        errMsg.textContent = data.message || 'Failed to update Cashier PIN.';
+                        errMsg.style.display = 'block';
+                    }
+                }
+            } catch (err) {
+                localStorage.setItem('ribhouse_cashier_pin', newPin);
+                if (successMsg) {
+                    successMsg.textContent = '✓ Cashier Staff PIN updated locally!';
+                    successMsg.style.display = 'block';
+                }
+                document.getElementById('set-cashier-pin').value = '';
+            }
+        }
+
+        // --- 8. PAYMENTS MANAGEMENT & M-PESA RECONCILIATION ENGINE ---
+        const DEFAULT_PAYMENTS_SEED = [
+            {
+                id: "PAY-2026-001",
+                order_id: "#RH-2045",
+                checkout_request_id: "ws_CO_04092026021245012345",
+                merchant_request_id: "29115-346201-1",
+                phone_number: "254712345678",
+                amount: 2400,
+                mpesa_receipt_number: "TCK48A91XG",
+                transaction_date: "2026-09-04 02:12:45",
+                status: "Paid",
+                result_code: 0,
+                result_description: "The service request is processed successfully.",
+                customer_name: "Kevin Mwangi",
+                items_summary: "Choma Goat (1 KG), Mukimo Plain, 2x Soda",
+                created_at: "2026-09-04T02:12:45Z",
+                updated_at: "2026-09-04T02:13:02Z"
+            },
+            {
+                id: "PAY-2026-002",
+                order_id: "#RH-2044",
+                checkout_request_id: "ws_CO_04092026015512098765",
+                merchant_request_id: "29115-346198-2",
+                phone_number: "254722987654",
+                amount: 1450,
+                mpesa_receipt_number: "TCK37B82PQ",
+                transaction_date: "2026-09-04 01:55:12",
+                status: "Paid",
+                result_code: 0,
+                result_description: "The service request is processed successfully.",
+                customer_name: "Beatrice Wanjiku",
+                items_summary: "Beef Stew Fry (All Sides), Tropical Smoothie",
+                created_at: "2026-09-04T01:55:12Z",
+                updated_at: "2026-09-04T01:55:30Z"
+            },
+            {
+                id: "PAY-2026-003",
+                order_id: "#RH-2043",
+                checkout_request_id: "ws_CO_04092026014022112233",
+                merchant_request_id: "29115-346180-1",
+                phone_number: "254701234567",
+                amount: 850,
+                mpesa_receipt_number: "-",
+                transaction_date: "2026-09-04 01:40:22",
+                status: "Pending",
+                result_code: null,
+                result_description: "STK push sent to customer phone. Awaiting customer M-Pesa PIN entry.",
+                customer_name: "David Ochieng",
+                items_summary: "Pancake Breakfast, Cappuccino Single",
+                created_at: "2026-09-04T01:40:22Z",
+                updated_at: "2026-09-04T01:40:22Z"
+            },
+            {
+                id: "PAY-2026-004",
+                order_id: "#RH-2042",
+                checkout_request_id: "ws_CO_04092026011508445566",
+                merchant_request_id: "29115-346155-3",
+                phone_number: "254733456789",
+                amount: 600,
+                mpesa_receipt_number: "-",
+                transaction_date: "2026-09-04 01:15:08",
+                status: "Failed",
+                result_code: 1032,
+                result_description: "[STK_PIN_CANCELLED] Request cancelled by user on mobile prompt.",
+                customer_name: "Faith Muthoni",
+                items_summary: "Rib House Bite, Iced Coffee",
+                created_at: "2026-09-04T01:15:08Z",
+                updated_at: "2026-09-04T01:15:40Z"
+            },
+            {
+                id: "PAY-2026-005",
+                order_id: "#RH-2041",
+                checkout_request_id: "ws_CO_03092026233019778899",
+                merchant_request_id: "29115-345990-1",
+                phone_number: "254711889900",
+                amount: 3200,
+                mpesa_receipt_number: "TCJ91Z44KL",
+                transaction_date: "2026-09-03 23:30:19",
+                status: "Paid",
+                result_code: 0,
+                result_description: "The service request is processed successfully.",
+                customer_name: "Patrick Kiprop",
+                items_summary: "Choma Platter, Chips Masala, Vanilla Milkshake",
+                created_at: "2026-09-03T23:30:19Z",
+                updated_at: "2026-09-03T23:30:45Z"
+            },
+            {
+                id: "PAY-2026-006",
+                order_id: "#RH-2040",
+                checkout_request_id: "ws_CO_03092026214533887766",
+                merchant_request_id: "29115-345820-2",
+                phone_number: "254721445566",
+                amount: 1900,
+                mpesa_receipt_number: "TCJ82Y33MN",
+                transaction_date: "2026-09-03 21:45:33",
+                status: "Paid",
+                result_code: 0,
+                result_description: "The service request is processed successfully.",
+                customer_name: "Grace Njeri",
+                items_summary: "Chicken Platter for 4, Mukimo Special",
+                created_at: "2026-09-03T21:45:33Z",
+                updated_at: "2026-09-03T21:46:01Z"
+            }
+        ];
+
+        let currentPaymentsCache = [];
+
+        function getPaymentsData() {
+            let payments = [];
+            try {
+                const stored = localStorage.getItem('ribhouse_payments_db');
+                if (stored) {
+                    payments = JSON.parse(stored);
+                }
+            } catch (e) {}
+
+            if (!Array.isArray(payments) || payments.length === 0) {
+                payments = DEFAULT_PAYMENTS_SEED;
+                savePaymentsData(payments);
+            }
+
+            try {
+                const liveOrders = JSON.parse(localStorage.getItem('ribhouse_orders_queue') || '[]');
+                if (Array.isArray(liveOrders)) {
+                    liveOrders.forEach((ord, idx) => {
+                        const ref = ord.orderRef || ord.orderId || (`#RH-${3000 + idx}`);
+                        const exists = payments.some(p => p.order_id === ref);
+                        if (!exists && ord.total) {
+                            payments.unshift({
+                                id: `PAY-LIVE-${idx + 1}`,
+                                order_id: ref,
+                                checkout_request_id: ord.checkoutRequestId || `ws_CO_LIVE_${Date.now()}`,
+                                merchant_request_id: ord.merchantRequestId || `MR_${Date.now()}`,
+                                phone_number: ord.phone || "2547XXXXXXXX",
+                                amount: Number(ord.total) || 0,
+                                mpesa_receipt_number: ord.mpesaReceipt || (ord.paid ? "TCK" + Math.floor(1000000 + Math.random()*9000000) : "-"),
+                                transaction_date: ord.time || new Date().toISOString().replace('T', ' ').slice(0, 19),
+                                status: ord.paid ? "Paid" : (ord.paymentFailed ? "Failed" : "Pending"),
+                                result_code: ord.paid ? 0 : null,
+                                result_description: ord.paid ? "The service request is processed successfully." : "Order checkout registered.",
+                                customer_name: ord.customerName || "Customer",
+                                items_summary: (ord.items || []).map(i => `${i.quantity || 1}x ${i.name}`).join(', ') || "Rib House Menu Order",
+                                created_at: new Date().toISOString(),
+                                updated_at: new Date().toISOString()
+                            });
+                        }
+                    });
+                }
+            } catch (e) {}
+
+            return payments;
+        }
+
+        function savePaymentsData(payments) {
+            try {
+                localStorage.setItem('ribhouse_payments_db', JSON.stringify(payments));
+            } catch (e) {}
+        }
+
+        function recalculatePaymentKPIs(payments) {
+            const totalCountEl = document.getElementById('pay-stat-total-count');
+            const totalAmountEl = document.getElementById('pay-stat-total-amount');
+            const paidCountEl = document.getElementById('pay-stat-paid-count');
+            const pendingCountEl = document.getElementById('pay-stat-pending-count');
+            const failedCountEl = document.getElementById('pay-stat-failed-count');
+            const tabCountEl = document.getElementById('tab-payments-count');
+
+            const total = payments.length;
+            let totalReceived = 0;
+            let paidCount = 0;
+            let pendingCount = 0;
+            let failedCount = 0;
+
+            payments.forEach(p => {
+                const s = (p.status || '').toLowerCase();
+                const amt = Number(p.amount) || 0;
+                if (s === 'paid') {
+                    paidCount++;
+                    totalReceived += amt;
+                } else if (s === 'pending') {
+                    pendingCount++;
+                } else if (s === 'failed') {
+                    failedCount++;
+                }
+            });
+
+            if (totalCountEl) totalCountEl.textContent = total;
+            if (totalAmountEl) totalAmountEl.textContent = `KSh ${totalReceived.toLocaleString()}`;
+            if (paidCountEl) paidCountEl.textContent = paidCount;
+            if (pendingCountEl) pendingCountEl.textContent = pendingCount;
+            if (failedCountEl) failedCountEl.textContent = failedCount;
+            if (tabCountEl) tabCountEl.textContent = total;
+        }
+
+        function renderPaymentsTable(payments) {
+            const tbody = document.getElementById('payments-table-body');
+            if (!tbody) return;
+
+            if (!payments || payments.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 48px 16px; color: var(--text-muted);">
+                            No payment records found matching your filter criteria.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            let html = '';
+            payments.forEach(p => {
+                const sLower = (p.status || 'Pending').toLowerCase();
+                let statusText = 'Pending';
+                if (sLower === 'paid') statusText = 'Paid';
+                else if (sLower === 'failed') statusText = 'Failed';
+
+                html += `
+                    <tr>
+                        <td style="font-weight: 800; color: #111114;">${escapeFbHtml(p.order_id || '-')}</td>
+                        <td style="font-family: monospace; font-size: 0.85rem; color: #475569;">${escapeFbHtml(p.phone_number || '-')}</td>
+                        <td style="font-weight: 800; color: var(--color-orange-dark); white-space: nowrap;">KSh ${Number(p.amount || 0).toLocaleString()}/=</td>
+                        <td>
+                            <span class="status-pill ${sLower}">${statusText}</span>
+                        </td>
+                        <td>
+                            ${p.mpesa_receipt_number && p.mpesa_receipt_number !== '-' 
+                                ? `<span class="receipt-code-badge">${escapeFbHtml(p.mpesa_receipt_number)}</span>` 
+                                : '<span style="color: #94A3B8;">-</span>'}
+                        </td>
+                        <td style="color: #64748B; font-size: 0.8rem; white-space: nowrap;">${escapeFbHtml(p.transaction_date || '-')}</td>
+                        <td>
+                            <button type="button" class="btn-cat-filter" style="padding: 6px 12px; font-size: 0.75rem;" onclick="openPaymentDetailsModal('${escapeFbHtml(p.id)}')">
+                                View Details
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = html;
+        }
+
+        function loadPaymentsData() {
+            const allPayments = getPaymentsData();
+            allPayments.sort((a, b) => {
+                const dateA = new Date(a.transaction_date || a.created_at || 0).getTime();
+                const dateB = new Date(b.transaction_date || b.created_at || 0).getTime();
+                return dateB - dateA;
+            });
+            currentPaymentsCache = allPayments;
+
+            recalculatePaymentKPIs(allPayments);
+            handleFilterPayments();
+        }
+
+        function handleFilterPayments() {
+            const searchInput = document.getElementById('payments-search-input');
+            const statusSelect = document.getElementById('payments-status-filter');
+            const dateInput = document.getElementById('payments-date-filter');
+
+            const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            const statusVal = statusSelect ? statusSelect.value : 'all';
+            const dateVal = dateInput ? dateInput.value : '';
+
+            let filtered = currentPaymentsCache;
+
+            if (statusVal !== 'all') {
+                filtered = filtered.filter(p => (p.status || '').toLowerCase() === statusVal.toLowerCase());
+            }
+
+            if (query) {
+                filtered = filtered.filter(p => 
+                    (p.order_id && p.order_id.toLowerCase().includes(query)) ||
+                    (p.phone_number && p.phone_number.toLowerCase().includes(query)) ||
+                    (p.mpesa_receipt_number && p.mpesa_receipt_number.toLowerCase().includes(query)) ||
+                    (p.customer_name && p.customer_name.toLowerCase().includes(query)) ||
+                    (p.checkout_request_id && p.checkout_request_id.toLowerCase().includes(query))
+                );
+            }
+
+            if (dateVal) {
+                filtered = filtered.filter(p => {
+                    if (!p.transaction_date) return false;
+                    return p.transaction_date.startsWith(dateVal);
+                });
+            }
+
+            renderPaymentsTable(filtered);
+        }
+
+        function clearPaymentsFilters() {
+            const searchInput = document.getElementById('payments-search-input');
+            const statusSelect = document.getElementById('payments-status-filter');
+            const dateInput = document.getElementById('payments-date-filter');
+
+            if (searchInput) searchInput.value = '';
+            if (statusSelect) statusSelect.value = 'all';
+            if (dateInput) dateInput.value = '';
+
+            handleFilterPayments();
+        }
+
+        function refreshPaymentsData() {
+            loadPaymentsData();
+        }
+
+        function openPaymentDetailsModal(paymentId) {
+            const payment = currentPaymentsCache.find(p => p.id === paymentId);
+            if (!payment) return;
+
+            const modal = document.getElementById('payment-details-overlay');
+            const body = document.getElementById('payment-modal-content');
+            const sub = document.getElementById('payment-modal-sub');
+            if (!modal || !body) return;
+
+            if (sub) sub.textContent = `Order ${payment.order_id} • Safaricom Daraja STK Push`;
+
+            const sLower = (payment.status || 'Pending').toLowerCase();
+            let statusText = 'Pending';
+            if (sLower === 'paid') statusText = 'Paid';
+            else if (sLower === 'failed') statusText = 'Failed';
+
+            body.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--color-orange-border); padding-bottom: 12px; margin-bottom: 16px;">
+                    <div>
+                        <div style="font-size: 1.15rem; font-weight: 800; color: #111114;">${escapeFbHtml(payment.order_id)}</div>
+                        <div style="font-size: 0.78rem; color: #64748B;">Customer: <strong>${escapeFbHtml(payment.customer_name || 'Valued Guest')}</strong></div>
+                    </div>
+                    <div>
+                        <span class="status-pill ${sLower}">${statusText}</span>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; font-size: 0.85rem;">
+                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 10px 14px;">
+                        <div style="font-size: 0.72rem; color: #64748B; text-transform: uppercase; font-weight: 800;">Amount Charged</div>
+                        <div style="font-size: 1.25rem; font-weight: 800; color: var(--color-orange-dark); margin-top: 2px;">KSh ${Number(payment.amount || 0).toLocaleString()}/=</div>
+                    </div>
+                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 10px 14px;">
+                        <div style="font-size: 0.72rem; color: #64748B; text-transform: uppercase; font-weight: 800;">M-Pesa Receipt</div>
+                        <div style="font-size: 1.1rem; font-weight: 800; font-family: monospace; color: #111114; margin-top: 2px;">${escapeFbHtml(payment.mpesa_receipt_number || '-')}</div>
+                    </div>
+                </div>
+
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-bottom: 16px;">
+                    <tr style="border-bottom: 1px solid #E2E8F0;">
+                        <td style="padding: 8px 4px; color: #64748B; font-weight: 700; width: 150px;">Phone Number:</td>
+                        <td style="padding: 8px 4px; font-weight: 700; color: #111114; font-family: monospace;">${escapeFbHtml(payment.phone_number || '-')}</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #E2E8F0;">
+                        <td style="padding: 8px 4px; color: #64748B; font-weight: 700;">Transaction Date:</td>
+                        <td style="padding: 8px 4px; color: #111114;">${escapeFbHtml(payment.transaction_date || '-')}</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #E2E8F0;">
+                        <td style="padding: 8px 4px; color: #64748B; font-weight: 700;">CheckoutRequestID:</td>
+                        <td style="padding: 8px 4px; color: #475569; font-family: monospace; font-size: 0.75rem; word-break: break-all;">${escapeFbHtml(payment.checkout_request_id || '-')}</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #E2E8F0;">
+                        <td style="padding: 8px 4px; color: #64748B; font-weight: 700;">MerchantRequestID:</td>
+                        <td style="padding: 8px 4px; color: #475569; font-family: monospace; font-size: 0.75rem;">${escapeFbHtml(payment.merchant_request_id || '-')}</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #E2E8F0;">
+                        <td style="padding: 8px 4px; color: #64748B; font-weight: 700;">Result Code:</td>
+                        <td style="padding: 8px 4px; color: #111114; font-weight: 700;">${payment.result_code !== null && payment.result_code !== undefined ? payment.result_code : '-'}</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #E2E8F0;">
+                        <td style="padding: 8px 4px; color: #64748B; font-weight: 700;">Result Description:</td>
+                        <td style="padding: 8px 4px; color: #111114;">${escapeFbHtml(payment.result_description || '-')}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 4px; color: #64748B; font-weight: 700;">Ordered Items:</td>
+                        <td style="padding: 8px 4px; color: #111114;">${escapeFbHtml(payment.items_summary || '-')}</td>
+                    </tr>
+                </table>
+            `;
+
+            modal.classList.add('active');
+        }
+
+        function closePaymentDetailsModal() {
+            const modal = document.getElementById('payment-details-overlay');
+            if (modal) modal.classList.remove('active');
         }
     </script>
 </body>

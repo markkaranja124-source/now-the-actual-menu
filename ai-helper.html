@@ -1586,38 +1586,41 @@
                         <input type="hidden" id="selected-dining-type" value="dine-in">
                     </div>
 
-                    <!-- Dine-In & Takeaway Instant Guide Box (Visible ONLY on Dine-In / Takeaway) -->
-                    <div id="waiter-order-guide-box" style="background: #FFF7ED; border: 2px solid #EA580C; padding: 22px; text-align: center; margin-top: 10px;">
-                        <span style="font-size: 0.95rem; font-weight: 800; color: #EA580C; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 8px;">DINE IN & TAKEAWAY SERVICE</span>
-                        <p style="font-size: 0.95rem; color: #1E293B; line-height: 1.6; margin: 0; font-weight: 500;">
-                            Your chosen meals and grand total is shown below. <strong>Simply show your phone screen to your waiter</strong> to place and serve your order. Enjoy your delicacy.
-                        </p>
+                    <!-- Dynamic Service Mode Guidance Notice -->
+                    <div id="service-mode-notice" style="background: #FFF7ED; border: 1px solid #FDBA74; border-left: 4px solid #EA580C; padding: 14px 18px; margin-bottom: 20px; font-size: 0.9rem; color: #7C2D12; line-height: 1.5; border-radius: 4px;">
+                        <strong>Dine-In Service:</strong> Enter your table number and M-Pesa phone number below to pay directly from your table. We will serve you as you relax!
                     </div>
 
-                    <!-- Delivery ONLY Form & Payment Section (Hidden by Default for Dine-In/Takeaway) -->
-                    <div id="delivery-details-section" style="display: none; flex-direction: column; gap: 16px;">
-                        <!-- Full Name -->
-                        <div class="form-group">
-                            <label for="cust-name" class="form-label">Full Name <span class="req">*</span></label>
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+
+                        <!-- Table Number (Visible on Dine-In) -->
+                        <div class="form-group" id="table-input-group">
+                            <label for="cust-table-number" class="form-label">Table Number <span class="req">*</span></label>
+                            <input type="text" id="cust-table-number" class="form-control" placeholder="e.g. Table 4">
+                        </div>
+
+                        <!-- Full Name / Pickup Name -->
+                        <div class="form-group" id="name-input-group">
+                            <label for="cust-name" class="form-label" id="cust-name-label">Your Name (Optional)</label>
                             <input type="text" id="cust-name" class="form-control" placeholder="e.g. Kelvin Mwangi" autocomplete="name">
                         </div>
 
-                        <!-- Phone Number -->
+                        <!-- M-Pesa Phone Number (Required for all modes) -->
                         <div class="form-group">
                             <label for="cust-phone" class="form-label">M-Pesa Phone Number <span class="req">*</span></label>
-                            <input type="tel" id="cust-phone" class="form-control" placeholder="e.g. 0724 594 204" autocomplete="tel">
+                            <input type="tel" id="cust-phone" class="form-control" placeholder="e.g. 0793 382 017" autocomplete="tel" required>
                         </div>
 
-                        <!-- Delivery Address / Notes -->
-                        <div class="form-group">
+                        <!-- Delivery Address & Notes (Delivery Only) -->
+                        <div class="form-group" id="delivery-address-group" style="display: none;">
                             <label for="cust-table-location" class="form-label" id="table-location-label">
                                 Delivery Address & Landmark <span class="req">*</span>
                             </label>
                             <input type="text" id="cust-table-location" class="form-control" placeholder="e.g. Development House, 3rd Floor, Moi Ave">
                         </div>
 
-                        <!-- GPS Location Pin -->
-                        <div class="form-group" id="delivery-gps-container">
+                        <!-- GPS Location Pin (Delivery Only) -->
+                        <div class="form-group" id="delivery-gps-container" style="display: none;">
                             <label class="form-label">Location Pin (Optional for Faster Rider Dispatch)</label>
                             <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
                                 <button type="button" class="btn-pin-action" id="btn-pin-current-gps" onclick="handlePinCurrentLocation()">
@@ -1631,7 +1634,7 @@
                             <input type="hidden" id="cust-gps-url" value="">
                         </div>
 
-                        <!-- Special Cooking Instructions (Delivery Only) -->
+                        <!-- Special Cooking Instructions (All Modes) -->
                         <div class="form-group">
                             <label for="cust-notes" class="form-label">Special Cooking Instructions (Optional)</label>
                             <input type="text" id="cust-notes" class="form-control" placeholder="e.g. Extra kachumbari, mild pepper, hot coffee">
@@ -1654,9 +1657,9 @@
                             </button>
                         </div>
 
-                        <!-- Submit Order Button (Delivery Only) -->
+                        <!-- Submit Order Button (Active for all modes!) -->
                         <button type="submit" class="btn-confirm-order" id="btn-submit-order" style="display: flex;">
-                            <span>PAY WITH M-PESA & DISPATCH</span>
+                            <span id="btn-submit-order-text">PAY WITH M-PESA (DINE-IN)</span>
                             <span>&rarr;</span>
                         </button>
                     </div>
@@ -2048,39 +2051,55 @@
             } catch(e) {}
 
             const serviceSummary = document.getElementById('totals-service-type');
-            const guideBox = document.getElementById('waiter-order-guide-box');
-            const deliverySection = document.getElementById('delivery-details-section');
+            const tableGroup = document.getElementById('table-input-group');
+            const deliveryAddressGroup = document.getElementById('delivery-address-group');
+            const deliveryGpsGroup = document.getElementById('delivery-gps-container');
+            const guideNotice = document.getElementById('service-mode-notice');
+            const submitBtnText = document.getElementById('btn-submit-order-text');
+            const nameLabel = document.getElementById('cust-name-label');
             const nameInput = document.getElementById('cust-name');
-            const phoneInput = document.getElementById('cust-phone');
+            const tableInput = document.getElementById('cust-table-number');
             const addressInput = document.getElementById('cust-table-location');
 
-            if (type === 'dine-in' || type === 'takeaway') {
+            if (type === 'dine-in') {
                 if (serviceSummary) {
-                    if (type === 'takeaway') {
-                        serviceSummary.textContent = 'Takeaway';
-                        serviceSummary.style.color = '#D97706';
-                    } else {
-                        serviceSummary.textContent = 'Dine In';
-                        serviceSummary.style.color = '#059669';
-                    }
+                    serviceSummary.textContent = 'Dine In';
+                    serviceSummary.style.color = '#059669';
                 }
-                if (guideBox) guideBox.style.display = 'block';
-                if (deliverySection) deliverySection.style.display = 'none';
-
-                if (nameInput) nameInput.required = false;
-                if (phoneInput) phoneInput.required = false;
-                if (addressInput) addressInput.required = false;
+                if (tableGroup) tableGroup.style.display = 'block';
+                if (deliveryAddressGroup) deliveryAddressGroup.style.display = 'none';
+                if (deliveryGpsGroup) deliveryGpsGroup.style.display = 'none';
+                if (guideNotice) {
+                    guideNotice.innerHTML = '<strong>Dine-In Service:</strong> Enter your table number and M-Pesa phone number below to pay directly from your table. We will serve you as you relax!';
+                }
+                if (submitBtnText) submitBtnText.textContent = 'PAY WITH M-PESA (DINE-IN)';
+                if (nameLabel) nameLabel.innerHTML = 'Your Name (Optional)';
+            } else if (type === 'takeaway') {
+                if (serviceSummary) {
+                    serviceSummary.textContent = 'Takeaway';
+                    serviceSummary.style.color = '#D97706';
+                }
+                if (tableGroup) tableGroup.style.display = 'none';
+                if (deliveryAddressGroup) deliveryAddressGroup.style.display = 'none';
+                if (deliveryGpsGroup) deliveryGpsGroup.style.display = 'none';
+                if (guideNotice) {
+                    guideNotice.innerHTML = '<strong>Takeaway Service:</strong> Enter your name and phone number to pay directly. Your meal will be packed fresh and ready for collection at the counter!';
+                }
+                if (submitBtnText) submitBtnText.textContent = 'PAY WITH M-PESA (TAKEAWAY)';
+                if (nameLabel) nameLabel.innerHTML = 'Pickup Name <span class="req">*</span>';
             } else if (type === 'delivery') {
                 if (serviceSummary) {
                     serviceSummary.textContent = 'Direct Delivery';
                     serviceSummary.style.color = '#2563EB';
                 }
-                if (guideBox) guideBox.style.display = 'none';
-                if (deliverySection) deliverySection.style.display = 'flex';
-
-                if (nameInput) nameInput.required = true;
-                if (phoneInput) phoneInput.required = true;
-                if (addressInput) addressInput.required = true;
+                if (tableGroup) tableGroup.style.display = 'none';
+                if (deliveryAddressGroup) deliveryAddressGroup.style.display = 'block';
+                if (deliveryGpsGroup) deliveryGpsGroup.style.display = 'block';
+                if (guideNotice) {
+                    guideNotice.innerHTML = '<strong>Direct Delivery:</strong> Enter your delivery address and phone number. Our dispatch rider will deliver straight to your location!';
+                }
+                if (submitBtnText) submitBtnText.textContent = 'PAY WITH M-PESA & DISPATCH';
+                if (nameLabel) nameLabel.innerHTML = 'Full Name <span class="req">*</span>';
             }
 
             if (!skipRender && typeof renderCheckoutReview === 'function') {
@@ -2279,10 +2298,12 @@
         // --- 6. ORDER SUBMISSION & WHATSAPP GENERATION ---
         function handlePlaceOrderSubmit(e) {
             e.preventDefault();
+            const diningType = document.getElementById('selected-dining-type').value;
             const name = document.getElementById('cust-name').value.trim();
             const phone = document.getElementById('cust-phone').value.trim();
-            const diningType = document.getElementById('selected-dining-type').value;
-            const locationNote = document.getElementById('cust-table-location').value.trim();
+            const tableInput = document.getElementById('cust-table-number');
+            const tableNumber = tableInput ? tableInput.value.trim() : '';
+            const deliveryLocation = document.getElementById('cust-table-location') ? document.getElementById('cust-table-location').value.trim() : '';
             const specialNotes = document.getElementById('cust-notes').value.trim();
             const gpsUrl = document.getElementById('cust-gps-url') ? document.getElementById('cust-gps-url').value.trim() : '';
 
@@ -2292,25 +2313,50 @@
                 return;
             }
 
-            if (diningType === 'delivery') {
+            // Universal phone check for STK Push
+            if (!phone) {
+                alert('Please enter your M-Pesa Phone Number to receive the payment prompt.');
+                const phoneInput = document.getElementById('cust-phone');
+                if (phoneInput) phoneInput.focus();
+                return;
+            }
+
+            let locationNote = '';
+            let serviceLabel = 'Table:';
+            let customerDisplayName = name || 'Guest';
+
+            if (diningType === 'dine-in') {
+                if (!tableNumber) {
+                    alert('Please enter your Table Number.');
+                    if (tableInput) tableInput.focus();
+                    return;
+                }
+                serviceLabel = 'Table:';
+                locationNote = /^\d+$/.test(tableNumber) ? `Table ${tableNumber}` : tableNumber;
+            } else if (diningType === 'takeaway') {
+                if (!name) {
+                    alert('Please enter your Name for pickup.');
+                    const nameInput = document.getElementById('cust-name');
+                    if (nameInput) nameInput.focus();
+                    return;
+                }
+                serviceLabel = 'Pickup:';
+                locationNote = 'Counter Pickup';
+            } else if (diningType === 'delivery') {
                 if (!name) {
                     alert('Please enter your Full Name.');
                     const nameInput = document.getElementById('cust-name');
                     if (nameInput) nameInput.focus();
                     return;
                 }
-                if (!phone) {
-                    alert('Please enter your M-Pesa Phone Number.');
-                    const phoneInput = document.getElementById('cust-phone');
-                    if (phoneInput) phoneInput.focus();
-                    return;
-                }
-                if (!locationNote) {
+                if (!deliveryLocation) {
                     alert('Please enter your Delivery Address & Landmark.');
                     const locInput = document.getElementById('cust-table-location');
                     if (locInput) locInput.focus();
                     return;
                 }
+                serviceLabel = 'Delivery:';
+                locationNote = deliveryLocation + (gpsUrl ? ' (Location Pinned)' : '');
             }
 
             let grandTotal = 0;
@@ -2325,31 +2371,12 @@
             // Generate Solid Continuous Order Ref: RH260813011501
             const orderRef = generateSolidOrderRef();
 
-            // Format Table / Location Cleanly
-            let serviceLabel = 'Table:';
-            let formattedLocation = locationNote;
-
-            if (diningType === 'dine-in') {
-                serviceLabel = 'Table:';
-                if (/^\d+$/.test(locationNote)) {
-                    formattedLocation = `Table ${locationNote}`;
-                } else if (!locationNote.toLowerCase().includes('table')) {
-                    formattedLocation = `Table ${locationNote}`;
-                }
-            } else if (diningType === 'takeaway') {
-                serviceLabel = 'Pickup:';
-                formattedLocation = locationNote || 'Counter Pickup';
-            } else if (diningType === 'delivery') {
-                serviceLabel = 'Delivery:';
-                formattedLocation = locationNote + (gpsUrl ? ' (Location Pinned)' : '');
-            }
-
             currentActiveOrder = {
                 ref: orderRef,
-                customerName: name,
+                customerName: customerDisplayName,
                 phone: phone,
                 diningType: diningType,
-                tableOrLocation: formattedLocation,
+                tableOrLocation: locationNote,
                 gpsUrl: gpsUrl,
                 specialNotes: specialNotes,
                 items: cart,
@@ -2371,11 +2398,11 @@
 
             // Populate Modal
             document.getElementById('modal-order-id').textContent = 'REF: ' + orderRef;
-            document.getElementById('modal-customer-name').textContent = name;
+            document.getElementById('modal-customer-name').textContent = customerDisplayName;
             
             const sLabelEl = document.getElementById('modal-service-label');
             if (sLabelEl) sLabelEl.textContent = serviceLabel;
-            document.getElementById('modal-table-val').textContent = formattedLocation;
+            document.getElementById('modal-table-val').textContent = locationNote;
 
             document.getElementById('modal-phone-val').textContent = phone;
             document.getElementById('modal-amount-val').textContent = `KSh ${grandTotal.toLocaleString()}/=`;

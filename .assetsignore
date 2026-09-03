@@ -25,6 +25,10 @@ master_images_backup/**
 server.js
 worker.js
 test-mpesa.js
+analyze-perf.js
+optimize-images.js
+fix-lazy-loading.js
+convert-images.js
 package.json
 package-lock.json
 wrangler.jsonc

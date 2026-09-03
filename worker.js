@@ -285,7 +285,28 @@ export default {
             }
         }
 
-        // FALLBACK: Serve static assets
-        return env.ASSETS.fetch(request);
+        // FALLBACK: Serve static assets with high-performance edge & browser caching
+        const assetResponse = await env.ASSETS.fetch(request);
+        const newHeaders = new Headers(assetResponse.headers);
+        const pathname = url.pathname.toLowerCase();
+
+        // 1. Static images & media - Cache for 1 year immutable
+        if (/\.(webp|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$/.test(pathname)) {
+            newHeaders.set('Cache-Control', 'public, max-age=31536000, immutable');
+        }
+        // 2. CSS and JS bundles - Cache with stale-while-revalidate
+        else if (/\.(css|js)$/.test(pathname)) {
+            newHeaders.set('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
+        }
+        // 3. HTML pages - Fast 5-minute browser cache + background revalidation
+        else {
+            newHeaders.set('Cache-Control', 'public, max-age=300, stale-while-revalidate=86400');
+        }
+
+        return new Response(assetResponse.body, {
+            status: assetResponse.status,
+            statusText: assetResponse.statusText,
+            headers: newHeaders
+        });
     }
 };

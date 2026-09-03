@@ -1901,7 +1901,7 @@
                 return calculateItemSubtotal(item, currentType);
             }
             const base = item.basePrice || parseInt(item.price ? item.price.toString().replace(/[^0-9]/g, '') : '0', 10) || 0;
-            const pkgExtra = (currentType === 'takeaway') ? 20 : 0;
+            const pkgExtra = (currentType === 'takeaway' || currentType === 'delivery') ? 20 : 0;
             if (!item.portions || item.portions.length === 0) {
                 return (base + pkgExtra) * (item.qty || 1);
             }

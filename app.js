@@ -1800,12 +1800,12 @@ function getItemPackagingDetails(item) {
 }
 
 function calculateItemPackagingFee(item, diningType = getDiningType()) {
-    if (diningType === 'dine_in') return 0;
+    if (diningType === 'dine_in' || diningType === 'dine-in') return 0;
     return getItemPackagingDetails(item).totalFee;
 }
 
 function calculateCartPackagingTotal(cart, diningType = getDiningType()) {
-    if (diningType === 'dine_in' || !cart || cart.length === 0) return 0;
+    if (diningType === 'dine_in' || diningType === 'dine-in' || !cart || cart.length === 0) return 0;
     let total = 0;
     cart.forEach(item => {
         total += calculateItemPackagingFee(item, diningType);
@@ -1873,10 +1873,10 @@ function extractSideOptions(dishName, desc) {
     return [];
 }
 
-// Calculate total subtotal of a dish across all its customized portions (includes +20/= Takeaway Container fee if Takeaway is active)
+// Calculate total subtotal of a dish across all its customized portions (includes +20/= Takeaway/Delivery Packaging fee if Takeaway or Delivery is active)
 function calculateItemSubtotal(item, diningType = getDiningType()) {
     const base = item.basePrice || parseInt((item.price || '0').toString().replace(/[^0-9]/g, ''), 10) || 0;
-    const pkgExtra = (diningType === 'takeaway') ? 20 : 0;
+    const pkgExtra = (diningType === 'takeaway' || diningType === 'delivery') ? 20 : 0;
     if (!item.portions || item.portions.length === 0) {
         return (base + pkgExtra) * (item.qty || 1);
     }

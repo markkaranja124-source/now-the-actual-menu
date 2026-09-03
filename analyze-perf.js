@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const files = ['index.html', 'order.html', 'order-summary.html', 'ai-helper.html'];
+const files = ['index.html', 'order.html', 'order-summary.html', 'payment.html'];
 
 files.forEach(file => {
     if (!fs.existsSync(file)) return;

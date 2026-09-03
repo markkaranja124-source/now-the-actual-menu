@@ -285,6 +285,15 @@ export default {
             }
         }
 
+        // 5. ROUTE REWRITES & REDIRECTS FOR PAYMENT
+        const cleanPath = url.pathname.toLowerCase();
+        if (cleanPath === '/payment' || cleanPath === '/payment/') {
+            return env.ASSETS.fetch(new Request(new URL('/payment.html', request.url), request));
+        }
+        if (cleanPath === '/ai-helper' || cleanPath === '/ai-helper/' || cleanPath === '/ai-helper.html') {
+            return Response.redirect(new URL('/payment', request.url), 301);
+        }
+
         // FALLBACK: Serve static assets with high-performance edge & browser caching
         const assetResponse = await env.ASSETS.fetch(request);
         const newHeaders = new Headers(assetResponse.headers);

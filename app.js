@@ -947,7 +947,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-iced-coffee",
     "id": "dish-iced-coffee",
-    "image": "housecoffee.webp",
+    "image": "Icedcoffee.webp",
     "name": "Iced Coffee",
     "price": "180/=",
     "priceNum": 180

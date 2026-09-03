@@ -21,7 +21,7 @@
 
     <link rel="stylesheet" href="style.css?v=20260819_wa_text_clean_v32_1787092931582">
 
-    <!-- Leaflet Interactive Map for Custom Pin Location -->
+    <!-- Interactive Map Support (Leaflet with reliable high-speed tiles) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -1869,9 +1869,10 @@
             <div id="interactive-delivery-map" style="width: 100%; height: 320px; background: #E2E8F0;"></div>
 
             <div style="padding: 12px 16px; background: #FFFFFF; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--light-border); flex-wrap: wrap; gap: 8px;">
-                <div style="font-size: 0.8rem; color: var(--dark-text); font-weight: 700;">
-                    <span style="color: var(--subtle-text); font-weight: 600;">Selected Coordinates: </span>
+                <div style="font-size: 0.8rem; color: var(--dark-text); font-weight: 700; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                    <span style="color: var(--subtle-text); font-weight: 600;">Selected GPS:</span>
                     <span id="selected-map-coords-text">-1.286389, 36.817223</span>
+                    <a href="https://maps.google.com/?q=-1.286389,36.817223" id="map-preview-gmaps-link" target="_blank" style="font-size: 0.76rem; color: #059669; text-decoration: underline; margin-left: 4px; font-weight: 700;">Open in Google Maps &rarr;</a>
                 </div>
                 <button type="button" onclick="confirmMapPinLocation()" style="padding: 9px 16px; background: #059669; color: #FFFFFF; border: none; font-weight: 800; font-size: 0.8rem; cursor: pointer; text-transform: uppercase;">
                     Confirm Pinned Location
@@ -2055,8 +2056,6 @@
             const addressInput = document.getElementById('cust-table-location');
             const submitBtnText = document.getElementById('btn-submit-order-text');
 
-            if (submitBtnText) submitBtnText.textContent = 'PAY WITH M-PESA';
-
             if (type === 'dine-in') {
                 if (serviceSummary) {
                     serviceSummary.textContent = 'Dine In';
@@ -2068,6 +2067,7 @@
                 if (nameLabel) nameLabel.innerHTML = 'Your Name (Optional)';
                 if (nameInput) nameInput.required = false;
                 if (addressInput) addressInput.required = false;
+                if (submitBtnText) submitBtnText.textContent = 'PAY WITH M-PESA';
             } else if (type === 'takeaway') {
                 if (serviceSummary) {
                     serviceSummary.textContent = 'Takeaway';
@@ -2079,6 +2079,7 @@
                 if (nameLabel) nameLabel.innerHTML = 'Pickup Name (Optional)';
                 if (nameInput) nameInput.required = false;
                 if (addressInput) addressInput.required = false;
+                if (submitBtnText) submitBtnText.textContent = 'PAY WITH M-PESA';
             } else if (type === 'delivery') {
                 if (serviceSummary) {
                     serviceSummary.textContent = 'Direct Delivery';
@@ -2090,6 +2091,7 @@
                 if (nameLabel) nameLabel.innerHTML = 'Full Name <span class="req">*</span>';
                 if (nameInput) nameInput.required = true;
                 if (addressInput) addressInput.required = true;
+                if (submitBtnText) submitBtnText.textContent = 'PAY WITH M-PESA AND DISPATCH';
             }
 
             if (!skipRender && typeof renderCheckoutReview === 'function') {
@@ -2102,6 +2104,112 @@
         let deliveryMarker = null;
         let currentPinLat = -1.286389;
         let currentPinLng = 36.817223;
+
+        function openMapPinModal() {
+            const modal = document.getElementById('map-pin-modal');
+            if (modal) modal.classList.add('active');
+
+            setTimeout(() => {
+                const mapContainer = document.getElementById('interactive-delivery-map');
+                if (!mapContainer || !window.L) return;
+
+                if (!deliveryMap) {
+                    deliveryMap = L.map('interactive-delivery-map', {
+                        zoomControl: true,
+                        attributionControl: false
+                    }).setView([currentPinLat, currentPinLng], 15);
+
+                    // High-performance CartoDB Voyager tiles - free, ultra-reliable, never gives gray boxes
+                    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                        subdomains: 'abcd',
+                        maxZoom: 20
+                    }).addTo(deliveryMap);
+
+                    deliveryMarker = L.marker([currentPinLat, currentPinLng], { 
+                        draggable: true,
+                        title: 'Drag to adjust your exact delivery location'
+                    }).addTo(deliveryMap);
+
+                    deliveryMarker.on('dragend', (e) => {
+                        const pos = e.target.getLatLng();
+                        currentPinLat = pos.lat.toFixed(6);
+                        currentPinLng = pos.lng.toFixed(6);
+                        updateMapCoordDisplay();
+                    });
+
+                    deliveryMap.on('click', (e) => {
+                        currentPinLat = e.latlng.lat.toFixed(6);
+                        currentPinLng = e.latlng.lng.toFixed(6);
+                        deliveryMarker.setLatLng([currentPinLat, currentPinLng]);
+                        updateMapCoordDisplay();
+                    });
+                } else {
+                    deliveryMap.invalidateSize();
+                }
+                updateMapCoordDisplay();
+            }, 250);
+        }
+
+        function closeMapPinModal() {
+            const modal = document.getElementById('map-pin-modal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        function updateMapCoordDisplay() {
+            const coordEl = document.getElementById('selected-map-coords-text');
+            const gmapsLink = document.getElementById('map-preview-gmaps-link');
+            if (coordEl) {
+                coordEl.textContent = `${currentPinLat}, ${currentPinLng}`;
+            }
+            if (gmapsLink) {
+                gmapsLink.href = `https://maps.google.com/?q=${currentPinLat},${currentPinLng}`;
+            }
+        }
+
+        function handleSearchMapLocation() {
+            const query = document.getElementById('map-search-input').value.trim();
+            if (!query) return;
+
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&countrycodes=ke&limit=5&q=${encodeURIComponent(query + ', Nairobi')}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.length > 0) {
+                        const item = data[0];
+                        currentPinLat = parseFloat(item.lat).toFixed(6);
+                        currentPinLng = parseFloat(item.lon).toFixed(6);
+                        if (deliveryMap && deliveryMarker) {
+                            deliveryMap.setView([currentPinLat, currentPinLng], 16);
+                            deliveryMarker.setLatLng([currentPinLat, currentPinLng]);
+                            updateMapCoordDisplay();
+                        }
+                    } else {
+                        alert('Location not found in Nairobi. You can also drag the pin directly on the map.');
+                    }
+                })
+                .catch(() => {
+                    alert('Search error. You can tap or drag the pin directly on the map.');
+                });
+        }
+
+        function confirmMapPinLocation() {
+            const mapsUrl = `https://maps.google.com/?q=${currentPinLat},${currentPinLng}`;
+            const gpsInput = document.getElementById('cust-gps-url');
+            const badge = document.getElementById('gps-status-badge');
+            const btnCustom = document.getElementById('btn-pin-custom-map');
+
+            if (gpsInput) gpsInput.value = mapsUrl;
+            if (badge) {
+                badge.style.display = 'block';
+                badge.innerHTML = `Google Maps Pin Attached: ${currentPinLat}, ${currentPinLng} (<a href="${mapsUrl}" target="_blank" style="color: #059669; text-decoration: underline;">Open in Google Maps</a>)`;
+            }
+            if (btnCustom) {
+                btnCustom.innerHTML = `<span>Map Location Pinned</span>`;
+                btnCustom.style.borderColor = '#059669';
+                btnCustom.style.color = '#059669';
+            }
+
+            closeMapPinModal();
+        }
 
         function handlePinCurrentLocation() {
             const btn = document.getElementById('btn-pin-current-gps');
@@ -2122,6 +2230,8 @@
                 (position) => {
                     const lat = position.coords.latitude.toFixed(6);
                     const lng = position.coords.longitude.toFixed(6);
+                    currentPinLat = lat;
+                    currentPinLng = lng;
                     const mapsUrl = `https://maps.google.com/?q=${lat},${lng}`;
                     if (gpsInput) gpsInput.value = mapsUrl;
                     if (btn) {
@@ -2131,7 +2241,12 @@
                     }
                     if (badge) {
                         badge.style.display = 'block';
-                        badge.innerHTML = `Current Phone Location Attached (<a href="${mapsUrl}" target="_blank" style="color: #059669; text-decoration: underline;">View Map</a>)`;
+                        badge.innerHTML = `Current Phone Location Attached (<a href="${mapsUrl}" target="_blank" style="color: #059669; text-decoration: underline;">Open in Google Maps</a>)`;
+                    }
+                    if (deliveryMap && deliveryMarker) {
+                        deliveryMap.setView([lat, lng], 16);
+                        deliveryMarker.setLatLng([lat, lng]);
+                        updateMapCoordDisplay();
                     }
                 },
                 (err) => {
@@ -2143,96 +2258,6 @@
                 },
                 { enableHighAccuracy: true, timeout: 10000 }
             );
-        }
-
-        function openMapPinModal() {
-            const modal = document.getElementById('map-pin-modal');
-            if (modal) modal.classList.add('active');
-
-            setTimeout(() => {
-                if (!deliveryMap) {
-                    deliveryMap = L.map('interactive-delivery-map').setView([currentPinLat, currentPinLng], 14);
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        maxZoom: 19,
-                        attribution: '&copy; OpenStreetMap contributors'
-                    }).addTo(deliveryMap);
-
-                    deliveryMarker = L.marker([currentPinLat, currentPinLng], { draggable: true }).addTo(deliveryMap);
-
-                    deliveryMarker.on('dragend', (e) => {
-                        const pos = e.target.getLatLng();
-                        currentPinLat = pos.lat.toFixed(6);
-                        currentPinLng = pos.lng.toFixed(6);
-                        updateMapCoordDisplay();
-                    });
-
-                    deliveryMap.on('click', (e) => {
-                        currentPinLat = e.latlng.lat.toFixed(6);
-                        currentPinLng = e.latlng.lng.toFixed(6);
-                        deliveryMarker.setLatLng([currentPinLat, currentPinLng]);
-                        updateMapCoordDisplay();
-                    });
-                } else {
-                    deliveryMap.invalidateSize();
-                }
-            }, 200);
-        }
-
-        function closeMapPinModal() {
-            const modal = document.getElementById('map-pin-modal');
-            if (modal) modal.classList.remove('active');
-        }
-
-        function updateMapCoordDisplay() {
-            const coordEl = document.getElementById('selected-map-coords-text');
-            if (coordEl) {
-                coordEl.textContent = `${currentPinLat}, ${currentPinLng}`;
-            }
-        }
-
-        function handleSearchMapLocation() {
-            const query = document.getElementById('map-search-input').value.trim();
-            if (!query) return;
-
-            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', Nairobi, Kenya')}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data && data.length > 0) {
-                        const item = data[0];
-                        currentPinLat = parseFloat(item.lat).toFixed(6);
-                        currentPinLng = parseFloat(item.lon).toFixed(6);
-                        if (deliveryMap && deliveryMarker) {
-                            deliveryMap.setView([currentPinLat, currentPinLng], 15);
-                            deliveryMarker.setLatLng([currentPinLat, currentPinLng]);
-                            updateMapCoordDisplay();
-                        }
-                    } else {
-                        alert('Location not found. You can also drag the pin directly on the map.');
-                    }
-                })
-                .catch(() => {
-                    alert('Search error. You can tap or drag the pin directly on the map.');
-                });
-        }
-
-        function confirmMapPinLocation() {
-            const mapsUrl = `https://maps.google.com/?q=${currentPinLat},${currentPinLng}`;
-            const gpsInput = document.getElementById('cust-gps-url');
-            const badge = document.getElementById('gps-status-badge');
-            const btnCustom = document.getElementById('btn-pin-custom-map');
-
-            if (gpsInput) gpsInput.value = mapsUrl;
-            if (badge) {
-                badge.style.display = 'block';
-                badge.innerHTML = `Custom Map Pin Attached: ${currentPinLat}, ${currentPinLng} (<a href="${mapsUrl}" target="_blank" style="color: #059669; text-decoration: underline;">View Map</a>)`;
-            }
-            if (btnCustom) {
-                btnCustom.innerHTML = `<span>Map Location Pinned</span>`;
-                btnCustom.style.borderColor = '#059669';
-                btnCustom.style.color = '#059669';
-            }
-
-            closeMapPinModal();
         }
 
         // --- 4. COPY TILL NUMBER ---

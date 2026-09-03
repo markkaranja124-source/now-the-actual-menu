@@ -918,6 +918,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-smoothies-tropical",
     "id": "dish-smoothies-tropical",
+    "image": "tropicalsmoothie.webp",
     "name": "Smoothies (Tropical)",
     "price": "200/=",
     "priceNum": 200
@@ -4347,18 +4348,50 @@ if (typeof document !== 'undefined' && (document.readyState === 'interactive' ||
     } catch(e) {}
 }
 
-// Milkshake Flavored 3-Second Image Slideshow (chocolatemilkshake.webp <-> blueberrymilkshake.webp)
+// Milkshake Flavored Smooth Cross-Fade Slideshow (Chocolate, Blueberry, Vanilla)
 (function initMilkshakeSlideshow() {
-    const images = ['chocolatemilkshake.webp', 'blueberrymilkshake.webp'];
+    const images = ['chocolatemilkshake.webp', 'blueberrymilkshake.webp', 'vanillamilkshake.webp'];
+    
+    // Preload all milkshake images in browser memory for instant cross-dissolve
+    images.forEach((src) => {
+        const pre = new Image();
+        pre.src = src;
+    });
+
     let currentIndex = 0;
+    let isTransitioning = false;
+
     setInterval(() => {
-        const imgEl = document.getElementById('milkshake-slideshow-img');
-        if (!imgEl) return;
-        imgEl.style.opacity = '0';
-        setTimeout(() => {
-            currentIndex = (currentIndex + 1) % images.length;
-            imgEl.src = images[currentIndex];
-            imgEl.style.opacity = '1';
-        }, 500);
-    }, 3000);
+        const currentEl = document.getElementById('milkshake-slideshow-img');
+        const nextEl = document.getElementById('milkshake-slideshow-img-next');
+        if (!currentEl || isTransitioning) return;
+
+        isTransitioning = true;
+        const nextIndex = (currentIndex + 1) % images.length;
+
+        if (nextEl) {
+            // True cross-dissolve: bring next image up smoothly while fading out current image
+            nextEl.src = images[nextIndex];
+            nextEl.style.opacity = '1';
+            currentEl.style.opacity = '0';
+
+            setTimeout(() => {
+                currentEl.src = images[nextIndex];
+                currentEl.style.opacity = '1';
+                nextEl.style.opacity = '0';
+                currentIndex = nextIndex;
+                isTransitioning = false;
+            }, 920);
+        } else {
+            // Fallback for single image element
+            currentEl.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            currentEl.style.opacity = '0';
+            setTimeout(() => {
+                currentIndex = nextIndex;
+                currentEl.src = images[currentIndex];
+                currentEl.style.opacity = '1';
+                isTransitioning = false;
+            }, 500);
+        }
+    }, 3400);
 })();

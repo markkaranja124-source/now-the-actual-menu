@@ -2292,6 +2292,27 @@
                 return;
             }
 
+            if (diningType === 'delivery') {
+                if (!name) {
+                    alert('Please enter your Full Name.');
+                    const nameInput = document.getElementById('cust-name');
+                    if (nameInput) nameInput.focus();
+                    return;
+                }
+                if (!phone) {
+                    alert('Please enter your M-Pesa Phone Number.');
+                    const phoneInput = document.getElementById('cust-phone');
+                    if (phoneInput) phoneInput.focus();
+                    return;
+                }
+                if (!locationNote) {
+                    alert('Please enter your Delivery Address & Landmark.');
+                    const locInput = document.getElementById('cust-table-location');
+                    if (locInput) locInput.focus();
+                    return;
+                }
+            }
+
             let grandTotal = 0;
             let orderSummaryLines = [];
 
@@ -2546,6 +2567,11 @@ ${o.specialNotes ? `*Notes:*       ${o.specialNotes}\n` : ''}`;
                 });
 
                 const data = await res.json();
+
+                if (!data.success) {
+                    showMpesaState('failed', data.message || 'Failed to trigger STK Push.');
+                    return;
+                }
 
                 if (pillText) {
                     pillText.textContent = data.isSimulated ? 'Enter PIN (Demo Mode)' : 'Enter PIN on Phone';

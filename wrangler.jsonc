@@ -1,7 +1,18 @@
 {
   "name": "now-the-actual-menu",
+  "main": "worker.js",
   "compatibility_date": "2024-09-23",
   "assets": {
     "directory": "."
+  },
+  "vars": {
+    "MPESA_ENVIRONMENT": "sandbox",
+    "MPESA_CONSUMER_KEY": "qE0OJZvebNTC5OwSVfq1I9bQUwp1m3iu47H4MGUGKOL6jA37",
+    "MPESA_CONSUMER_SECRET": "0q9isAoA7ZWtqo66oc3dP3ophTe1AVt81zSXACIHtNkzDpuMAMf937RURZQdLlr2",
+    "MPESA_PASSKEY": "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919",
+    "MPESA_SHORTCODE": "174379",
+    "MPESA_TILL_NUMBER": "4977556",
+    "MPESA_CALLBACK_URL": "https://now-the-actual-menu.markkaranja124.workers.dev/api/mpesa/callback"
   }
 }
+

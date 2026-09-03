@@ -23,8 +23,11 @@ master_images_backup/**
 
 # Exclude backend and config files from static CDN
 server.js
+worker.js
+test-mpesa.js
 package.json
 package-lock.json
 wrangler.jsonc
 wrangler.toml
+
 

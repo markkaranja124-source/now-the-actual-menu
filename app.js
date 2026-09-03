@@ -135,9 +135,27 @@ function getDishImage(dishName, dishDesc) {
     if (textLower.includes('samosa combo')) return 'Andazisamosawitheggs.webp';
     if (textLower.includes('mini breakfast')) return 'Breakfast1.webp';
     if (textLower.includes('main breakfast')) return 'breakfastbreadwithbacon1.webp';
+    if (textLower.includes('rib house breakfast')) return 'ribhousebreakfast.webp';
     if (textLower.includes('goat soup breakfast') || textLower.includes('goat soup')) return 'Goatsoup.webp';
+    if (textLower.includes('chicken soup breakfast') || textLower.includes('chicken soup')) return 'chickensoup.webp';
     if (textLower.includes('beef stew') || textLower.includes('beef fry')) return 'beef.webp';
     if (textLower.includes('beef steak') || textLower.includes('steakbeaf')) return 'Steakbeaf.webp';
+    if (textLower.includes('house coffee black') || textLower.includes('black coffee w lemon') || textLower.includes('black coffee with lemon') || textLower.includes('tea masala black')) return 'housecoffeeblack.webp';
+    if (textLower.includes('americano')) return 'americano.webp';
+    if (textLower.includes('latte mocha')) return 'lattemocha.webp';
+    if (textLower.includes('tea special') || textLower.includes('tea masala white') || textLower.includes('ginger tea')) return 'teamasalaspecialteagingertea.webp';
+    if (textLower.includes('choma goat (0.5 kg)') || textLower.includes('choma goat 0.5 kg') || textLower.includes('goat choma 0.5')) return 'Goatchomahalfkg.webp';
+    if (textLower.includes('choma beef (1 kg)') || textLower.includes('choma beef 1 kg') || textLower.includes('beef choma 1')) return 'beefchoma1kg.webp';
+    if (textLower.includes('choma beef (0.5 kg)') || textLower.includes('choma beef 0.5 kg') || textLower.includes('beef choma 0.5')) return 'beefchomahalfkg.webp';
+    if (textLower.includes('chemsha goat (1 kg)') || textLower.includes('chemsha goat 1 kg')) return 'goat chemsha 1kg.webp';
+    if (textLower.includes('chemsha beef (1 kg)') || textLower.includes('chemsha beef 1 kg')) return 'beefchemsha1kg.webp';
+    if (textLower.includes('beef fry / tumbukiza') || textLower.includes('beef tumbukiza') || textLower.includes('beef fry (1 kg)')) return 'tumbukizabeeffry1kg.webp';
+    if (textLower.includes('special breakfast')) return 'Specialbreakfast.webp';
+    if (textLower.includes('goat fry') || textLower.includes('goat tumbukiza')) return 'tumbukizagoatfry1kg.webp';
+    if (textLower.includes('cappuccino')) return 'cappuccino_transparent.webp';
+    if (textLower.includes('espresso (double)') || textLower.includes('espresso double') || textLower.includes('esspressodouble') || textLower.includes('espresso (cold)') || textLower.includes('espresso cold')) return 'esspressodouble.webp';
+    if (textLower.includes('milkshake (flavored)') || textLower.includes('milkshake flavored') || textLower.includes('chocolate milkshake')) return 'chocolatemilkshake.webp';
+    if (textLower.includes('blueberry milkshake')) return 'blueberrymilkshake.webp';
 
     // No auto-guessing for any other dishes until explicitly requested by user
     return null;
@@ -401,94 +419,8 @@ function syncMainDishesUIState() {
 }
 
 function autoInjectDishCardThumbnails() {
-    if (typeof document === 'undefined') return;
-
-    // 1. Grid Cards
-    const cards = document.querySelectorAll('.menu-dish-card, [id^="dish-"], .menu-card-luxury-wrapper, .menu-grid > div');
-    cards.forEach(cardContainer => {
-        if (cardContainer.classList.contains('main-dish-section-block') || cardContainer.closest('.main-dish-section-block, #main-dishes-grid')) {
-            return;
-        }
-
-        const cardBox = (cardContainer.parentElement && cardContainer.parentElement.children.length > 0 && cardContainer.parentElement.style.background) 
-            ? cardContainer.parentElement 
-            : cardContainer;
-
-        const h3 = cardContainer.querySelector('h3, h4, .dish-title') || cardBox.querySelector('h3, h4');
-        const descP = cardBox.querySelector('p, .dish-desc');
-        if (!h3) return;
-
-        const name = h3.innerText.replace(/\s+/g, ' ').trim();
-        const desc = descP ? descP.innerText.replace(/\s+/g, ' ').trim() : '';
-
-        let imageFile = null;
-        if (typeof getDishImage === 'function') {
-            imageFile = getDishImage(name, desc);
-        }
-
-        if (imageFile) {
-            // Already cleanly constructed
-            if (cardBox.querySelector('.card-thumb-wrapper') && cardBox.querySelector('.card-info-col')) return;
-
-            const priceSpanHtml = cardBox.querySelector('span') ? cardBox.querySelector('span').outerHTML : '';
-            const cleanDesc = desc ? `<p class="dish-desc">${desc}</p>` : '';
-            const itemStatus = typeof getItemAvailability === 'function' ? getItemAvailability(name) : 'ready';
-
-            let btnHtml = cardBox.querySelector('button') ? cardBox.querySelector('button').outerHTML : `<button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>`;
-            let holdBadgeHtml = '';
-
-            if (itemStatus === 'hold') {
-                btnHtml = `<button type="button" class="card-order-action-btn" style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #D97706; background: #F59E0B; color: #000000; font-weight: 700; font-size: 0.82rem; cursor: not-allowed;">ON HOLD</button>`;
-                holdBadgeHtml = `<div class="card-hold-badge" style="position: absolute; top: 10px; right: 10px; background: #F59E0B; color: #000000; font-size: 0.7rem; font-weight: 800; padding: 4px 8px; border-radius: 3px; z-index: 5; letter-spacing: 0.5px; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">ON HOLD</div>`;
-            }
-
-            if (getComputedStyle(cardBox).position === 'static') {
-                cardBox.style.position = 'relative';
-            }
-
-            cardBox.classList.add('has-card-thumb');
-            cardBox.innerHTML = `
-                <div class="card-thumb-wrapper" style="position: relative;" title="${name}">
-                    <img src="${imageFile}" alt="${name}" class="card-thumb-img" loading="eager" fetchpriority="high" />
-                    ${holdBadgeHtml}
-                </div>
-                <div class="card-info-col">
-                    <div class="card-title-price-row">
-                        <h3>${name}</h3>
-                        ${priceSpanHtml}
-                    </div>
-                    ${cleanDesc}
-                    ${btnHtml}
-                </div>
-            `;
-        }
-    });
-
-    // 2. Compact Row Dish Items
-    const rowItems = document.querySelectorAll('div[style*="justify-content: space-between"]');
-    rowItems.forEach(row => {
-        if (row.querySelector('.row-thumb-img') || row.closest('.menu-dish-card, [id^="dish-"]')) return;
-        const nameSpan = row.querySelector('span[style*="font-family"]');
-        if (!nameSpan) return;
-
-        const name = nameSpan.innerText.replace(/\s+/g, ' ').trim();
-        if (!name || name.includes('/=')) return;
-
-        let imageFile = null;
-        if (typeof getDishImage === 'function') {
-            imageFile = getDishImage(name, '');
-        }
-
-        if (imageFile) {
-            const img = document.createElement('img');
-            img.src = imageFile;
-            img.alt = name;
-            img.className = 'row-thumb-img';
-            img.loading = 'lazy';
-            img.decoding = 'async';
-            row.insertBefore(img, nameSpan);
-        }
-    });
+    // Disabled: HTML cards in index.html already contain clean Oreo Shake layout
+    return;
 }
 
 if (typeof window !== 'undefined') {
@@ -616,7 +548,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-rib-house-breakfast",
     "id": "dish-rib-house-breakfast",
-    
+    "image": "ribhousebreakfast.webp",
     "name": "RIB HOUSE BREAKFAST",
     "price": "300/=",
     "priceNum": 300
@@ -647,8 +579,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-chicken-soup-breakfast",
     "id": "dish-chicken-soup-breakfast",
-    
-    "image": "Goatsoup.webp",
+    "image": "chickensoup.webp",
     "name": "CHICKEN SOUP BREAKFAST",
     "price": "300/=",
     "priceNum": 300
@@ -697,7 +628,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-rib-house-bite",
     "id": "dish-rib-house-bite",
-    
+    "image": "ribhousebite.webp",
     "name": "RIB HOUSE BITE",
     "price": "200/=",
     "priceNum": 200
@@ -707,7 +638,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-special-breakfast",
     "id": "dish-special-breakfast",
-    
+    "image": "Specialbreakfast.webp",
     "name": "SPECIAL BREAKFAST",
     "price": "220/=",
     "priceNum": 220
@@ -767,6 +698,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-americano",
     "id": "dish-americano",
+    "image": "americano.webp",
     "name": "Americano",
     "price": "150/=",
     "priceNum": 150
@@ -776,7 +708,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-latte-mocha",
     "id": "dish-latte-mocha",
-    "image": "housecoffee.webp",
+    "image": "lattemocha.webp",
     "name": "Latte Mocha",
     "price": "150/=",
     "priceNum": 150
@@ -786,7 +718,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-latte-machiatto",
     "id": "dish-latte-machiatto",
-    "image": "housecoffee.webp",
+    "image": "lattemachiato.webp",
     "name": "Latte Machiatto",
     "price": "180/=",
     "priceNum": 180
@@ -796,7 +728,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-coffee-latte",
     "id": "dish-coffee-latte",
-    "image": "housecoffee.webp",
+    "image": "coffeelatte1.webp",
     "name": "Coffee Latte",
     "price": "150/=",
     "priceNum": 150
@@ -806,7 +738,6 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-lemon-tea",
     "id": "dish-lemon-tea",
-    "image": "housecoffee.webp",
     "image": "Lemontea.webp",
     "name": "Lemon Tea",
     "price": "100/=",
@@ -828,6 +759,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-lemon-water",
     "id": "dish-lemon-water",
+    "image": "lemonwater.webp",
     "name": "Lemon Water",
     "price": "70/=",
     "priceNum": 70
@@ -837,7 +769,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-tea-special",
     "id": "dish-tea-special",
-    "image": "housecoffee.webp",
+    "image": "teamasalaspecialteagingertea.webp",
     "name": "Tea special",
     "price": "100/=",
     "priceNum": 100
@@ -847,7 +779,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-tea-masala-white",
     "id": "dish-tea-masala-white",
-    "image": "housecoffee.webp",
+    "image": "teamasalaspecialteagingertea.webp",
     "name": "Tea Masala White",
     "price": "130/=",
     "priceNum": 130
@@ -867,7 +799,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-ginger-tea",
     "id": "dish-ginger-tea",
-    "image": "housecoffee.webp",
+    "image": "teamasalaspecialteagingertea.webp",
     "name": "Ginger Tea",
     "price": "130/=",
     "priceNum": 130
@@ -896,6 +828,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-hot-milk",
     "id": "dish-hot-milk",
+    "image": "Hotmilk.webp",
     "name": "Hot Milk",
     "price": "100/=",
     "priceNum": 100
@@ -905,6 +838,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-honey-cone",
     "id": "dish-honey-cone",
+    "image": "honeycone.webp",
     "name": "Honey Cone",
     "price": "50/=",
     "priceNum": 50
@@ -924,7 +858,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-cappuccino-double",
     "id": "dish-cappuccino-double",
-    "image": "housecoffee.webp",
+    "image": "cappuccino_isolated.webp",
     "name": "Cappuccino (Double)",
     "price": "180/=",
     "priceNum": 180
@@ -934,7 +868,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-espresso-single",
     "id": "dish-espresso-single",
-    "image": "housecoffee.webp",
+    "image": "esspressosingle.webp",
     "name": "Espresso (Single)",
     "price": "120/=",
     "priceNum": 120
@@ -944,7 +878,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-espresso-double",
     "id": "dish-espresso-double",
-    "image": "housecoffee.webp",
+    "image": "esspressodouble.webp",
     "name": "Espresso (Double)",
     "price": "150/=",
     "priceNum": 150
@@ -954,7 +888,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-milkshake-flavored",
     "id": "dish-milkshake-flavored",
-    "image": "Oreoshake.webp",
+    "image": "chocolatemilkshake.webp",
     "name": "Milkshake (Flavored)",
     "price": "250/=",
     "priceNum": 250
@@ -1142,7 +1076,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-choma-beef-1-kg",
     "id": "dish-choma-beef-1-kg",
-    "image": "beef.webp",
+    "image": "beefchoma1kg.webp",
     "name": "CHOMA BEEF (1 KG)",
     "price": "1100/=",
     "priceNum": 1100
@@ -1152,7 +1086,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-choma-beef-0-5-kg",
     "id": "dish-choma-beef-0-5-kg",
-    
+    "image": "beefchomahalfkg.webp",
     "name": "CHOMA BEEF (0.5 KG)",
     "price": "550/=",
     "priceNum": 550
@@ -1172,7 +1106,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-choma-goat-0-5-kg",
     "id": "dish-choma-goat-0-5-kg",
-    "image": "Goatchoma1kg.webp",
+    "image": "Goatchomahalfkg.webp",
     "name": "CHOMA GOAT (0.5 KG)",
     "price": "600/=",
     "priceNum": 600
@@ -1236,7 +1170,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-goat-fry-tumbukiza-1-kg",
     "id": "dish-goat-fry-tumbukiza-1-kg",
-    
+    "image": "tumbukizagoatfry1kg.webp",
     "name": "GOAT FRY / TUMBUKIZA (1 KG)",
     "price": "1400/=",
     "priceNum": 1400
@@ -4412,3 +4346,19 @@ if (typeof document !== 'undefined' && (document.readyState === 'interactive' ||
         updateSelectionBarUI();
     } catch(e) {}
 }
+
+// Milkshake Flavored 3-Second Image Slideshow (chocolatemilkshake.webp <-> blueberrymilkshake.webp)
+(function initMilkshakeSlideshow() {
+    const images = ['chocolatemilkshake.webp', 'blueberrymilkshake.webp'];
+    let currentIndex = 0;
+    setInterval(() => {
+        const imgEl = document.getElementById('milkshake-slideshow-img');
+        if (!imgEl) return;
+        imgEl.style.opacity = '0';
+        setTimeout(() => {
+            currentIndex = (currentIndex + 1) % images.length;
+            imgEl.src = images[currentIndex];
+            imgEl.style.opacity = '1';
+        }, 500);
+    }, 3000);
+})();

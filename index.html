@@ -247,233 +247,208 @@
                 </div>
 
                 <div class="menu-grid"
-                    style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); margin-bottom: 60px;">
+                    style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); margin-bottom: 60px;">
                     <!-- TEST DISH (FOR TESTING PURPOSES) -->
-                    <div
-                        style="background: var(--color-card-bg); border: 2px dashed var(--color-gold); padding: 24px; cursor: pointer;">
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 2px dashed var(--color-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
                         <div id="dish-test-dish" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3
-                                style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-gold); text-transform: uppercase;">
-                                TEST DISH</h3>
-                            <span
-                                style="font-family: var(--font-serif); font-size: 1.3rem; color: #10B981; font-weight: bold;">1/=</span>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-gold); text-transform: uppercase;">
+                                TEST DISH</h4>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: #10B981; font-weight: bold;">1/=</span>
                         </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Developer testing dish (KSh 1/=) for M-Pesa verification and checkout order testing.</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Developer testing dish (KSh 1/=) for M-Pesa verification and checkout order testing.</p>
+                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
-                    <div
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px;">
+                    <!-- PANCAKE BREAKFAST -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
                         <div id="dish-pancake-breakfast" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3
-                                style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">
-                                PANCAKE BREAKFAST</h3>
-                            <span
-                                style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">400/=</span>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                PANCAKE BREAKFAST</h4>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">400/=</span>
                         </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Tea, 2 pancakes
-                            and pan Fried Bacon</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, 2 pancakes and pan Fried Bacon</p>
+                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
+                    <!-- MINI BREAKFAST -->
                     <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px;">
-                        <img src="Breakfast1.webp" alt="MINI BREAKFAST" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="Breakfast1.webp" alt="MINI BREAKFAST" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
                         <div id="dish-mini-breakfast" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3
-                                style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">
-                                MINI BREAKFAST</h3>
-                            <span
-                                style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">310/=</span>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                MINI BREAKFAST</h4>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">310/=</span>
                         </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Tea, 2 fried
-                            egg, Toast and sausage, A Small Glass Of Juice</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, 2 fried egg, Toast and sausage, A Small Glass Of Juice</p>
+                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
-                    <div
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px;">
-                        <div
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3
-                                style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">
-                                RIB HOUSE BREAKFAST</h3>
-                            <span
-                                style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">300/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Tea, Liver and
-                            Chapati</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ ADD TO ORDER</button>
-                    </div>
-
+                    <!-- RIB HOUSE BREAKFAST -->
                     <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px;">
-                        <img src="breakfastbreadwithbacon1.webp" alt="MAIN BREAKFAST" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
-                        <div
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="ribhousebreakfast.webp" alt="RIB HOUSE BREAKFAST" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-rib-house-breakfast" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3
-                                style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">
-                                MAIN BREAKFAST</h3>
-                            <span
-                                style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">400/=</span>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                RIB HOUSE BREAKFAST</h4>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">300/=</span>
                         </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Tea, 2 Eggs,
-                            Beef Bacon/Sausages, Toast and a glass of juice</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, Liver and Chapati</p>
+                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
+                    <!-- MAIN BREAKFAST -->
                     <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px;">
-                        <img src="Goatsoup.webp" alt="GOAT SOUP BREAKFAST" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
-                        <div
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="breakfastbreadwithbacon1.webp" alt="MAIN BREAKFAST" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-main-breakfast" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3
-                                style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">
-                                GOAT SOUP BREAKFAST</h3>
-                            <span
-                                style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">300/=</span>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                MAIN BREAKFAST</h4>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">400/=</span>
                         </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Served with a
-                            piece of goat meat, goat soup, chapati and veges.</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, 2 Eggs, Beef Bacon/Sausages, Toast and a glass of juice</p>
+                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
-                    <div
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px;">
-                        <div
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3
-                                style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">
-                                CHICKEN SOUP BREAKFAST</h3>
-                            <span
-                                style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">300/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Served With: A
-                            Piece Of Chicken Kienyeji, Chicken Soup, Chapati And Veges</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ ADD TO ORDER</button>
-                    </div>
-
-                    <div
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px;">
-                        <div
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3
-                                style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">
-                                CHIPS COMBO</h3>
-                            <span
-                                style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">300/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Chips Served
-                            With Tea / Egg / Andazi / Kachumbari</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ ADD TO ORDER</button>
-                    </div>
-
+                    <!-- GOAT SOUP BREAKFAST -->
                     <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px;">
-                        <img src="Andazisamosawitheggs.webp" alt="SAMOSA COMBO" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
-                        <div
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="Goatsoup.webp" alt="GOAT SOUP BREAKFAST" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-goat-soup-breakfast" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3
-                                style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">
-                                SAMOSA COMBO</h3>
-                            <span
-                                style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">280/=</span>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                GOAT SOUP BREAKFAST</h4>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">300/=</span>
                         </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">1 Egg / Samosa
-                            / Andazi / Tea</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Served with a piece of goat meat, goat soup, chapati and veges.</p>
+                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
-                    <div
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px;">
-                        <div
+                    <!-- CHICKEN SOUP BREAKFAST -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="chickensoup.webp" alt="CHICKEN SOUP BREAKFAST" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-chicken-soup-breakfast" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3
-                                style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">
-                                TRADITIONAL BREAKFAST</h3>
-                            <span
-                                style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">300/=</span>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                CHICKEN SOUP BREAKFAST</h4>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">300/=</span>
                         </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Tea, Nduma /
-                            Ngwaci, Egg Kienyeji, veges</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Served With: A Piece Of Chicken Kienyeji, Chicken Soup, Chapati And Veges</p>
+                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
-                    <div
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px;">
-                        <div
+                    <!-- CHIPS COMBO -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div id="dish-chips-combo" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3
-                                style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">
-                                FARMERS CHOICE</h3>
-                            <span
-                                style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">380/=</span>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                CHIPS COMBO</h4>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">300/=</span>
                         </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Tea, Beef
-                            bacon/Sausage and a Toast</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Chips Served With Tea / Egg / Andazi / Kachumbari</p>
+                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
-                    <div
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px;">
-                        <div
+                    <!-- SAMOSA COMBO -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="Andazisamosawitheggs.webp" alt="SAMOSA COMBO" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-samosa-combo" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3
-                                style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">
-                                RIB HOUSE BITE</h3>
-                            <span
-                                style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">200/=</span>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                SAMOSA COMBO</h4>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">280/=</span>
                         </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Tea, Andazi and
-                            a Sausage</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">1 Egg / Samosa / Andazi / Tea</p>
+                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
-                    <div
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px;">
-                        <div
+                    <!-- TRADITIONAL BREAKFAST -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div id="dish-traditional-breakfast" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3
-                                style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">
-                                SPECIAL BREAKFAST</h3>
-                            <span
-                                style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">220/=</span>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                TRADITIONAL BREAKFAST</h4>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">300/=</span>
                         </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Tea, one fried
-                            egg, toast and a sausage</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, Nduma / Ngwaci, Egg Kienyeji, veges</p>
+                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
-                    <div
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px;">
-                        <div
+                    <!-- FARMERS CHOICE -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div id="dish-farmers-choice" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3
-                                style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">
-                                RIB HOUSE SPECIAL</h3>
-                            <span
-                                style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">310/=</span>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                FARMERS CHOICE</h4>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">380/=</span>
                         </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Tea, Bacon/ 2
-                            Sausages and Chapati</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, Beef bacon/Sausage and a Toast</p>
+                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
-                    <div
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px;">
-                        <div
+                    <!-- RIB HOUSE BITE -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="ribhousebite.webp" alt="RIB HOUSE BITE" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-rib-house-bite" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3
-                                style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-cream); text-transform: uppercase;">
-                                BRITISH BREAKFAST</h3>
-                            <span
-                                style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">320/=</span>
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                RIB HOUSE BITE</h4>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">200/=</span>
                         </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Tea, Liver and
-                            Toast</p>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, Andazi and a Sausage</p>
+                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                    </div>
+
+                    <!-- SPECIAL BREAKFAST -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="Specialbreakfast.webp" alt="SPECIAL BREAKFAST" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-special-breakfast" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                SPECIAL BREAKFAST</h4>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">220/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, one fried egg, toast and a sausage</p>
+                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                    </div>
+
+                    <!-- RIB HOUSE SPECIAL -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div id="dish-rib-house-special" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                RIB HOUSE SPECIAL</h4>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">310/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, Bacon/ 2 Sausages and Chapati</p>
+                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                    </div>
+
+                    <!-- BRITISH BREAKFAST -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div id="dish-british-breakfast" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                BRITISH BREAKFAST</h4>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">320/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, Liver and Toast</p>
+                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
                 </div>
 
@@ -490,170 +465,196 @@
                     <!-- House Coffee white -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="housecoffee.webp" alt="House Coffee white" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
-                        <div id="dish-house-coffee-white" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="housecoffee.webp" alt="House Coffee white" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-house-coffee-white" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 House Coffee white</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">150/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">150/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- House Coffee Black -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-house-coffee-black" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="housecoffeeblack.webp" alt="House Coffee Black" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-house-coffee-black" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 House Coffee Black</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">100/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">100/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Black Coffee W lemon -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-black-coffee-w-lemon" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="housecoffeeblack.webp" alt="Black Coffee W lemon" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-black-coffee-w-lemon" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Black Coffee W lemon</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">110/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">110/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Americano -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-americano" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="americano.webp" alt="Americano" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-americano" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Americano</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">150/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">150/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Latte Mocha -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-latte-mocha" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="lattemocha.webp" alt="Latte Mocha" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-latte-mocha" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Latte Mocha</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">150/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">150/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Latte Machiatto -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-latte-machiatto" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="lattemachiato.webp" alt="Latte Machiatto" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-latte-machiatto" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Latte Machiatto</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">180/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">180/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Coffee Latte -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-coffee-latte" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="coffeelatte1.webp" alt="Coffee Latte" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-coffee-latte" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Coffee Latte</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">150/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">150/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Lemon Tea -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-lemon-tea" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="Lemontea.webp" alt="Lemon Tea" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-lemon-tea" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Lemon Tea</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">100/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">100/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Lemon Tea W Honey -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-lemon-tea-w-honey" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <div id="dish-lemon-tea-w-honey" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Lemon Tea W Honey</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">150/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">150/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Lemon Water -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-lemon-water" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="lemonwater.webp" alt="Lemon Water" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-lemon-water" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Lemon Water</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">70/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">70/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Tea special -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-tea-special" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="teamasalaspecialteagingertea.webp" alt="Tea special" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-tea-special" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Tea special</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">100/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">100/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Tea Masala White -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-tea-masala-white" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="teamasalaspecialteagingertea.webp" alt="Tea Masala White" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-tea-masala-white" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Tea Masala White</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">130/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">130/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Tea Masala Black -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-tea-masala-black" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="housecoffeeblack.webp" alt="Tea Masala Black" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-tea-masala-black" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Tea Masala Black</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">100/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">100/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Ginger Tea -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-ginger-tea" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="teamasalaspecialteagingertea.webp" alt="Ginger Tea" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-ginger-tea" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Ginger Tea</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">130/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">130/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Dawa -->
@@ -673,85 +674,98 @@
                     <!-- Honey Espresso -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-honey-espresso" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <div id="dish-honey-espresso" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Honey Espresso</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">110/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">110/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Hot Milk -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-hot-milk" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="Hotmilk.webp" alt="Hot Milk" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-hot-milk" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Hot Milk</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">100/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">100/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Honey Cone -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-honey-cone" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="honeycone.webp" alt="Honey Cone" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-honey-cone" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Honey Cone</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">50/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">50/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Cappuccino (Single) -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-cappuccino-single" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="cappuccino_transparent.webp" alt="Cappuccino (Single)" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-cappuccino-single" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Cappuccino (Single)</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">150/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">150/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Cappuccino (Double) -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-cappuccino-double" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="cappuccino_isolated.webp" alt="Cappuccino (Double)" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-cappuccino-double" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Cappuccino (Double)</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">180/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">180/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Espresso (Single) -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-espresso-single" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="esspressosingle.webp" alt="Espresso (Single)" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-espresso-single" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Espresso (Single)</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">120/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">120/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Espresso (Double) -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-espresso-double" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="esspressodouble.webp" alt="Espresso (Double)" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-espresso-double" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Espresso (Double)</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">150/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">150/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
                 </div>
 
@@ -767,25 +781,29 @@
                     <!-- Milkshake (Flavored) -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-milkshake-flavored" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
-                                Milkshake (Flavored)</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">250/=</span>
+                        <img id="milkshake-slideshow-img" src="chocolatemilkshake.webp" alt="Milkshake (Flavored)" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px; transition: opacity 0.6s ease-in-out;" loading="lazy" decoding="async" />
+                        <div id="dish-milkshake-flavored" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                MILKSHAKE (FLAVORED)</h4>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">250/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Espresso (Cold) -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-espresso-cold" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <img src="esspressodouble.webp" alt="Espresso (Cold)" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <div id="dish-espresso-cold" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Espresso (Cold)</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">250/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">250/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Oreo shake -->
@@ -805,13 +823,14 @@
                     <!-- Smoothies (Tropical) -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-smoothies-tropical" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <div id="dish-smoothies-tropical" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Smoothies (Tropical)</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">200/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">200/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Ice Cream Scoops -->
@@ -831,25 +850,27 @@
                     <!-- Lemonade (Flavor) -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-lemonade-flavor" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <div id="dish-lemonade-flavor" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Lemonade (Flavor)</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">100/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">100/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Iced Coffee -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div id="dish-iced-coffee" class="menu-dish-card">
-                            <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-cream); margin-bottom: 6px;">
+                        <div id="dish-iced-coffee" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
                                 Iced Coffee</h4>
-                            <span style="font-size: 1.1rem; color: var(--color-gold); font-weight: bold;">180/=</span>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">180/=</span>
                         </div>
                         <button type="button" class="card-order-action-btn"
-                            style="margin-top: 20px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
                     </div>
                 </div>
 
@@ -1367,6 +1388,7 @@
                     <!-- CHOMA BEEF 1 KG -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="beefchoma1kg.webp" alt="CHOMA BEEF (1 KG)" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
                         <div id="dish-choma-beef-1-kg" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1381,6 +1403,7 @@
                     <!-- CHOMA BEEF 0.5 KG -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="beefchomahalfkg.webp" alt="CHOMA BEEF (0.5 KG)" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
                         <div id="dish-choma-beef-0-5-kg" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1410,6 +1433,7 @@
                     <!-- CHOMA GOAT 0.5 KG -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="Goatchomahalfkg.webp" alt="CHOMA GOAT (0.5 KG)" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
                         <div id="dish-choma-goat-0-5-kg" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1424,6 +1448,7 @@
                     <!-- CHEMSHA BEEF 1 KG -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="beefchemsha1kg.webp" alt="CHEMSHA BEEF (1 KG)" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
                         <div id="dish-chemsha-beef-1-kg" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1453,6 +1478,7 @@
                     <!-- CHEMSHA GOAT 1 KG -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="goat chemsha 1kg.webp" alt="CHEMSHA GOAT (1 KG)" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
                         <div id="dish-chemsha-goat-1-kg" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1482,6 +1508,7 @@
                     <!-- BEEF FRY / TUMBUKIZA 1 KG -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="tumbukizabeeffry1kg.webp" alt="BEEF FRY / TUMBUKIZA (1 KG)" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
                         <div id="dish-beef-fry-tumbukiza-1-kg" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1496,6 +1523,7 @@
                     <!-- GOAT FRY / TUMBUKIZA 1 KG -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="tumbukizagoatfry1kg.webp" alt="GOAT FRY / TUMBUKIZA (1 KG)" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
                         <div id="dish-goat-fry-tumbukiza-1-kg" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1865,7 +1893,7 @@
         <button class="ai-flaming-trigger" id="ai-flaming-trigger" aria-label="Open Rib House Menu AI Assistant">
             <div class="flame-aura-ring"></div>
             <div class="flaming-logo-box">
-                <img src="logo.png" alt="Rib House AI" class="flaming-logo-img">
+                <img src="logo.webp" alt="Rib House AI" class="flaming-logo-img">
             </div>
         </button>
     </div>
@@ -1876,7 +1904,7 @@
         <div class="ai-drawer-header">
             <div class="ai-header-info">
                 <div class="ai-avatar-flame">
-                    <img src="logo.png" alt="Rib House Emblem">
+                    <img src="logo.webp" alt="Rib House Emblem">
                     <span class="online-dot"></span>
                 </div>
                 <div>

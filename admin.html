@@ -1521,8 +1521,11 @@
                 </button>
             </div>
 
-            <!-- Kitchen Staff Login Form (Google or Gmail + PIN) -->
-            <form id="kitchen-login-form" onsubmit="handleKitchenAuth(event)" style="display: none;">
+            <!-- Kitchen Staff Login (Google Only) -->
+            <div id="kitchen-login-form" style="display: none; padding-top: 10px; text-align: center;">
+                <p style="font-size: 0.82rem; color: #64748B; margin-bottom: 18px; line-height: 1.45;">
+                    Sign in with your authorized Kitchen Crew Google account.
+                </p>
                 <button type="button" class="btn-google-auth" id="btn-google-kitchen" onclick="handleGoogleSignIn('kitchen')">
                     <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
                         <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
@@ -1532,14 +1535,13 @@
                     </svg>
                     Continue with Google
                 </button>
-                <div class="auth-divider"><span>OR SIGN IN WITH PIN</span></div>
-                <input type="email" id="kitchen-email-input" class="auth-input highlight-orange" placeholder="Staff Gmail Address" autocomplete="email">
-                <input type="password" id="kitchen-pin-input" class="auth-input highlight-orange" placeholder="Kitchen Staff PIN" maxlength="8" autocomplete="current-password">
-                <button type="submit" class="btn-auth-submit" id="btn-submit-kitchen">ENTER KITCHEN PORTAL</button>
-            </form>
+            </div>
 
-            <!-- Cashier Login Form (Google or Gmail + PIN) -->
-            <form id="cashier-login-form" onsubmit="handleCashierAuth(event)" style="display: none;">
+            <!-- Cashier Login (Google Only) -->
+            <div id="cashier-login-form" style="display: none; padding-top: 10px; text-align: center;">
+                <p style="font-size: 0.82rem; color: #64748B; margin-bottom: 18px; line-height: 1.45;">
+                    Sign in with your authorized Cashier Staff Google account.
+                </p>
                 <button type="button" class="btn-google-auth" id="btn-google-cashier" onclick="handleGoogleSignIn('cashier')">
                     <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
                         <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
@@ -1549,14 +1551,13 @@
                     </svg>
                     Continue with Google
                 </button>
-                <div class="auth-divider"><span>OR SIGN IN WITH PIN</span></div>
-                <input type="email" id="cashier-email-input" class="auth-input highlight-orange" placeholder="Staff Gmail Address" autocomplete="email">
-                <input type="password" id="cashier-pin-input" class="auth-input highlight-orange" placeholder="Cashier PIN" maxlength="8" autocomplete="current-password">
-                <button type="submit" class="btn-auth-submit" id="btn-submit-cashier">ENTER CASHIER PORTAL</button>
-            </form>
+            </div>
 
-            <!-- Master Admin Login Form (Google or Password) -->
-            <form id="admin-login-form" onsubmit="handleAdminAuth(event)">
+            <!-- Master Admin Login (Google Only) -->
+            <div id="admin-login-form" style="padding-top: 10px; text-align: center;">
+                <p style="font-size: 0.82rem; color: #64748B; margin-bottom: 18px; line-height: 1.45;">
+                    Sign in with your authorized Master Admin Google account.
+                </p>
                 <button type="button" class="btn-google-auth" id="btn-google-admin" onclick="handleGoogleSignIn('admin')">
                     <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
                         <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
@@ -1566,11 +1567,7 @@
                     </svg>
                     Continue with Google
                 </button>
-                <div class="auth-divider"><span>OR SIGN IN WITH MASTER PASSWORD</span></div>
-                <input type="password" id="admin-password-input" class="auth-input highlight-orange" placeholder="Master Admin Password" autocomplete="current-password">
-                <input type="password" id="admin-2fa-input" class="auth-input passkey-field" placeholder="2FA Security Passkey (Optional)" autocomplete="off">
-                <button type="submit" class="btn-auth-submit" id="btn-submit-admin">AUTHENTICATE MASTER ADMIN</button>
-            </form>
+            </div>
 
             <div class="auth-error-msg" id="auth-error-msg">Invalid credentials.</div>
         </div>
@@ -1615,10 +1612,13 @@
                 <form id="google-password-verify-form" onsubmit="handleGooglePasswordSubmit(event)">
                     <input type="password" id="google-dialog-password" class="auth-input highlight-orange" placeholder="Enter your password" required autocomplete="current-password" style="text-align: center; margin-bottom: 10px;">
                     
-                    <label class="google-show-pass-wrap">
-                        <input type="checkbox" id="google-toggle-show-pass" onchange="toggleGoogleShowPassword()">
-                        <span>Show password</span>
-                    </label>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 0 4px;">
+                        <label class="google-show-pass-wrap" style="margin-bottom: 0;">
+                            <input type="checkbox" id="google-toggle-show-pass" onchange="toggleGoogleShowPassword()">
+                            <span>Show password</span>
+                        </label>
+                        <a href="javascript:void(0)" onclick="handleGoogleForgotPassword(event)" style="font-size: 0.82rem; color: #1A73E8; font-weight: 600; text-decoration: none; cursor: pointer;">Forgot password?</a>
+                    </div>
 
                     <div style="display: flex; gap: 8px;">
                         <button type="button" class="admin-action-btn secondary" style="flex: 1; padding: 12px 14px; font-weight: 700;" onclick="backToGoogleEmailStep()">BACK</button>
@@ -2019,7 +2019,12 @@
 
         function closeGoogleAuthDialog() {
             const dialog = document.getElementById('google-dialog-modal');
+            const dialogErr = document.getElementById('google-dialog-error');
             if (dialog) dialog.style.display = 'none';
+            if (dialogErr) {
+                dialogErr.style.display = 'none';
+                dialogErr.innerHTML = '';
+            }
             pendingGoogleRole = null;
             verifiedGoogleEmail = null;
         }
@@ -2029,7 +2034,10 @@
             const stepPass = document.getElementById('google-step-password');
             const emailInput = document.getElementById('google-dialog-email');
             const dialogErr = document.getElementById('google-dialog-error');
-            if (dialogErr) dialogErr.style.display = 'none';
+            if (dialogErr) {
+                dialogErr.style.display = 'none';
+                dialogErr.innerHTML = '';
+            }
 
             if (stepEmail) stepEmail.style.display = 'block';
             if (stepPass) stepPass.style.display = 'none';
@@ -2046,18 +2054,52 @@
             }
         }
 
+        function setGoogleDialogMessage(content, isError = true) {
+            const dialogErr = document.getElementById('google-dialog-error');
+            if (!dialogErr) return;
+            if (isError) {
+                dialogErr.style.color = 'var(--color-unavail)';
+                dialogErr.style.background = '#FEF2F2';
+                dialogErr.style.borderColor = '#FCA5A5';
+            } else {
+                dialogErr.style.color = '#0F172A';
+                dialogErr.style.background = '#F0F9FF';
+                dialogErr.style.borderColor = '#38BDF8';
+            }
+            dialogErr.innerHTML = content;
+            dialogErr.style.display = 'block';
+        }
+
+        function handleGoogleForgotPassword(e) {
+            if (e) e.preventDefault();
+            const email = verifiedGoogleEmail || (document.getElementById('google-dialog-email')?.value || '').trim();
+            const targetEmail = email || 'admin@ribhouse.co.ke';
+            const recoveryUrl = `https://accounts.google.com/signin/recovery?email=${encodeURIComponent(targetEmail)}`;
+            
+            window.open(recoveryUrl, '_blank');
+            
+            setGoogleDialogMessage(`
+                <div style="text-align: left; font-size: 0.8rem; line-height: 1.45;">
+                    <strong style="color: #0284C7; display: block; margin-bottom: 4px; font-size: 0.85rem;">📱 Google Phone Recovery Initiated</strong>
+                    Google Account Recovery opened in a new tab for <strong>${targetEmail}</strong>.<br>
+                    • Check your phone for the <strong>"Is it you trying to recover your account?"</strong> Google prompt, tap <strong>Yes</strong> and verify.<br>
+                    • Or enter the 6-digit Google verification code sent via SMS to your recovery phone number.
+                </div>
+            `, false);
+        }
+
         function handleGoogleEmailNext(e) {
             e.preventDefault();
             const emailInput = document.getElementById('google-dialog-email');
             const email = (emailInput?.value || '').toLowerCase().trim();
             const dialogErr = document.getElementById('google-dialog-error');
-            if (dialogErr) dialogErr.style.display = 'none';
+            if (dialogErr) {
+                dialogErr.style.display = 'none';
+                dialogErr.innerHTML = '';
+            }
 
             if (!email) {
-                if (dialogErr) {
-                    dialogErr.textContent = 'Please enter your Google email address.';
-                    dialogErr.style.display = 'block';
-                }
+                setGoogleDialogMessage('Please enter your Google email address.');
                 return;
             }
 
@@ -2068,28 +2110,19 @@
             if (role === 'admin') {
                 const allowedAdmin = (whitelist.admin || '').toLowerCase().trim();
                 if (!allowedAdmin || email !== allowedAdmin) {
-                    if (dialogErr) {
-                        dialogErr.textContent = `Access Denied: Google account "${email}" is not authorized for Master Admin. Only your designated Admin Gmail (${allowedAdmin || 'set in Settings'}) is permitted.`;
-                        dialogErr.style.display = 'block';
-                    }
+                    setGoogleDialogMessage(`Access Denied: Google account "${email}" is not authorized for Master Admin. Only your designated Admin Gmail (${allowedAdmin || 'set in Settings'}) is permitted.`);
                     return;
                 }
             } else if (role === 'kitchen') {
                 const allowedKitchen = (whitelist.kitchen || []).map(em => em.toLowerCase().trim());
                 if (!allowedKitchen.includes(email)) {
-                    if (dialogErr) {
-                        dialogErr.textContent = `Access Denied: Google account "${email}" is not authorized for Kitchen Crew. Only the 2 approved Kitchen Gmails are permitted.`;
-                        dialogErr.style.display = 'block';
-                    }
+                    setGoogleDialogMessage(`Access Denied: Google account "${email}" is not authorized for Kitchen Crew. Only the 2 approved Kitchen Gmails are permitted.`);
                     return;
                 }
             } else if (role === 'cashier') {
                 const allowedCashier = (whitelist.cashier || []).map(em => em.toLowerCase().trim());
                 if (!allowedCashier.includes(email)) {
-                    if (dialogErr) {
-                        dialogErr.textContent = `Access Denied: Google account "${email}" is not authorized for Cashier portal. Only the 3 approved Cashier Gmails are permitted.`;
-                        dialogErr.style.display = 'block';
-                    }
+                    setGoogleDialogMessage(`Access Denied: Google account "${email}" is not authorized for Cashier portal. Only the 3 approved Cashier Gmails are permitted.`);
                     return;
                 }
             }
@@ -2117,13 +2150,13 @@
             const passInput = document.getElementById('google-dialog-password');
             const password = (passInput?.value || '').trim();
             const dialogErr = document.getElementById('google-dialog-error');
-            if (dialogErr) dialogErr.style.display = 'none';
+            if (dialogErr) {
+                dialogErr.style.display = 'none';
+                dialogErr.innerHTML = '';
+            }
 
             if (!password) {
-                if (dialogErr) {
-                    dialogErr.textContent = 'Please enter your password.';
-                    dialogErr.style.display = 'block';
-                }
+                setGoogleDialogMessage('Please enter your password.');
                 return;
             }
 
@@ -2142,10 +2175,7 @@
                                 (password === 'admin');
 
                 if (!isMatch) {
-                    if (dialogErr) {
-                        dialogErr.textContent = 'Wrong password for this Google account. Please enter your valid Master Admin password.';
-                        dialogErr.style.display = 'block';
-                    }
+                    setGoogleDialogMessage('Wrong password for this Google account. Please enter your valid Master Admin password.');
                     if (passInput) passInput.focus();
                     return;
                 }
@@ -2177,10 +2207,7 @@
                     return;
                 }
 
-                if (dialogErr) {
-                    dialogErr.textContent = 'Wrong password/PIN for Kitchen Crew account. (Default: 1234)';
-                    dialogErr.style.display = 'block';
-                }
+                setGoogleDialogMessage('Wrong password/PIN for Kitchen Crew account. (Default: 1234)');
                 if (passInput) passInput.focus();
                 return;
             }
@@ -2200,10 +2227,7 @@
                     return;
                 }
 
-                if (dialogErr) {
-                    dialogErr.textContent = 'Wrong password/PIN for Cashier account. (Default: 5678)';
-                    dialogErr.style.display = 'block';
-                }
+                setGoogleDialogMessage('Wrong password/PIN for Cashier account. (Default: 5678)');
                 if (passInput) passInput.focus();
                 return;
             }
@@ -2255,112 +2279,20 @@
             }
         }
 
-        // Kitchen Auth Handler (Gmail Whitelist + PIN)
+        // Google-Only Role Authentication Handlers
         async function handleKitchenAuth(e) {
-            e.preventDefault();
-            const email = (document.getElementById('kitchen-email-input')?.value || '').toLowerCase().trim();
-            const pin = document.getElementById('kitchen-pin-input').value.trim();
-            const errMsg = document.getElementById('auth-error-msg');
-            const savedPin = localStorage.getItem('ribhouse_kitchen_pin') || '1234';
-            const whitelist = getGmailWhitelist();
-
-            if (errMsg) errMsg.style.display = 'none';
-
-            // 1. Verify Gmail Whitelist (Must match one of the 2 authorized Kitchen emails)
-            const isWhitelisted = whitelist.kitchen.map(em => em.toLowerCase().trim()).includes(email);
-            if (!isWhitelisted) {
-                if (errMsg) {
-                    errMsg.textContent = `Access Denied: "${email}" is not on the authorized Kitchen Staff Gmail whitelist.`;
-                    errMsg.style.display = 'block';
-                }
-                return;
-            }
-
-            // 2. Verify PIN
-            if (pin === savedPin || pin === '1234') {
-                authenticateSuccess('kitchen', email);
-                try {
-                    fetch('/api/auth/login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ role: 'kitchen', email: email, pin: pin })
-                    }).catch(() => {});
-                } catch (err) {}
-                return;
-            }
-
-            if (errMsg) {
-                errMsg.textContent = 'Invalid Kitchen PIN. (Default: 1234)';
-                errMsg.style.display = 'block';
-            }
+            if (e) e.preventDefault();
+            handleGoogleSignIn('kitchen');
         }
 
-        // Cashier Auth Handler (Gmail Whitelist + PIN)
         async function handleCashierAuth(e) {
-            e.preventDefault();
-            const email = (document.getElementById('cashier-email-input')?.value || '').toLowerCase().trim();
-            const pin = document.getElementById('cashier-pin-input').value.trim();
-            const errMsg = document.getElementById('auth-error-msg');
-            const savedPin = localStorage.getItem('ribhouse_cashier_pin') || '5678';
-            const whitelist = getGmailWhitelist();
-
-            if (errMsg) errMsg.style.display = 'none';
-
-            // 1. Verify Gmail Whitelist (Must match one of the 3 authorized Cashier emails)
-            const isWhitelisted = whitelist.cashier.map(em => em.toLowerCase().trim()).includes(email);
-            if (!isWhitelisted) {
-                if (errMsg) {
-                    errMsg.textContent = `Access Denied: "${email}" is not on the authorized Cashier Gmail whitelist.`;
-                    errMsg.style.display = 'block';
-                }
-                return;
-            }
-
-            // 2. Verify PIN
-            if (pin === savedPin || pin === '5678' || pin === '1234') {
-                authenticateSuccess('cashier', email);
-                try {
-                    fetch('/api/auth/login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ role: 'cashier', email: email, pin: pin })
-                    }).catch(() => {});
-                } catch (err) {}
-                return;
-            }
-
-            if (errMsg) {
-                errMsg.textContent = 'Invalid Cashier PIN. (Default: 5678)';
-                errMsg.style.display = 'block';
-            }
+            if (e) e.preventDefault();
+            handleGoogleSignIn('cashier');
         }
 
-        // Master Admin Auth Handler (Instant Zero-Failure Verification)
         async function handleAdminAuth(e) {
-            e.preventDefault();
-            const password = document.getElementById('admin-password-input').value.trim();
-            const passkey = document.getElementById('admin-2fa-input') ? document.getElementById('admin-2fa-input').value.trim() : '';
-            const errMsg = document.getElementById('auth-error-msg');
-
-            if (errMsg) errMsg.style.display = 'none';
-
-            if (password === 'RibHouse@2026!Master' || password === '1234' || password === 'admin') {
-                const whitelist = getGmailWhitelist();
-                authenticateSuccess('admin', whitelist.admin || 'admin@ribhouse.co.ke');
-                try {
-                    fetch('/api/auth/login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ role: 'admin', username: 'admin', password: password, passkey: passkey })
-                    }).catch(() => {});
-                } catch (err) {}
-                return;
-            }
-
-            if (errMsg) {
-                errMsg.textContent = 'Invalid credentials. (Default: RibHouse@2026!Master)';
-                errMsg.style.display = 'block';
-            }
+            if (e) e.preventDefault();
+            handleGoogleSignIn('admin');
         }
 
         function authenticateSuccess(role, userEmail) {
@@ -2454,11 +2386,8 @@
 
             document.getElementById('auth-gate-modal').style.display = 'flex';
             document.getElementById('admin-main-content').style.display = 'none';
-            if (document.getElementById('kitchen-email-input')) document.getElementById('kitchen-email-input').value = '';
-            if (document.getElementById('kitchen-pin-input')) document.getElementById('kitchen-pin-input').value = '';
-            if (document.getElementById('cashier-email-input')) document.getElementById('cashier-email-input').value = '';
-            if (document.getElementById('cashier-pin-input')) document.getElementById('cashier-pin-input').value = '';
-            if (document.getElementById('admin-password-input')) document.getElementById('admin-password-input').value = '';
+            if (document.getElementById('google-dialog-email')) document.getElementById('google-dialog-email').value = '';
+            if (document.getElementById('google-dialog-password')) document.getElementById('google-dialog-password').value = '';
             if (document.getElementById('nav-user-email')) document.getElementById('nav-user-email').style.display = 'none';
             const errMsg = document.getElementById('auth-error-msg');
             if (errMsg) errMsg.style.display = 'none';

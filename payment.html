@@ -662,33 +662,38 @@
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
             width: 100%;
+            margin-top: 4px;
         }
 
         .btn-mpesa-resend {
             background: #008751;
             color: #FFFFFF;
-            border: none;
-            padding: 8px 14px;
-            font-size: 0.74rem;
+            border: 1.5px solid #008751;
+            padding: 9px 18px;
+            font-size: 0.78rem;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.6px;
             cursor: pointer;
             transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 135, 81, 0.15);
         }
 
         .btn-mpesa-resend:hover {
             background: #00663d;
+            border-color: #00663d;
+            box-shadow: 0 4px 12px rgba(0, 135, 81, 0.25);
+            transform: translateY(-1px);
         }
 
         .btn-mpesa-manual-toggle {
             background: #FFFFFF;
-            border: 1px solid var(--light-border);
-            color: var(--slate-text);
-            padding: 7px 12px;
-            font-size: 0.74rem;
+            border: 1.5px solid #CBD5E1;
+            color: #334155;
+            padding: 9px 16px;
+            font-size: 0.78rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -697,21 +702,8 @@
         .btn-mpesa-manual-toggle:hover {
             border-color: var(--color-gold);
             color: var(--dark-text);
-        }
-
-        .btn-mpesa-sim {
-            background: #FEF3C7;
-            border: 1px dashed #D97706;
-            color: #92400E;
-            padding: 7px 12px;
-            font-size: 0.72rem;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .btn-mpesa-sim:hover {
-            background: #FDE68A;
+            background: #F8FAFC;
+            transform: translateY(-1px);
         }
 
         /* Verified State UI */
@@ -1769,7 +1761,11 @@
                 <div id="mpesa-state-waiting" class="mpesa-state-box">
                     <div class="mpesa-pulse-avatar">
                         <div class="radar-pulse"></div>
-                        <span class="mpesa-phone-icon" style="font-size: 1.1rem; font-weight: 800;">M</span>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#008751" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                            <path d="M9 6h6"></path>
+                        </svg>
                     </div>
                     <div class="mpesa-state-text-wrap">
                         <h4 class="mpesa-prompt-title">M-Pesa PIN Prompt Sent</h4>
@@ -1791,23 +1787,22 @@
                         <button type="button" class="btn-mpesa-manual-toggle" onclick="toggleManualMpesaInput()">
                             <span>Manual Code</span>
                         </button>
-                        <button type="button" class="btn-mpesa-sim" id="btn-mpesa-sim" onclick="simulateMpesaSuccess()" title="Test Instant Payment Confirmation">
-                            <span>Test Confirm (Demo)</span>
-                        </button>
                     </div>
                 </div>
 
                 <!-- Success State: Verified -->
                 <div id="mpesa-state-verified" class="mpesa-state-box" style="display: none;">
                     <div class="mpesa-verified-icon-wrap">
-                        <span class="verified-checkmark">✓</span>
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
                     </div>
                     <h4 class="mpesa-verified-title">PAYMENT VERIFIED & CONFIRMED</h4>
                     <div class="mpesa-receipt-badge">
                         <span class="receipt-label">M-Pesa Receipt:</span>
                         <strong class="receipt-code" id="mpesa-receipt-display">TA12345678</strong>
                     </div>
-                    <p class="mpesa-verified-sub">Your transaction has been verified by Safaricom. Your order is officially paid and the kitchen is firing up the grill!</p>
+                    <p class="mpesa-verified-sub">Your payment has been successfully confirmed by Safaricom. Your order is officially paid and the kitchen is firing up the grill!</p>
                 </div>
 
                 <!-- Failed / Cancelled State -->

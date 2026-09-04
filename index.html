@@ -1544,30 +1544,35 @@
 
                     <!-- TUMBUKIZA SIDES & ADD-ONS (WARU, SPINACH, BANANA) -->
                     <div class="menu-card-luxury-wrapper tumbukiza-sides-card"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                                <span style="font-family: var(--font-serif); font-size: 0.72rem; letter-spacing: 1.5px; color: #B8860B; font-weight: 800; text-transform: uppercase; background: rgba(184, 134, 11, 0.08); padding: 4px 8px; border: 1px solid rgba(184, 134, 11, 0.25);">TUMBUKIZA PAIRINGS</span>
-                                <span style="font-size: 0.72rem; color: #64748B; font-weight: 600;">PORTION SIDES</span>
+                        style="background: #FFFFFF !important; border: 1px solid rgba(230, 126, 34, 0.4) !important; padding: 24px !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important; width: 100% !important; max-width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; overflow: hidden !important;">
+                        <div style="display: flex !important; flex-direction: column !important; width: 100% !important; min-width: 0 !important; box-sizing: border-box !important;">
+                            
+                            <!-- Header Info -->
+                            <div class="tumbukiza-header-wrap" style="display: flex !important; flex-direction: column !important; width: 100% !important; min-width: 0 !important; margin-bottom: 16px !important; box-sizing: border-box !important;">
+                                <div style="display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; margin-bottom: 8px !important;">
+                                    <span style="font-family: var(--font-serif); font-size: 0.72rem; letter-spacing: 1.5px; color: #B8860B; font-weight: 800; text-transform: uppercase; background: rgba(184, 134, 11, 0.08); padding: 3px 8px; border: 1px solid rgba(184, 134, 11, 0.25);">TUMBUKIZA PAIRINGS</span>
+                                    <span style="font-size: 0.72rem; color: #64748B; font-weight: 600;">PORTION SIDES</span>
+                                </div>
+                                <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: #111114 !important; text-transform: uppercase; margin: 0 0 6px 0; font-weight: 700; width: 100% !important;">
+                                    TUMBUKIZA SIDES</h3>
+                                <p style="font-size: 0.85rem; color: #44444A !important; line-height: 1.5; margin: 0; width: 100% !important;">
+                                    Authentic traditional sides simmered in rich broth or served fresh alongside your Beef & Goat Tumbukiza.
+                                </p>
                             </div>
-                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase; margin-bottom: 6px;">
-                                TUMBUKIZA SIDES</h3>
-                            <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.5; margin-bottom: 16px;">
-                                Authentic traditional sides simmered in rich broth or served fresh alongside your Beef & Goat Tumbukiza.
-                            </p>
 
                             <!-- Tiny Boxes List (styled like Share Location / Copy Address / Share via WhatsApp) -->
-                            <div class="tumbukiza-tiny-boxes-list" style="display: flex; flex-direction: column; gap: 10px;">
+                            <div class="tumbukiza-tiny-boxes-list" style="display: flex !important; flex-direction: column !important; gap: 12px !important; width: 100% !important; min-width: 0 !important; box-sizing: border-box !important;">
 
                                 <!-- Box 1: Waru -->
                                 <div id="dish-waru" class="menu-dish-card tumbukiza-mini-box"
-                                    onclick="handleDirectDishSelect(this, 'Waru', '120/=', 'Freshly boiled or fried spiced potatoes', 'sides')">
-                                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px;">
-                                        <h4 style="font-family: var(--font-serif); font-size: 0.95rem; font-weight: 700; color: #1E293B !important; margin: 0; text-transform: uppercase;">WARU</h4>
+                                    onclick="handleDirectDishSelect(this, 'Waru', '120/=', 'Freshly boiled or fried spiced potatoes', 'sides')"
+                                    style="background: #FFFFFF !important; border: 1.5px solid #CBD5E1 !important; padding: 12px 14px !important; box-sizing: border-box !important; width: 100% !important; min-width: 0 !important; cursor: pointer; display: flex !important; flex-direction: column !important; gap: 6px !important;">
+                                    <div style="display: flex !important; justify-content: space-between !important; align-items: baseline !important; width: 100% !important;">
+                                        <h4 style="font-family: var(--font-serif); font-size: 0.96rem; font-weight: 700; color: #1E293B !important; margin: 0; text-transform: uppercase;">WARU</h4>
                                         <span style="font-family: var(--font-serif); font-size: 0.95rem; font-weight: 800; color: #B8860B !important;">120/=</span>
                                     </div>
-                                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
-                                        <p style="font-size: 0.76rem; color: #64748B !important; margin: 0; line-height: 1.35;">Freshly boiled or fried spiced potatoes</p>
+                                    <div style="display: flex !important; justify-content: space-between !important; align-items: center !important; gap: 10px !important; width: 100% !important;">
+                                        <p style="font-size: 0.76rem; color: #64748B !important; margin: 0; line-height: 1.35; flex: 1 1 auto;">Freshly boiled or fried spiced potatoes</p>
                                         <button type="button" class="card-order-action-btn tumbukiza-box-btn" data-dish-name="Waru"
                                             onclick="handleDirectDishSelect(this, 'Waru', '120/=', 'Freshly boiled or fried spiced potatoes', 'sides')">+ Add</button>
                                     </div>
@@ -1575,13 +1580,14 @@
 
                                 <!-- Box 2: Spinach -->
                                 <div id="dish-spinach" class="menu-dish-card tumbukiza-mini-box"
-                                    onclick="handleDirectDishSelect(this, 'Spinach', '120/=', 'Fresh sauteed farm-fresh garden spinach', 'sides')">
-                                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px;">
-                                        <h4 style="font-family: var(--font-serif); font-size: 0.95rem; font-weight: 700; color: #1E293B !important; margin: 0; text-transform: uppercase;">SPINACH</h4>
+                                    onclick="handleDirectDishSelect(this, 'Spinach', '120/=', 'Fresh sauteed farm-fresh garden spinach', 'sides')"
+                                    style="background: #FFFFFF !important; border: 1.5px solid #CBD5E1 !important; padding: 12px 14px !important; box-sizing: border-box !important; width: 100% !important; min-width: 0 !important; cursor: pointer; display: flex !important; flex-direction: column !important; gap: 6px !important;">
+                                    <div style="display: flex !important; justify-content: space-between !important; align-items: baseline !important; width: 100% !important;">
+                                        <h4 style="font-family: var(--font-serif); font-size: 0.96rem; font-weight: 700; color: #1E293B !important; margin: 0; text-transform: uppercase;">SPINACH</h4>
                                         <span style="font-family: var(--font-serif); font-size: 0.95rem; font-weight: 800; color: #B8860B !important;">120/=</span>
                                     </div>
-                                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
-                                        <p style="font-size: 0.76rem; color: #64748B !important; margin: 0; line-height: 1.35;">Fresh sauteed farm-fresh garden spinach</p>
+                                    <div style="display: flex !important; justify-content: space-between !important; align-items: center !important; gap: 10px !important; width: 100% !important;">
+                                        <p style="font-size: 0.76rem; color: #64748B !important; margin: 0; line-height: 1.35; flex: 1 1 auto;">Fresh sauteed farm-fresh garden spinach</p>
                                         <button type="button" class="card-order-action-btn tumbukiza-box-btn" data-dish-name="Spinach"
                                             onclick="handleDirectDishSelect(this, 'Spinach', '120/=', 'Fresh sauteed farm-fresh garden spinach', 'sides')">+ Add</button>
                                     </div>
@@ -1589,13 +1595,14 @@
 
                                 <!-- Box 3: Banana -->
                                 <div id="dish-banana" class="menu-dish-card tumbukiza-mini-box"
-                                    onclick="handleDirectDishSelect(this, 'Banana', '100/=', 'Fresh cooked or roasted sweet bananas', 'sides')">
-                                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px;">
-                                        <h4 style="font-family: var(--font-serif); font-size: 0.95rem; font-weight: 700; color: #1E293B !important; margin: 0; text-transform: uppercase;">BANANA</h4>
+                                    onclick="handleDirectDishSelect(this, 'Banana', '100/=', 'Fresh cooked or roasted sweet bananas', 'sides')"
+                                    style="background: #FFFFFF !important; border: 1.5px solid #CBD5E1 !important; padding: 12px 14px !important; box-sizing: border-box !important; width: 100% !important; min-width: 0 !important; cursor: pointer; display: flex !important; flex-direction: column !important; gap: 6px !important;">
+                                    <div style="display: flex !important; justify-content: space-between !important; align-items: baseline !important; width: 100% !important;">
+                                        <h4 style="font-family: var(--font-serif); font-size: 0.96rem; font-weight: 700; color: #1E293B !important; margin: 0; text-transform: uppercase;">BANANA</h4>
                                         <span style="font-family: var(--font-serif); font-size: 0.95rem; font-weight: 800; color: #B8860B !important;">100/=</span>
                                     </div>
-                                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
-                                        <p style="font-size: 0.76rem; color: #64748B !important; margin: 0; line-height: 1.35;">Fresh cooked or roasted sweet bananas</p>
+                                    <div style="display: flex !important; justify-content: space-between !important; align-items: center !important; gap: 10px !important; width: 100% !important;">
+                                        <p style="font-size: 0.76rem; color: #64748B !important; margin: 0; line-height: 1.35; flex: 1 1 auto;">Fresh cooked or roasted sweet bananas</p>
                                         <button type="button" class="card-order-action-btn tumbukiza-box-btn" data-dish-name="Banana"
                                             onclick="handleDirectDishSelect(this, 'Banana', '100/=', 'Fresh cooked or roasted sweet bananas', 'sides')">+ Add</button>
                                     </div>
@@ -1604,7 +1611,7 @@
                             </div>
                         </div>
 
-                        <div style="margin-top: 14px; padding-top: 10px; border-top: 1px dashed rgba(0,0,0,0.1); font-size: 0.75rem; color: #64748B; text-align: center;">
+                        <div style="margin-top: 16px; padding-top: 12px; border-top: 1px dashed rgba(0,0,0,0.1); font-size: 0.75rem; color: #64748B; text-align: center; width: 100% !important; box-sizing: border-box !important;">
                             Add to accompany Beef / Goat Tumbukiza
                         </div>
                     </div>

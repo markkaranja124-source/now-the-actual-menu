@@ -7357,8 +7357,8 @@ img {
     justify-content: space-between !important;
 }
 
-.menu-card-luxury-wrapper > div:first-child,
-.menu-card-luxury-wrapper > .menu-dish-card {
+.menu-card-luxury-wrapper:not(.tumbukiza-sides-card) > div:first-child,
+.menu-card-luxury-wrapper:not(.tumbukiza-sides-card) > .menu-dish-card {
     margin-bottom: auto !important;
     display: flex !important;
     justify-content: space-between !important;
@@ -7452,11 +7452,16 @@ img {
 .tumbukiza-sides-card {
     background: #FFFFFF !important;
     border: 1px solid rgba(230, 126, 34, 0.4) !important;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    padding: 24px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
     transition: var(--transition-smooth);
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
 }
 
 .tumbukiza-sides-card:hover {
@@ -7464,27 +7469,61 @@ img {
     box-shadow: 0 14px 40px rgba(230, 126, 34, 0.35) !important;
 }
 
+.tumbukiza-sides-card > div,
+.tumbukiza-sides-card > div:first-child {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    margin-bottom: 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+}
+
+.tumbukiza-header-wrap {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin-bottom: 16px !important;
+    box-sizing: border-box !important;
+}
+
+.tumbukiza-tiny-boxes-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+}
+
 .tumbukiza-mini-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background: #FFFFFF;
-    border: 1.5px solid #CBD5E1;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    background: #FFFFFF !important;
+    border: 1.5px solid #CBD5E1 !important;
     color: #1E293B !important;
-    padding: 12px 14px;
-    border-radius: 0px;
-    transition: var(--transition-smooth);
-    cursor: pointer;
-    text-decoration: none;
-    text-align: left;
-    margin-bottom: 10px;
+    padding: 12px 14px !important;
+    border-radius: 0px !important;
+    transition: var(--transition-smooth) !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    text-align: left !important;
+    margin-bottom: 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
 }
 
 .tumbukiza-mini-box:hover {
-    background: #F8FAFC;
-    border-color: #B8860B;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    background: #F8FAFC !important;
+    border-color: #B8860B !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06) !important;
 }
 
 .tumbukiza-mini-box.is-selected,
@@ -7494,24 +7533,25 @@ img {
 }
 
 .tumbukiza-box-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 7px 14px;
-    border: 1.5px solid #CBD5E1;
-    background: #FFFFFF;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 7px 14px !important;
+    border: 1.5px solid #CBD5E1 !important;
+    background: #FFFFFF !important;
     color: #1E293B !important;
-    font-weight: 700;
-    font-size: 0.78rem;
-    letter-spacing: 0.3px;
-    border-radius: 0px;
-    cursor: pointer;
-    transition: var(--transition-smooth);
-    white-space: nowrap;
+    font-weight: 700 !important;
+    font-size: 0.78rem !important;
+    letter-spacing: 0.3px !important;
+    border-radius: 0px !important;
+    cursor: pointer !important;
+    transition: var(--transition-smooth) !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
 }
 
 .tumbukiza-mini-box:hover .tumbukiza-box-btn {
-    border-color: #B8860B;
+    border-color: #B8860B !important;
     color: #B8860B !important;
 }
 

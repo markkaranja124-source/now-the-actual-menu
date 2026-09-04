@@ -413,13 +413,41 @@ function syncMainDishesUIState() {
             } else {
                 btn.innerHTML = btn.classList.contains('tumbukiza-box-btn') ? '+ ADD' : '+ ADD TO ORDER';
                 btn.classList.remove('selected-btn-active', 'is-selected');
-                btn.style.setProperty('background', 'transparent', 'important');
-                btn.style.setProperty('color', '#B8860B', 'important');
-                btn.style.setProperty('border-color', '#B8860B', 'important');
+                if (btn.classList.contains('tumbukiza-box-btn')) {
+                    btn.style.setProperty('background', '#FFFFFF', 'important');
+                    btn.style.setProperty('color', '#1E293B', 'important');
+                    btn.style.setProperty('border-color', '#CBD5E1', 'important');
+                } else {
+                    btn.style.setProperty('background', 'transparent', 'important');
+                    btn.style.setProperty('color', '#B8860B', 'important');
+                    btn.style.setProperty('border-color', '#B8860B', 'important');
+                }
                 if (cardBox && cardBox.classList.contains('tumbukiza-mini-box')) {
                     cardBox.classList.remove('is-selected');
                 }
             }
+        }
+    });
+
+    // 4. Sync Tumbukiza Inline Pill Buttons (.tumbukiza-pill-btn)
+    const pillBtns = document.querySelectorAll('.tumbukiza-pill-btn');
+    pillBtns.forEach(pill => {
+        const dishName = pill.getAttribute('data-dish-name') || '';
+        if (!dishName) return;
+        const isSel = cart.some(item => norm(item.name) === norm(dishName));
+        const price = pill.getAttribute('data-price') || '';
+        if (isSel) {
+            pill.classList.add('is-selected');
+            pill.innerHTML = `✓ ${dishName} ${price}`;
+            pill.style.setProperty('background', '#B8860B', 'important');
+            pill.style.setProperty('color', '#FFFFFF', 'important');
+            pill.style.setProperty('border-color', '#B8860B', 'important');
+        } else {
+            pill.classList.remove('is-selected');
+            pill.innerHTML = `+ ${dishName} ${price}`;
+            pill.style.setProperty('background', '#FFFFFF', 'important');
+            pill.style.setProperty('color', '#1E293B', 'important');
+            pill.style.setProperty('border-color', '#CBD5E1', 'important');
         }
     });
 }

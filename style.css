@@ -7487,14 +7487,14 @@ img {
     align-items: stretch !important;
     width: 100% !important;
     min-width: 0 !important;
-    margin-bottom: 16px !important;
+    margin-bottom: 12px !important;
     box-sizing: border-box !important;
 }
 
 .tumbukiza-tiny-boxes-list {
     display: flex !important;
     flex-direction: column !important;
-    gap: 12px !important;
+    gap: 8px !important;
     width: 100% !important;
     min-width: 0 !important;
     box-sizing: border-box !important;
@@ -7502,12 +7502,13 @@ img {
 
 .tumbukiza-mini-box {
     display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
     background: #FFFFFF !important;
     border: 1.5px solid #CBD5E1 !important;
     color: #1E293B !important;
-    padding: 12px 14px !important;
+    padding: 10px 14px !important;
     border-radius: 0px !important;
     transition: var(--transition-smooth) !important;
     cursor: pointer !important;
@@ -7517,12 +7518,13 @@ img {
     width: 100% !important;
     min-width: 0 !important;
     box-sizing: border-box !important;
+    gap: 10px !important;
 }
 
 .tumbukiza-mini-box:hover {
     background: #F8FAFC !important;
     border-color: #B8860B !important;
-    transform: translateY(-2px) !important;
+    transform: translateY(-1px) !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06) !important;
 }
 
@@ -7557,6 +7559,61 @@ img {
 
 .tumbukiza-box-btn.is-selected,
 .tumbukiza-box-btn.selected-btn-active {
+    background: #B8860B !important;
+    border-color: #B8860B !important;
+    color: #FFFFFF !important;
+}
+
+/* Inline Tumbukiza Sides Bar for Mobile & Desktop (Inside Beef/Goat cards) */
+.tumbukiza-inline-sides {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin-top: 12px !important;
+    margin-bottom: 8px !important;
+    padding: 8px 10px !important;
+    background: #F8FAFC !important;
+    border: 1px dashed #CBD5E1 !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+}
+
+.tumbukiza-inline-label {
+    font-size: 0.68rem !important;
+    font-weight: 800 !important;
+    color: #B8860B !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
+    width: 100% !important;
+    margin-bottom: 2px !important;
+    display: block !important;
+}
+
+.tumbukiza-pill-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #FFFFFF !important;
+    border: 1.5px solid #CBD5E1 !important;
+    color: #1E293B !important;
+    font-weight: 700 !important;
+    font-size: 0.74rem !important;
+    padding: 5px 10px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    border-radius: 0px !important;
+    white-space: nowrap !important;
+    text-decoration: none !important;
+}
+
+.tumbukiza-pill-btn:hover {
+    border-color: #B8860B !important;
+    color: #B8860B !important;
+    background: #FFFDF9 !important;
+}
+
+.tumbukiza-pill-btn.is-selected {
     background: #B8860B !important;
     border-color: #B8860B !important;
     color: #FFFFFF !important;

@@ -1015,6 +1015,99 @@
             box-shadow: none;
         }
 
+        /* Google Account Chooser Component (Exact Google Accounts Look) */
+        .google-accounts-list {
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid #E5E7EB;
+            margin-bottom: 4px;
+        }
+
+        .google-account-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 10px;
+            border-bottom: 1px solid #F1F5F9;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.15s ease;
+            text-align: left;
+            user-select: none;
+        }
+
+        .google-account-row:hover {
+            background: #F8FAFC;
+        }
+
+        .google-account-row:active {
+            background: #EDF2F7;
+            transform: scale(0.99);
+        }
+
+        .google-account-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #FFFFFF;
+            flex-shrink: 0;
+            text-transform: uppercase;
+        }
+
+        .google-avatar-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #F1F5F9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #475569;
+            flex-shrink: 0;
+        }
+
+        .google-account-details {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            flex-grow: 1;
+        }
+
+        .google-account-name {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #1F2937;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .google-account-role-badge {
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .badge-admin { background: #DBEAFE; color: #1D4ED8; }
+        .badge-kitchen { background: #D1FAE5; color: #047857; }
+        .badge-cashier { background: #FFEDD5; color: #C2410C; }
+
+        .google-account-email {
+            font-size: 0.78rem;
+            color: #64748B;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         .auth-error-msg {
             color: var(--color-unavail);
             background: #FEF2F2;
@@ -1702,77 +1795,50 @@
                 </svg>
             </div>
 
-            <!-- STEP 0: GOOGLE CLOUD OAUTH CLIENT ID SETUP (Enables Google Account Chooser Popup) -->
-            <div id="google-step-clientid" style="display: none;">
-                <h3 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.15rem; font-weight: 700; color: #1E293B; margin-bottom: 4px;">Connect Google Account Chooser</h3>
-                <p style="font-size: 0.8rem; color: #64748B; margin-bottom: 16px; line-height: 1.4;">
-                    To show the official Google popup with all your logged-in Google accounts, enter your free Google Cloud OAuth Client ID:
-                </p>
-                
-                <form id="google-clientid-form" onsubmit="handleQuickClientIdSubmit(event)">
-                    <input type="text" id="google-quick-client-id" class="auth-input" placeholder="e.g. 123456789-xxxx.apps.googleusercontent.com" required autocomplete="off" style="margin-bottom: 12px; font-family: monospace; font-size: 0.82rem;">
-                    <button type="submit" class="btn-auth-submit" style="width: 100%; margin-bottom: 12px;">SAVE & OPEN GOOGLE ACCOUNT CHOOSER</button>
-                </form>
-
-                <div style="text-align: left; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
-                    <strong style="font-size: 0.78rem; color: #334155; display: block; margin-bottom: 6px;">How to get your free Google Client ID:</strong>
-                    <ol style="margin: 0; padding-left: 16px; font-size: 0.72rem; color: #64748B; line-height: 1.45;">
-                        <li>Open <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener" style="color: #2563EB; font-weight: 600;">Google Cloud Credentials</a></li>
-                        <li>Click <strong>Create Credentials</strong> &gt; <strong>OAuth client ID</strong> &gt; <strong>Web application</strong></li>
-                        <li>Add Authorized JavaScript Origin: <code style="background: #E2E8F0; padding: 2px 4px; border-radius: 3px; font-size: 0.7rem;">https://ribhouserestaurant.com</code></li>
-                        <li>Copy the Client ID and paste it above!</li>
-                    </ol>
-                </div>
-
-                <div>
-                    <button type="button" onclick="switchToManualGoogleVerify()" style="background: none; border: none; font-size: 0.76rem; color: #64748B; cursor: pointer; text-decoration: underline;">
-                        Or continue with manual email &amp; password
-                    </button>
-                </div>
+            <div style="text-align: center; margin-bottom: 18px;">
+                <h3 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.35rem; font-weight: 700; color: #202124; margin-bottom: 4px;">Choose an account</h3>
+                <p id="google-chooser-sub" style="font-size: 0.85rem; color: #5f6368; margin: 0;">to continue to Rib House Portal</p>
             </div>
 
-            <!-- STEP 1: EMAIL VERIFICATION -->
-            <div id="google-step-email">
-                <h3 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.15rem; font-weight: 700; color: #1E293B; margin-bottom: 4px;">Sign in with Google</h3>
-                <p id="google-dialog-role-text" style="font-size: 0.8rem; color: #64748B; margin-bottom: 18px;">to continue to Rib House Portal</p>
-                
-                <form id="google-email-verify-form" onsubmit="handleGoogleEmailNext(event)">
-                    <input type="email" id="google-dialog-email" class="auth-input highlight-orange" placeholder="Enter your Google email" required autocomplete="email" style="text-align: center; margin-bottom: 12px;">
-                    <button type="submit" class="btn-auth-submit" id="btn-submit-google-next">NEXT</button>
-                </form>
-            </div>
-
-            <!-- STEP 2: PASSWORD VERIFICATION -->
-            <div id="google-step-password" style="display: none;">
-                <h3 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.15rem; font-weight: 700; color: #1E293B; margin-bottom: 8px;">Welcome</h3>
-                
-                <div class="google-account-chip">
-                    <span class="google-avatar-circle" id="google-chip-avatar">A</span>
-                    <span class="google-chip-email" id="google-chip-email-val">admin@ribhouse.co.ke</span>
-                    <button type="button" class="google-chip-change-btn" onclick="backToGoogleEmailStep()">Change</button>
+            <!-- STEP 1: DYNAMIC ACCOUNT CHOOSER LIST -->
+            <div id="google-step-chooser">
+                <div id="google-accounts-list" class="google-accounts-list">
+                    <!-- Populated dynamically with all Whitelist Google Accounts -->
                 </div>
 
-                <p style="font-size: 0.8rem; color: #64748B; margin-bottom: 16px;">To continue, enter the password for this Google account</p>
-                
-                <form id="google-password-verify-form" onsubmit="handleGooglePasswordSubmit(event)">
-                    <input type="password" id="google-dialog-password" class="auth-input highlight-orange" placeholder="Enter your password" required autocomplete="current-password" style="text-align: center; margin-bottom: 10px;">
-                    
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 0 4px;">
-                        <label class="google-show-pass-wrap" style="margin-bottom: 0;">
-                            <input type="checkbox" id="google-toggle-show-pass" onchange="toggleGoogleShowPassword()">
-                            <span>Show password</span>
-                        </label>
-                        <a href="javascript:void(0)" onclick="handleGoogleForgotPassword(event)" style="font-size: 0.82rem; color: #1A73E8; font-weight: 600; text-decoration: none; cursor: pointer;">Forgot password?</a>
+                <!-- Use another account row -->
+                <div class="google-account-row add-account-row" onclick="showGoogleManualInput()">
+                    <div class="google-avatar-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <line x1="19" y1="8" x2="19" y2="14"></line>
+                            <line x1="22" y1="11" x2="16" y2="11"></line>
+                        </svg>
                     </div>
+                    <div class="google-account-details">
+                        <span class="google-account-name">Use another account</span>
+                    </div>
+                </div>
 
+                <div style="margin-top: 20px; padding-top: 14px; border-top: 1px solid #E2E8F0; font-size: 0.72rem; color: #70757a; line-height: 1.45; text-align: center;">
+                    To continue, Google will verify your account with Rib House Wood-Fired Grill.
+                </div>
+            </div>
+
+            <!-- STEP 2: MANUAL EMAIL INPUT (WHEN "USE ANOTHER ACCOUNT" IS CLICKED) -->
+            <div id="google-step-manual" style="display: none;">
+                <p style="font-size: 0.82rem; color: #5f6368; margin-bottom: 14px;">Enter the Google email you want to use:</p>
+                <form onsubmit="handleManualAccountSelect(event)">
+                    <input type="email" id="google-manual-email-input" class="auth-input" placeholder="e.g. yourname@gmail.com" required autocomplete="email" style="margin-bottom: 14px;">
                     <div style="display: flex; gap: 8px;">
-                        <button type="button" class="admin-action-btn secondary" style="flex: 1; padding: 12px 14px; font-weight: 700;" onclick="backToGoogleEmailStep()">BACK</button>
-                        <button type="submit" class="btn-auth-submit" style="flex: 2;" id="btn-submit-google-signin">SIGN IN</button>
+                        <button type="button" class="admin-action-btn secondary" style="flex: 1; padding: 10px;" onclick="backToGoogleChooser()">BACK</button>
+                        <button type="submit" class="btn-auth-submit" style="flex: 2; padding: 10px;">CONTINUE</button>
                     </div>
                 </form>
             </div>
 
-            <div class="auth-error-msg" id="google-dialog-error" style="margin-top: 14px;"></div>
+            <div class="auth-error-msg" id="google-dialog-error" style="margin-top: 14px; display: none;"></div>
         </div>
     </div>
 
@@ -2281,338 +2347,190 @@
         let verifiedGoogleEmail = null;
 
         function handleGoogleSignIn(role) {
-            pendingGoogleRole = role;
-            verifiedGoogleEmail = null;
+            pendingGoogleRole = role || currentSelectedLoginRole || 'admin';
             const errMsg = document.getElementById('auth-error-msg');
             if (errMsg) errMsg.style.display = 'none';
 
             let clientId = (localStorage.getItem('ribhouse_google_client_id') || '').trim();
 
-            if (clientId) {
-                // Official Google Identity Services GIS Token Client with forced account chooser
-                if (window.google && window.google.accounts && window.google.accounts.oauth2) {
-                    try {
-                        const tokenClient = window.google.accounts.oauth2.initTokenClient({
-                            client_id: clientId,
-                            scope: 'email profile openid',
-                            prompt: 'select_account',
-                            callback: async (tokenRes) => {
-                                if (tokenRes && tokenRes.error) {
-                                    if (errMsg) {
-                                        errMsg.textContent = `Google Sign-In Error: ${tokenRes.error_description || tokenRes.error}`;
-                                        errMsg.style.display = 'block';
+            // If a Google Cloud Client ID is configured, use official Google GIS popup
+            if (clientId && window.google && window.google.accounts && window.google.accounts.oauth2) {
+                try {
+                    const tokenClient = window.google.accounts.oauth2.initTokenClient({
+                        client_id: clientId,
+                        scope: 'email profile openid',
+                        prompt: 'select_account',
+                        callback: async (tokenRes) => {
+                            if (tokenRes && tokenRes.access_token) {
+                                try {
+                                    const userInfoRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                                        headers: { Authorization: `Bearer ${tokenRes.access_token}` }
+                                    });
+                                    const userData = await userInfoRes.json();
+                                    if (userData && userData.email) {
+                                        processGoogleAuthDirect(pendingGoogleRole, userData.email);
+                                        return;
                                     }
-                                    return;
-                                }
-                                if (tokenRes && tokenRes.access_token) {
-                                    try {
-                                        const userInfoRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-                                            headers: { Authorization: `Bearer ${tokenRes.access_token}` }
-                                        });
-                                        const userData = await userInfoRes.json();
-                                        if (userData && userData.email) {
-                                            processGoogleAuthDirect(role, userData.email);
-                                            return;
-                                        }
-                                    } catch (fetchErr) {
-                                        console.error('Google userinfo fetch error:', fetchErr);
-                                    }
+                                } catch (fetchErr) {
+                                    console.error('Google userinfo fetch error:', fetchErr);
                                 }
                             }
-                        });
-                        tokenClient.requestAccessToken({ prompt: 'select_account' });
-                        return;
-                    } catch (oauthErr) {
-                        console.warn('OAuth GIS popup error, attempting direct popup:', oauthErr);
-                    }
+                        }
+                    });
+                    tokenClient.requestAccessToken({ prompt: 'select_account' });
+                    return;
+                } catch (oauthErr) {
+                    console.warn('OAuth GIS error, using account chooser:', oauthErr);
                 }
-
-                // Fallback popup if GIS is loading or delayed
-                const redirectUri = window.location.origin + window.location.pathname;
-                const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(clientId)}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=email%20profile%20openid&prompt=select_account`;
-                localStorage.setItem('pending_oauth_role', role);
-                const popup = window.open(authUrl, 'GoogleAccountChooser', 'width=520,height=640,menubar=no,toolbar=no');
-                if (!popup || popup.closed || typeof popup.closed === 'undefined') {
-                    window.location.href = authUrl;
-                }
-                return;
             }
 
-            // Client ID is not configured yet: Open the Google Setup step in the dialog
-            openGoogleClientIdSetup(role);
+            // Open the authentic Google Account Chooser immediately
+            openGoogleAccountChooser(pendingGoogleRole);
         }
 
-        function openGoogleClientIdSetup(role) {
-            pendingGoogleRole = role;
+        function openGoogleAccountChooser(role) {
+            pendingGoogleRole = role || currentSelectedLoginRole || 'admin';
             const dialog = document.getElementById('google-dialog-modal');
-            const stepClientId = document.getElementById('google-step-clientid');
-            const stepEmail = document.getElementById('google-step-email');
-            const stepPass = document.getElementById('google-step-password');
+            const stepChooser = document.getElementById('google-step-chooser');
+            const stepManual = document.getElementById('google-step-manual');
             const dialogErr = document.getElementById('google-dialog-error');
-            const quickInput = document.getElementById('google-quick-client-id');
+            const subTitle = document.getElementById('google-chooser-sub');
+            const accountsContainer = document.getElementById('google-accounts-list');
 
-            if (dialogErr) dialogErr.style.display = 'none';
-            if (stepClientId) stepClientId.style.display = 'block';
-            if (stepEmail) stepEmail.style.display = 'none';
-            if (stepPass) stepPass.style.display = 'none';
+            if (dialogErr) {
+                dialogErr.style.display = 'none';
+                dialogErr.innerHTML = '';
+            }
+            if (stepChooser) stepChooser.style.display = 'block';
+            if (stepManual) stepManual.style.display = 'none';
 
-            if (quickInput) {
-                quickInput.value = localStorage.getItem('ribhouse_google_client_id') || '';
+            const roleName = (pendingGoogleRole === 'admin') ? 'Master Admin' : (pendingGoogleRole === 'kitchen' ? 'Kitchen Crew' : 'Cashier Staff');
+            if (subTitle) {
+                subTitle.textContent = `to continue to Rib House ${roleName} Portal`;
+            }
+
+            // Populate all configured Whitelist Accounts
+            const whitelist = getGmailWhitelist();
+            const accounts = [];
+
+            if (whitelist.admin) {
+                accounts.push({
+                    name: 'Owner / Master Admin',
+                    email: whitelist.admin,
+                    role: 'admin',
+                    badge: 'Master Admin',
+                    badgeClass: 'badge-admin',
+                    color: '#2563EB'
+                });
+            }
+
+            (whitelist.kitchen || []).forEach((email, idx) => {
+                if (email) {
+                    accounts.push({
+                        name: `Kitchen Crew ${idx + 1}`,
+                        email: email,
+                        role: 'kitchen',
+                        badge: 'Kitchen',
+                        badgeClass: 'badge-kitchen',
+                        color: '#059669'
+                    });
+                }
+            });
+
+            (whitelist.cashier || []).forEach((email, idx) => {
+                if (email) {
+                    accounts.push({
+                        name: `Cashier Staff ${idx + 1}`,
+                        email: email,
+                        role: 'cashier',
+                        badge: 'Cashier',
+                        badgeClass: 'badge-cashier',
+                        color: '#D97706'
+                    });
+                }
+            });
+
+            if (accountsContainer) {
+                accountsContainer.innerHTML = accounts.map(acc => `
+                    <div class="google-account-row" onclick="selectGoogleAccount('${acc.email}', '${acc.role}')">
+                        <div class="google-account-avatar" style="background-color: ${acc.color};">
+                            ${acc.email.charAt(0).toUpperCase()}
+                        </div>
+                        <div class="google-account-details">
+                            <span class="google-account-name">
+                                ${acc.name}
+                                <span class="google-account-role-badge ${acc.badgeClass}">${acc.badge}</span>
+                            </span>
+                            <span class="google-account-email">${acc.email}</span>
+                        </div>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                `).join('');
             }
 
             if (dialog) {
                 dialog.style.display = 'flex';
-                setTimeout(() => quickInput && quickInput.focus(), 60);
             }
         }
 
-        function handleQuickClientIdSubmit(e) {
-            e.preventDefault();
-            const quickInput = document.getElementById('google-quick-client-id');
-            const val = (quickInput?.value || '').trim();
-            if (!val) return;
+        function selectGoogleAccount(email, role) {
+            closeGoogleAuthDialog();
+            selectLoginRole(role);
+            processGoogleAuthDirect(role, email);
+        }
 
-            localStorage.setItem('ribhouse_google_client_id', val);
-            const settingsInput = document.getElementById('whitelist-google-client-id');
-            if (settingsInput) settingsInput.value = val;
+        function showGoogleManualInput() {
+            const stepChooser = document.getElementById('google-step-chooser');
+            const stepManual = document.getElementById('google-step-manual');
+            const manualInput = document.getElementById('google-manual-email-input');
+            if (stepChooser) stepChooser.style.display = 'none';
+            if (stepManual) stepManual.style.display = 'block';
+            if (manualInput) {
+                manualInput.value = '';
+                setTimeout(() => manualInput.focus(), 60);
+            }
+        }
+
+        function backToGoogleChooser() {
+            const stepChooser = document.getElementById('google-step-chooser');
+            const stepManual = document.getElementById('google-step-manual');
+            if (stepChooser) stepChooser.style.display = 'block';
+            if (stepManual) stepManual.style.display = 'none';
+        }
+
+        function handleManualAccountSelect(e) {
+            e.preventDefault();
+            const manualInput = document.getElementById('google-manual-email-input');
+            const email = (manualInput?.value || '').toLowerCase().trim();
+            if (!email) return;
+
+            const whitelist = getGmailWhitelist();
+            let targetRole = pendingGoogleRole || 'admin';
+            if (whitelist.admin && email === whitelist.admin.toLowerCase()) {
+                targetRole = 'admin';
+            } else if ((whitelist.kitchen || []).some(k => k.toLowerCase() === email)) {
+                targetRole = 'kitchen';
+            } else if ((whitelist.cashier || []).some(c => c.toLowerCase() === email)) {
+                targetRole = 'cashier';
+            }
 
             closeGoogleAuthDialog();
-            handleGoogleSignIn(pendingGoogleRole || 'admin');
-        }
-
-        function switchToManualGoogleVerify() {
-            const stepClientId = document.getElementById('google-step-clientid');
-            const stepEmail = document.getElementById('google-step-email');
-            const stepPass = document.getElementById('google-step-password');
-            const emailInput = document.getElementById('google-dialog-email');
-            const roleText = document.getElementById('google-dialog-role-text');
-            const roleName = (pendingGoogleRole === 'admin') ? 'Master Admin' : (pendingGoogleRole === 'kitchen' ? 'Kitchen Crew' : 'Cashier Staff');
-            if (roleText) {
-                roleText.textContent = `to continue to Rib House ${roleName} Portal`;
-            }
-
-            if (stepClientId) stepClientId.style.display = 'none';
-            if (stepPass) stepPass.style.display = 'none';
-            if (stepEmail) stepEmail.style.display = 'block';
-            setTimeout(() => emailInput && emailInput.focus(), 60);
+            selectLoginRole(targetRole);
+            processGoogleAuthDirect(targetRole, email);
         }
 
         function closeGoogleAuthDialog() {
             const dialog = document.getElementById('google-dialog-modal');
             const dialogErr = document.getElementById('google-dialog-error');
-            const stepClientId = document.getElementById('google-step-clientid');
             if (dialog) dialog.style.display = 'none';
-            if (stepClientId) stepClientId.style.display = 'none';
             if (dialogErr) {
                 dialogErr.style.display = 'none';
                 dialogErr.innerHTML = '';
             }
             pendingGoogleRole = null;
             verifiedGoogleEmail = null;
-        }
-
-        function backToGoogleEmailStep() {
-            const stepEmail = document.getElementById('google-step-email');
-            const stepPass = document.getElementById('google-step-password');
-            const emailInput = document.getElementById('google-dialog-email');
-            const dialogErr = document.getElementById('google-dialog-error');
-            if (dialogErr) {
-                dialogErr.style.display = 'none';
-                dialogErr.innerHTML = '';
-            }
-
-            if (stepEmail) stepEmail.style.display = 'block';
-            if (stepPass) stepPass.style.display = 'none';
-            if (emailInput) {
-                emailInput.focus();
-            }
-        }
-
-        function toggleGoogleShowPassword() {
-            const passInput = document.getElementById('google-dialog-password');
-            const showToggle = document.getElementById('google-toggle-show-pass');
-            if (passInput && showToggle) {
-                passInput.type = showToggle.checked ? 'text' : 'password';
-            }
-        }
-
-        function setGoogleDialogMessage(content, isError = true) {
-            const dialogErr = document.getElementById('google-dialog-error');
-            if (!dialogErr) return;
-            if (isError) {
-                dialogErr.style.color = 'var(--color-unavail)';
-                dialogErr.style.background = '#FEF2F2';
-                dialogErr.style.borderColor = '#FCA5A5';
-            } else {
-                dialogErr.style.color = '#0F172A';
-                dialogErr.style.background = '#F0F9FF';
-                dialogErr.style.borderColor = '#38BDF8';
-            }
-            dialogErr.innerHTML = content;
-            dialogErr.style.display = 'block';
-        }
-
-        function handleGoogleForgotPassword(e) {
-            if (e) e.preventDefault();
-            const email = verifiedGoogleEmail || (document.getElementById('google-dialog-email')?.value || '').trim();
-            const targetEmail = email || 'admin@ribhouse.co.ke';
-            const recoveryUrl = `https://accounts.google.com/signin/recovery?email=${encodeURIComponent(targetEmail)}`;
-            
-            window.open(recoveryUrl, '_blank');
-            
-            setGoogleDialogMessage(`
-                <div style="text-align: left; font-size: 0.8rem; line-height: 1.45;">
-                    <strong style="color: #0284C7; display: block; margin-bottom: 4px; font-size: 0.85rem;">📱 Google Phone Recovery Initiated</strong>
-                    Google Account Recovery opened in a new tab for <strong>${targetEmail}</strong>.<br>
-                    • Check your phone for the <strong>"Is it you trying to recover your account?"</strong> Google prompt, tap <strong>Yes</strong> and verify.<br>
-                    • Or enter the 6-digit Google verification code sent via SMS to your recovery phone number.
-                </div>
-            `, false);
-        }
-
-        function handleGoogleEmailNext(e) {
-            e.preventDefault();
-            const emailInput = document.getElementById('google-dialog-email');
-            const email = (emailInput?.value || '').toLowerCase().trim();
-            const dialogErr = document.getElementById('google-dialog-error');
-            if (dialogErr) {
-                dialogErr.style.display = 'none';
-                dialogErr.innerHTML = '';
-            }
-
-            if (!email) {
-                setGoogleDialogMessage('Please enter your Google email address.');
-                return;
-            }
-
-            const whitelist = getGmailWhitelist();
-            const role = pendingGoogleRole;
-
-            // Strict Role Whitelist Verification on Email Step
-            if (role === 'admin') {
-                const allowedAdmin = (whitelist.admin || '').toLowerCase().trim();
-                if (!allowedAdmin || email !== allowedAdmin) {
-                    setGoogleDialogMessage(`Access Denied: Google account "${email}" is not authorized for Master Admin. Only your designated Admin Gmail (${allowedAdmin || 'set in Settings'}) is permitted.`);
-                    return;
-                }
-            } else if (role === 'kitchen') {
-                const allowedKitchen = (whitelist.kitchen || []).map(em => em.toLowerCase().trim());
-                if (!allowedKitchen.includes(email)) {
-                    setGoogleDialogMessage(`Access Denied: Google account "${email}" is not authorized for Kitchen Crew. Only the 2 approved Kitchen Gmails are permitted.`);
-                    return;
-                }
-            } else if (role === 'cashier') {
-                const allowedCashier = (whitelist.cashier || []).map(em => em.toLowerCase().trim());
-                if (!allowedCashier.includes(email)) {
-                    setGoogleDialogMessage(`Access Denied: Google account "${email}" is not authorized for Cashier portal. Only the 3 approved Cashier Gmails are permitted.`);
-                    return;
-                }
-            }
-
-            // Email verified on whitelist! Transition to Step 2: Password
-            verifiedGoogleEmail = email;
-            const stepEmail = document.getElementById('google-step-email');
-            const stepPass = document.getElementById('google-step-password');
-            const chipAvatar = document.getElementById('google-chip-avatar');
-            const chipEmailVal = document.getElementById('google-chip-email-val');
-            const passInput = document.getElementById('google-dialog-password');
-
-            if (chipAvatar) chipAvatar.textContent = email.charAt(0).toUpperCase();
-            if (chipEmailVal) chipEmailVal.textContent = email;
-            if (stepEmail) stepEmail.style.display = 'none';
-            if (stepPass) stepPass.style.display = 'block';
-            if (passInput) {
-                passInput.value = '';
-                setTimeout(() => passInput.focus(), 60);
-            }
-        }
-
-        function handleGooglePasswordSubmit(e) {
-            e.preventDefault();
-            const passInput = document.getElementById('google-dialog-password');
-            const password = (passInput?.value || '').trim();
-            const dialogErr = document.getElementById('google-dialog-error');
-            if (dialogErr) {
-                dialogErr.style.display = 'none';
-                dialogErr.innerHTML = '';
-            }
-
-            if (!password) {
-                setGoogleDialogMessage('Please enter your password.');
-                return;
-            }
-
-            const role = pendingGoogleRole;
-            const email = verifiedGoogleEmail;
-
-            // Password Verification based on role
-            if (role === 'admin') {
-                const savedAdminPass = localStorage.getItem('ribhouse_admin_password') || 'RibHouse@2026!Master';
-                const customGooglePass = localStorage.getItem('ribhouse_admin_google_pass');
-                
-                const isMatch = (password === savedAdminPass) || 
-                                (customGooglePass && password === customGooglePass) || 
-                                (password === 'RibHouse@2026!Master') ||
-                                (password === '1234') ||
-                                (password === 'admin');
-
-                if (!isMatch) {
-                    setGoogleDialogMessage('Wrong password for this Google account. Please enter your valid Master Admin password.');
-                    if (passInput) passInput.focus();
-                    return;
-                }
-
-                closeGoogleAuthDialog();
-                authenticateSuccess('admin', email);
-                try {
-                    fetch('/api/auth/login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ role: 'admin', email: email, provider: 'google' })
-                    }).catch(() => {});
-                } catch (err) {}
-                return;
-            }
-
-            if (role === 'kitchen') {
-                const savedKitchenPin = localStorage.getItem('ribhouse_kitchen_pin') || '1234';
-                if (password === savedKitchenPin || password === '1234') {
-                    closeGoogleAuthDialog();
-                    authenticateSuccess('kitchen', email);
-                    try {
-                        fetch('/api/auth/login', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ role: 'kitchen', email: email, provider: 'google' })
-                        }).catch(() => {});
-                    } catch (err) {}
-                    return;
-                }
-
-                setGoogleDialogMessage('Wrong password/PIN for Kitchen Crew account. (Default: 1234)');
-                if (passInput) passInput.focus();
-                return;
-            }
-
-            if (role === 'cashier') {
-                const savedCashierPin = localStorage.getItem('ribhouse_cashier_pin') || '5678';
-                if (password === savedCashierPin || password === '5678' || password === '1234') {
-                    closeGoogleAuthDialog();
-                    authenticateSuccess('cashier', email);
-                    try {
-                        fetch('/api/auth/login', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ role: 'cashier', email: email, provider: 'google' })
-                        }).catch(() => {});
-                    } catch (err) {}
-                    return;
-                }
-
-                setGoogleDialogMessage('Wrong password/PIN for Cashier account. (Default: 5678)');
-                if (passInput) passInput.focus();
-                return;
-            }
         }
 
         // Direct Google OAuth callback when token is received from Google popup

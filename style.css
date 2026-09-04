@@ -3149,33 +3149,38 @@ img {
 
 .btn-select-dish {
     flex: 1;
-    border: 1px solid var(--color-gold);
-    color: var(--color-gold);
-    padding: 6px 12px;
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    border-radius: 4px;
-    background: rgba(197, 160, 89, 0.08);
-    cursor: pointer;
-    transition: var(--transition-fast);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
+    border: 1.5px solid #B8860B !important;
+    color: #B8860B !important;
+    padding: 8px 14px !important;
+    font-size: 0.78rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
+    border-radius: 4px !important;
+    background: #FFFBEB !important;
+    cursor: pointer !important;
+    transition: var(--transition-fast) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    box-shadow: 0 2px 6px rgba(184, 134, 11, 0.18) !important;
 }
 
 .btn-select-dish:hover {
-    background: var(--color-gold);
-    color: var(--color-black);
+    background: #B8860B !important;
+    color: #FFFFFF !important;
+    border-color: #B8860B !important;
+    box-shadow: 0 4px 12px rgba(184, 134, 11, 0.35) !important;
+    transform: translateY(-1px);
 }
 
 .btn-select-dish.active {
-    background: var(--color-gold);
-    color: var(--color-black);
-    border-color: var(--color-gold-bright);
-    font-weight: 700;
+    background: #B8860B !important;
+    color: #FFFFFF !important;
+    border-color: #B8860B !important;
+    font-weight: 800 !important;
+    box-shadow: 0 2px 8px rgba(184, 134, 11, 0.4) !important;
 }
 
 /* ==========================================================================
@@ -7590,39 +7595,42 @@ img {
     align-items: center !important;
     justify-content: center !important;
     flex-shrink: 0 !important;
-    width: 72px !important;
-    min-width: 72px !important;
-    max-width: 72px !important;
-    height: 30px !important;
-    padding: 0 !important;
+    padding: 6px 14px !important;
+    min-width: 84px !important;
+    height: 32px !important;
     margin: 0 !important;
-    border: 1.5px solid #CBD5E1 !important;
-    background: #FFFFFF !important;
-    color: #1E293B !important;
-    font-weight: 700 !important;
-    font-size: 0.75rem !important;
-    letter-spacing: 0.3px !important;
-    border-radius: 0px !important;
+    border: 1.5px solid #B8860B !important;
+    background: #FFFBEB !important;
+    color: #B8860B !important;
+    font-weight: 800 !important;
+    font-size: 0.78rem !important;
+    letter-spacing: 0.5px !important;
+    border-radius: 4px !important;
     cursor: pointer !important;
     transition: all 0.2s ease !important;
     text-align: center !important;
     text-transform: uppercase !important;
     box-sizing: border-box !important;
+    box-shadow: 0 2px 6px rgba(184, 134, 11, 0.18) !important;
 }
 
 .tumbukiza-mini-box:hover .tumbukiza-mini-add-btn,
 .tumbukiza-mini-add-btn:hover {
     border-color: #B8860B !important;
-    color: #B8860B !important;
-    background: #FFFDF9 !important;
+    color: #FFFFFF !important;
+    background: #B8860B !important;
+    box-shadow: 0 4px 12px rgba(184, 134, 11, 0.35) !important;
+    transform: translateY(-1px);
 }
 
 .tumbukiza-mini-add-btn.is-selected,
-.tumbukiza-mini-add-btn.selected-btn-active {
+.tumbukiza-mini-add-btn.selected-btn-active,
+.tumbukiza-mini-add-btn.active {
     background: #B8860B !important;
     border-color: #B8860B !important;
     color: #FFFFFF !important;
     font-weight: 800 !important;
+    box-shadow: 0 2px 8px rgba(184, 134, 11, 0.4) !important;
 }
 
 .tumbukiza-sides-footer {

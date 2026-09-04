@@ -446,9 +446,11 @@ function syncMainDishesUIState() {
         } else {
             btn.innerHTML = '+ ADD';
             btn.classList.remove('selected-btn-active', 'is-selected');
-            btn.style.setProperty('background', '#FFFFFF', 'important');
-            btn.style.setProperty('color', '#1E293B', 'important');
-            btn.style.setProperty('border-color', '#CBD5E1', 'important');
+            btn.style.setProperty('background', '#FFFBEB', 'important');
+            btn.style.setProperty('color', '#B8860B', 'important');
+            btn.style.setProperty('border-color', '#B8860B', 'important');
+            btn.style.setProperty('font-weight', '800', 'important');
+            btn.style.setProperty('box-shadow', '0 2px 6px rgba(184, 134, 11, 0.18)', 'important');
             if (itemBox) itemBox.classList.remove('is-selected');
         }
     });
@@ -2002,13 +2004,31 @@ function toggleSelectItem(dishDataStr) {
         }
         saveSelectedCart(cart);
 
-        // Update button UI in AI drawer
+        // Update button UI in AI drawer & page
         if (typeof document !== 'undefined' && typeof document.querySelectorAll === 'function') {
             const encodedName = encodeURIComponent(dish.name);
             document.querySelectorAll(`button[data-dish-name="${encodedName}"]`).forEach(btn => {
                 const isSel = isDishSelected(dish.name);
                 btn.classList.toggle('active', isSel);
-                btn.innerHTML = isSel ? '✓ Selected' : '+ Select Item';
+                if (btn.classList.contains('tumbukiza-mini-add-btn')) {
+                    btn.innerHTML = isSel ? '✓ ADDED' : '+ ADD';
+                } else if (btn.classList.contains('btn-select-dish')) {
+                    btn.innerHTML = isSel ? '✓ Added to Order' : '+ Add to Order';
+                } else {
+                    btn.innerHTML = isSel ? '✓ Selected' : '+ Select Item';
+                }
+                if (isSel) {
+                    btn.style.setProperty('background', '#B8860B', 'important');
+                    btn.style.setProperty('color', '#FFFFFF', 'important');
+                    btn.style.setProperty('border-color', '#B8860B', 'important');
+                    btn.style.setProperty('font-weight', '800', 'important');
+                } else {
+                    btn.style.setProperty('background', '#FFFBEB', 'important');
+                    btn.style.setProperty('color', '#B8860B', 'important');
+                    btn.style.setProperty('border-color', '#B8860B', 'important');
+                    btn.style.setProperty('font-weight', '800', 'important');
+                    btn.style.setProperty('box-shadow', '0 2px 6px rgba(184, 134, 11, 0.18)', 'important');
+                }
             });
         }
     } catch(e) {

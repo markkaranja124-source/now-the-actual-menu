@@ -429,7 +429,31 @@ function syncMainDishesUIState() {
         }
     });
 
-    // 4. Sync Tumbukiza Inline Pill Buttons (.tumbukiza-pill-btn)
+    // 4. Sync Tumbukiza Mini Side Buttons (.tumbukiza-mini-add-btn)
+    const tumbukizaMiniBtns = document.querySelectorAll('.tumbukiza-mini-add-btn');
+    tumbukizaMiniBtns.forEach(btn => {
+        const dishName = btn.getAttribute('data-dish-name') || '';
+        if (!dishName) return;
+        const isSel = cart.some(item => norm(item.name) === norm(dishName));
+        const itemBox = btn.closest('.tumbukiza-mini-box');
+        if (isSel) {
+            btn.innerHTML = '✓ ADDED';
+            btn.classList.add('selected-btn-active', 'is-selected');
+            btn.style.setProperty('background', '#B8860B', 'important');
+            btn.style.setProperty('color', '#FFFFFF', 'important');
+            btn.style.setProperty('border-color', '#B8860B', 'important');
+            if (itemBox) itemBox.classList.add('is-selected');
+        } else {
+            btn.innerHTML = '+ ADD';
+            btn.classList.remove('selected-btn-active', 'is-selected');
+            btn.style.setProperty('background', '#FFFFFF', 'important');
+            btn.style.setProperty('color', '#1E293B', 'important');
+            btn.style.setProperty('border-color', '#CBD5E1', 'important');
+            if (itemBox) itemBox.classList.remove('is-selected');
+        }
+    });
+
+    // 5. Sync Tumbukiza Inline Pill Buttons (.tumbukiza-pill-btn)
     const pillBtns = document.querySelectorAll('.tumbukiza-pill-btn');
     pillBtns.forEach(pill => {
         const dishName = pill.getAttribute('data-dish-name') || '';

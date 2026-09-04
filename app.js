@@ -2392,14 +2392,24 @@ function initClickableMenuDishes() {
     // Globally clean up any old status pills or badges
     document.querySelectorAll('.dish-status-pill, [class*="status-pill"], [class*="pill-hold"], [class*="pill-unavailable"]').forEach(el => el.remove());
 
-    const allCards = document.querySelectorAll('.menu-grid > div, .menu-card-luxury-wrapper');
+    // Prevent corrupting or injecting into Tumbukiza sides card
+    const tumbukizaSidesCard = document.querySelector('.tumbukiza-sides-card, #dish-card-tumbukiza-sides');
+    if (tumbukizaSidesCard) {
+        tumbukizaSidesCard.querySelectorAll('.row-order-pill, > .card-order-action-btn').forEach(el => el.remove());
+    }
+
+    const allCards = document.querySelectorAll('.menu-grid > div:not(.tumbukiza-sides-card), .menu-card-luxury-wrapper:not(.tumbukiza-sides-card)');
 
     allCards.forEach(card => {
+        if (card.classList.contains('tumbukiza-sides-card') || card.id === 'dish-card-tumbukiza-sides' || card.querySelector('.tumbukiza-tiny-boxes-list')) {
+            return;
+        }
+
         const h3Header = card.querySelector('h3, h4');
         if (!h3Header || !h3Header.innerText.trim()) return;
 
         const mainTitle = h3Header.innerText.replace(/\s+/g, ' ').trim();
-        if (!mainTitle || mainTitle.toLowerCase() === 'dish') return;
+        if (!mainTitle || mainTitle.toLowerCase() === 'dish' || mainTitle.toLowerCase().includes('tumbukiza sides')) return;
 
         // Detect if this card has sub-item option rows (like Matumbo Fry with sides)
         const subContainers = card.querySelectorAll('div > div');

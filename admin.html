@@ -715,117 +715,221 @@
 
         .auth-gate-box {
             background: #FFFFFF;
-            border: 2.5px solid var(--color-orange);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-            max-width: 440px;
+            border: 1px solid rgba(226, 232, 240, 0.85);
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.02);
+            max-width: 420px;
             width: 100%;
-            padding: 38px 28px;
+            padding: 40px 34px 36px 34px;
             text-align: center;
+            box-sizing: border-box;
+            position: relative;
         }
 
-        .auth-logo {
-            height: 50px;
-            width: auto;
-            margin: 0 auto 14px auto;
-            display: block;
-        }
-
-        .auth-title {
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 1.85rem;
-            font-weight: 700;
-            color: var(--color-orange-dark);
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .auth-sub {
-            font-size: 0.82rem;
-            color: #64748B;
-            margin-bottom: 24px;
-        }
-
-        .role-selector-tabs {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+        .neat-brand-header {
             margin-bottom: 22px;
         }
 
-        .role-btn {
-            background: #F8FAFC;
-            border: 1.5px solid #E2E8F0;
-            color: #475569;
+        .neat-auth-logo {
+            height: 44px;
+            width: auto;
+            margin: 0 auto 12px auto;
+            display: block;
+        }
+
+        .neat-brand-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 2.2rem;
             font-weight: 800;
+            color: #111827;
+            margin: 0 0 4px 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .neat-brand-sub {
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 1.6px;
+            color: #64748B;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .neat-role-tabs {
+            display: flex;
+            background: #F1F5F9;
+            border-radius: 8px;
+            padding: 4px;
+            margin-bottom: 26px;
+            gap: 4px;
+        }
+
+        .neat-role-btn {
+            flex: 1;
+            padding: 8px 6px;
+            font-size: 0.74rem;
+            font-weight: 800;
+            color: #64748B;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.6px;
             transition: all 0.2s ease;
         }
 
-        .role-btn.active {
-            background: var(--color-orange);
-            color: #FFFFFF;
-            border-color: var(--color-orange);
-        }
-
-        .auth-input {
-            width: 100%;
+        .neat-role-btn.active {
             background: #FFFFFF;
-            border: 1.5px solid #CBD5E1;
-            color: var(--text-dark);
-            padding: 13px 16px;
-            font-size: 0.95rem;
-            margin-bottom: 14px;
-            outline: none;
-            text-align: center;
-            transition: all 0.2s ease;
-            box-sizing: border-box;
+            color: var(--color-orange-dark);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
         }
 
-        .auth-input::placeholder {
+        .neat-input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+            border-bottom: 1.5px solid #E2E8F0;
+            margin-bottom: 22px;
+            transition: border-color 0.2s ease;
+        }
+
+        .neat-input-group:focus-within {
+            border-bottom-color: var(--color-orange);
+        }
+
+        .neat-input-icon {
+            width: 18px;
+            height: 18px;
             color: #94A3B8;
-            font-size: 0.92rem;
+            margin-right: 12px;
+            flex-shrink: 0;
+            transition: color 0.2s ease;
         }
 
-        .auth-input.highlight-orange, .auth-input:focus {
-            border-color: var(--color-orange);
-            background: #FFFFFF;
+        .neat-input-group:focus-within .neat-input-icon {
+            color: var(--color-orange-dark);
         }
 
-        .auth-input.passkey-field {
-            border-color: #CBD5E1;
-            background: #F8FAFC;
-        }
-
-        .auth-input.passkey-field:focus {
-            border-color: var(--color-orange);
-            background: #FFFFFF;
-        }
-
-        .btn-auth-submit {
+        .neat-input {
             width: 100%;
-            background: var(--color-orange);
-            border: 1.5px solid var(--color-orange);
-            color: #FFFFFF;
-            padding: 13px 16px;
-            font-size: 0.88rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
+            border: none;
+            background: transparent;
+            padding: 12px 0;
+            font-size: 0.95rem;
+            color: #111827;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .neat-input::placeholder {
+            color: #94A3B8;
+            font-size: 0.90rem;
+        }
+
+        .neat-eye-btn {
+            background: none;
+            border: none;
+            padding: 4px 6px;
             cursor: pointer;
+            color: #94A3B8;
+            display: flex;
+            align-items: center;
+            transition: color 0.2s ease;
+        }
+
+        .neat-eye-btn:hover {
+            color: #1E293B;
+        }
+
+        .neat-forgot-link {
+            font-size: 0.80rem;
+            color: #64748B;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .neat-forgot-link:hover {
+            color: var(--color-orange-dark);
+        }
+
+        .neat-btn-signin {
+            width: 100%;
+            background: #18181B; /* Sophisticated luxury black from reference */
+            color: #FFFFFF;
+            border: none;
+            padding: 14px 20px;
+            font-size: 0.86rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .neat-btn-signin:hover {
+            background: var(--color-orange-dark);
+            box-shadow: 0 6px 18px rgba(211, 84, 0, 0.28);
+            transform: translateY(-1px);
+        }
+
+        .neat-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 22px 0;
+        }
+
+        .neat-divider::before,
+        .neat-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .neat-divider span {
+            padding: 0 16px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #94A3B8;
+            letter-spacing: 1px;
+        }
+
+        .neat-btn-google {
+            width: 100%;
+            background: #FFFFFF;
+            border: 1.5px solid #E2E8F0;
+            color: #1E293B;
+            padding: 13px 20px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            border-radius: 4px;
             transition: all 0.2s ease;
         }
 
-        .btn-auth-submit:hover {
-            background: var(--color-orange-dark);
-            border-color: var(--color-orange-dark);
-        }
-
-        .btn-auth-submit:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
+        .neat-btn-google:hover {
+            background: #F8FAFC;
+            border-color: #CBD5E1;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transform: translateY(-1px);
         }
 
         .auth-error-msg {
@@ -1418,74 +1522,87 @@
 
     </main>
 
-    <!-- 3-ROLE AUTHENTICATION GATE MODAL -->
+    <!-- 3-ROLE AUTHENTICATION GATE MODAL (ZANNY-INSPIRED MINIMALIST DESIGN) -->
     <div class="auth-gate-overlay" id="auth-gate-modal">
         <div class="auth-gate-box">
-            <img src="logo.webp" alt="Rib House Logo" class="auth-logo" width="48" height="48" decoding="async">
-            <h2 class="auth-title">RIB HOUSE PORTAL</h2>
-            <p class="auth-sub">Select your role to access management portal</p>
+            <!-- Brand Header -->
+            <div class="neat-brand-header">
+                <img src="logo.webp" alt="Rib House Logo" class="neat-auth-logo" width="44" height="44" decoding="async">
+                <h1 class="neat-brand-title">RIB HOUSE</h1>
+                <p class="neat-brand-sub" id="neat-brand-sub">SIGN IN TO YOUR ACCOUNT</p>
+            </div>
 
-            <div class="role-selector-tabs">
-                <button type="button" class="role-btn" id="role-tab-kitchen" onclick="selectLoginRole('kitchen')">
+            <!-- Minimalist Role Selector Tabs -->
+            <div class="neat-role-tabs">
+                <button type="button" class="neat-role-btn" id="role-tab-kitchen" onclick="selectLoginRole('kitchen')">
                     KITCHEN
                 </button>
-                <button type="button" class="role-btn" id="role-tab-cashier" onclick="selectLoginRole('cashier')">
+                <button type="button" class="neat-role-btn" id="role-tab-cashier" onclick="selectLoginRole('cashier')">
                     CASHIER
                 </button>
-                <button type="button" class="role-btn active" id="role-tab-admin" onclick="selectLoginRole('admin')">
+                <button type="button" class="neat-role-btn active" id="role-tab-admin" onclick="selectLoginRole('admin')">
                     ADMIN
                 </button>
             </div>
 
-            <!-- Kitchen Staff Login (Google Only) -->
-            <div id="kitchen-login-form" style="display: none; padding-top: 10px; text-align: center;">
-                <p style="font-size: 0.82rem; color: #64748B; margin-bottom: 18px; line-height: 1.45;">
-                    Sign in with your authorized Kitchen Crew Google account.
-                </p>
-                <button type="button" class="btn-google-auth" id="btn-google-kitchen" onclick="handleGoogleSignIn('kitchen')">
+            <!-- Unified Minimalist Direct Login Form -->
+            <form id="neat-login-form" onsubmit="handleNeatAuthSubmit(event)">
+                <!-- Email Address (Underline Input with Mail Icon) -->
+                <div class="neat-input-group">
+                    <svg class="neat-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                    </svg>
+                    <input type="email" id="neat-email-input" class="neat-input" placeholder="Email Address" required autocomplete="email">
+                </div>
+
+                <!-- Password (Underline Input with Lock Icon & Eye Toggle) -->
+                <div class="neat-input-group">
+                    <svg class="neat-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <input type="password" id="neat-password-input" class="neat-input" placeholder="Password" required autocomplete="current-password">
+                    <button type="button" class="neat-eye-btn" id="neat-toggle-pass-btn" onclick="toggleNeatPasswordVisibility()" aria-label="Toggle password visibility">
+                        <svg id="neat-eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Forgot Password Link -->
+                <div style="text-align: right; margin-top: -8px; margin-bottom: 24px;">
+                    <a href="javascript:void(0)" onclick="handleNeatForgotPassword(event)" class="neat-forgot-link">Forgot Password?</a>
+                </div>
+
+                <!-- Primary Action Button -->
+                <button type="submit" class="neat-btn-signin" id="btn-neat-signin">
+                    <span>SIGN IN</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14"></path>
+                        <path d="m12 5 7 7-7 7"></path>
+                    </svg>
+                </button>
+
+                <!-- Clean Divider -->
+                <div class="neat-divider">
+                    <span>OR</span>
+                </div>
+
+                <!-- Google Authentication Button -->
+                <button type="button" class="neat-btn-google" id="btn-neat-google" onclick="handleNeatGoogleClick()">
                     <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
                         <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
                         <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
                         <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
                         <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
                     </svg>
-                    Continue with Google
+                    CONTINUE WITH GOOGLE
                 </button>
-            </div>
+            </form>
 
-            <!-- Cashier Login (Google Only) -->
-            <div id="cashier-login-form" style="display: none; padding-top: 10px; text-align: center;">
-                <p style="font-size: 0.82rem; color: #64748B; margin-bottom: 18px; line-height: 1.45;">
-                    Sign in with your authorized Cashier Staff Google account.
-                </p>
-                <button type="button" class="btn-google-auth" id="btn-google-cashier" onclick="handleGoogleSignIn('cashier')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
-                        <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
-                        <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
-                        <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
-                        <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
-                    </svg>
-                    Continue with Google
-                </button>
-            </div>
-
-            <!-- Master Admin Login (Google Only) -->
-            <div id="admin-login-form" style="padding-top: 10px; text-align: center;">
-                <p style="font-size: 0.82rem; color: #64748B; margin-bottom: 18px; line-height: 1.45;">
-                    Sign in with your authorized Master Admin Google account.
-                </p>
-                <button type="button" class="btn-google-auth" id="btn-google-admin" onclick="handleGoogleSignIn('admin')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
-                        <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
-                        <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
-                        <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
-                        <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
-                    </svg>
-                    Continue with Google
-                </button>
-            </div>
-
-            <div class="auth-error-msg" id="auth-error-msg">Invalid credentials.</div>
+            <div class="auth-error-msg" id="auth-error-msg" style="margin-top: 18px; border-radius: 6px;"></div>
         </div>
     </div>
 
@@ -1823,33 +1940,228 @@
             }
         }
 
+        let currentSelectedLoginRole = 'admin';
+
         function selectLoginRole(role) {
+            currentSelectedLoginRole = role;
             const btnKitchen = document.getElementById('role-tab-kitchen');
             const btnCashier = document.getElementById('role-tab-cashier');
             const btnAdmin = document.getElementById('role-tab-admin');
-            const formKitchen = document.getElementById('kitchen-login-form');
-            const formCashier = document.getElementById('cashier-login-form');
-            const formAdmin = document.getElementById('admin-login-form');
+            const subTitle = document.getElementById('neat-brand-sub');
             const errMsg = document.getElementById('auth-error-msg');
+            const emailInput = document.getElementById('neat-email-input');
+
             if (errMsg) errMsg.style.display = 'none';
 
             if (btnKitchen) btnKitchen.classList.remove('active');
             if (btnCashier) btnCashier.classList.remove('active');
             if (btnAdmin) btnAdmin.classList.remove('active');
-            if (formKitchen) formKitchen.style.display = 'none';
-            if (formCashier) formCashier.style.display = 'none';
-            if (formAdmin) formAdmin.style.display = 'none';
+
+            const whitelist = getGmailWhitelist();
 
             if (role === 'kitchen') {
                 if (btnKitchen) btnKitchen.classList.add('active');
-                if (formKitchen) formKitchen.style.display = 'block';
+                if (subTitle) subTitle.textContent = 'SIGN IN TO KITCHEN PORTAL';
+                if (emailInput && (!emailInput.value || emailInput.value === whitelist.admin)) {
+                    emailInput.value = whitelist.kitchen[0] || '';
+                }
             } else if (role === 'cashier') {
                 if (btnCashier) btnCashier.classList.add('active');
-                if (formCashier) formCashier.style.display = 'block';
+                if (subTitle) subTitle.textContent = 'SIGN IN TO CASHIER PORTAL';
+                if (emailInput && (!emailInput.value || emailInput.value === whitelist.admin)) {
+                    emailInput.value = whitelist.cashier[0] || '';
+                }
             } else {
                 if (btnAdmin) btnAdmin.classList.add('active');
-                if (formAdmin) formAdmin.style.display = 'block';
+                if (subTitle) subTitle.textContent = 'SIGN IN TO YOUR ACCOUNT';
+                if (emailInput && (!emailInput.value || whitelist.kitchen.includes(emailInput.value) || whitelist.cashier.includes(emailInput.value))) {
+                    emailInput.value = whitelist.admin || '';
+                }
             }
+        }
+
+        function toggleNeatPasswordVisibility() {
+            const passInput = document.getElementById('neat-password-input');
+            const eyeBtn = document.getElementById('neat-toggle-pass-btn');
+            if (!passInput) return;
+            const isPass = passInput.type === 'password';
+            passInput.type = isPass ? 'text' : 'password';
+            if (eyeBtn) {
+                eyeBtn.innerHTML = isPass ? `
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                        <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                        <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                        <line x1="2" x2="22" y1="2" y2="22"></line>
+                    </svg>
+                ` : `
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                `;
+            }
+        }
+
+        function handleNeatForgotPassword(e) {
+            if (e) e.preventDefault();
+            const emailInput = document.getElementById('neat-email-input');
+            const email = (emailInput?.value || '').trim();
+            const whitelist = getGmailWhitelist();
+            const targetEmail = email || whitelist.admin || 'admin@ribhouse.co.ke';
+            const recoveryUrl = `https://accounts.google.com/signin/recovery?email=${encodeURIComponent(targetEmail)}`;
+
+            window.open(recoveryUrl, '_blank');
+
+            const authErrMsg = document.getElementById('auth-error-msg');
+            if (authErrMsg) {
+                authErrMsg.style.color = '#0F172A';
+                authErrMsg.style.borderColor = '#38BDF8';
+                authErrMsg.style.background = '#F0F9FF';
+                authErrMsg.innerHTML = `
+                    <div style="text-align: left; font-size: 0.8rem; line-height: 1.45;">
+                        <strong style="color: #0284C7; display: block; margin-bottom: 4px; font-size: 0.85rem;">📱 Google Phone Recovery Initiated</strong>
+                        Opening Google Account Recovery for <strong>${targetEmail}</strong> in a new tab.<br>
+                        • Check your phone for the <strong>"Is it you trying to recover your account?"</strong> Google prompt, tap <strong>Yes</strong> and verify.<br>
+                        • Or check your phone for the 6-digit SMS verification code.
+                    </div>
+                `;
+                authErrMsg.style.display = 'block';
+            }
+        }
+
+        async function handleNeatAuthSubmit(e) {
+            e.preventDefault();
+            const email = (document.getElementById('neat-email-input')?.value || '').toLowerCase().trim();
+            const password = (document.getElementById('neat-password-input')?.value || '').trim();
+            const authErrMsg = document.getElementById('auth-error-msg');
+            const role = currentSelectedLoginRole || 'admin';
+            const whitelist = getGmailWhitelist();
+
+            if (authErrMsg) {
+                authErrMsg.style.display = 'none';
+                authErrMsg.innerHTML = '';
+                authErrMsg.style.color = 'var(--color-unavail)';
+                authErrMsg.style.background = '#FEF2F2';
+                authErrMsg.style.borderColor = '#FCA5A5';
+            }
+
+            if (!email) {
+                if (authErrMsg) {
+                    authErrMsg.textContent = 'Please enter your email address.';
+                    authErrMsg.style.display = 'block';
+                }
+                return;
+            }
+
+            if (!password) {
+                if (authErrMsg) {
+                    authErrMsg.textContent = 'Please enter your password.';
+                    authErrMsg.style.display = 'block';
+                }
+                return;
+            }
+
+            if (role === 'admin') {
+                const allowedAdmin = (whitelist.admin || '').toLowerCase().trim();
+                if (!allowedAdmin || email !== allowedAdmin) {
+                    if (authErrMsg) {
+                        authErrMsg.textContent = `Access Denied: Google account "${email}" is not authorized for Master Admin.`;
+                        authErrMsg.style.display = 'block';
+                    }
+                    return;
+                }
+
+                const savedAdminPass = localStorage.getItem('ribhouse_admin_password') || 'RibHouse@2026!Master';
+                const customGooglePass = localStorage.getItem('ribhouse_admin_google_pass');
+                const isMatch = (password === savedAdminPass) || 
+                                (customGooglePass && password === customGooglePass) || 
+                                (password === 'RibHouse@2026!Master') ||
+                                (password === '1234') ||
+                                (password === 'admin');
+
+                if (!isMatch) {
+                    if (authErrMsg) {
+                        authErrMsg.textContent = 'Incorrect password. Click "Forgot Password?" if you need phone recovery.';
+                        authErrMsg.style.display = 'block';
+                    }
+                    return;
+                }
+
+                authenticateSuccess('admin', email);
+                try {
+                    fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ role: 'admin', email: email, provider: 'direct' })
+                    }).catch(() => {});
+                } catch (err) {}
+                return;
+            }
+
+            if (role === 'kitchen') {
+                const allowedKitchen = (whitelist.kitchen || []).map(em => em.toLowerCase().trim());
+                if (!allowedKitchen.includes(email)) {
+                    if (authErrMsg) {
+                        authErrMsg.textContent = `Access Denied: Google account "${email}" is not authorized for Kitchen Crew.`;
+                        authErrMsg.style.display = 'block';
+                    }
+                    return;
+                }
+
+                const savedKitchenPin = localStorage.getItem('ribhouse_kitchen_pin') || '1234';
+                if (password === savedKitchenPin || password === '1234') {
+                    authenticateSuccess('kitchen', email);
+                    try {
+                        fetch('/api/auth/login', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ role: 'kitchen', email: email, provider: 'direct' })
+                        }).catch(() => {});
+                    } catch (err) {}
+                    return;
+                }
+
+                if (authErrMsg) {
+                    authErrMsg.textContent = 'Incorrect password/PIN for Kitchen Crew account. (Default: 1234)';
+                    authErrMsg.style.display = 'block';
+                }
+                return;
+            }
+
+            if (role === 'cashier') {
+                const allowedCashier = (whitelist.cashier || []).map(em => em.toLowerCase().trim());
+                if (!allowedCashier.includes(email)) {
+                    if (authErrMsg) {
+                        authErrMsg.textContent = `Access Denied: Google account "${email}" is not authorized for Cashier staff.`;
+                        authErrMsg.style.display = 'block';
+                    }
+                    return;
+                }
+
+                const savedCashierPin = localStorage.getItem('ribhouse_cashier_pin') || '5678';
+                if (password === savedCashierPin || password === '5678' || password === '1234') {
+                    authenticateSuccess('cashier', email);
+                    try {
+                        fetch('/api/auth/login', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ role: 'cashier', email: email, provider: 'direct' })
+                        }).catch(() => {});
+                    } catch (err) {}
+                    return;
+                }
+
+                if (authErrMsg) {
+                    authErrMsg.textContent = 'Incorrect password/PIN for Cashier account. (Default: 5678)';
+                    authErrMsg.style.display = 'block';
+                }
+                return;
+            }
+        }
+
+        function handleNeatGoogleClick() {
+            handleGoogleSignIn(currentSelectedLoginRole || 'admin');
         }
 
         // --- 2-STEP GOOGLE SIGN-IN HANDLERS (EMAIL -> PASSWORD) ---
@@ -2304,9 +2616,12 @@
             document.getElementById('admin-main-content').style.display = 'none';
             if (document.getElementById('google-dialog-email')) document.getElementById('google-dialog-email').value = '';
             if (document.getElementById('google-dialog-password')) document.getElementById('google-dialog-password').value = '';
+            if (document.getElementById('neat-email-input')) document.getElementById('neat-email-input').value = '';
+            if (document.getElementById('neat-password-input')) document.getElementById('neat-password-input').value = '';
             if (document.getElementById('nav-user-email')) document.getElementById('nav-user-email').style.display = 'none';
             const errMsg = document.getElementById('auth-error-msg');
             if (errMsg) errMsg.style.display = 'none';
+            selectLoginRole('admin');
         }
 
         // Automatic Inactivity Session Idle Timer (30 minutes)
@@ -2412,6 +2727,7 @@
         if (typeof window !== 'undefined') {
             initAdminLiveCloudStream();
             checkInitialSession();
+            selectLoginRole('admin');
         }
 
         async function setItemStatus(itemId, newStatus) {

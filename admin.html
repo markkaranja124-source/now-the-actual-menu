@@ -1702,6 +1702,35 @@
                 </svg>
             </div>
 
+            <!-- STEP 0: GOOGLE CLOUD OAUTH CLIENT ID SETUP (Enables Google Account Chooser Popup) -->
+            <div id="google-step-clientid" style="display: none;">
+                <h3 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.15rem; font-weight: 700; color: #1E293B; margin-bottom: 4px;">Connect Google Account Chooser</h3>
+                <p style="font-size: 0.8rem; color: #64748B; margin-bottom: 16px; line-height: 1.4;">
+                    To show the official Google popup with all your logged-in Google accounts, enter your free Google Cloud OAuth Client ID:
+                </p>
+                
+                <form id="google-clientid-form" onsubmit="handleQuickClientIdSubmit(event)">
+                    <input type="text" id="google-quick-client-id" class="auth-input" placeholder="e.g. 123456789-xxxx.apps.googleusercontent.com" required autocomplete="off" style="margin-bottom: 12px; font-family: monospace; font-size: 0.82rem;">
+                    <button type="submit" class="btn-auth-submit" style="width: 100%; margin-bottom: 12px;">SAVE & OPEN GOOGLE ACCOUNT CHOOSER</button>
+                </form>
+
+                <div style="text-align: left; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+                    <strong style="font-size: 0.78rem; color: #334155; display: block; margin-bottom: 6px;">How to get your free Google Client ID:</strong>
+                    <ol style="margin: 0; padding-left: 16px; font-size: 0.72rem; color: #64748B; line-height: 1.45;">
+                        <li>Open <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener" style="color: #2563EB; font-weight: 600;">Google Cloud Credentials</a></li>
+                        <li>Click <strong>Create Credentials</strong> &gt; <strong>OAuth client ID</strong> &gt; <strong>Web application</strong></li>
+                        <li>Add Authorized JavaScript Origin: <code style="background: #E2E8F0; padding: 2px 4px; border-radius: 3px; font-size: 0.7rem;">https://ribhouserestaurant.com</code></li>
+                        <li>Copy the Client ID and paste it above!</li>
+                    </ol>
+                </div>
+
+                <div>
+                    <button type="button" onclick="switchToManualGoogleVerify()" style="background: none; border: none; font-size: 0.76rem; color: #64748B; cursor: pointer; text-decoration: underline;">
+                        Or continue with manual email &amp; password
+                    </button>
+                </div>
+            </div>
+
             <!-- STEP 1: EMAIL VERIFICATION -->
             <div id="google-step-email">
                 <h3 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.15rem; font-weight: 700; color: #1E293B; margin-bottom: 4px;">Sign in with Google</h3>
@@ -2257,81 +2286,123 @@
             const errMsg = document.getElementById('auth-error-msg');
             if (errMsg) errMsg.style.display = 'none';
 
-            // Check if Google Identity Services GIS with Client ID is configured
-            const clientId = localStorage.getItem('ribhouse_google_client_id');
-            if (window.google && window.google.accounts && window.google.accounts.oauth2 && clientId) {
-                try {
-                    const tokenClient = window.google.accounts.oauth2.initTokenClient({
-                        client_id: clientId,
-                        scope: 'email profile openid',
-                        callback: async (tokenRes) => {
-                            if (tokenRes && tokenRes.access_token) {
-                                try {
-                                    const userInfoRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-                                        headers: { Authorization: `Bearer ${tokenRes.access_token}` }
-                                    });
-                                    const userData = await userInfoRes.json();
-                                    if (userData && userData.email) {
-                                        processGoogleAuthDirect(role, userData.email);
-                                        return;
+            let clientId = (localStorage.getItem('ribhouse_google_client_id') || '').trim();
+
+            if (clientId) {
+                // Official Google Identity Services GIS Token Client with forced account chooser
+                if (window.google && window.google.accounts && window.google.accounts.oauth2) {
+                    try {
+                        const tokenClient = window.google.accounts.oauth2.initTokenClient({
+                            client_id: clientId,
+                            scope: 'email profile openid',
+                            prompt: 'select_account',
+                            callback: async (tokenRes) => {
+                                if (tokenRes && tokenRes.error) {
+                                    if (errMsg) {
+                                        errMsg.textContent = `Google Sign-In Error: ${tokenRes.error_description || tokenRes.error}`;
+                                        errMsg.style.display = 'block';
                                     }
-                                } catch (fetchErr) {
-                                    console.error('Google userinfo fetch error:', fetchErr);
+                                    return;
+                                }
+                                if (tokenRes && tokenRes.access_token) {
+                                    try {
+                                        const userInfoRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                                            headers: { Authorization: `Bearer ${tokenRes.access_token}` }
+                                        });
+                                        const userData = await userInfoRes.json();
+                                        if (userData && userData.email) {
+                                            processGoogleAuthDirect(role, userData.email);
+                                            return;
+                                        }
+                                    } catch (fetchErr) {
+                                        console.error('Google userinfo fetch error:', fetchErr);
+                                    }
                                 }
                             }
-                        }
-                    });
-                    tokenClient.requestAccessToken();
-                    return;
-                } catch (oauthErr) {
-                    console.warn('OAuth popup init error, falling back to verification dialog:', oauthErr);
+                        });
+                        tokenClient.requestAccessToken({ prompt: 'select_account' });
+                        return;
+                    } catch (oauthErr) {
+                        console.warn('OAuth GIS popup error, attempting direct popup:', oauthErr);
+                    }
                 }
+
+                // Fallback popup if GIS is loading or delayed
+                const redirectUri = window.location.origin + window.location.pathname;
+                const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(clientId)}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=email%20profile%20openid&prompt=select_account`;
+                localStorage.setItem('pending_oauth_role', role);
+                const popup = window.open(authUrl, 'GoogleAccountChooser', 'width=520,height=640,menubar=no,toolbar=no');
+                if (!popup || popup.closed || typeof popup.closed === 'undefined') {
+                    window.location.href = authUrl;
+                }
+                return;
             }
 
-            // Interactive Google 2-Step Dialog (Email -> Password)
+            // Client ID is not configured yet: Open the Google Setup step in the dialog
+            openGoogleClientIdSetup(role);
+        }
+
+        function openGoogleClientIdSetup(role) {
+            pendingGoogleRole = role;
             const dialog = document.getElementById('google-dialog-modal');
+            const stepClientId = document.getElementById('google-step-clientid');
             const stepEmail = document.getElementById('google-step-email');
             const stepPass = document.getElementById('google-step-password');
-            const roleText = document.getElementById('google-dialog-role-text');
-            const emailInput = document.getElementById('google-dialog-email');
-            const passInput = document.getElementById('google-dialog-password');
             const dialogErr = document.getElementById('google-dialog-error');
-            const showPassToggle = document.getElementById('google-toggle-show-pass');
+            const quickInput = document.getElementById('google-quick-client-id');
 
             if (dialogErr) dialogErr.style.display = 'none';
-            if (stepEmail) stepEmail.style.display = 'block';
+            if (stepClientId) stepClientId.style.display = 'block';
+            if (stepEmail) stepEmail.style.display = 'none';
             if (stepPass) stepPass.style.display = 'none';
-            if (passInput) {
-                passInput.value = '';
-                passInput.type = 'password';
-            }
-            if (showPassToggle) showPassToggle.checked = false;
 
-            const roleName = role === 'admin' ? 'Master Admin' : (role === 'kitchen' ? 'Kitchen Crew' : 'Cashier Staff');
-            if (roleText) {
-                roleText.textContent = `to continue to Rib House ${roleName} Portal`;
-            }
-
-            // Prefill email if configured
-            const whitelist = getGmailWhitelist();
-            if (emailInput) {
-                if (role === 'admin' && whitelist.admin) {
-                    emailInput.value = whitelist.admin;
-                } else {
-                    emailInput.value = '';
-                }
+            if (quickInput) {
+                quickInput.value = localStorage.getItem('ribhouse_google_client_id') || '';
             }
 
             if (dialog) {
                 dialog.style.display = 'flex';
-                setTimeout(() => emailInput && emailInput.focus(), 60);
+                setTimeout(() => quickInput && quickInput.focus(), 60);
             }
+        }
+
+        function handleQuickClientIdSubmit(e) {
+            e.preventDefault();
+            const quickInput = document.getElementById('google-quick-client-id');
+            const val = (quickInput?.value || '').trim();
+            if (!val) return;
+
+            localStorage.setItem('ribhouse_google_client_id', val);
+            const settingsInput = document.getElementById('whitelist-google-client-id');
+            if (settingsInput) settingsInput.value = val;
+
+            closeGoogleAuthDialog();
+            handleGoogleSignIn(pendingGoogleRole || 'admin');
+        }
+
+        function switchToManualGoogleVerify() {
+            const stepClientId = document.getElementById('google-step-clientid');
+            const stepEmail = document.getElementById('google-step-email');
+            const stepPass = document.getElementById('google-step-password');
+            const emailInput = document.getElementById('google-dialog-email');
+            const roleText = document.getElementById('google-dialog-role-text');
+            const roleName = (pendingGoogleRole === 'admin') ? 'Master Admin' : (pendingGoogleRole === 'kitchen' ? 'Kitchen Crew' : 'Cashier Staff');
+            if (roleText) {
+                roleText.textContent = `to continue to Rib House ${roleName} Portal`;
+            }
+
+            if (stepClientId) stepClientId.style.display = 'none';
+            if (stepPass) stepPass.style.display = 'none';
+            if (stepEmail) stepEmail.style.display = 'block';
+            setTimeout(() => emailInput && emailInput.focus(), 60);
         }
 
         function closeGoogleAuthDialog() {
             const dialog = document.getElementById('google-dialog-modal');
             const dialogErr = document.getElementById('google-dialog-error');
+            const stepClientId = document.getElementById('google-step-clientid');
             if (dialog) dialog.style.display = 'none';
+            if (stepClientId) stepClientId.style.display = 'none';
             if (dialogErr) {
                 dialogErr.style.display = 'none';
                 dialogErr.innerHTML = '';
@@ -2554,12 +2625,19 @@
                 const allowedAdmin = (whitelist.admin || '').toLowerCase().trim();
                 if (!allowedAdmin || cleanEmail !== allowedAdmin) {
                     if (mainErrMsg) {
-                        mainErrMsg.textContent = `Access Denied: Google account "${cleanEmail}" is not authorized for Master Admin.`;
+                        mainErrMsg.textContent = `Access Denied: Google account "${cleanEmail}" is not authorized for Master Admin. Only your designated Admin Gmail (${allowedAdmin || 'set in Settings'}) is permitted.`;
                         mainErrMsg.style.display = 'block';
                     }
                     return;
                 }
                 authenticateSuccess('admin', cleanEmail);
+                try {
+                    fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ role: 'admin', email: cleanEmail, provider: 'google' })
+                    }).catch(() => {});
+                } catch (err) {}
                 return;
             }
 
@@ -2567,12 +2645,19 @@
                 const allowedKitchen = (whitelist.kitchen || []).map(em => em.toLowerCase().trim());
                 if (!allowedKitchen.includes(cleanEmail)) {
                     if (mainErrMsg) {
-                        mainErrMsg.textContent = `Access Denied: Google account "${cleanEmail}" is not authorized for Kitchen Crew.`;
+                        mainErrMsg.textContent = `Access Denied: Google account "${cleanEmail}" is not authorized for Kitchen Crew. Only approved Kitchen Gmails are permitted.`;
                         mainErrMsg.style.display = 'block';
                     }
                     return;
                 }
                 authenticateSuccess('kitchen', cleanEmail);
+                try {
+                    fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ role: 'kitchen', email: cleanEmail, provider: 'google' })
+                    }).catch(() => {});
+                } catch (err) {}
                 return;
             }
 
@@ -2580,15 +2665,62 @@
                 const allowedCashier = (whitelist.cashier || []).map(em => em.toLowerCase().trim());
                 if (!allowedCashier.includes(cleanEmail)) {
                     if (mainErrMsg) {
-                        mainErrMsg.textContent = `Access Denied: Google account "${cleanEmail}" is not authorized for Cashier.`;
+                        mainErrMsg.textContent = `Access Denied: Google account "${cleanEmail}" is not authorized for Cashier. Only approved Cashier Gmails are permitted.`;
                         mainErrMsg.style.display = 'block';
                     }
                     return;
                 }
                 authenticateSuccess('cashier', cleanEmail);
+                try {
+                    fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ role: 'cashier', email: cleanEmail, provider: 'google' })
+                    }).catch(() => {});
+                } catch (err) {}
                 return;
             }
         }
+
+        // Window hash / popup message listener for Google OAuth callback
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.location.hash && window.location.hash.includes('access_token=')) {
+                const params = new URLSearchParams(window.location.hash.substring(1));
+                const accessToken = params.get('access_token');
+                if (accessToken) {
+                    if (window.opener && !window.opener.closed) {
+                        try {
+                            window.opener.postMessage({ type: 'GOOGLE_OAUTH_TOKEN', token: accessToken }, window.location.origin);
+                            window.close();
+                            return;
+                        } catch (e) {}
+                    }
+                    history.replaceState(null, null, window.location.pathname + window.location.search);
+                    fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                        headers: { Authorization: `Bearer ${accessToken}` }
+                    }).then(r => r.json()).then(userData => {
+                        if (userData && userData.email) {
+                            const pendingRole = localStorage.getItem('pending_oauth_role') || 'admin';
+                            processGoogleAuthDirect(pendingRole, userData.email);
+                        }
+                    }).catch(console.error);
+                }
+            }
+        });
+
+        window.addEventListener('message', (event) => {
+            if (event.origin !== window.location.origin) return;
+            if (event.data && event.data.type === 'GOOGLE_OAUTH_TOKEN' && event.data.token) {
+                fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                    headers: { Authorization: `Bearer ${event.data.token}` }
+                }).then(r => r.json()).then(userData => {
+                    if (userData && userData.email) {
+                        const pendingRole = localStorage.getItem('pending_oauth_role') || pendingGoogleRole || 'admin';
+                        processGoogleAuthDirect(pendingRole, userData.email);
+                    }
+                }).catch(console.error);
+            }
+        });
 
         // Google-Only Role Authentication Handlers
         async function handleKitchenAuth(e) {

@@ -23,6 +23,9 @@
     <!-- html2pdf.js for Executive PDF Reports Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
+    <!-- Google Identity Services (Sign In with Google) -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
     <style>
         :root {
             --color-orange: #E67E22;
@@ -849,6 +852,99 @@
             text-align: center;
         }
 
+        .btn-google-auth {
+            width: 100%;
+            background: #FFFFFF;
+            border: 1.5px solid #CBD5E1;
+            color: #1E293B;
+            padding: 12px 16px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .btn-google-auth:hover {
+            background: #F8FAFC;
+            border-color: #94A3B8;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+            transform: translateY(-1px);
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 14px 0 16px 0;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .auth-divider span {
+            padding: 0 10px;
+            font-size: 0.70rem;
+            font-weight: 800;
+            color: #94A3B8;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+        }
+
+        /* Google Interactive Auth Modal */
+        .google-dialog-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 1100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .google-dialog-box {
+            background: #FFFFFF;
+            border: 1px solid #CBD5E1;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            max-width: 420px;
+            width: 100%;
+            padding: 30px 24px 24px 24px;
+            text-align: center;
+            position: relative;
+            animation: fadeInDialog 0.2s ease-out;
+        }
+
+        @keyframes fadeInDialog {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .google-dialog-close {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            color: #94A3B8;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .google-dialog-close:hover {
+            color: #1E293B;
+        }
+
         /* ------------------------------------------------------------- */
         /* DAILY SUMMARY REPORT MODAL                                    */
         /* ------------------------------------------------------------- */
@@ -1274,13 +1370,25 @@
                     </form>
                 </div>
 
-                <!-- 4. Authorized Staff Gmail Accounts Whitelist Form (Master Admin Only) -->
+                <!-- 4. Authorized Staff & Master Admin Google Accounts Whitelist Form (Master Admin Only) -->
                 <div class="settings-box" style="grid-column: 1 / -1;">
-                    <h3 class="settings-heading">Authorized Staff Gmail Whitelist</h3>
-                    <p class="settings-sub">Only staff authenticated with these exact 5 approved Gmail addresses will be permitted to access the Kitchen and Cashier portals.</p>
+                    <h3 class="settings-heading">Authorized Staff & Master Admin Google Whitelist</h3>
+                    <p class="settings-sub">Configure the approved Google accounts for Master Admin (1), Kitchen Crew (2), and Cashier Staff (3). "Continue with Google" strictly verifies and permits only these exact accounts for their respective roles.</p>
 
                     <form id="gmail-whitelist-form" onsubmit="handleSaveGmailWhitelist(event)">
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                            <!-- Master Admin Account (1 Slot) -->
+                            <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; padding: 18px;">
+                                <h4 style="font-size: 0.82rem; font-weight: 800; color: #3B82F6; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.5px;">
+                                    Master Admin Gmail (1 Account)
+                                </h4>
+                                <div class="form-group" style="margin-bottom: 6px;">
+                                    <label class="form-label">Owner / Admin Gmail</label>
+                                    <input type="email" id="whitelist-admin-email" class="auth-input" placeholder="e.g. yourname@gmail.com" required autocomplete="off">
+                                </div>
+                                <span style="font-size: 0.72rem; color: #64748B; line-height: 1.3; display: block;">Only this exact Gmail is allowed to access Master Admin via "Continue with Google".</span>
+                            </div>
+
                             <!-- Kitchen Accounts (2 Slots) -->
                             <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; padding: 18px;">
                                 <h4 style="font-size: 0.82rem; font-weight: 800; color: #10B981; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.5px;">
@@ -1316,6 +1424,12 @@
                             </div>
                         </div>
 
+                        <div class="form-group" style="max-width: 540px; margin-bottom: 18px;">
+                            <label class="form-label">Google OAuth Client ID (Optional for 1-Click Popup)</label>
+                            <input type="text" id="whitelist-google-client-id" class="auth-input" placeholder="e.g. xxxxx.apps.googleusercontent.com" autocomplete="off" style="text-align: left; font-family: monospace; font-size: 0.82rem;">
+                            <span style="font-size: 0.72rem; color: #64748B;">If left blank, an instant Google account verification prompt is used.</span>
+                        </div>
+
                         <button type="submit" class="btn-auth-submit" style="max-width: 320px;">Save Authorized Gmail Whitelist</button>
                         <div class="auth-error-msg" id="whitelist-error-msg"></div>
                         <div class="auth-success-msg" id="whitelist-success-msg"></div>
@@ -1346,28 +1460,81 @@
                 </button>
             </div>
 
-            <!-- Kitchen Staff Login Form (Gmail + PIN) -->
+            <!-- Kitchen Staff Login Form (Google or Gmail + PIN) -->
             <form id="kitchen-login-form" onsubmit="handleKitchenAuth(event)" style="display: none;">
-                <input type="email" id="kitchen-email-input" class="auth-input highlight-orange" placeholder="Staff Gmail Address" required autocomplete="email">
-                <input type="password" id="kitchen-pin-input" class="auth-input highlight-orange" placeholder="Kitchen Staff PIN" maxlength="8" required autocomplete="current-password">
+                <button type="button" class="btn-google-auth" id="btn-google-kitchen" onclick="handleGoogleSignIn('kitchen')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+                        <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+                        <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                        <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                    </svg>
+                    Continue with Google
+                </button>
+                <div class="auth-divider"><span>OR SIGN IN WITH PIN</span></div>
+                <input type="email" id="kitchen-email-input" class="auth-input highlight-orange" placeholder="Staff Gmail Address" autocomplete="email">
+                <input type="password" id="kitchen-pin-input" class="auth-input highlight-orange" placeholder="Kitchen Staff PIN" maxlength="8" autocomplete="current-password">
                 <button type="submit" class="btn-auth-submit" id="btn-submit-kitchen">ENTER KITCHEN PORTAL</button>
             </form>
 
-            <!-- Cashier Login Form (Gmail + PIN) -->
+            <!-- Cashier Login Form (Google or Gmail + PIN) -->
             <form id="cashier-login-form" onsubmit="handleCashierAuth(event)" style="display: none;">
-                <input type="email" id="cashier-email-input" class="auth-input highlight-orange" placeholder="Staff Gmail Address" required autocomplete="email">
-                <input type="password" id="cashier-pin-input" class="auth-input highlight-orange" placeholder="Cashier PIN" maxlength="8" required autocomplete="current-password">
+                <button type="button" class="btn-google-auth" id="btn-google-cashier" onclick="handleGoogleSignIn('cashier')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+                        <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+                        <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                        <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                    </svg>
+                    Continue with Google
+                </button>
+                <div class="auth-divider"><span>OR SIGN IN WITH PIN</span></div>
+                <input type="email" id="cashier-email-input" class="auth-input highlight-orange" placeholder="Staff Gmail Address" autocomplete="email">
+                <input type="password" id="cashier-pin-input" class="auth-input highlight-orange" placeholder="Cashier PIN" maxlength="8" autocomplete="current-password">
                 <button type="submit" class="btn-auth-submit" id="btn-submit-cashier">ENTER CASHIER PORTAL</button>
             </form>
 
-            <!-- Master Admin Login Form (Password + 2FA Passkey) -->
+            <!-- Master Admin Login Form (Google or Password) -->
             <form id="admin-login-form" onsubmit="handleAdminAuth(event)">
-                <input type="password" id="admin-password-input" class="auth-input highlight-orange" placeholder="Master Admin Password" required autocomplete="current-password">
+                <button type="button" class="btn-google-auth" id="btn-google-admin" onclick="handleGoogleSignIn('admin')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+                        <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+                        <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                        <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                    </svg>
+                    Continue with Google
+                </button>
+                <div class="auth-divider"><span>OR SIGN IN WITH MASTER PASSWORD</span></div>
+                <input type="password" id="admin-password-input" class="auth-input highlight-orange" placeholder="Master Admin Password" autocomplete="current-password">
                 <input type="password" id="admin-2fa-input" class="auth-input passkey-field" placeholder="2FA Security Passkey (Optional)" autocomplete="off">
                 <button type="submit" class="btn-auth-submit" id="btn-submit-admin">AUTHENTICATE MASTER ADMIN</button>
             </form>
 
             <div class="auth-error-msg" id="auth-error-msg">Invalid credentials.</div>
+        </div>
+    </div>
+
+    <!-- GOOGLE ACCOUNT SIGN-IN VERIFICATION DIALOG -->
+    <div class="google-dialog-overlay" id="google-dialog-modal">
+        <div class="google-dialog-box">
+            <button type="button" class="google-dialog-close" onclick="closeGoogleAuthDialog()" aria-label="Close dialog">&times;</button>
+            <div style="margin-bottom: 14px;">
+                <svg width="36" height="36" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+                    <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+                    <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                    <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                </svg>
+            </div>
+            <h3 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.15rem; font-weight: 700; color: #1E293B; margin-bottom: 4px;">Sign in with Google</h3>
+            <p id="google-dialog-role-text" style="font-size: 0.8rem; color: #64748B; margin-bottom: 18px;">Verify your authorized Google Account to continue</p>
+            
+            <form id="google-email-verify-form" onsubmit="submitGoogleDialogAuth(event)">
+                <input type="email" id="google-dialog-email" class="auth-input highlight-orange" placeholder="your-email@gmail.com" required autocomplete="email" style="text-align: center; margin-bottom: 12px;">
+                <button type="submit" class="btn-auth-submit" id="btn-submit-google-verify">CONTINUE WITH GOOGLE ACCOUNT</button>
+            </form>
+            <div class="auth-error-msg" id="google-dialog-error" style="margin-top: 12px;"></div>
         </div>
     </div>
 
@@ -1541,8 +1708,9 @@
         let idleTimer = null;
         const IDLE_TIMEOUT_MS = 30 * 60 * 1000; // 30 Minutes Inactivity
 
-        // 5 Authorized Staff Gmail Accounts (2 Kitchen, 3 Cashier)
+        // 6 Authorized Staff & Master Admin Google Accounts (1 Admin, 2 Kitchen, 3 Cashier)
         const DEFAULT_GMAIL_WHITELIST = {
+            admin: "admin@ribhouserestaurant.com",
             kitchen: [
                 "ribhousekitchen1@gmail.com",
                 "ribhousekitchen2@gmail.com"
@@ -1560,7 +1728,11 @@
                 if (stored) {
                     const parsed = JSON.parse(stored);
                     if (parsed && Array.isArray(parsed.kitchen) && Array.isArray(parsed.cashier)) {
-                        return parsed;
+                        return {
+                            admin: parsed.admin || DEFAULT_GMAIL_WHITELIST.admin,
+                            kitchen: parsed.kitchen,
+                            cashier: parsed.cashier
+                        };
                     }
                 }
             } catch(e) {}
@@ -1573,40 +1745,61 @@
 
         function populateWhitelistSettingsInputs() {
             const wl = getGmailWhitelist();
+            const adm = document.getElementById('whitelist-admin-email');
             const k1 = document.getElementById('whitelist-kitchen-1');
             const k2 = document.getElementById('whitelist-kitchen-2');
             const c1 = document.getElementById('whitelist-cashier-1');
             const c2 = document.getElementById('whitelist-cashier-2');
             const c3 = document.getElementById('whitelist-cashier-3');
+            const cid = document.getElementById('whitelist-google-client-id');
 
+            if (adm) adm.value = wl.admin || '';
             if (k1) k1.value = wl.kitchen[0] || '';
             if (k2) k2.value = wl.kitchen[1] || '';
             if (c1) c1.value = wl.cashier[0] || '';
             if (c2) c2.value = wl.cashier[1] || '';
             if (c3) c3.value = wl.cashier[2] || '';
+            if (cid) cid.value = localStorage.getItem('ribhouse_google_client_id') || '';
         }
 
         function handleSaveGmailWhitelist(e) {
             e.preventDefault();
+            const adminEmail = (document.getElementById('whitelist-admin-email')?.value || '').toLowerCase().trim();
             const k1 = (document.getElementById('whitelist-kitchen-1')?.value || '').toLowerCase().trim();
             const k2 = (document.getElementById('whitelist-kitchen-2')?.value || '').toLowerCase().trim();
             const c1 = (document.getElementById('whitelist-cashier-1')?.value || '').toLowerCase().trim();
             const c2 = (document.getElementById('whitelist-cashier-2')?.value || '').toLowerCase().trim();
             const c3 = (document.getElementById('whitelist-cashier-3')?.value || '').toLowerCase().trim();
+            const clientId = (document.getElementById('whitelist-google-client-id')?.value || '').trim();
 
             const errMsg = document.getElementById('whitelist-error-msg');
             const successMsg = document.getElementById('whitelist-success-msg');
             if (errMsg) errMsg.style.display = 'none';
             if (successMsg) successMsg.style.display = 'none';
 
+            if (!adminEmail) {
+                if (errMsg) {
+                    errMsg.textContent = 'Please enter your Master Admin Gmail address.';
+                    errMsg.style.display = 'block';
+                }
+                return;
+            }
+
             const newWhitelist = {
+                admin: adminEmail,
                 kitchen: [k1, k2].filter(Boolean),
                 cashier: [c1, c2, c3].filter(Boolean)
             };
 
             saveGmailWhitelist(newWhitelist);
+            if (clientId) {
+                localStorage.setItem('ribhouse_google_client_id', clientId);
+            } else {
+                localStorage.removeItem('ribhouse_google_client_id');
+            }
+
             if (successMsg) {
-                successMsg.textContent = '✓ Authorized Staff Gmail Whitelist saved and active immediately!';
+                successMsg.textContent = '✓ Authorized Staff & Master Admin Google Whitelist saved and active immediately!';
                 successMsg.style.display = 'block';
             }
         }
@@ -1637,6 +1830,160 @@
             } else {
                 if (btnAdmin) btnAdmin.classList.add('active');
                 if (formAdmin) formAdmin.style.display = 'block';
+            }
+        }
+
+        // --- GOOGLE SIGN-IN HANDLERS ---
+        let pendingGoogleRole = null;
+
+        function handleGoogleSignIn(role) {
+            pendingGoogleRole = role;
+            const errMsg = document.getElementById('auth-error-msg');
+            if (errMsg) errMsg.style.display = 'none';
+
+            // Check if Google Identity Services GIS with Client ID is configured
+            const clientId = localStorage.getItem('ribhouse_google_client_id');
+            if (window.google && window.google.accounts && window.google.accounts.oauth2 && clientId) {
+                try {
+                    const tokenClient = window.google.accounts.oauth2.initTokenClient({
+                        client_id: clientId,
+                        scope: 'email profile openid',
+                        callback: async (tokenRes) => {
+                            if (tokenRes && tokenRes.access_token) {
+                                try {
+                                    const userInfoRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                                        headers: { Authorization: `Bearer ${tokenRes.access_token}` }
+                                    });
+                                    const userData = await userInfoRes.json();
+                                    if (userData && userData.email) {
+                                        processGoogleAuthEmail(role, userData.email, false);
+                                        return;
+                                    }
+                                } catch (fetchErr) {
+                                    console.error('Google userinfo fetch error:', fetchErr);
+                                }
+                            }
+                        }
+                    });
+                    tokenClient.requestAccessToken();
+                    return;
+                } catch (oauthErr) {
+                    console.warn('OAuth popup init error, falling back to verification dialog:', oauthErr);
+                }
+            }
+
+            // Interactive Google Dialog prompt
+            const dialog = document.getElementById('google-dialog-modal');
+            const roleText = document.getElementById('google-dialog-role-text');
+            const emailInput = document.getElementById('google-dialog-email');
+            const dialogErr = document.getElementById('google-dialog-error');
+            if (dialogErr) dialogErr.style.display = 'none';
+
+            const roleName = role === 'admin' ? 'Master Admin' : (role === 'kitchen' ? 'Kitchen Crew' : 'Cashier Staff');
+            if (roleText) {
+                roleText.textContent = `Sign in with your authorized ${roleName} Google Account`;
+            }
+            if (emailInput) {
+                emailInput.value = '';
+            }
+            if (dialog) {
+                dialog.style.display = 'flex';
+                setTimeout(() => emailInput && emailInput.focus(), 60);
+            }
+        }
+
+        function closeGoogleAuthDialog() {
+            const dialog = document.getElementById('google-dialog-modal');
+            if (dialog) dialog.style.display = 'none';
+            pendingGoogleRole = null;
+        }
+
+        function submitGoogleDialogAuth(e) {
+            e.preventDefault();
+            const emailInput = document.getElementById('google-dialog-email');
+            const email = emailInput ? emailInput.value.trim() : '';
+            if (!email || !pendingGoogleRole) return;
+
+            processGoogleAuthEmail(pendingGoogleRole, email, true);
+        }
+
+        function processGoogleAuthEmail(role, email, fromDialog = false) {
+            const cleanEmail = (email || '').toLowerCase().trim();
+            const mainErrMsg = document.getElementById('auth-error-msg');
+            const dialogErrMsg = document.getElementById('google-dialog-error');
+            
+            function showError(msg) {
+                if (fromDialog && dialogErrMsg) {
+                    dialogErrMsg.textContent = msg;
+                    dialogErrMsg.style.display = 'block';
+                } else if (mainErrMsg) {
+                    mainErrMsg.textContent = msg;
+                    mainErrMsg.style.display = 'block';
+                }
+            }
+
+            if (!cleanEmail) {
+                showError('Please enter a valid Gmail address.');
+                return;
+            }
+
+            const whitelist = getGmailWhitelist();
+
+            // 1. MASTER ADMIN ROLE VERIFICATION (Only owner's configured admin Gmail)
+            if (role === 'admin') {
+                const allowedAdmin = (whitelist.admin || '').toLowerCase().trim();
+                if (!allowedAdmin || cleanEmail !== allowedAdmin) {
+                    showError(`Access Denied: Google account "${cleanEmail}" is not authorized for Master Admin. Only your designated Admin Gmail (${allowedAdmin || 'set in Settings'}) is permitted.`);
+                    return;
+                }
+                closeGoogleAuthDialog();
+                authenticateSuccess('admin', cleanEmail);
+                try {
+                    fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ role: 'admin', email: cleanEmail, provider: 'google' })
+                    }).catch(() => {});
+                } catch (err) {}
+                return;
+            }
+
+            // 2. KITCHEN CREW ROLE VERIFICATION (Only the 2 authorized Kitchen Gmails)
+            if (role === 'kitchen') {
+                const allowedKitchen = (whitelist.kitchen || []).map(em => em.toLowerCase().trim());
+                if (!allowedKitchen.includes(cleanEmail)) {
+                    showError(`Access Denied: Google account "${cleanEmail}" is not authorized for Kitchen Crew. Only the 2 approved Kitchen Gmails are permitted.`);
+                    return;
+                }
+                closeGoogleAuthDialog();
+                authenticateSuccess('kitchen', cleanEmail);
+                try {
+                    fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ role: 'kitchen', email: cleanEmail, provider: 'google' })
+                    }).catch(() => {});
+                } catch (err) {}
+                return;
+            }
+
+            // 3. CASHIER ROLE VERIFICATION (Only the 3 authorized Cashier Gmails)
+            if (role === 'cashier') {
+                const allowedCashier = (whitelist.cashier || []).map(em => em.toLowerCase().trim());
+                if (!allowedCashier.includes(cleanEmail)) {
+                    showError(`Access Denied: Google account "${cleanEmail}" is not authorized for Cashier portal. Only the 3 approved Cashier Gmails are permitted.`);
+                    return;
+                }
+                closeGoogleAuthDialog();
+                authenticateSuccess('cashier', cleanEmail);
+                try {
+                    fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ role: 'cashier', email: cleanEmail, provider: 'google' })
+                    }).catch(() => {});
+                } catch (err) {}
+                return;
             }
         }
 
@@ -1730,7 +2077,8 @@
             if (errMsg) errMsg.style.display = 'none';
 
             if (password === 'RibHouse@2026!Master' || password === '1234' || password === 'admin') {
-                authenticateSuccess('admin', 'admin@ribhouse.co.ke');
+                const whitelist = getGmailWhitelist();
+                authenticateSuccess('admin', whitelist.admin || 'admin@ribhouse.co.ke');
                 try {
                     fetch('/api/auth/login', {
                         method: 'POST',
@@ -1762,7 +2110,7 @@
             const inventoryTabBtn = document.getElementById('tab-btn-inventory');
 
             if (emailBadge) {
-                if (userEmail && role !== 'admin') {
+                if (userEmail) {
                     emailBadge.textContent = userEmail;
                     emailBadge.style.display = 'inline-block';
                 } else {

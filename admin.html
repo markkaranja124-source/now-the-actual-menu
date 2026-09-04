@@ -1332,105 +1332,14 @@
             </div>
         </section>
 
-        <!-- TAB 4: ADMIN SETTINGS & REAL-TIME PASSWORD VALIDATOR (MASTER ADMIN ONLY) -->
+        <!-- TAB 4: ADMIN SETTINGS & GOOGLE WHITELIST MANAGEMENT (MASTER ADMIN ONLY) -->
         <section id="section-settings" style="display: none;">
-            <div class="settings-container">
+            <div class="settings-container" style="display: block; max-width: 1080px; margin: 0 auto;">
                 
-                <!-- 1. Master Admin Password Upgrade Form -->
+                <!-- Authorized Staff & Master Admin Google Accounts Whitelist Form (Master Admin Only) -->
                 <div class="settings-box">
-                    <h3 class="settings-heading">Administrator Password</h3>
-                    <p class="settings-sub">Enforce strict 12+ character complexity standards with salted Bcrypt hashing.</p>
-
-                    <form id="admin-password-change-form" onsubmit="handleChangeAdminPassword(event)">
-                        <div class="form-group">
-                            <label class="form-label">Current Master Password</label>
-                            <input type="password" id="current-admin-pass" class="auth-input" placeholder="Enter current master password" required autocomplete="current-password">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">New Master Password</label>
-                            <input type="password" id="new-admin-pass" class="auth-input" placeholder="Create strong 12+ character password" required autocomplete="new-password" oninput="handlePasswordComplexityLiveCheck(this.value)">
-                            
-                            <!-- Real-time Interactive Password Requirements Checklist -->
-                            <div class="password-requirements-box">
-                                <div class="pwd-req-title">Password Security Requirements</div>
-                                <ul class="pwd-req-list">
-                                    <li class="pwd-req-item" id="req-length">
-                                        <span class="req-icon">○</span> At least 12 characters long
-                                    </li>
-                                    <li class="pwd-req-item" id="req-upper">
-                                        <span class="req-icon">○</span> At least one uppercase letter (A-Z)
-                                    </li>
-                                    <li class="pwd-req-item" id="req-lower">
-                                        <span class="req-icon">○</span> At least one lowercase letter (a-z)
-                                    </li>
-                                    <li class="pwd-req-item" id="req-num">
-                                        <span class="req-icon">○</span> At least one number (0-9)
-                                    </li>
-                                    <li class="pwd-req-item" id="req-spec">
-                                        <span class="req-icon">○</span> At least one special character (@, #, $, %, !, &, etc.)
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Confirm New Password</label>
-                            <input type="password" id="confirm-admin-pass" class="auth-input" placeholder="Re-type new password" required autocomplete="new-password" oninput="handlePasswordMatchLiveCheck()">
-                            <div class="pwd-match-indicator" id="pwd-match-indicator"></div>
-                        </div>
-
-                        <button type="submit" class="btn-auth-submit" id="btn-save-password">Update Administrator Password</button>
-                        <div class="auth-error-msg" id="pwd-error-msg"></div>
-                        <div class="auth-success-msg" id="pwd-success-msg"></div>
-                    </form>
-                </div>
-
-                <!-- 2. Kitchen Staff Quick PIN Form -->
-                <div class="settings-box">
-                    <h3 class="settings-heading">Kitchen Staff PIN</h3>
-                    <p class="settings-sub">Set the 4 to 8 digit quick-access PIN for kitchen chefs and live order viewers.</p>
-
-                    <form id="kitchen-pin-change-form" onsubmit="handleChangeKitchenPin(event)">
-                        <div class="form-group">
-                            <label class="form-label">New Kitchen Staff PIN</label>
-                            <input type="password" id="set-kitchen-pin" class="auth-input" placeholder="Enter 4-8 digit PIN (e.g. 1234)" maxlength="8" required pattern="\d{4,8}" title="PIN must be between 4 and 8 digits">
-                        </div>
-
-                        <button type="submit" class="btn-auth-submit">Update Kitchen PIN</button>
-                        <div class="auth-error-msg" id="kpin-error-msg"></div>
-                        <div class="auth-success-msg" id="kpin-success-msg"></div>
-                    </form>
-
-                    <div style="margin-top: 32px; border-top: 1px solid #E2E8F0; padding-top: 18px;">
-                        <h4 style="font-size: 0.82rem; text-transform: uppercase; color: var(--text-dark); margin-bottom: 6px;">Session Security Policy</h4>
-                        <p style="font-size: 0.75rem; color: var(--text-muted);">
-                            Active sessions automatically expire after <strong>30 minutes of idle inactivity</strong>. Failed login attempts trigger a 15-minute temporary lockout after 5 consecutive failures.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 3. Cashier Staff Quick PIN Form -->
-                <div class="settings-box">
-                    <h3 class="settings-heading">Cashier Staff PIN</h3>
-                    <p class="settings-sub">Set the 4 to 8 digit quick-access PIN for cashiers managing payments & reconciliation.</p>
-
-                    <form id="cashier-pin-change-form" onsubmit="handleChangeCashierPin(event)">
-                        <div class="form-group">
-                            <label class="form-label">New Cashier Staff PIN</label>
-                            <input type="password" id="set-cashier-pin" class="auth-input" placeholder="Enter 4-8 digit PIN (e.g. 5678)" maxlength="8" required pattern="\d{4,8}" title="PIN must be between 4 and 8 digits">
-                        </div>
-
-                        <button type="submit" class="btn-auth-submit">Update Cashier PIN</button>
-                        <div class="auth-error-msg" id="cpin-error-msg"></div>
-                        <div class="auth-success-msg" id="cpin-success-msg"></div>
-                    </form>
-                </div>
-
-                <!-- 4. Authorized Staff & Master Admin Google Accounts Whitelist Form (Master Admin Only) -->
-                <div class="settings-box" style="grid-column: 1 / -1;">
                     <h3 class="settings-heading">Authorized Staff & Master Admin Google Whitelist</h3>
-                    <p class="settings-sub">Configure the approved Google accounts for Master Admin (1), Kitchen Crew (2), and Cashier Staff (3). "Continue with Google" strictly verifies and permits only these exact accounts for their respective roles.</p>
+                    <p class="settings-sub">Configure the approved Google accounts for Master Admin, Kitchen Crew, and Cashier Staff. "Continue with Google" strictly verifies and permits only these exact accounts for their respective roles.</p>
 
                     <form id="gmail-whitelist-form" onsubmit="handleSaveGmailWhitelist(event)">
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 20px;">
@@ -1495,6 +1404,13 @@
                         <div class="auth-error-msg" id="whitelist-error-msg"></div>
                         <div class="auth-success-msg" id="whitelist-success-msg"></div>
                     </form>
+
+                    <div style="margin-top: 28px; border-top: 1px solid #E2E8F0; padding-top: 18px;">
+                        <h4 style="font-size: 0.82rem; text-transform: uppercase; color: var(--text-dark); margin-bottom: 6px; font-weight: 800;">Session Security Policy</h4>
+                        <p style="font-size: 0.75rem; color: var(--text-muted); margin: 0; line-height: 1.5;">
+                            Active sessions automatically expire after <strong>30 minutes of idle inactivity</strong>. Only verified Google accounts configured in this whitelist are permitted to authenticate.
+                        </p>
+                    </div>
                 </div>
 
             </div>
@@ -3294,186 +3210,7 @@ Report automatically generated by Rib House System.`;
             if (overlay) overlay.classList.remove('active');
         }
 
-        // --- 7. REAL-TIME PASSWORD COMPLEXITY VALIDATOR & SETTINGS HANDLERS ---
-        function handlePasswordComplexityLiveCheck(pwd) {
-            const reqLength = document.getElementById('req-length');
-            const reqUpper = document.getElementById('req-upper');
-            const reqLower = document.getElementById('req-lower');
-            const reqNum = document.getElementById('req-num');
-            const reqSpec = document.getElementById('req-spec');
-
-            function toggleReq(el, isMet) {
-                if (!el) return;
-                const icon = el.querySelector('.req-icon');
-                if (isMet) {
-                    el.classList.add('met');
-                    if (icon) icon.textContent = '✓';
-                } else {
-                    el.classList.remove('met');
-                    if (icon) icon.textContent = '○';
-                }
-            }
-
-            toggleReq(reqLength, pwd && pwd.length >= 12);
-            toggleReq(reqUpper, /[A-Z]/.test(pwd));
-            toggleReq(reqLower, /[a-z]/.test(pwd));
-            toggleReq(reqNum, /[0-9]/.test(pwd));
-            toggleReq(reqSpec, /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]/.test(pwd));
-
-            handlePasswordMatchLiveCheck();
-        }
-
-        function handlePasswordMatchLiveCheck() {
-            const newPass = document.getElementById('new-admin-pass').value;
-            const confPass = document.getElementById('confirm-admin-pass').value;
-            const matchIndicator = document.getElementById('pwd-match-indicator');
-
-            if (!matchIndicator) return;
-
-            if (!confPass) {
-                matchIndicator.style.display = 'none';
-                return;
-            }
-
-            if (newPass === confPass) {
-                matchIndicator.textContent = '✓ Passwords match';
-                matchIndicator.className = 'pwd-match-indicator match';
-            } else {
-                matchIndicator.textContent = '✕ Passwords do not match';
-                matchIndicator.className = 'pwd-match-indicator mismatch';
-            }
-        }
-
-        async function handleChangeAdminPassword(e) {
-            e.preventDefault();
-            const currentPassword = document.getElementById('current-admin-pass').value;
-            const newPassword = document.getElementById('new-admin-pass').value;
-            const confirmPassword = document.getElementById('confirm-admin-pass').value;
-            const errMsg = document.getElementById('pwd-error-msg');
-            const successMsg = document.getElementById('pwd-success-msg');
-            const btn = document.getElementById('btn-save-password');
-
-            if (errMsg) errMsg.style.display = 'none';
-            if (successMsg) successMsg.style.display = 'none';
-            if (btn) { btn.disabled = true; btn.textContent = 'Updating...'; }
-
-            try {
-                const res = await fetch('/api/auth/change-password', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        currentPassword: currentPassword,
-                        newPassword: newPassword,
-                        confirmPassword: confirmPassword
-                    })
-                });
-
-                const data = await res.json();
-
-                if (res.ok && data.success) {
-                    if (successMsg) {
-                        successMsg.textContent = '✓ Administrator password updated and secured with Bcrypt!';
-                        successMsg.style.display = 'block';
-                    }
-                    document.getElementById('admin-password-change-form').reset();
-                    handlePasswordComplexityLiveCheck('');
-                } else {
-                    if (errMsg) {
-                        errMsg.textContent = data.message || 'Failed to update password.';
-                        errMsg.style.display = 'block';
-                    }
-                }
-            } catch (err) {
-                if (errMsg) {
-                    errMsg.textContent = 'Network error while updating password.';
-                    errMsg.style.display = 'block';
-                }
-            } finally {
-                if (btn) { btn.disabled = false; btn.textContent = 'Update Administrator Password'; }
-            }
-        }
-
-        async function handleChangeKitchenPin(e) {
-            e.preventDefault();
-            const newPin = document.getElementById('set-kitchen-pin').value.trim();
-            const errMsg = document.getElementById('kpin-error-msg');
-            const successMsg = document.getElementById('kpin-success-msg');
-
-            if (errMsg) errMsg.style.display = 'none';
-            if (successMsg) successMsg.style.display = 'none';
-
-            try {
-                const res = await fetch('/api/auth/change-kitchen-pin', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ newPin: newPin })
-                });
-
-                const data = await res.json();
-
-                if (res.ok && data.success) {
-                    if (successMsg) {
-                        successMsg.textContent = '✓ Kitchen Staff PIN updated successfully!';
-                        successMsg.style.display = 'block';
-                    }
-                    document.getElementById('set-kitchen-pin').value = '';
-                } else {
-                    if (errMsg) {
-                        errMsg.textContent = data.message || 'Failed to update Kitchen PIN.';
-                        errMsg.style.display = 'block';
-                    }
-                }
-            } catch (err) {
-                localStorage.setItem('ribhouse_kitchen_pin', newPin);
-                if (successMsg) {
-                    successMsg.textContent = '✓ Kitchen Staff PIN updated locally!';
-                    successMsg.style.display = 'block';
-                }
-                document.getElementById('set-kitchen-pin').value = '';
-            }
-        }
-
-        async function handleChangeCashierPin(e) {
-            e.preventDefault();
-            const newPin = document.getElementById('set-cashier-pin').value.trim();
-            const errMsg = document.getElementById('cpin-error-msg');
-            const successMsg = document.getElementById('cpin-success-msg');
-
-            if (errMsg) errMsg.style.display = 'none';
-            if (successMsg) successMsg.style.display = 'none';
-
-            try {
-                const res = await fetch('/api/auth/change-cashier-pin', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ newPin: newPin })
-                });
-
-                const data = await res.json();
-
-                if (res.ok && data.success) {
-                    if (successMsg) {
-                        successMsg.textContent = '✓ Cashier Staff PIN updated successfully!';
-                        successMsg.style.display = 'block';
-                    }
-                    document.getElementById('set-cashier-pin').value = '';
-                } else {
-                    if (errMsg) {
-                        errMsg.textContent = data.message || 'Failed to update Cashier PIN.';
-                        errMsg.style.display = 'block';
-                    }
-                }
-            } catch (err) {
-                localStorage.setItem('ribhouse_cashier_pin', newPin);
-                if (successMsg) {
-                    successMsg.textContent = '✓ Cashier Staff PIN updated locally!';
-                    successMsg.style.display = 'block';
-                }
-                document.getElementById('set-cashier-pin').value = '';
-            }
-        }
-
-        // --- 8. PAYMENTS MANAGEMENT & M-PESA RECONCILIATION ENGINE ---
+        // --- 7. PAYMENTS MANAGEMENT & M-PESA RECONCILIATION ENGINE ---
         const DEFAULT_PAYMENTS_SEED = [
             {
                 id: "PAY-2026-001",

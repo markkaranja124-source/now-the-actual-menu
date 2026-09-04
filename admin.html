@@ -2012,18 +2012,11 @@
         let idleTimer = null;
         const IDLE_TIMEOUT_MS = 30 * 60 * 1000; // 30 Minutes Inactivity
 
-        // 6 Authorized Staff & Master Admin Google Accounts (1 Admin, 2 Kitchen, 3 Cashier)
+        // Authorized Staff & Master Admin Google Accounts (Clean - No default placeholders)
         const DEFAULT_GMAIL_WHITELIST = {
-            admin: "admin@ribhouserestaurant.com",
-            kitchen: [
-                "ribhousekitchen1@gmail.com",
-                "ribhousekitchen2@gmail.com"
-            ],
-            cashier: [
-                "ribhousecashier1@gmail.com",
-                "ribhousecashier2@gmail.com",
-                "ribhousecashier3@gmail.com"
-            ]
+            admin: "",
+            kitchen: [],
+            cashier: []
         };
 
         function getGmailWhitelist() {
@@ -2031,16 +2024,20 @@
                 const stored = localStorage.getItem('ribhouse_gmail_whitelist');
                 if (stored) {
                     const parsed = JSON.parse(stored);
-                    if (parsed && Array.isArray(parsed.kitchen) && Array.isArray(parsed.cashier)) {
+                    if (parsed) {
                         return {
-                            admin: parsed.admin || DEFAULT_GMAIL_WHITELIST.admin,
-                            kitchen: parsed.kitchen,
-                            cashier: parsed.cashier
+                            admin: parsed.admin || "",
+                            kitchen: Array.isArray(parsed.kitchen) ? parsed.kitchen.filter(Boolean) : [],
+                            cashier: Array.isArray(parsed.cashier) ? parsed.cashier.filter(Boolean) : []
                         };
                     }
                 }
             } catch(e) {}
-            return DEFAULT_GMAIL_WHITELIST;
+            return {
+                admin: "",
+                kitchen: [],
+                cashier: []
+            };
         }
 
         function saveGmailWhitelist(whitelist) {

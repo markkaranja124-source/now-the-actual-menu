@@ -402,17 +402,23 @@ function syncMainDishesUIState() {
             btn.style.removeProperty('cursor');
 
             if (isSelected) {
-                btn.innerHTML = '✓ ADDED TO ORDER';
+                btn.innerHTML = btn.classList.contains('tumbukiza-box-btn') ? '✓ ADDED' : '✓ ADDED TO ORDER';
                 btn.classList.add('selected-btn-active', 'is-selected');
                 btn.style.setProperty('background', '#B8860B', 'important');
                 btn.style.setProperty('color', '#FFFFFF', 'important');
                 btn.style.setProperty('border-color', '#B8860B', 'important');
+                if (cardBox && cardBox.classList.contains('tumbukiza-mini-box')) {
+                    cardBox.classList.add('is-selected');
+                }
             } else {
-                btn.innerHTML = '+ ADD TO ORDER';
+                btn.innerHTML = btn.classList.contains('tumbukiza-box-btn') ? '+ ADD' : '+ ADD TO ORDER';
                 btn.classList.remove('selected-btn-active', 'is-selected');
                 btn.style.setProperty('background', 'transparent', 'important');
                 btn.style.setProperty('color', '#B8860B', 'important');
                 btn.style.setProperty('border-color', '#B8860B', 'important');
+                if (cardBox && cardBox.classList.contains('tumbukiza-mini-box')) {
+                    cardBox.classList.remove('is-selected');
+                }
             }
         }
     });

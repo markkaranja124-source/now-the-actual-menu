@@ -7445,4 +7445,82 @@ img {
     }
 }
 
+/* ==========================================================================
+   TUMBUKIZA ESSENTIAL SIDES - COMPACT ACTION BOXES
+   Matches style of Share Location, Copy Address & Share via WhatsApp
+   ========================================================================== */
+.tumbukiza-sides-card {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(230, 126, 34, 0.4) !important;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: var(--transition-smooth);
+}
+
+.tumbukiza-sides-card:hover {
+    border-color: var(--color-gold) !important;
+    box-shadow: 0 14px 40px rgba(230, 126, 34, 0.35) !important;
+}
+
+.tumbukiza-mini-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #FFFFFF;
+    border: 1.5px solid #CBD5E1;
+    color: #1E293B !important;
+    padding: 12px 14px;
+    border-radius: 0px;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+    text-decoration: none;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.tumbukiza-mini-box:hover {
+    background: #F8FAFC;
+    border-color: #B8860B;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.tumbukiza-mini-box.is-selected,
+.tumbukiza-mini-box.selected-item-active {
+    border-color: #B8860B !important;
+    background: #FFFDF9 !important;
+}
+
+.tumbukiza-box-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 14px;
+    border: 1.5px solid #CBD5E1;
+    background: #FFFFFF;
+    color: #1E293B !important;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.3px;
+    border-radius: 0px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    white-space: nowrap;
+}
+
+.tumbukiza-mini-box:hover .tumbukiza-box-btn {
+    border-color: #B8860B;
+    color: #B8860B !important;
+}
+
+.tumbukiza-box-btn.is-selected,
+.tumbukiza-box-btn.selected-btn-active {
+    background: #B8860B !important;
+    border-color: #B8860B !important;
+    color: #FFFFFF !important;
+}
+
+
 

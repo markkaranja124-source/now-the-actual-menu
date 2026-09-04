@@ -6,7 +6,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>RIB HOUSE | Management & Kitchen Portal</title>
     <!-- Prevent Search Engine Indexing for Hidden Page -->
     <meta name="robots" content="noindex, nofollow">
@@ -51,7 +51,16 @@
             border-radius: 0 !important;
         }
 
+        html {
+            overflow-x: hidden;
+            width: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
         body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
             background-color: var(--light-bg);
             background-image: 
                 radial-gradient(circle at center, rgba(255, 255, 255, 0.90) 0%, rgba(248, 246, 240, 0.97) 100%),
@@ -67,31 +76,45 @@
             flex-direction: column;
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
+            box-sizing: border-box;
         }
 
         /* Top Luxury White & Orange Admin Bar */
         .admin-nav-bar {
             background: #FFFFFF;
-            border-bottom: 1px solid var(--color-orange-border);
+            border-bottom: 1.5px solid var(--color-orange-border);
             box-shadow: 0 2px 14px rgba(230, 126, 34, 0.08);
-            padding: 14px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            padding: 12px 24px;
             position: sticky;
             top: 0;
             z-index: 100;
+            width: 100%;
+            max-width: 100vw;
+            box-sizing: border-box;
+        }
+
+        .admin-nav-inner {
+            max-width: 1240px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-sizing: border-box;
         }
 
         .admin-nav-left {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
+            min-width: 0;
         }
 
         .admin-nav-logo {
             height: 38px;
             width: auto;
+            flex-shrink: 0;
         }
 
         .admin-nav-title {
@@ -101,6 +124,8 @@
             letter-spacing: 1.5px;
             color: var(--color-orange-dark);
             text-transform: uppercase;
+            white-space: nowrap;
+            line-height: 1;
         }
 
         .admin-user-badge {
@@ -112,6 +137,29 @@
             background: rgba(230, 126, 34, 0.12);
             color: var(--color-orange-dark);
             border: 1px solid var(--color-orange);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .admin-nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .nav-user-email {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #475569;
+            background: #F1F5F9;
+            border: 1px solid #CBD5E1;
+            padding: 4px 10px;
+            display: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 240px;
         }
 
         .btn-admin-logout {
@@ -124,6 +172,8 @@
             cursor: pointer;
             text-transform: uppercase;
             transition: all 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .btn-admin-logout:hover {
@@ -932,6 +982,110 @@
             transform: translateY(-1px);
         }
 
+        /* Pure Google Authentication Styles */
+        .neat-google-auth-box {
+            margin-top: 10px;
+        }
+
+        .neat-google-auth-card {
+            background: #F8FAFC;
+            border: 1.5px solid #E2E8F0;
+            border-radius: 10px;
+            padding: 20px 18px;
+            margin-bottom: 20px;
+            text-align: left;
+            transition: border-color 0.2s ease;
+        }
+
+        .neat-portal-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .neat-portal-tag.admin {
+            background: #EFF6FF;
+            color: #2563EB;
+            border: 1px solid #BFDBFE;
+        }
+
+        .neat-portal-tag.kitchen {
+            background: #ECFDF5;
+            color: #059669;
+            border: 1px solid #A7F3D0;
+        }
+
+        .neat-portal-tag.cashier {
+            background: #FFFBEB;
+            color: #D97706;
+            border: 1px solid #FDE68A;
+        }
+
+        .neat-authorized-email-label {
+            font-size: 0.72rem;
+            color: #64748B;
+            font-weight: 700;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .neat-authorized-email-val {
+            font-family: 'Plus Jakarta Sans', monospace, sans-serif;
+            font-size: 0.96rem;
+            font-weight: 700;
+            color: #0F172A;
+            word-break: break-all;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .neat-auth-subtext {
+            font-size: 0.74rem;
+            color: #64748B;
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid #E2E8F0;
+            line-height: 1.45;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .neat-btn-google-primary {
+            width: 100%;
+            background: #FFFFFF;
+            border: 2px solid #E2E8F0;
+            color: #1E293B;
+            padding: 14px 20px;
+            font-size: 0.88rem;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+        }
+
+        .neat-btn-google-primary:hover {
+            background: #F8FAFC;
+            border-color: #CBD5E1;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+        }
+
         /* Form Inputs & Whitelist Settings Boxes: Clean White Background with Crisp Dark Text */
         .auth-input {
             width: 100%;
@@ -1413,6 +1567,467 @@
             font-size: 0.82rem;
             letter-spacing: 0.5px;
         }
+
+        /* ------------------------------------------------------------- */
+        /* MOBILE & TABLET RESPONSIVE ADAPTATIONS                        */
+        /* ------------------------------------------------------------- */
+        .mobile-table-hint {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            /* Prevent iOS Safari from auto-zooming inputs on focus */
+            input, select, textarea, .auth-input, .search-input-box, .neat-input {
+                font-size: 16px !important;
+            }
+
+            /* Top Navigation Header */
+            .admin-nav-bar {
+                padding: 8px 10px;
+                width: 100% !important;
+                max-width: 100vw !important;
+                box-sizing: border-box;
+            }
+
+            .admin-nav-inner {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: space-between;
+                gap: 6px;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .admin-nav-left {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                min-width: 0;
+                order: 1;
+            }
+
+            .admin-nav-logo {
+                height: 28px;
+                width: 28px;
+                flex-shrink: 0;
+            }
+
+            .admin-nav-title {
+                font-size: 0.95rem;
+                letter-spacing: 0.5px;
+                white-space: nowrap;
+                line-height: 1;
+                margin: 0;
+            }
+
+            .admin-user-badge {
+                font-size: 0.65rem;
+                padding: 2px 6px;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
+            .admin-nav-right {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                flex-shrink: 0;
+                order: 2;
+            }
+
+            .btn-admin-logout {
+                padding: 5px 10px;
+                font-size: 0.70rem;
+                min-height: 32px;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
+            .nav-user-email {
+                order: 3;
+                width: 100% !important;
+                max-width: 100% !important;
+                text-align: center;
+                box-sizing: border-box;
+                font-size: 0.70rem !important;
+                padding: 2px 8px !important;
+                margin-top: 2px;
+                border: 1px solid #E2E8F0;
+                background: #F8FAFC;
+                color: #475569;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            /* Main Layout Wrapper */
+            .admin-main-wrapper {
+                padding: 12px 10px 60px 10px;
+                width: 100% !important;
+                max-width: 100vw !important;
+                box-sizing: border-box;
+                overflow-x: hidden;
+            }
+
+            /* Portal Navigation Tabs Bar */
+            .portal-tabs-bar {
+                gap: 6px;
+                margin-bottom: 16px;
+                padding-bottom: 4px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+
+            .portal-tabs-bar::-webkit-scrollbar {
+                display: none;
+            }
+
+            .portal-tab-btn {
+                padding: 10px 14px;
+                font-size: 0.78rem;
+                flex-shrink: 0;
+                min-height: 42px;
+            }
+
+            /* Category Filter Bar */
+            .category-filters-bar {
+                gap: 6px;
+                margin-bottom: 14px;
+                padding-bottom: 4px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+
+            .category-filters-bar::-webkit-scrollbar {
+                display: none;
+            }
+
+            .btn-cat-filter {
+                padding: 8px 12px;
+                font-size: 0.74rem;
+                flex-shrink: 0;
+                min-height: 38px;
+            }
+
+            /* Search & Action Toolbars */
+            .search-info-bar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+                margin-bottom: 16px;
+            }
+
+            .search-input-box {
+                max-width: 100% !important;
+                width: 100% !important;
+                min-height: 44px;
+            }
+
+            .payments-filter-bar {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 10px !important;
+                width: 100% !important;
+            }
+
+            .payments-filters-group {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                width: 100% !important;
+                gap: 8px !important;
+            }
+
+            .payments-filters-group .search-input-box,
+            .payments-filters-group .filter-select,
+            .payments-filters-group .filter-date,
+            .payments-filters-group .btn-clear-filter {
+                width: 100% !important;
+                max-width: 100% !important;
+                min-height: 44px;
+                box-sizing: border-box;
+            }
+
+            .payments-actions-group {
+                width: 100% !important;
+            }
+
+            .btn-refresh-payments {
+                width: 100% !important;
+                min-height: 44px;
+                text-align: center;
+                justify-content: center;
+                box-sizing: border-box;
+            }
+
+            /* Inventory Cards Grid */
+            .inventory-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .inv-dish-card {
+                padding: 14px 12px;
+            }
+
+            .inv-dish-name {
+                font-size: 1.15rem;
+            }
+
+            .inv-dish-price {
+                font-size: 1.15rem;
+            }
+
+            .inv-state-buttons {
+                grid-template-columns: 1fr 1fr 1.2fr;
+                gap: 5px;
+                margin-top: 8px;
+            }
+
+            .btn-inv-state {
+                min-height: 44px;
+                padding: 10px 4px;
+                font-size: 0.72rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Orders Feed Grid */
+            .orders-feed-container {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .order-ticket-card {
+                padding: 16px 14px;
+            }
+
+            /* KPI Stats Grid */
+            .admin-stats-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px !important;
+                margin-bottom: 16px;
+            }
+
+            .admin-stat-card {
+                padding: 12px 14px;
+            }
+
+            .stat-num {
+                font-size: 1.45rem;
+            }
+
+            .stat-label {
+                font-size: 0.68rem;
+            }
+
+            .admin-stats-grid .admin-stat-card:last-child:nth-child(odd) {
+                grid-column: 1 / -1;
+            }
+
+            /* Payments Table Mobile Horizontal Touch Scroll & Swipe Hint */
+            .mobile-table-hint {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background: #FFF7ED;
+                color: #C2410C;
+                font-size: 0.72rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                padding: 8px 12px;
+                border-bottom: 1px solid #FFEDD5;
+                user-select: none;
+            }
+
+            .payments-table-container {
+                -webkit-overflow-scrolling: touch;
+                overflow-x: auto;
+                margin-bottom: 20px;
+                border-radius: 0;
+            }
+
+            .payments-table {
+                min-width: 680px;
+                font-size: 0.82rem;
+            }
+
+            .payments-table th,
+            .payments-table td {
+                padding: 10px 12px;
+            }
+
+            /* Reviews & Analytics Section */
+            .feedback-feed-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .feedback-card {
+                padding: 16px 14px;
+            }
+
+            .admin-actions-bar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .admin-actions-bar > div:first-child {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px !important;
+                width: 100%;
+            }
+
+            .admin-actions-bar .admin-action-btn {
+                width: 100%;
+                min-height: 42px;
+                text-align: center;
+                justify-content: center;
+                display: flex;
+                align-items: center;
+            }
+
+            /* Security Whitelist Settings Form */
+            #gmail-whitelist-form > div {
+                grid-template-columns: 1fr !important;
+                gap: 12px !important;
+            }
+
+            .settings-box {
+                padding: 18px 14px !important;
+            }
+
+            .settings-heading {
+                font-size: 1.25rem !important;
+            }
+
+            .btn-auth-submit {
+                width: 100% !important;
+                max-width: 100% !important;
+                min-height: 46px;
+            }
+
+            /* Modals & Overlays on Mobile */
+            .daily-report-overlay {
+                padding: 8px !important;
+            }
+
+            .daily-report-modal {
+                max-height: 94vh !important;
+                width: 100% !important;
+            }
+
+            .daily-report-header {
+                padding: 12px 14px !important;
+            }
+
+            .daily-report-body {
+                padding: 12px 10px !important;
+            }
+
+            .report-sheet {
+                padding: 12px 8px !important;
+            }
+
+            .google-dialog-box {
+                padding: 24px 16px 18px 16px !important;
+                max-width: 100% !important;
+            }
+
+            .google-dialog-close {
+                top: 10px;
+                right: 10px;
+                font-size: 1.6rem;
+                padding: 4px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Extra Narrow Phones (iPhone SE, Galaxy A series, etc.) */
+            .auth-gate-overlay {
+                padding: 10px !important;
+            }
+
+            .auth-gate-box {
+                padding: 22px 14px 18px 14px !important;
+                max-width: 100% !important;
+                border-radius: 8px;
+            }
+
+            .neat-brand-title {
+                font-size: 1.65rem !important;
+                letter-spacing: 1px !important;
+            }
+
+            .neat-brand-header {
+                margin-bottom: 16px !important;
+            }
+
+            .neat-role-tabs {
+                margin-bottom: 14px !important;
+                padding: 3px !important;
+            }
+
+            .admin-nav-title {
+                font-size: 0.88rem !important;
+                max-width: 120px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .admin-user-badge {
+                font-size: 0.62rem !important;
+                padding: 2px 5px !important;
+            }
+
+            .btn-admin-logout {
+                padding: 4px 8px !important;
+                font-size: 0.68rem !important;
+            }
+
+            .neat-role-btn {
+                padding: 8px 2px !important;
+                font-size: 0.70rem !important;
+                letter-spacing: 0.4px !important;
+                min-height: 38px;
+            }
+
+            .neat-google-auth-card {
+                padding: 14px 10px !important;
+                margin-bottom: 14px !important;
+            }
+
+            .neat-authorized-email-val {
+                font-size: 0.84rem !important;
+                word-break: break-all;
+            }
+
+            .neat-btn-google-primary {
+                padding: 12px 12px !important;
+                font-size: 0.80rem !important;
+                letter-spacing: 0.5px !important;
+                min-height: 46px;
+            }
+
+            .admin-actions-bar > div:first-child {
+                grid-template-columns: 1fr !important;
+            }
+
+            .pay-details-stats-grid {
+                grid-template-columns: 1fr !important;
+                gap: 8px !important;
+            }
+
+            .pay-details-table td:first-child {
+                width: 110px !important;
+            }
+        }
     </style>
 </head>
 
@@ -1420,16 +2035,16 @@
 
     <!-- TOP NAVIGATION BAR -->
     <header class="admin-nav-bar">
-        <div class="admin-nav-left">
-            <img src="logo.webp" alt="Rib House Logo" class="admin-nav-logo" width="48" height="48" decoding="async">
-            <div>
+        <div class="admin-nav-inner">
+            <div class="admin-nav-left">
+                <img src="logo.webp" alt="Rib House Logo" class="admin-nav-logo" width="38" height="38" decoding="async">
                 <h1 class="admin-nav-title">RIB HOUSE PORTAL</h1>
+                <span class="admin-user-badge" id="nav-role-badge">STAFF</span>
             </div>
-            <span class="admin-user-badge" id="nav-role-badge">STAFF</span>
-            <span id="nav-user-email" style="font-size: 0.75rem; font-weight: 700; color: #475569; background: #F1F5F9; border: 1px solid #CBD5E1; padding: 3px 8px; display: none;"></span>
-        </div>
-        <div>
-            <button type="button" class="btn-admin-logout" onclick="handleLogout()">Sign Out</button>
+            <div class="admin-nav-right">
+                <button type="button" class="btn-admin-logout" onclick="handleLogout()">Sign Out</button>
+            </div>
+            <span id="nav-user-email" class="nav-user-email"></span>
         </div>
     </header>
 
@@ -1497,7 +2112,7 @@
         <!-- TAB: PAYMENTS MANAGEMENT & M-PESA RECONCILIATION -->
         <section id="section-payments" style="display: none;">
             <!-- 5 KPI Summary Cards -->
-            <div class="admin-stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+            <div class="admin-stats-grid payments-stats-grid">
                 <div class="admin-stat-card">
                     <span class="stat-num" id="pay-stat-total-count">0</span>
                     <span class="stat-label">Total Payments</span>
@@ -1521,24 +2136,24 @@
             </div>
 
             <!-- Search, Filter & Action Toolbar -->
-            <div class="search-info-bar" style="margin-bottom: 18px;">
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center; flex: 1;">
-                    <input type="text" id="payments-search-input" class="search-input-box" placeholder="Search Order ID, Phone or M-Pesa Receipt..." oninput="handleFilterPayments()" style="max-width: 340px;">
+            <div class="search-info-bar payments-filter-bar">
+                <div class="payments-filters-group">
+                    <input type="text" id="payments-search-input" class="search-input-box" placeholder="Search Order ID, Phone or M-Pesa Receipt..." oninput="handleFilterPayments()">
                     
-                    <select id="payments-status-filter" class="search-input-box" onchange="handleFilterPayments()" style="max-width: 170px; padding: 10px 12px; cursor: pointer; background: #FFFFFF;">
+                    <select id="payments-status-filter" class="search-input-box filter-select" onchange="handleFilterPayments()">
                         <option value="all">All Statuses</option>
                         <option value="Paid">Paid</option>
                         <option value="Pending">Pending</option>
                         <option value="Failed">Failed</option>
                     </select>
 
-                    <input type="date" id="payments-date-filter" class="search-input-box" onchange="handleFilterPayments()" style="max-width: 170px; padding: 9px 12px; cursor: pointer; background: #FFFFFF;">
+                    <input type="date" id="payments-date-filter" class="search-input-box filter-date" onchange="handleFilterPayments()">
                     
-                    <button type="button" class="btn-cat-filter" onclick="clearPaymentsFilters()">Clear Filters</button>
+                    <button type="button" class="btn-cat-filter btn-clear-filter" onclick="clearPaymentsFilters()">Clear Filters</button>
                 </div>
 
-                <div style="display: flex; gap: 8px;">
-                    <button type="button" class="admin-action-btn" onclick="refreshPaymentsData()" style="background: var(--color-orange); color: #FFFFFF; font-weight: 700;">
+                <div class="payments-actions-group">
+                    <button type="button" class="admin-action-btn btn-refresh-payments" onclick="refreshPaymentsData()">
                         Refresh Payments
                     </button>
                 </div>
@@ -1546,6 +2161,10 @@
 
             <!-- Responsive Payments Table -->
             <div class="payments-table-container">
+                <div class="mobile-table-hint">
+                    <span>Swipe sideways to view details</span>
+                    <span>&rarr;</span>
+                </div>
                 <table class="payments-table" id="payments-table">
                     <thead>
                         <tr>
@@ -1630,13 +2249,9 @@
                                 </h4>
                                 <div class="form-group" style="margin-bottom: 8px;">
                                     <label class="form-label">Owner / Admin Gmail</label>
-                                    <input type="email" id="whitelist-admin-email" class="auth-input" placeholder="e.g. yourname@gmail.com" required autocomplete="off">
+                                    <input type="email" id="whitelist-admin-email" class="auth-input" placeholder="e.g. karanjamark117@gmail.com" required autocomplete="off">
                                 </div>
-                                <div class="form-group" style="margin-bottom: 6px;">
-                                    <label class="form-label">Google Account Password (Optional)</label>
-                                    <input type="password" id="whitelist-admin-google-pass" class="auth-input" placeholder="Defaults to Master Admin Password" autocomplete="off">
-                                </div>
-                                <span style="font-size: 0.72rem; color: #64748B; line-height: 1.3; display: block;">When logging in via "Continue with Google", enter this password or your Master Admin Password.</span>
+                                <span style="font-size: 0.72rem; color: #64748B; line-height: 1.3; display: block;">Exclusive Google account with full access to master administration.</span>
                             </div>
 
                             <!-- Kitchen Accounts (Up to 2 Slots) -->
@@ -1698,87 +2313,72 @@
 
     </main>
 
-    <!-- 3-ROLE AUTHENTICATION GATE MODAL (ZANNY-INSPIRED MINIMALIST DESIGN) -->
+    <!-- 3-ROLE AUTHENTICATION GATE MODAL (PURE GOOGLE AUTHENTICATION) -->
     <div class="auth-gate-overlay" id="auth-gate-modal">
         <div class="auth-gate-box">
             <!-- Brand Header -->
             <div class="neat-brand-header">
                 <img src="logo.webp" alt="Rib House Logo" class="neat-auth-logo" width="44" height="44" decoding="async">
                 <h1 class="neat-brand-title">RIB HOUSE</h1>
-                <p class="neat-brand-sub" id="neat-brand-sub">SIGN IN TO YOUR ACCOUNT</p>
+                <p class="neat-brand-sub" id="neat-brand-sub">MASTER ADMIN ACCESS</p>
             </div>
 
-            <!-- Minimalist Role Selector Tabs -->
+            <!-- Role Selector Tabs -->
             <div class="neat-role-tabs">
+                <button type="button" class="neat-role-btn active" id="role-tab-admin" onclick="selectLoginRole('admin')">
+                    ADMIN
+                </button>
                 <button type="button" class="neat-role-btn" id="role-tab-kitchen" onclick="selectLoginRole('kitchen')">
                     KITCHEN
                 </button>
                 <button type="button" class="neat-role-btn" id="role-tab-cashier" onclick="selectLoginRole('cashier')">
                     CASHIER
                 </button>
-                <button type="button" class="neat-role-btn active" id="role-tab-admin" onclick="selectLoginRole('admin')">
-                    ADMIN
-                </button>
             </div>
 
-            <!-- Unified Minimalist Direct Login Form -->
-            <form id="neat-login-form" onsubmit="handleNeatAuthSubmit(event)">
-                <!-- Email Address (Underline Input with Mail Icon) -->
-                <div class="neat-input-group">
-                    <svg class="neat-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                    </svg>
-                    <input type="email" id="neat-email-input" class="neat-input" placeholder="Email Address" required autocomplete="email">
-                </div>
+            <!-- Pure Google Authentication Portal Box -->
+            <div class="neat-google-auth-box">
+                <!-- Role Status Card -->
+                <div class="neat-google-auth-card">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                        <span class="neat-portal-tag admin" id="neat-role-badge-tag">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            Master Admin Portal
+                        </span>
+                        <span style="font-size: 0.68rem; font-weight: 700; color: #10B981; display: inline-flex; align-items: center; gap: 4px;">
+                            <span style="width: 7px; height: 7px; border-radius: 50%; background: #10B981; display: inline-block;"></span>
+                            Google Secured
+                        </span>
+                    </div>
 
-                <!-- Password (Underline Input with Lock Icon & Eye Toggle) -->
-                <div class="neat-input-group">
-                    <svg class="neat-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                    </svg>
-                    <input type="password" id="neat-password-input" class="neat-input" placeholder="Password" required autocomplete="current-password">
-                    <button type="button" class="neat-eye-btn" id="neat-toggle-pass-btn" onclick="toggleNeatPasswordVisibility()" aria-label="Toggle password visibility">
-                        <svg id="neat-eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
+                    <div class="neat-authorized-email-label">Authorized Google Account</div>
+                    <div class="neat-authorized-email-val" id="neat-authorized-email-display">
+                        karanjamark117@gmail.com
+                    </div>
+
+                    <div class="neat-auth-subtext">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" style="flex-shrink: 0; margin-top: 1px;">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
                         </svg>
-                    </button>
+                        <span>Only this designated Gmail account authenticated with its real Google password can access this section.</span>
+                    </div>
                 </div>
 
-                <!-- Forgot Password Link -->
-                <div style="text-align: right; margin-top: -8px; margin-bottom: 24px;">
-                    <a href="javascript:void(0)" onclick="handleNeatForgotPassword(event)" class="neat-forgot-link">Forgot Password?</a>
-                </div>
-
-                <!-- Primary Action Button -->
-                <button type="submit" class="neat-btn-signin" id="btn-neat-signin">
-                    <span>SIGN IN</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M5 12h14"></path>
-                        <path d="m12 5 7 7-7 7"></path>
-                    </svg>
-                </button>
-
-                <!-- Clean Divider -->
-                <div class="neat-divider">
-                    <span>OR</span>
-                </div>
-
-                <!-- Google Authentication Button -->
-                <button type="button" class="neat-btn-google" id="btn-neat-google" onclick="handleNeatGoogleClick()">
-                    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <!-- Primary Action: Continue with Google -->
+                <button type="button" class="neat-btn-google-primary" id="btn-neat-google" onclick="handleNeatGoogleClick()">
+                    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
                         <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
                         <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
                         <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
                         <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
                     </svg>
-                    CONTINUE WITH GOOGLE
+                    <span>SIGN IN WITH GOOGLE</span>
                 </button>
-            </form>
+            </div>
 
-            <div class="auth-error-msg" id="auth-error-msg" style="margin-top: 18px; border-radius: 6px;"></div>
+            <div class="auth-error-msg" id="auth-error-msg" style="margin-top: 18px; border-radius: 8px; display: none;"></div>
         </div>
     </div>
 
@@ -2014,11 +2614,11 @@
 
         const GOOGLE_OAUTH_CLIENT_ID = '1079273613313-fjgri85baubbh41ehrddi6pr52dgj4dd.apps.googleusercontent.com';
 
-        // Authorized Staff & Master Admin Google Accounts (Clean - No default placeholders)
-        const DEFAULT_GMAIL_WHITELIST = {
-            admin: "",
-            kitchen: [],
-            cashier: []
+        // Authorized Staff & Master Admin Google Accounts (Strict 3 Accounts)
+        const AUTHORIZED_ACCOUNTS = {
+            admin: 'karanjamark117@gmail.com',
+            kitchen: 'kitchcrew254@gmail.com',
+            cashier: 'ribhousecashier1@gmail.com'
         };
 
         function getGmailWhitelist() {
@@ -2028,17 +2628,21 @@
                     const parsed = JSON.parse(stored);
                     if (parsed) {
                         return {
-                            admin: parsed.admin || "",
-                            kitchen: Array.isArray(parsed.kitchen) ? parsed.kitchen.filter(Boolean) : [],
-                            cashier: Array.isArray(parsed.cashier) ? parsed.cashier.filter(Boolean) : []
+                            admin: (parsed.admin || AUTHORIZED_ACCOUNTS.admin).toLowerCase().trim(),
+                            kitchen: (Array.isArray(parsed.kitchen) && parsed.kitchen.filter(Boolean).length > 0)
+                                ? parsed.kitchen.filter(Boolean).map(e => e.toLowerCase().trim())
+                                : [AUTHORIZED_ACCOUNTS.kitchen],
+                            cashier: (Array.isArray(parsed.cashier) && parsed.cashier.filter(Boolean).length > 0)
+                                ? parsed.cashier.filter(Boolean).map(e => e.toLowerCase().trim())
+                                : [AUTHORIZED_ACCOUNTS.cashier]
                         };
                     }
                 }
             } catch(e) {}
             return {
-                admin: "",
-                kitchen: [],
-                cashier: []
+                admin: AUTHORIZED_ACCOUNTS.admin,
+                kitchen: [AUTHORIZED_ACCOUNTS.kitchen],
+                cashier: [AUTHORIZED_ACCOUNTS.cashier]
             };
         }
 
@@ -2055,10 +2659,8 @@
             const c2 = document.getElementById('whitelist-cashier-2');
             const c3 = document.getElementById('whitelist-cashier-3');
             const cid = document.getElementById('whitelist-google-client-id');
-            const gpass = document.getElementById('whitelist-admin-google-pass');
 
             if (adm) adm.value = wl.admin || '';
-            if (gpass) gpass.value = localStorage.getItem('ribhouse_admin_google_pass') || '';
             if (k1) k1.value = wl.kitchen[0] || '';
             if (k2) k2.value = wl.kitchen[1] || '';
             if (c1) c1.value = wl.cashier[0] || '';
@@ -2070,7 +2672,6 @@
         function handleSaveGmailWhitelist(e) {
             e.preventDefault();
             const adminEmail = (document.getElementById('whitelist-admin-email')?.value || '').toLowerCase().trim();
-            const adminGooglePass = (document.getElementById('whitelist-admin-google-pass')?.value || '').trim();
             const k1 = (document.getElementById('whitelist-kitchen-1')?.value || '').toLowerCase().trim();
             const k2 = (document.getElementById('whitelist-kitchen-2')?.value || '').toLowerCase().trim();
             const c1 = (document.getElementById('whitelist-cashier-1')?.value || '').toLowerCase().trim();
@@ -2099,12 +2700,6 @@
 
             saveGmailWhitelist(newWhitelist);
 
-            if (adminGooglePass) {
-                localStorage.setItem('ribhouse_admin_google_pass', adminGooglePass);
-            } else {
-                localStorage.removeItem('ribhouse_admin_google_pass');
-            }
-
             if (clientId) {
                 localStorage.setItem('ribhouse_google_client_id', clientId);
             } else {
@@ -2117,223 +2712,59 @@
             }
         }
 
+        const ROLE_CONFIG = {
+            admin: {
+                role: 'admin',
+                label: 'Master Admin Portal',
+                email: AUTHORIZED_ACCOUNTS.admin,
+                badgeClass: 'admin',
+                icon: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+                subtitle: 'MASTER ADMIN ACCESS'
+            },
+            kitchen: {
+                role: 'kitchen',
+                label: 'Kitchen Crew Portal',
+                email: AUTHORIZED_ACCOUNTS.kitchen,
+                badgeClass: 'kitchen',
+                icon: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/><line x1="6" y1="17" x2="18" y2="17"/></svg>`,
+                subtitle: 'KITCHEN CREW ACCESS'
+            },
+            cashier: {
+                role: 'cashier',
+                label: 'Cashier Portal',
+                email: AUTHORIZED_ACCOUNTS.cashier,
+                badgeClass: 'cashier',
+                icon: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10"/></svg>`,
+                subtitle: 'CASHIER STAFF ACCESS'
+            }
+        };
+
         let currentSelectedLoginRole = 'admin';
 
         function selectLoginRole(role) {
-            currentSelectedLoginRole = role;
+            currentSelectedLoginRole = role || 'admin';
             const btnKitchen = document.getElementById('role-tab-kitchen');
             const btnCashier = document.getElementById('role-tab-cashier');
             const btnAdmin = document.getElementById('role-tab-admin');
             const subTitle = document.getElementById('neat-brand-sub');
             const errMsg = document.getElementById('auth-error-msg');
-            const emailInput = document.getElementById('neat-email-input');
+            const tagEl = document.getElementById('neat-role-badge-tag');
+            const emailValEl = document.getElementById('neat-authorized-email-display');
 
             if (errMsg) errMsg.style.display = 'none';
 
-            if (btnKitchen) btnKitchen.classList.remove('active');
-            if (btnCashier) btnCashier.classList.remove('active');
-            if (btnAdmin) btnAdmin.classList.remove('active');
+            if (btnKitchen) btnKitchen.classList.toggle('active', currentSelectedLoginRole === 'kitchen');
+            if (btnCashier) btnCashier.classList.toggle('active', currentSelectedLoginRole === 'cashier');
+            if (btnAdmin) btnAdmin.classList.toggle('active', currentSelectedLoginRole === 'admin');
 
-            const whitelist = getGmailWhitelist();
-
-            if (role === 'kitchen') {
-                if (btnKitchen) btnKitchen.classList.add('active');
-                if (subTitle) subTitle.textContent = 'SIGN IN TO KITCHEN PORTAL';
-                if (emailInput && (!emailInput.value || emailInput.value === whitelist.admin)) {
-                    emailInput.value = whitelist.kitchen[0] || '';
-                }
-            } else if (role === 'cashier') {
-                if (btnCashier) btnCashier.classList.add('active');
-                if (subTitle) subTitle.textContent = 'SIGN IN TO CASHIER PORTAL';
-                if (emailInput && (!emailInput.value || emailInput.value === whitelist.admin)) {
-                    emailInput.value = whitelist.cashier[0] || '';
-                }
-            } else {
-                if (btnAdmin) btnAdmin.classList.add('active');
-                if (subTitle) subTitle.textContent = 'SIGN IN TO YOUR ACCOUNT';
-                if (emailInput && (!emailInput.value || whitelist.kitchen.includes(emailInput.value) || whitelist.cashier.includes(emailInput.value))) {
-                    emailInput.value = whitelist.admin || '';
-                }
+            const conf = ROLE_CONFIG[currentSelectedLoginRole] || ROLE_CONFIG.admin;
+            if (subTitle) subTitle.textContent = conf.subtitle;
+            if (tagEl) {
+                tagEl.className = `neat-portal-tag ${conf.badgeClass}`;
+                tagEl.innerHTML = `${conf.icon} ${conf.label}`;
             }
-        }
-
-        function toggleNeatPasswordVisibility() {
-            const passInput = document.getElementById('neat-password-input');
-            const eyeBtn = document.getElementById('neat-toggle-pass-btn');
-            if (!passInput) return;
-            const isPass = passInput.type === 'password';
-            passInput.type = isPass ? 'text' : 'password';
-            if (eyeBtn) {
-                eyeBtn.innerHTML = isPass ? `
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
-                        <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
-                        <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
-                        <line x1="2" x2="22" y1="2" y2="22"></line>
-                    </svg>
-                ` : `
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
-                `;
-            }
-        }
-
-        function handleNeatForgotPassword(e) {
-            if (e) e.preventDefault();
-            const emailInput = document.getElementById('neat-email-input');
-            const email = (emailInput?.value || '').trim();
-            const whitelist = getGmailWhitelist();
-            const targetEmail = email || whitelist.admin || 'admin@ribhouse.co.ke';
-            const recoveryUrl = `https://accounts.google.com/signin/recovery?email=${encodeURIComponent(targetEmail)}`;
-
-            window.open(recoveryUrl, '_blank');
-
-            const authErrMsg = document.getElementById('auth-error-msg');
-            if (authErrMsg) {
-                authErrMsg.style.color = '#0F172A';
-                authErrMsg.style.borderColor = '#38BDF8';
-                authErrMsg.style.background = '#F0F9FF';
-                authErrMsg.innerHTML = `
-                    <div style="text-align: left; font-size: 0.8rem; line-height: 1.45;">
-                        <strong style="color: #0284C7; display: block; margin-bottom: 4px; font-size: 0.85rem;">📱 Google Phone Recovery Initiated</strong>
-                        Opening Google Account Recovery for <strong>${targetEmail}</strong> in a new tab.<br>
-                        • Check your phone for the <strong>"Is it you trying to recover your account?"</strong> Google prompt, tap <strong>Yes</strong> and verify.<br>
-                        • Or check your phone for the 6-digit SMS verification code.
-                    </div>
-                `;
-                authErrMsg.style.display = 'block';
-            }
-        }
-
-        async function handleNeatAuthSubmit(e) {
-            e.preventDefault();
-            const email = (document.getElementById('neat-email-input')?.value || '').toLowerCase().trim();
-            const password = (document.getElementById('neat-password-input')?.value || '').trim();
-            const authErrMsg = document.getElementById('auth-error-msg');
-            const role = currentSelectedLoginRole || 'admin';
-            const whitelist = getGmailWhitelist();
-
-            if (authErrMsg) {
-                authErrMsg.style.display = 'none';
-                authErrMsg.innerHTML = '';
-                authErrMsg.style.color = 'var(--color-unavail)';
-                authErrMsg.style.background = '#FEF2F2';
-                authErrMsg.style.borderColor = '#FCA5A5';
-            }
-
-            if (!email) {
-                if (authErrMsg) {
-                    authErrMsg.textContent = 'Please enter your email address.';
-                    authErrMsg.style.display = 'block';
-                }
-                return;
-            }
-
-            if (!password) {
-                if (authErrMsg) {
-                    authErrMsg.textContent = 'Please enter your password.';
-                    authErrMsg.style.display = 'block';
-                }
-                return;
-            }
-
-            if (role === 'admin') {
-                const allowedAdmin = (whitelist.admin || '').toLowerCase().trim();
-                if (!allowedAdmin || email !== allowedAdmin) {
-                    if (authErrMsg) {
-                        authErrMsg.textContent = `Access Denied: Google account "${email}" is not authorized for Master Admin.`;
-                        authErrMsg.style.display = 'block';
-                    }
-                    return;
-                }
-
-                const savedAdminPass = localStorage.getItem('ribhouse_admin_password') || 'RibHouse@2026!Master';
-                const customGooglePass = localStorage.getItem('ribhouse_admin_google_pass');
-                const isMatch = (password === savedAdminPass) || 
-                                (customGooglePass && password === customGooglePass) || 
-                                (password === 'RibHouse@2026!Master') ||
-                                (password === '1234') ||
-                                (password === 'admin');
-
-                if (!isMatch) {
-                    if (authErrMsg) {
-                        authErrMsg.textContent = 'Incorrect password. Click "Forgot Password?" if you need phone recovery.';
-                        authErrMsg.style.display = 'block';
-                    }
-                    return;
-                }
-
-                authenticateSuccess('admin', email);
-                try {
-                    fetch('/api/auth/login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ role: 'admin', email: email, provider: 'direct' })
-                    }).catch(() => {});
-                } catch (err) {}
-                return;
-            }
-
-            if (role === 'kitchen') {
-                const allowedKitchen = (whitelist.kitchen || []).map(em => em.toLowerCase().trim());
-                if (!allowedKitchen.includes(email)) {
-                    if (authErrMsg) {
-                        authErrMsg.textContent = `Access Denied: Google account "${email}" is not authorized for Kitchen Crew.`;
-                        authErrMsg.style.display = 'block';
-                    }
-                    return;
-                }
-
-                const savedKitchenPin = localStorage.getItem('ribhouse_kitchen_pin') || '1234';
-                if (password === savedKitchenPin || password === '1234') {
-                    authenticateSuccess('kitchen', email);
-                    try {
-                        fetch('/api/auth/login', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ role: 'kitchen', email: email, provider: 'direct' })
-                        }).catch(() => {});
-                    } catch (err) {}
-                    return;
-                }
-
-                if (authErrMsg) {
-                    authErrMsg.textContent = 'Incorrect password/PIN for Kitchen Crew account. (Default: 1234)';
-                    authErrMsg.style.display = 'block';
-                }
-                return;
-            }
-
-            if (role === 'cashier') {
-                const allowedCashier = (whitelist.cashier || []).map(em => em.toLowerCase().trim());
-                if (!allowedCashier.includes(email)) {
-                    if (authErrMsg) {
-                        authErrMsg.textContent = `Access Denied: Google account "${email}" is not authorized for Cashier staff.`;
-                        authErrMsg.style.display = 'block';
-                    }
-                    return;
-                }
-
-                const savedCashierPin = localStorage.getItem('ribhouse_cashier_pin') || '5678';
-                if (password === savedCashierPin || password === '5678' || password === '1234') {
-                    authenticateSuccess('cashier', email);
-                    try {
-                        fetch('/api/auth/login', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ role: 'cashier', email: email, provider: 'direct' })
-                        }).catch(() => {});
-                    } catch (err) {}
-                    return;
-                }
-
-                if (authErrMsg) {
-                    authErrMsg.textContent = 'Incorrect password/PIN for Cashier account. (Default: 5678)';
-                    authErrMsg.style.display = 'block';
-                }
-                return;
+            if (emailValEl) {
+                emailValEl.textContent = conf.email;
             }
         }
 
@@ -2552,51 +2983,54 @@
         function processGoogleAuthDirect(role, email) {
             const cleanEmail = (email || '').toLowerCase().trim();
             const mainErrMsg = document.getElementById('auth-error-msg');
-            const whitelist = getGmailWhitelist();
+            const targetRole = role || currentSelectedLoginRole || 'admin';
 
-            const allowedAdmin = (whitelist.admin || '').toLowerCase().trim();
-            const allowedKitchen = (whitelist.kitchen || []).map(em => em.toLowerCase().trim());
-            const allowedCashier = (whitelist.cashier || []).map(em => em.toLowerCase().trim());
-
-            // If whitelist is currently clean/unconfigured, auto-designate the first logging-in account as Master Admin!
-            if (!allowedAdmin && allowedKitchen.length === 0 && allowedCashier.length === 0) {
-                whitelist.admin = cleanEmail;
-                saveGmailWhitelist(whitelist);
-                const adminInput = document.getElementById('whitelist-admin-email');
-                if (adminInput) adminInput.value = cleanEmail;
-                authenticateSuccess('admin', cleanEmail);
-                try {
-                    fetch('/api/auth/login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ role: 'admin', email: cleanEmail, provider: 'google' })
-                    }).catch(() => {});
-                } catch (err) {}
-                return;
+            // Strict 3-Account Role Authorization
+            let authorizedRole = null;
+            if (cleanEmail === AUTHORIZED_ACCOUNTS.admin) {
+                authorizedRole = 'admin';
+            } else if (cleanEmail === AUTHORIZED_ACCOUNTS.kitchen) {
+                authorizedRole = 'kitchen';
+            } else if (cleanEmail === AUTHORIZED_ACCOUNTS.cashier) {
+                authorizedRole = 'cashier';
             }
 
-            let targetRole = role || currentSelectedLoginRole || 'admin';
-            if (allowedAdmin && cleanEmail === allowedAdmin) {
-                targetRole = 'admin';
-            } else if (allowedKitchen.includes(cleanEmail)) {
-                targetRole = 'kitchen';
-            } else if (allowedCashier.includes(cleanEmail)) {
-                targetRole = 'cashier';
-            } else {
+            if (!authorizedRole) {
                 if (mainErrMsg) {
-                    mainErrMsg.textContent = `Access Denied: Google account "${cleanEmail}" is not authorized for Rib House. Please add it to Authorized Whitelist in settings.`;
+                    mainErrMsg.innerHTML = `
+                        <div style="font-weight: 700; color: #DC2626; margin-bottom: 4px;">Access Denied</div>
+                        <div style="font-size: 0.82rem; color: #475569;">
+                            The Google account <strong>${cleanEmail}</strong> is not authorized. Only designated Rib House Google accounts can access the portal.
+                        </div>
+                    `;
                     mainErrMsg.style.display = 'block';
                 }
                 return;
             }
 
-            selectLoginRole(targetRole);
-            authenticateSuccess(targetRole, cleanEmail);
+            // Role Mismatch Guard
+            if (targetRole && targetRole !== authorizedRole) {
+                const roleLabels = { admin: 'Master Admin Portal', kitchen: 'Kitchen Crew Portal', cashier: 'Cashier Portal' };
+                if (mainErrMsg) {
+                    mainErrMsg.innerHTML = `
+                        <div style="font-weight: 700; color: #DC2626; margin-bottom: 4px;">Role Mismatch</div>
+                        <div style="font-size: 0.82rem; color: #475569;">
+                            Account <strong>${cleanEmail}</strong> is authorized for <strong>${roleLabels[authorizedRole]}</strong> only.<br>
+                            You cannot use it to access ${roleLabels[targetRole]}.
+                        </div>
+                    `;
+                    mainErrMsg.style.display = 'block';
+                }
+                return;
+            }
+
+            selectLoginRole(authorizedRole);
+            authenticateSuccess(authorizedRole, cleanEmail);
             try {
                 fetch('/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ role: targetRole, email: cleanEmail, provider: 'google' })
+                    body: JSON.stringify({ role: authorizedRole, email: cleanEmail, provider: 'google' })
                 }).catch(() => {});
             } catch (err) {}
         }
@@ -3359,13 +3793,11 @@
                     feedbacks = JSON.parse(localStorage.getItem('ribhouse_feedbacks_queue') || '[]');
                 } catch(e) {}
             }
-            if (!feedbacks || feedbacks.length === 0) {
-                feedbacks = [
-                    { id: 'fb_1', dish: "CHOMA GOAT (1 KG)", author: "Samuel Mwangi", rating: 5, comments: "The tenderness and rich flavor on the choma goat was extraordinary! Best in Nairobi.", group: "Family Gathering", date: "Today" },
-                    { id: 'fb_2', dish: "BEEF STEAK (All Sides)", author: "Amina K.", rating: 5, comments: "Quick service, juicy steak with mukimo special. Will definitely be returning with colleagues.", group: "Business Lunch", date: "Today" },
-                    { id: 'fb_3', dish: "CHOMA GOAT (1 KG)", author: "Dennis O.", rating: 5, comments: "Outstanding flavor, authentic seasoning and tender cuts!", group: "Family Gathering", date: "Today" }
-                ];
+            if (!Array.isArray(feedbacks)) {
+                feedbacks = [];
             }
+            // Filter out any legacy mock reviews
+            feedbacks = feedbacks.filter(f => !f.id || !f.id.startsWith('fb_'));
             return feedbacks;
         }
 
@@ -3661,111 +4093,6 @@ Report automatically generated by Rib House System.`;
         }
 
         // --- 7. PAYMENTS MANAGEMENT & M-PESA RECONCILIATION ENGINE ---
-        const DEFAULT_PAYMENTS_SEED = [
-            {
-                id: "PAY-2026-001",
-                order_id: "#RH-2045",
-                checkout_request_id: "ws_CO_04092026021245012345",
-                merchant_request_id: "29115-346201-1",
-                phone_number: "254712345678",
-                amount: 2400,
-                mpesa_receipt_number: "TCK48A91XG",
-                transaction_date: "2026-09-04 02:12:45",
-                status: "Paid",
-                result_code: 0,
-                result_description: "The service request is processed successfully.",
-                customer_name: "Kevin Mwangi",
-                items_summary: "Choma Goat (1 KG), Mukimo Plain, 2x Soda",
-                created_at: "2026-09-04T02:12:45Z",
-                updated_at: "2026-09-04T02:13:02Z"
-            },
-            {
-                id: "PAY-2026-002",
-                order_id: "#RH-2044",
-                checkout_request_id: "ws_CO_04092026015512098765",
-                merchant_request_id: "29115-346198-2",
-                phone_number: "254722987654",
-                amount: 1450,
-                mpesa_receipt_number: "TCK37B82PQ",
-                transaction_date: "2026-09-04 01:55:12",
-                status: "Paid",
-                result_code: 0,
-                result_description: "The service request is processed successfully.",
-                customer_name: "Beatrice Wanjiku",
-                items_summary: "Beef Stew Fry (All Sides), Tropical Smoothie",
-                created_at: "2026-09-04T01:55:12Z",
-                updated_at: "2026-09-04T01:55:30Z"
-            },
-            {
-                id: "PAY-2026-003",
-                order_id: "#RH-2043",
-                checkout_request_id: "ws_CO_04092026014022112233",
-                merchant_request_id: "29115-346180-1",
-                phone_number: "254701234567",
-                amount: 850,
-                mpesa_receipt_number: "-",
-                transaction_date: "2026-09-04 01:40:22",
-                status: "Pending",
-                result_code: null,
-                result_description: "STK push sent to customer phone. Awaiting customer M-Pesa PIN entry.",
-                customer_name: "David Ochieng",
-                items_summary: "Pancake Breakfast, Cappuccino Single",
-                created_at: "2026-09-04T01:40:22Z",
-                updated_at: "2026-09-04T01:40:22Z"
-            },
-            {
-                id: "PAY-2026-004",
-                order_id: "#RH-2042",
-                checkout_request_id: "ws_CO_04092026011508445566",
-                merchant_request_id: "29115-346155-3",
-                phone_number: "254733456789",
-                amount: 600,
-                mpesa_receipt_number: "-",
-                transaction_date: "2026-09-04 01:15:08",
-                status: "Failed",
-                result_code: 1032,
-                result_description: "[STK_PIN_CANCELLED] Request cancelled by user on mobile prompt.",
-                customer_name: "Faith Muthoni",
-                items_summary: "Rib House Bite, Iced Coffee",
-                created_at: "2026-09-04T01:15:08Z",
-                updated_at: "2026-09-04T01:15:40Z"
-            },
-            {
-                id: "PAY-2026-005",
-                order_id: "#RH-2041",
-                checkout_request_id: "ws_CO_03092026233019778899",
-                merchant_request_id: "29115-345990-1",
-                phone_number: "254711889900",
-                amount: 3200,
-                mpesa_receipt_number: "TCJ91Z44KL",
-                transaction_date: "2026-09-03 23:30:19",
-                status: "Paid",
-                result_code: 0,
-                result_description: "The service request is processed successfully.",
-                customer_name: "Patrick Kiprop",
-                items_summary: "Choma Platter, Chips Masala, Vanilla Milkshake",
-                created_at: "2026-09-03T23:30:19Z",
-                updated_at: "2026-09-03T23:30:45Z"
-            },
-            {
-                id: "PAY-2026-006",
-                order_id: "#RH-2040",
-                checkout_request_id: "ws_CO_03092026214533887766",
-                merchant_request_id: "29115-345820-2",
-                phone_number: "254721445566",
-                amount: 1900,
-                mpesa_receipt_number: "TCJ82Y33MN",
-                transaction_date: "2026-09-03 21:45:33",
-                status: "Paid",
-                result_code: 0,
-                result_description: "The service request is processed successfully.",
-                customer_name: "Grace Njeri",
-                items_summary: "Chicken Platter for 4, Mukimo Special",
-                created_at: "2026-09-03T21:45:33Z",
-                updated_at: "2026-09-03T21:46:01Z"
-            }
-        ];
-
         let currentPaymentsCache = [];
 
         function getPaymentsData() {
@@ -3777,10 +4104,12 @@ Report automatically generated by Rib House System.`;
                 }
             } catch (e) {}
 
-            if (!Array.isArray(payments) || payments.length === 0) {
-                payments = DEFAULT_PAYMENTS_SEED;
-                savePaymentsData(payments);
+            if (!Array.isArray(payments)) {
+                payments = [];
             }
+
+            // Strictly filter out any legacy mock/seed items
+            payments = payments.filter(p => !p.id || (!p.id.startsWith('PAY-2026-00') && !p.id.startsWith('PAY-MOCK-')));
 
             try {
                 const liveOrders = JSON.parse(localStorage.getItem('ribhouse_orders_queue') || '[]');
@@ -3811,6 +4140,7 @@ Report automatically generated by Rib House System.`;
                 }
             } catch (e) {}
 
+            savePaymentsData(payments);
             return payments;
         }
 
@@ -3994,7 +4324,7 @@ Report automatically generated by Rib House System.`;
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; font-size: 0.85rem;">
+                <div class="pay-details-stats-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; font-size: 0.85rem;">
                     <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 10px 14px;">
                         <div style="font-size: 0.72rem; color: #64748B; text-transform: uppercase; font-weight: 800;">Amount Charged</div>
                         <div style="font-size: 1.25rem; font-weight: 800; color: var(--color-orange-dark); margin-top: 2px;">KSh ${Number(payment.amount || 0).toLocaleString()}/=</div>
@@ -4005,7 +4335,7 @@ Report automatically generated by Rib House System.`;
                     </div>
                 </div>
 
-                <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-bottom: 16px;">
+                <table class="pay-details-table" style="width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-bottom: 16px;">
                     <tr style="border-bottom: 1px solid #E2E8F0;">
                         <td style="padding: 8px 4px; color: #64748B; font-weight: 700; width: 150px;">Phone Number:</td>
                         <td style="padding: 8px 4px; font-weight: 700; color: #111114; font-family: monospace;">${escapeFbHtml(payment.phone_number || '-')}</td>

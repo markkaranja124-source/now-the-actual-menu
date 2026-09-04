@@ -235,7 +235,7 @@ function generateSessionToken(userPayload) {
 }
 
 // Verify Session Middleware
-function requireAuth(allowedRoles = ['admin', 'kitchen']) {
+function requireAuth(allowedRoles = ['admin', 'kitchen', 'cashier']) {
     return (req, res, next) => {
         let token = req.cookies?.ribhouse_admin_session;
         if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
@@ -275,12 +275,52 @@ function requireAuth(allowedRoles = ['admin', 'kitchen']) {
 // AUTHENTICATION API ROUTES
 // -----------------------------------------------------------------------------
 
-// 1. Unified Sign-in Endpoint (Kitchen PIN or Master Admin Password)
+// 1. Unified Sign-in Endpoint
 app.post('/api/auth/login', (req, res) => {
     try {
-        const { role, pin, username, password } = req.body;
-        const targetRole = role === 'admin' ? 'admin' : 'kitchen';
-        const identifier = targetRole === 'admin' ? (username || 'admin') : 'kitchen_staff';
+        const { role, email, provider, pin, username, password } = req.body;
+
+        // PURE GOOGLE AUTHENTICATION - Strict 3-Account Rule
+        if (provider === 'google' || email) {
+            const cleanEmail = (email || '').toLowerCase().trim();
+            const AUTHORIZED_ROLES = {
+                'karanjamark117@gmail.com': 'admin',
+                'kitchcrew254@gmail.com': 'kitchen',
+                'ribhousecashier1@gmail.com': 'cashier'
+            };
+
+            const verifiedRole = AUTHORIZED_ROLES[cleanEmail];
+            if (!verifiedRole) {
+                return res.status(403).json({
+                    success: false,
+                    message: `Access Denied: Google account "${cleanEmail}" is not authorized.`
+                });
+            }
+
+            if (role && role !== verifiedRole) {
+                return res.status(403).json({
+                    success: false,
+                    message: `Access Denied: "${cleanEmail}" is authorized for ${verifiedRole} only, not ${role}.`
+                });
+            }
+
+            const token = generateSessionToken({ username: cleanEmail, role: verifiedRole });
+            res.cookie('ribhouse_admin_session', token, {
+                httpOnly: true,
+                sameSite: 'strict',
+                maxAge: SESSION_EXPIRY_MINUTES * 60 * 1000
+            });
+
+            return res.json({
+                success: true,
+                role: verifiedRole,
+                token: token,
+                user: { username: cleanEmail, role: verifiedRole }
+            });
+        }
+
+        const targetRole = role === 'admin' ? 'admin' : (role === 'cashier' ? 'cashier' : 'kitchen');
+        const identifier = targetRole === 'admin' ? (username || 'admin') : `${targetRole}_staff`;
 
         // Check Rate Limiting / Lockout Guard
         const rateCheck = checkRateLimit(req, identifier);
@@ -294,20 +334,17 @@ app.post('/api/auth/login', (req, res) => {
 
         const authStore = readJsonFile(AUTH_STORE_PATH, {});
 
-        if (targetRole === 'kitchen') {
-            // Kitchen Staff PIN Authentication
+        if (targetRole === 'kitchen' || targetRole === 'cashier') {
             if (!pin) {
                 return res.status(400).json({ success: false, message: 'Invalid credentials.' });
             }
 
-            const kitchenRecord = authStore.kitchen;
-            const isMatch = kitchenRecord?.pinHash && bcrypt.compareSync(pin.toString().trim(), kitchenRecord.pinHash);
+            const staffRecord = authStore[targetRole] || authStore.kitchen;
+            const isMatch = staffRecord?.pinHash && bcrypt.compareSync(pin.toString().trim(), staffRecord.pinHash);
 
             if (!isMatch) {
                 const failStatus = recordFailedAttempt(req, identifier);
-                const msg = failStatus.locked
-                    ? failStatus.message
-                    : 'Invalid credentials.';
+                const msg = failStatus.locked ? failStatus.message : 'Invalid credentials.';
                 return res.status(failStatus.locked ? 429 : 401).json({
                     success: false,
                     locked: failStatus.locked,
@@ -317,7 +354,7 @@ app.post('/api/auth/login', (req, res) => {
             }
 
             clearFailedAttempts(req, identifier);
-            const token = generateSessionToken({ username: 'kitchen', role: 'kitchen' });
+            const token = generateSessionToken({ username: targetRole, role: targetRole });
 
             res.cookie('ribhouse_admin_session', token, {
                 httpOnly: true,
@@ -327,9 +364,9 @@ app.post('/api/auth/login', (req, res) => {
 
             return res.json({
                 success: true,
-                role: 'kitchen',
+                role: targetRole,
                 token: token,
-                user: { username: 'Kitchen Crew', role: 'kitchen' }
+                user: { username: `${targetRole.toUpperCase()} Staff`, role: targetRole }
             });
 
         } else {
@@ -343,9 +380,7 @@ app.post('/api/auth/login', (req, res) => {
 
             if (!isMatch) {
                 const failStatus = recordFailedAttempt(req, identifier);
-                const msg = failStatus.locked
-                    ? failStatus.message
-                    : 'Invalid email or password.';
+                const msg = failStatus.locked ? failStatus.message : 'Invalid email or password.';
                 return res.status(failStatus.locked ? 429 : 401).json({
                     success: false,
                     locked: failStatus.locked,

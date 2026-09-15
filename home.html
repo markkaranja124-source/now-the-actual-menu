@@ -203,47 +203,48 @@
         /* RIB HOUSE BRAND LOGO */
         .brand-block {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             text-decoration: none;
-            margin-bottom: 36px;
+            margin-bottom: 28px;
             cursor: pointer;
+            width: 100%;
         }
 
         .brand-logo-img {
-            width: 58px;
-            height: 58px;
+            width: 66px;
+            height: 66px;
             border-radius: 50%;
             border: 2px solid var(--color-gold);
             padding: 3px;
-            background: rgba(15, 15, 18, 0.6);
+            background: rgba(15, 15, 18, 0.65);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .brand-block:hover .brand-logo-img {
+            transform: scale(1.06);
+            border-color: var(--color-gold-light);
         }
 
         .brand-text-wrap {
             display: flex;
             flex-direction: column;
-            text-align: right;
+            align-items: center;
+            text-align: center;
         }
 
         .brand-main-title {
             font-family: var(--font-serif);
-            font-size: 2.4rem;
+            font-size: 1.75rem;
             font-weight: 700;
-            letter-spacing: 3px;
+            letter-spacing: 2.5px;
             color: #FFFFFF;
-            line-height: 1;
-            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
-        }
-
-        .brand-sub-title {
-            font-family: var(--font-sans);
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 3.5px;
-            color: var(--color-gold);
+            line-height: 1.2;
+            text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95);
             text-transform: uppercase;
-            margin-top: 5px;
+            text-align: center;
         }
 
         /* NAVIGATION LINKS LIST */
@@ -529,18 +530,21 @@
             }
 
             .brand-block {
-                flex-direction: row;
+                flex-direction: column;
                 justify-content: center;
-                text-align: left;
+                align-items: center;
+                text-align: center;
                 margin-bottom: 24px;
+                gap: 10px;
             }
 
             .brand-text-wrap {
-                text-align: left;
+                text-align: center;
+                align-items: center;
             }
 
             .brand-main-title {
-                font-size: 2rem;
+                font-size: 1.55rem;
             }
 
             /* Center button */
@@ -653,12 +657,11 @@
         <!-- RIGHT PANEL: RIB HOUSE BRANDING & ICONIC VERTICAL MENU -->
         <aside class="right-nav-panel">
             <!-- Brand Mark -->
-            <a href="home.html" class="brand-block" aria-label="Rib House Home">
+            <a href="home.html" class="brand-block" aria-label="Rib House Restaurant">
+                <img src="logo.webp" alt="Rib House Crest" class="brand-logo-img" width="66" height="66">
                 <div class="brand-text-wrap">
-                    <h1 class="brand-main-title">RIB HOUSE</h1>
-                    <span class="brand-sub-title">WOOD-FIRED GRILL</span>
+                    <h1 class="brand-main-title">RIB HOUSE RESTAURANT</h1>
                 </div>
-                <img src="logo.webp" alt="Rib House Crest" class="brand-logo-img" width="58" height="58">
             </a>
 
             <!-- CJ's Style Vertical Nav Menu with Horizontal Dividers -->

@@ -26,12 +26,15 @@ server.js
 worker.js
 test-mpesa.js
 analyze-perf.js
-optimize-images.js
-fix-lazy-loading.js
-convert-images.js
+optimize-slides.js
 package.json
 package-lock.json
 wrangler.jsonc
 wrangler.toml
+
+# Exclude raw 102MB camera originals (we use optimized slides/*.webp)
+DSC_*.JPG
+DSC_*.jpg
+
 
 

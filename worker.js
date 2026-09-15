@@ -285,8 +285,11 @@ export default {
             }
         }
 
-        // 5. ROUTE REWRITES & REDIRECTS FOR PAYMENT
+        // 5. ROUTE REWRITES & REDIRECTS FOR PAYMENT & HOME
         const cleanPath = url.pathname.toLowerCase();
+        if (cleanPath === '/home' || cleanPath === '/home/') {
+            return env.ASSETS.fetch(new Request(new URL('/home.html', request.url), request));
+        }
         if (cleanPath === '/payment' || cleanPath === '/payment/') {
             return env.ASSETS.fetch(new Request(new URL('/payment.html', request.url), request));
         }

@@ -466,6 +466,47 @@ img {
     background-color: #D35400 !important;
 }
 
+/* Boxed Luxury HOME Button */
+.nav-home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #FFFFFF !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid #111114 !important;
+    padding: 8px 16px;
+    border-radius: 6px;
+    color: #111114 !important;
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.nav-home-btn:hover {
+    background: #F5F5F7 !important;
+    border-color: #D35400 !important;
+    color: #D35400 !important;
+    box-shadow: 0 4px 15px rgba(211, 84, 0, 0.2);
+    transform: translateY(-1px);
+}
+
+.nav-home-btn .nav-home-icon {
+    color: #D35400 !important;
+    flex-shrink: 0;
+    transition: var(--transition-fast);
+}
+
+.nav-home-btn:hover .nav-home-icon {
+    transform: scale(1.1);
+}
+
 /* ==========================================================================
    LUXURY SIDE DRAWER (WHITE ELEGANT DRAW PANEL)
    ========================================================================== */
@@ -5622,8 +5663,27 @@ img {
         grid-row: 1;
         display: flex;
         align-items: center;
+        gap: 8px !important;
         justify-self: start;
         z-index: 2;
+    }
+
+    .nav-home-btn {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        padding: 7px 12px !important;
+        border-radius: 6px !important;
+        background: #FFFFFF !important;
+        border: 1.5px solid #111114 !important;
+        color: #111114 !important;
+        font-size: 0.75rem !important;
+        letter-spacing: 1.5px !important;
+        font-weight: 700 !important;
+        flex-shrink: 0 !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+        white-space: nowrap !important;
     }
 
     .menu-box-btn {

@@ -32,6 +32,11 @@ app.use(cookieParser());
 // Serve static frontend files
 app.use(express.static(path.join(__dirname)));
 
+// Home showcase route
+app.get(['/home', '/home/'], (req, res) => {
+    res.sendFile(path.join(__dirname, 'home.html'));
+});
+
 // -----------------------------------------------------------------------------
 // PERSISTENT DATA STORAGE ENGINE (data/ directory)
 // -----------------------------------------------------------------------------

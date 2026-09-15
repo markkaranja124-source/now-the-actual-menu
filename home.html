@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIB HOUSE | Wood-Fired Grill & Artisan Dining</title>
+    <meta name="description"
+        content="Welcome to Rib House. Experience Nairobi's finest wood-fired choma, signature platters, and artisan barista brews. Order online or visit us today. Till No: 4977556.">
+
+    <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Preload critical slide & logo -->
+    <link rel="preload" as="image" href="slides/slide-1.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="logo.webp">
+
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="shortcut icon" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+
+    <style>
+        :root {
+            --color-gold: #D4AF37;
+            --color-gold-light: #F3E5AB;
+            --color-red: #D91C24;
+            --color-red-hover: #B8131A;
+            --color-dark: #0F0F12;
+            --color-text-light: #F8FAFC;
+            --font-serif: 'Cormorant Garamond', Georgia, serif;
+            --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: var(--font-sans);
+            background-color: var(--color-dark);
+            color: var(--color-text-light);
+        }
+
+        /* FULL VIEWPORT GLIDING SLIDESHOW */
+        .slider-viewport {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .slide-item {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 6s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: scale(1.08);
+            will-change: opacity, transform;
+        }
+
+        .slide-item.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+            z-index: 2;
+        }
+
+        .slide-item.prev {
+            opacity: 0;
+            transform: scale(1.02);
+            z-index: 1;
+        }
+
+        .slide-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* ELEGANT CINEMATIC GRADIENT OVERLAYS */
+        .slider-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+            background:
+                /* Right side shadow for text readability */
+                linear-gradient(to left, rgba(10, 10, 15, 0.78) 0%, rgba(10, 10, 15, 0.45) 30%, rgba(10, 10, 15, 0.15) 60%, transparent 100%),
+                /* Subtle bottom vignette */
+                linear-gradient(to top, rgba(10, 10, 15, 0.75) 0%, transparent 40%),
+                /* Subtle top vignette */
+                linear-gradient(to bottom, rgba(10, 10, 15, 0.6) 0%, transparent 30%);
+        }
+
+        /* MAIN CONTENT LAYER */
+        .home-container {
+            position: relative;
+            z-index: 5;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 7vw;
+        }
+
+        /* LEFT / CENTER: HERO CALL TO ACTION (CJ's START ORDER BUTTON) */
+        .hero-action-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-left: 6vw;
+            animation: fadeInHero 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hero-tagline-sub {
+            font-family: var(--font-serif);
+            font-size: 1.45rem;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 2px;
+            margin-bottom: 22px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.75);
+            text-transform: capitalize;
+        }
+
+        .btn-start-order {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--color-red);
+            color: #FFFFFF;
+            font-family: var(--font-sans);
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 20px 48px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(217, 28, 36, 0.5), 0 2px 8px rgba(0, 0, 0, 0.6);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-start-order::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            transform: rotate(25deg) translateY(-100%);
+            transition: transform 0.75s ease-in-out;
+        }
+
+        .btn-start-order:hover {
+            background-color: var(--color-red-hover);
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 14px 40px rgba(217, 28, 36, 0.7), 0 4px 12px rgba(0, 0, 0, 0.8);
+        }
+
+        .btn-start-order:hover::after {
+            transform: rotate(25deg) translateY(100%);
+        }
+
+        .btn-start-order:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        /* RIGHT PANEL: LUXURY RESTAURANT BRAND & NAVIGATION */
+        .right-nav-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            width: 320px;
+            margin-right: 2vw;
+            animation: fadeInRight 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* RIB HOUSE BRAND LOGO */
+        .brand-block {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-decoration: none;
+            margin-bottom: 36px;
+            cursor: pointer;
+        }
+
+        .brand-logo-img {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            border: 2px solid var(--color-gold);
+            padding: 3px;
+            background: rgba(15, 15, 18, 0.6);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .brand-text-wrap {
+            display: flex;
+            flex-direction: column;
+            text-align: right;
+        }
+
+        .brand-main-title {
+            font-family: var(--font-serif);
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #FFFFFF;
+            line-height: 1;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+        }
+
+        .brand-sub-title {
+            font-family: var(--font-sans);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 3.5px;
+            color: var(--color-gold);
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        /* NAVIGATION LINKS LIST */
+        .nav-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-item-link {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 14px;
+            padding: 16px 0;
+            color: #FFFFFF;
+            text-decoration: none;
+            font-family: var(--font-sans);
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-item-link svg {
+            stroke: #FFFFFF;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .nav-item-link:hover {
+            color: var(--color-gold-light);
+            border-bottom-color: var(--color-gold);
+            padding-right: 6px;
+            text-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+        }
+
+        .nav-item-link:hover svg {
+            stroke: var(--color-gold);
+            transform: scale(1.15);
+        }
+
+        /* BOTTOM SLIDER CONTROLS & COUNTER */
+        .slider-controls-bar {
+            position: fixed;
+            bottom: 32px;
+            left: 7vw;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .slide-counter {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.85);
+            min-width: 55px;
+        }
+
+        .slide-counter .current-num {
+            color: var(--color-gold);
+            font-size: 1.15rem;
+        }
+
+        .slider-dots {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dot-btn {
+            width: 28px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.35);
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.35s ease;
+            padding: 0;
+        }
+
+        .dot-btn.active {
+            width: 48px;
+            background: var(--color-gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+        }
+
+        .slider-arrows {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 12px;
+        }
+
+        .arrow-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(15, 15, 18, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(6px);
+        }
+
+        .arrow-btn:hover {
+            background: var(--color-gold);
+            color: #0F0F12;
+            border-color: var(--color-gold);
+            transform: scale(1.08);
+        }
+
+        /* MODAL POPUPS FOR LOCATIONS, ABOUT, TILL */
+        .info-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .info-modal-backdrop.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .info-modal-card {
+            background: #18181E;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 520px;
+            padding: 34px;
+            color: #F8FAFC;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+            transform: translateY(20px) scale(0.96);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .info-modal-backdrop.open .info-modal-card {
+            transform: translateY(0) scale(1);
+        }
+
+        .info-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #FFFFFF;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        .info-modal-close:hover {
+            background: var(--color-red);
+        }
+
+        .info-modal-title {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            color: var(--color-gold);
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+        }
+
+        .info-modal-body {
+            font-size: 0.98rem;
+            line-height: 1.7;
+            color: #CBD5E1;
+        }
+
+        .info-modal-body p {
+            margin-bottom: 12px;
+        }
+
+        .info-modal-highlight {
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+
+        .info-modal-btn {
+            display: inline-block;
+            margin-top: 18px;
+            background: var(--color-gold);
+            color: #0F0F12;
+            font-weight: 800;
+            padding: 12px 24px;
+            border-radius: 4px;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+        }
+
+        .info-modal-btn:hover {
+            background: var(--color-gold-light);
+            transform: translateY(-2px);
+        }
+
+        /* KEYFRAME ANIMATIONS */
+        @keyframes fadeInHero {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 960px) {
+            html,
+            body {
+                overflow-y: auto;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .slider-viewport {
+                position: fixed;
+            }
+
+            .slider-overlay {
+                background:
+                    linear-gradient(to bottom, rgba(10, 10, 15, 0.7) 0%, rgba(10, 10, 15, 0.4) 40%, rgba(10, 10, 15, 0.85) 100%);
+            }
+
+            .home-container {
+                position: relative;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                min-height: 100vh;
+                padding: 40px 24px 80px 24px;
+                gap: 40px;
+            }
+
+            /* Top brand */
+            .right-nav-panel {
+                width: 100%;
+                align-items: center;
+                margin-right: 0;
+                order: 1;
+            }
+
+            .brand-block {
+                flex-direction: row;
+                justify-content: center;
+                text-align: left;
+                margin-bottom: 24px;
+            }
+
+            .brand-text-wrap {
+                text-align: left;
+            }
+
+            .brand-main-title {
+                font-size: 2rem;
+            }
+
+            /* Center button */
+            .hero-action-box {
+                margin-left: 0;
+                order: 2;
+                margin-top: auto;
+                margin-bottom: auto;
+            }
+
+            .hero-tagline-sub {
+                font-size: 1.2rem;
+                text-align: center;
+            }
+
+            .btn-start-order {
+                font-size: 1.15rem;
+                padding: 18px 40px;
+                width: 100%;
+                max-width: 320px;
+            }
+
+            /* Nav links */
+            .nav-list {
+                order: 3;
+                width: 100%;
+                max-width: 340px;
+                margin-top: 20px;
+            }
+
+            .nav-item-link {
+                justify-content: center;
+                padding: 14px 0;
+                font-size: 0.95rem;
+            }
+
+            /* Controls bar on mobile */
+            .slider-controls-bar {
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 18px;
+                width: max-content;
+            }
+
+            .dot-btn {
+                width: 18px;
+            }
+
+            .dot-btn.active {
+                width: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 1. FULL VIEWPORT GLIDING BACKGROUND SLIDER -->
+    <div class="slider-viewport" id="slider-viewport" aria-label="Rib House Culinary Visual Showcase">
+        <!-- 11 Optimized WebP Slides -->
+        <div class="slide-item active" data-index="1">
+            <img src="slides/slide-1.webp" alt="Rib House Signature Dish 1" class="slide-img" fetchpriority="high">
+        </div>
+        <div class="slide-item" data-index="2">
+            <img src="slides/slide-2.webp" alt="Rib House Signature Dish 2" class="slide-img" loading="lazy">
+        </div>
+        <div class="slide-item" data-index="3">
+            <img src="slides/slide-3.webp" alt="Rib House Signature Dish 3" class="slide-img" loading="lazy">
+        </div>
+        <div class="slide-item" data-index="4">
+            <img src="slides/slide-4.webp" alt="Rib House Signature Dish 4" class="slide-img" loading="lazy">
+        </div>
+        <div class="slide-item" data-index="5">
+            <img src="slides/slide-5.webp" alt="Rib House Signature Dish 5" class="slide-img" loading="lazy">
+        </div>
+        <div class="slide-item" data-index="6">
+            <img src="slides/slide-6.webp" alt="Rib House Signature Dish 6" class="slide-img" loading="lazy">
+        </div>
+        <div class="slide-item" data-index="7">
+            <img src="slides/slide-7.webp" alt="Rib House Signature Dish 7" class="slide-img" loading="lazy">
+        </div>
+        <div class="slide-item" data-index="8">
+            <img src="slides/slide-8.webp" alt="Rib House Signature Dish 8" class="slide-img" loading="lazy">
+        </div>
+        <div class="slide-item" data-index="9">
+            <img src="slides/slide-9.webp" alt="Rib House Signature Dish 9" class="slide-img" loading="lazy">
+        </div>
+        <div class="slide-item" data-index="10">
+            <img src="slides/slide-10.webp" alt="Rib House Signature Dish 10" class="slide-img" loading="lazy">
+        </div>
+        <div class="slide-item" data-index="11">
+            <img src="slides/slide-11.webp" alt="Rib House Signature Dish 11" class="slide-img" loading="lazy">
+        </div>
+    </div>
+
+    <!-- 2. LUXURY CINEMATIC OVERLAY -->
+    <div class="slider-overlay"></div>
+
+    <!-- 3. MAIN FOREGROUND CONTENT (CJ'S RESTAURANT ARCHITECTURE) -->
+    <main class="home-container">
+
+        <!-- CENTER-LEFT: CJ'S PROMINENT START ORDER CALL-TO-ACTION -->
+        <div class="hero-action-box">
+            <span class="hero-tagline-sub">Wood-Fired Perfection & Artisan Dining</span>
+            <a href="index.html" class="btn-start-order" id="btn-start-order" aria-label="Start Your Order">
+                START ORDER
+            </a>
+        </div>
+
+        <!-- RIGHT PANEL: RIB HOUSE BRANDING & ICONIC VERTICAL MENU -->
+        <aside class="right-nav-panel">
+            <!-- Brand Mark -->
+            <a href="home.html" class="brand-block" aria-label="Rib House Home">
+                <div class="brand-text-wrap">
+                    <h1 class="brand-main-title">RIB HOUSE</h1>
+                    <span class="brand-sub-title">WOOD-FIRED GRILL</span>
+                </div>
+                <img src="logo.webp" alt="Rib House Crest" class="brand-logo-img" width="58" height="58">
+            </a>
+
+            <!-- CJ's Style Vertical Nav Menu with Horizontal Dividers -->
+            <nav class="nav-list" aria-label="Main Navigation">
+                <a href="index.html" class="nav-item-link" id="nav-link-menu">
+                    <span>MENU</span>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                        <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                        <line x1="6" y1="1" x2="6" y2="4"></line>
+                        <line x1="10" y1="1" x2="10" y2="4"></line>
+                        <line x1="14" y1="1" x2="14" y2="4"></line>
+                    </svg>
+                </a>
+
+                <a href="#locations" class="nav-item-link" id="nav-link-locations" onclick="openModal('modal-locations', event)">
+                    <span>LOCATIONS</span>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                </a>
+
+                <a href="tel:0724594204" class="nav-item-link" id="nav-link-call">
+                    <span>CALL / ORDERS</span>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                </a>
+
+                <a href="#till-info" class="nav-item-link" id="nav-link-till" onclick="openModal('modal-till', event)">
+                    <span>PAYMENT / TILL</span>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                        <line x1="1" y1="10" x2="23" y2="10"></line>
+                    </svg>
+                </a>
+
+                <a href="#about-us" class="nav-item-link" id="nav-link-about" onclick="openModal('modal-about', event)">
+                    <span>ABOUT US</span>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                </a>
+            </nav>
+        </aside>
+    </main>
+
+    <!-- 4. BOTTOM CONTROLS & SLIDE INDICATOR -->
+    <div class="slider-controls-bar" aria-label="Slider Controls">
+        <div class="slide-counter">
+            <span class="current-num" id="current-slide-num">01</span> / <span class="total-num" id="total-slide-num">11</span>
+        </div>
+
+        <div class="slider-dots" id="slider-dots" role="tablist" aria-label="Slide Selector">
+            <!-- Dynamically or statically generated dots -->
+            <button class="dot-btn active" data-to="0" aria-label="Slide 1"></button>
+            <button class="dot-btn" data-to="1" aria-label="Slide 2"></button>
+            <button class="dot-btn" data-to="2" aria-label="Slide 3"></button>
+            <button class="dot-btn" data-to="3" aria-label="Slide 4"></button>
+            <button class="dot-btn" data-to="4" aria-label="Slide 5"></button>
+            <button class="dot-btn" data-to="5" aria-label="Slide 6"></button>
+            <button class="dot-btn" data-to="6" aria-label="Slide 7"></button>
+            <button class="dot-btn" data-to="7" aria-label="Slide 8"></button>
+            <button class="dot-btn" data-to="8" aria-label="Slide 9"></button>
+            <button class="dot-btn" data-to="9" aria-label="Slide 10"></button>
+            <button class="dot-btn" data-to="10" aria-label="Slide 11"></button>
+        </div>
+
+        <div class="slider-arrows">
+            <button class="arrow-btn" id="prev-slide-btn" aria-label="Previous Slide">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <button class="arrow-btn" id="next-slide-btn" aria-label="Next Slide">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- 5. INTERACTIVE MODALS -->
+
+    <!-- LOCATIONS MODAL -->
+    <div class="info-modal-backdrop" id="modal-locations" onclick="if(event.target === this) closeModal('modal-locations')">
+        <div class="info-modal-card">
+            <button class="info-modal-close" onclick="closeModal('modal-locations')" aria-label="Close">&times;</button>
+            <h2 class="info-modal-title">Our Location & Hours</h2>
+            <div class="info-modal-body">
+                <p><span class="info-modal-highlight">📍 Location:</span> Rib House Restaurant, Nairobi, Kenya</p>
+                <p><span class="info-modal-highlight">🕒 Hours:</span> Open Daily from 7:00 AM – 11:00 PM</p>
+                <p><span class="info-modal-highlight">📞 Direct Inquiries:</span> 0724 594 204</p>
+                <p>Enjoy our spacious dining ambiance, wood-fired grill stations, and fresh barista coffee bar with ample parking.</p>
+                <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="info-modal-btn">GET DIRECTIONS &rarr;</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAYMENT & TILL MODAL -->
+    <div class="info-modal-backdrop" id="modal-till" onclick="if(event.target === this) closeModal('modal-till')">
+        <div class="info-modal-card">
+            <button class="info-modal-close" onclick="closeModal('modal-till')" aria-label="Close">&times;</button>
+            <h2 class="info-modal-title">M-Pesa Payment Info</h2>
+            <div class="info-modal-body">
+                <p><span class="info-modal-highlight">BUY GOODS TILL NO:</span> <strong style="color: #10B981; font-size: 1.4rem; letter-spacing: 2px;">4977556</strong></p>
+                <p><span class="info-modal-highlight">Store Name:</span> RIB HOUSE RESTAURANT</p>
+                <p>1. Go to your M-Pesa Menu &rarr; Lipa na M-Pesa &rarr; Buy Goods and Services.</p>
+                <p>2. Enter Till Number: <strong style="color: #D4AF37;">4977556</strong>.</p>
+                <p>3. Enter Amount and your M-Pesa PIN to complete payment.</p>
+                <a href="payment.html" class="info-modal-btn">DIRECT M-PESA CHECKOUT &rarr;</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABOUT US MODAL -->
+    <div class="info-modal-backdrop" id="modal-about" onclick="if(event.target === this) closeModal('modal-about')">
+        <div class="info-modal-card">
+            <button class="info-modal-close" onclick="closeModal('modal-about')" aria-label="Close">&times;</button>
+            <h2 class="info-modal-title">About Rib House</h2>
+            <div class="info-modal-body">
+                <p><span class="info-modal-highlight">Wood-Fired Grill & Artisan Excellence:</span> Rib House is dedicated to serving the finest grilled meats, hearty breakfasts, and authentic barista drinks crafted from premium ingredients.</p>
+                <p>From our sizzling 1KG Goat and Beef Choma, signature platters for four, to fresh tilapia and gourmet shakes, every meal is prepared with passion and tradition.</p>
+                <a href="index.html" class="info-modal-btn">EXPLORE OUR MENU &rarr;</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. HIGH-PERFORMANCE SLIDER ENGINE SCRIPT -->
+    <script>
+        (function () {
+            const slides = document.querySelectorAll('.slide-item');
+            const dots = document.querySelectorAll('.dot-btn');
+            const currentNumEl = document.getElementById('current-slide-num');
+            const prevBtn = document.getElementById('prev-slide-btn');
+            const nextBtn = document.getElementById('next-slide-btn');
+            const viewport = document.getElementById('slider-viewport');
+
+            let currentIndex = 0;
+            const totalSlides = slides.length;
+            const GLIDE_INTERVAL = 5000; // 5 seconds per slide
+            let slideTimer = null;
+            let isPaused = false;
+
+            function padZero(num) {
+                return num < 10 ? '0' + num : '' + num;
+            }
+
+            function showSlide(newIndex, direction = 'next') {
+                if (newIndex === currentIndex) return;
+
+                const prevIndex = currentIndex;
+                currentIndex = (newIndex + totalSlides) % totalSlides;
+
+                // Update classes
+                slides.forEach((slide, idx) => {
+                    slide.classList.remove('active', 'prev');
+                    if (idx === prevIndex) {
+                        slide.classList.add('prev');
+                    } else if (idx === currentIndex) {
+                        slide.classList.add('active');
+                    }
+                });
+
+                // Update dots
+                dots.forEach((dot, idx) => {
+                    dot.classList.toggle('active', idx === currentIndex);
+                });
+
+                // Update counter
+                if (currentNumEl) {
+                    currentNumEl.textContent = padZero(currentIndex + 1);
+                }
+            }
+
+            function nextSlide() {
+                showSlide(currentIndex + 1, 'next');
+            }
+
+            function prevSlide() {
+                showSlide(currentIndex - 1, 'prev');
+            }
+
+            function startAutoGlide() {
+                stopAutoGlide();
+                slideTimer = setInterval(() => {
+                    if (!isPaused) {
+                        nextSlide();
+                    }
+                }, GLIDE_INTERVAL);
+            }
+
+            function stopAutoGlide() {
+                if (slideTimer) {
+                    clearInterval(slideTimer);
+                    slideTimer = null;
+                }
+            }
+
+            // Dot clicks
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const to = parseInt(dot.getAttribute('data-to'), 10);
+                    showSlide(to);
+                    startAutoGlide();
+                });
+            });
+
+            // Arrow buttons
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    nextSlide();
+                    startAutoGlide();
+                });
+            }
+
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    prevSlide();
+                    startAutoGlide();
+                });
+            }
+
+            // Keyboard navigation (Left/Right arrows)
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    nextSlide();
+                    startAutoGlide();
+                } else if (e.key === 'ArrowLeft') {
+                    prevSlide();
+                    startAutoGlide();
+                }
+            });
+
+            // Pause gliding on hover
+            if (viewport) {
+                viewport.addEventListener('mouseenter', () => { isPaused = true; });
+                viewport.addEventListener('mouseleave', () => { isPaused = false; });
+            }
+
+            // Touch swipe support on mobile
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            window.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            window.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, { passive: true });
+
+            function handleSwipe() {
+                const diff = touchEndX - touchStartX;
+                if (Math.abs(diff) > 45) {
+                    if (diff < 0) {
+                        nextSlide();
+                    } else {
+                        prevSlide();
+                    }
+                    startAutoGlide();
+                }
+            }
+
+            // Start auto glide on load
+            startAutoGlide();
+        })();
+
+        // Modal Helpers
+        function openModal(id, e) {
+            if (e) e.preventDefault();
+            const modal = document.getElementById(id);
+            if (modal) modal.classList.add('open');
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) modal.classList.remove('open');
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.info-modal-backdrop.open').forEach(m => m.classList.remove('open'));
+            }
+        });
+    </script>
+</body>
+
+</html>

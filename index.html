@@ -58,6 +58,10 @@
             <div class="drawer-section">
                 <span class="drawer-section-title">DISCOVER</span>
                 <nav class="drawer-nav">
+                    <a href="home.html" class="drawer-link">
+                        <span class="drawer-link-text">HOME</span>
+                        <span class="drawer-link-arrow">&rsaquo;</span>
+                    </a>
                     <a href="#bk-combos" class="drawer-link">
                         <span class="drawer-link-text">BREAKFAST COMBOS</span>
                         <span class="drawer-link-arrow">&rsaquo;</span>
@@ -120,10 +124,17 @@
     <!-- Floating Transparent Navbar over Hero -->
     <header class="navbar" id="navbar">
         <div class="nav-container">
-            <!-- Left: MENU Trigger Box -->
-            <div class="nav-left-box">
+            <!-- Left: HOME & MENU Navigation Controls -->
+            <div class="nav-left-box" style="display: flex; align-items: center; gap: 10px;">
+                <a href="home.html" class="nav-home-btn" id="nav-home-btn" aria-label="Rib House Home Showcase" title="Return to Home Showcase" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: #FFFFFF; border: 1.5px solid #111114; border-radius: 6px; color: #111114; text-decoration: none; font-family: var(--font-sans); font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+                    <svg class="nav-home-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #D35400;">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>HOME</span>
+                </a>
                 <button class="menu-box-btn" id="side-drawer-toggle" aria-label="Open Navigation Menu" onclick="if(window.openSideDrawer) window.openSideDrawer(event); else { document.getElementById('side-drawer')?.classList.add('active'); document.getElementById('drawer-backdrop')?.classList.add('active'); document.body.style.overflow='hidden'; }">
-                    <span class="menu-box-text">MENU</span>
+                    <span class="menu-box-text">CATEGORIES</span>
                     <span class="menu-box-icon">
                         <span></span>
                         <span></span>
@@ -133,7 +144,7 @@
             </div>
 
             <!-- Centered Luxury Logo Emblem -->
-            <a href="#hero" class="brand-logo" aria-label="Rib House Homepage">
+            <a href="home.html" class="brand-logo" aria-label="Rib House Home Showcase" title="Go to Home Showcase">
                 <img src="logo.webp" alt="Rib House Logo" class="nav-logo-img" width="48" height="48" decoding="async" loading="lazy">
                 <span class="brand-title">RIB HOUSE</span>
                 <span class="brand-subtitle">BEST QUALITY GRILLED MEAT</span>

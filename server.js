@@ -29,11 +29,28 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Serve static frontend files
-app.use(express.static(path.join(__dirname)));
+// Request logger for API calls
+app.use((req, res, next) => {
+    if (req.url.startsWith('/api/')) {
+        console.log(`[API ${req.method}] ${req.url}`);
+    }
+    next();
+});
+
+// Serve static frontend files with no-cache for HTML and JS
+app.use(express.static(path.join(__dirname), {
+    setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.html') || filePath.endsWith('.js') || filePath.endsWith('.json')) {
+            res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+            res.setHeader('Pragma', 'no-cache');
+            res.setHeader('Expires', '0');
+        }
+    }
+}));
 
 // Home showcase route
 app.get(['/home', '/home/'], (req, res) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     res.sendFile(path.join(__dirname, 'home.html'));
 });
 
@@ -48,6 +65,7 @@ if (!fs.existsSync(DATA_DIR)) {
 const AUTH_STORE_PATH = path.join(DATA_DIR, 'auth_store.json');
 const FEEDBACK_STORE_PATH = path.join(DATA_DIR, 'feedback_store.json');
 const ORDERS_STORE_PATH = path.join(DATA_DIR, 'orders_store.json');
+const INVENTORY_STORE_PATH = path.join(DATA_DIR, 'inventory_store.json');
 
 function readJsonFile(filePath, defaultValue) {
     try {
@@ -525,6 +543,46 @@ app.post('/api/auth/change-kitchen-pin', requireAuth(['admin']), (req, res) => {
         res.status(500).json({ success: false, message: 'Failed to update kitchen PIN.' });
     }
 });
+
+// -----------------------------------------------------------------------------
+// REAL-TIME INVENTORY & DISH AVAILABILITY API
+// -----------------------------------------------------------------------------
+app.get('/api/inventory', (req, res) => {
+    try {
+        const inv = readJsonFile(INVENTORY_STORE_PATH, {});
+        res.json({ success: true, inventory: inv });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+const handleInventoryUpdate = (req, res) => {
+    try {
+        const body = req.body || {};
+        const inv = readJsonFile(INVENTORY_STORE_PATH, {});
+
+        if (body.itemId && body.status !== undefined) {
+            inv[body.itemId] = body.status;
+        } else if (body.updates && typeof body.updates === 'object') {
+            Object.assign(inv, body.updates);
+        } else if (typeof body === 'object') {
+            for (const [key, val] of Object.entries(body)) {
+                if (typeof val === 'string' || typeof val === 'boolean') {
+                    inv[key] = val;
+                }
+            }
+        }
+
+        writeJsonFile(INVENTORY_STORE_PATH, inv);
+        console.log('📦 [Inventory Updated]:', body);
+        res.json({ success: true, inventory: inv });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+};
+
+app.post('/api/inventory', handleInventoryUpdate);
+app.patch('/api/inventory', handleInventoryUpdate);
 
 // -----------------------------------------------------------------------------
 // PUBLIC CUSTOMER FEEDBACK & REVIEW INGESTION API

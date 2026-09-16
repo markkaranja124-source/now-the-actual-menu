@@ -172,6 +172,53 @@ function normalizeDishName(name) {
         .trim();
 }
 
+// Global Premium Toast Notification for Dish Actions & Hold Alerts
+function showDishNoticeToast(message, isWarning) {
+    if (typeof document === 'undefined') return;
+    let toast = document.getElementById('dish-notice-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'dish-notice-toast';
+        toast.style.position = 'fixed';
+        toast.style.bottom = '28px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%) translateY(100px)';
+        toast.style.zIndex = '99999';
+        toast.style.maxWidth = '90vw';
+        toast.style.width = 'max-content';
+        toast.style.padding = '14px 24px';
+        toast.style.fontFamily = "'Plus Jakarta Sans', sans-serif";
+        toast.style.fontSize = '0.92rem';
+        toast.style.fontWeight = '700';
+        toast.style.borderRadius = '8px';
+        toast.style.boxShadow = '0 10px 30px rgba(0,0,0,0.35)';
+        toast.style.transition = 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+        toast.style.pointerEvents = 'none';
+        toast.style.textAlign = 'center';
+        document.body.appendChild(toast);
+    }
+
+    if (isWarning) {
+        toast.style.background = '#1E1B18';
+        toast.style.color = '#F59E0B';
+        toast.style.border = '1.5px solid #F59E0B';
+    } else {
+        toast.style.background = '#111114';
+        toast.style.color = '#D4AF37';
+        toast.style.border = '1.5px solid #B8860B';
+    }
+
+    toast.innerText = message;
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    toast.style.opacity = '1';
+
+    if (window._dishNoticeTimer) clearTimeout(window._dishNoticeTimer);
+    window._dishNoticeTimer = setTimeout(() => {
+        toast.style.transform = 'translateX(-50%) translateY(100px)';
+        toast.style.opacity = '0';
+    }, 3500);
+}
+
 // Direct Robust Dish Selection Handler (Called directly via onclick on cards/buttons)
 function handleDirectDishSelect(element, dishName, dishPrice, dishDesc, dishCategory) {
     if (typeof event !== 'undefined' && event) {
@@ -182,6 +229,7 @@ function handleDirectDishSelect(element, dishName, dishPrice, dishDesc, dishCate
     if (typeof getItemAvailability === 'function') {
         const status = getItemAvailability(dishName);
         if (status === 'hold' || status === 'unavailable') {
+            showDishNoticeToast(`⚠️ "${dishName}" is currently ON HOLD in the kitchen and cannot be ordered right now.`, true);
             return;
         }
     }
@@ -247,14 +295,20 @@ function syncMainDishesUIState() {
         if (itemStatus === 'hold') {
             row.classList.remove('selected-item-active');
             row.style.opacity = '0.65';
-            row.style.cursor = 'not-allowed';
+            row.style.cursor = 'pointer';
             if (btnEl) {
                 btnEl.innerText = 'ON HOLD';
                 btnEl.style.background = '#F59E0B';
                 btnEl.style.color = '#000000';
                 btnEl.style.borderColor = '#D97706';
-                btnEl.style.cursor = 'not-allowed';
+                btnEl.style.cursor = 'pointer';
             }
+            const notifyHoldRow = (e) => {
+                if (e) { e.stopPropagation(); e.preventDefault(); }
+                showDishNoticeToast(`⚠️ "${exactName}" is currently ON HOLD in the kitchen.`, true);
+            };
+            row.onclick = notifyHoldRow;
+            if (btnEl) btnEl.onclick = notifyHoldRow;
         } else if (isSelected) {
             row.classList.add('selected-item-active');
             row.style.opacity = '1';
@@ -307,13 +361,17 @@ function syncMainDishesUIState() {
         if (itemStatus === 'hold') {
             banner.classList.remove('selected-item-active');
             banner.style.opacity = '0.65';
-            banner.style.cursor = 'not-allowed';
+            banner.style.cursor = 'pointer';
             if (textEl) textEl.innerHTML = `${exactName}<br><span style="color:#F59E0B;font-weight:700;">ON HOLD IN KITCHEN</span>`;
             if (arrowEl) {
                 arrowEl.innerHTML = 'HOLD';
                 arrowEl.style.background = '#F59E0B';
                 arrowEl.style.color = '#000000';
             }
+            banner.onclick = (e) => {
+                if (e) { e.stopPropagation(); e.preventDefault(); }
+                showDishNoticeToast(`⚠️ "${exactName}" is currently ON HOLD in the kitchen.`, true);
+            };
         } else if (isSelected) {
             banner.classList.add('selected-item-active');
             banner.style.opacity = '1';
@@ -368,7 +426,14 @@ function syncMainDishesUIState() {
             btn.style.setProperty('background', '#F59E0B', 'important');
             btn.style.setProperty('color', '#000000', 'important');
             btn.style.setProperty('border-color', '#D97706', 'important');
-            btn.style.setProperty('cursor', 'not-allowed', 'important');
+            btn.style.setProperty('cursor', 'pointer', 'important');
+
+            const notifyHoldCard = (e) => {
+                if (e) { e.stopPropagation(); e.preventDefault(); }
+                showDishNoticeToast(`⚠️ "${exactName}" is currently ON HOLD in the kitchen.`, true);
+            };
+            btn.onclick = notifyHoldCard;
+            cardBox.onclick = notifyHoldCard;
 
             if (cardBox) {
                 cardBox.style.opacity = '0.85';
@@ -2179,29 +2244,61 @@ const DISH_NAME_TO_INVENTORY_KEY = {
     "tilapia stew (all sides)": "tilapia_stew",
     "tilapia fry": "tilapia_fry",
     "tilapia fry (all sides)": "tilapia_fry",
+    "tilapia wet fry": "tilapia_stew",
+    "tilapia wet fry (all sides)": "tilapia_stew",
+    "deep fried tilapia": "tilapia_fry",
+    "deep fried tilapia (all sides)": "tilapia_fry",
     "ugali with sukuma / cabbage": "ugali_sukuma_cabbage",
     "ugali with managu": "ugali_managu",
     "ugali & vegetables": "ugali_sukuma_cabbage",
-        "choma beef (1 kg)": "choma_beef_1kg",
+    "choma beef (1 kg)": "choma_beef_1kg",
     "choma beef (0.5 kg)": "choma_beef_half_kg",
+    "choma beef (1/2 kg)": "choma_beef_half_kg",
     "choma beef 1kg": "choma_beef_1kg",
     "choma beef 0.5kg": "choma_beef_half_kg",
     "choma beef (0.5kg)": "choma_beef_half_kg",
     "choma beef (1kg)": "choma_beef_1kg",
+    "beef choma (1 kg)": "choma_beef_1kg",
+    "beef choma (0.5 kg)": "choma_beef_half_kg",
+    "beef choma (1/2 kg)": "choma_beef_half_kg",
+    "beef choma 1kg": "choma_beef_1kg",
+    "beef choma 0.5kg": "choma_beef_half_kg",
+    "beef choma (0.5kg)": "choma_beef_half_kg",
+    "beef choma (1kg)": "choma_beef_1kg",
     "choma goat (1 kg)": "choma_goat_1kg",
     "choma goat (0.5 kg)": "choma_goat_half_kg",
+    "choma goat (1/2 kg)": "choma_goat_half_kg",
     "choma goat 1kg": "choma_goat_1kg",
     "choma goat 0.5kg": "choma_goat_half_kg",
     "choma goat (0.5kg)": "choma_goat_half_kg",
     "choma goat (1kg)": "choma_goat_1kg",
+    "goat choma (1 kg)": "choma_goat_1kg",
+    "goat choma (0.5 kg)": "choma_goat_half_kg",
+    "goat choma (1/2 kg)": "choma_goat_half_kg",
+    "goat choma 1kg": "choma_goat_1kg",
+    "goat choma 0.5kg": "choma_goat_half_kg",
+    "goat choma (0.5kg)": "choma_goat_half_kg",
+    "goat choma 1/2kg": "choma_goat_half_kg",
     "chemsha beef (1 kg)": "chemsha_beef_1kg",
     "chemsha beef (0.5 kg)": "chemsha_beef_half_kg",
+    "chemsha beef (1/2 kg)": "chemsha_beef_half_kg",
     "chemsha beef 1kg": "chemsha_beef_1kg",
     "chemsha beef 0.5kg": "chemsha_beef_half_kg",
+    "beef chemsha (1 kg)": "chemsha_beef_1kg",
+    "beef chemsha (0.5 kg)": "chemsha_beef_half_kg",
+    "beef chemsha (1/2 kg)": "chemsha_beef_half_kg",
+    "beef chemsha 1kg": "chemsha_beef_1kg",
+    "beef chemsha 0.5kg": "chemsha_beef_half_kg",
     "chemsha goat (1 kg)": "chemsha_goat_1kg",
     "chemsha goat (0.5 kg)": "chemsha_goat_half_kg",
+    "chemsha goat (1/2 kg)": "chemsha_goat_half_kg",
     "chemsha goat 1kg": "chemsha_goat_1kg",
     "chemsha goat 0.5kg": "chemsha_goat_half_kg",
+    "goat chemsha (1 kg)": "chemsha_goat_1kg",
+    "goat chemsha (0.5 kg)": "chemsha_goat_half_kg",
+    "goat chemsha (1/2 kg)": "chemsha_goat_half_kg",
+    "goat chemsha 1kg": "chemsha_goat_1kg",
+    "goat chemsha 0.5kg": "chemsha_goat_half_kg",
     "beef fry / tumbukiza (1 kg)": "beef_fry_tumbukiza_1kg",
     "goat fry / tumbukiza (1 kg)": "goat_fry_tumbukiza_1kg",
     "beef fry / tumbukiza": "beef_fry_tumbukiza_1kg",
@@ -2246,6 +2343,39 @@ const DISH_NAME_TO_INVENTORY_KEY = {
     "managu (greens)": "side_managu"
 };
 
+const INVENTORY_KEY_ALIASES = {
+    'side_chips': ['extra_chips_plain', 'side_chips'],
+    'extra_chips_plain': ['extra_chips_plain', 'side_chips'],
+    'side_chips_masala': ['extra_chips_masala', 'side_chips_masala'],
+    'extra_chips_masala': ['extra_chips_masala', 'side_chips_masala'],
+    'side_rice_plain': ['extra_rice_plain', 'side_rice_plain'],
+    'extra_rice_plain': ['extra_rice_plain', 'side_rice_plain'],
+    'side_mukimo_plain': ['extra_mukimo_plain', 'side_mukimo_plain'],
+    'extra_mukimo_plain': ['extra_mukimo_plain', 'side_mukimo_plain'],
+    'side_rice_mukimo_special': ['extra_rice_mukimo_special', 'side_rice_mukimo_special'],
+    'extra_rice_mukimo_special': ['extra_rice_mukimo_special', 'side_rice_mukimo_special'],
+    'side_pilau_special': ['extra_pilau_special', 'side_pilau_special'],
+    'extra_pilau_special': ['extra_pilau_special', 'side_pilau_special'],
+    'side_waru': ['extra_waru', 'side_waru'],
+    'extra_waru': ['extra_waru', 'side_waru'],
+    'side_spinach': ['extra_spinach', 'side_spinach'],
+    'extra_spinach': ['extra_spinach', 'side_spinach'],
+    'side_banana': ['extra_banana', 'side_banana'],
+    'extra_banana': ['extra_banana', 'side_banana']
+};
+
+function checkInvKeyStatus(inv, key) {
+    if (!key || !inv) return 'ready';
+    if (inv[key] && inv[key] !== 'ready') return inv[key];
+    const aliases = INVENTORY_KEY_ALIASES[key];
+    if (aliases) {
+        for (const alias of aliases) {
+            if (inv[alias] && inv[alias] !== 'ready') return inv[alias];
+        }
+    }
+    return 'ready';
+}
+
 function resolveInventoryKey(name) {
     if (!name) return '';
     const clean = name.toLowerCase().trim().replace(/\s+/g, ' ');
@@ -2261,18 +2391,26 @@ function resolveInventoryKey(name) {
     return clean.replace(/[^a-z0-9]/g, '_');
 }
 
-// --- LIVE CLOUD INVENTORY SYNC ENGINE ---
-const RIBHOUSE_CLOUD_SYNC_URL = 'https://ribhouse-admin-default-rtdb.firebaseio.com/inventory.json';
+// --- LIVE INVENTORY SYNC ENGINE (REST API + BROADCASTCHANNEL + LOCALSTORAGE) ---
+function getInventoryApiUrl() {
+    if (typeof window === 'undefined') return '/api/inventory';
+    if (window.location.protocol === 'file:') {
+        return 'http://localhost:3000/api/inventory';
+    }
+    return '/api/inventory';
+}
+const INVENTORY_API_URL = getInventoryApiUrl();
 
-// Fetch latest inventory from cloud on load & listen in real-time
+// Fetch latest inventory from backend API & merge into local cache
 async function fetchCloudInventory() {
     try {
-        const res = await fetch(RIBHOUSE_CLOUD_SYNC_URL);
+        const res = await fetch(INVENTORY_API_URL);
         if (res.ok) {
             const data = await res.json();
-            if (data && typeof data === 'object') {
+            const inv = data && data.inventory ? data.inventory : data;
+            if (inv && typeof inv === 'object') {
                 const local = getDishInventoryState();
-                const merged = { ...local, ...data };
+                const merged = { ...local, ...inv };
                 localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(merged));
                 refreshAllDishCardsUI();
                 if (typeof renderSelectedOrderPage === 'function') {
@@ -2281,74 +2419,31 @@ async function fetchCloudInventory() {
             }
         }
     } catch (e) {
-        // Fallback to local storage
+        // Network offline, fallback to local storage
     }
 }
 
-// Push status to cloud from admin portal
+// Push item status to backend API
 async function pushCloudInventoryItem(itemId, status) {
     try {
-        await fetch(RIBHOUSE_CLOUD_SYNC_URL, {
-            method: 'PATCH',
+        await fetch(INVENTORY_API_URL, {
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ [itemId]: status })
+            body: JSON.stringify({ itemId, status })
         });
     } catch (e) {
-        // Fallback to local storage
+        // Offline fallback
     }
 }
 
-// Live listener for all customer devices across Kenya (Zero-Latency Real-Time SSE Stream)
+// Live listener for customer devices (Initial fetch + periodic polling + BroadcastChannel)
 function initLiveInventoryListener() {
     fetchCloudInventory();
     
-    // Auto sync periodically in background every 2 seconds as backup
+    // Auto sync periodically every 5 seconds for cross-device updates
     if (!window._ribhouse_sync_interval) {
-        window._ribhouse_sync_interval = setInterval(fetchCloudInventory, 45000);
+        window._ribhouse_sync_interval = setInterval(fetchCloudInventory, 5000);
     }
-
-    // Native Realtime EventSource (SSE Stream) for 0.05-second instant live updates
-    try {
-        if (window.EventSource && !window._ribhouse_eventsource) {
-            const evtSource = new EventSource(RIBHOUSE_CLOUD_SYNC_URL);
-            window._ribhouse_eventsource = evtSource;
-
-            function processLiveCloudPayload(e) {
-                try {
-                    const parsed = JSON.parse(e.data);
-                    if (!parsed) return;
-                    const local = getDishInventoryState();
-                    let hasChanged = false;
-
-                    if (parsed.path === '/' || parsed.path === '') {
-                        if (parsed.data && typeof parsed.data === 'object') {
-                            Object.assign(local, parsed.data);
-                            hasChanged = true;
-                        }
-                    } else if (parsed.path) {
-                        // Single item key updated e.g. path: "/choma_goat_1kg", data: "hold"
-                        const cleanKey = parsed.path.replace(/^\//, '').split('/')[0];
-                        if (cleanKey && parsed.data !== undefined) {
-                            local[cleanKey] = parsed.data;
-                            hasChanged = true;
-                        }
-                    }
-
-                    if (hasChanged) {
-                        localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(local));
-                        refreshAllDishCardsUI();
-                        if (typeof renderSelectedOrderPage === 'function') {
-                            renderSelectedOrderPage();
-                        }
-                    }
-                } catch(err) {}
-            }
-
-            evtSource.addEventListener('put', processLiveCloudPayload);
-            evtSource.addEventListener('patch', processLiveCloudPayload);
-            evtSource.onmessage = processLiveCloudPayload;
-        }
-    } catch (e) {}
 }
 
 if (typeof window !== 'undefined') {
@@ -2365,7 +2460,12 @@ if (typeof window !== 'undefined') {
         if ('BroadcastChannel' in window) {
             const invChannel = new BroadcastChannel('ribhouse_inventory_channel');
             invChannel.onmessage = (e) => {
-                if (e.data && e.data.type === 'inventory_update') {
+                if (e.data && (e.data.type === 'inventory_update' || e.data.type === 'inventory_batch_update')) {
+                    if (e.data.itemId && e.data.status) {
+                        const local = getDishInventoryState();
+                        local[e.data.itemId] = e.data.status;
+                        localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(local));
+                    }
                     if (typeof refreshAllDishCardsUI === 'function') refreshAllDishCardsUI();
                     if (typeof renderSelectedOrderPage === 'function') renderSelectedOrderPage();
                 }
@@ -2374,12 +2474,50 @@ if (typeof window !== 'undefined') {
     } catch (e) {}
 }
 
-function getItemAvailability(name) {
+function getItemAvailability(name, sideName) {
     if (!name) return 'ready';
     try {
         const inv = getDishInventoryState();
-        const key = resolveInventoryKey(name);
-        return inv[key] || 'ready';
+
+        // 1. Direct resolved key check
+        const mainKey = resolveInventoryKey(name);
+        const mainStatus = checkInvKeyStatus(inv, mainKey);
+        if (mainStatus !== 'ready') {
+            return mainStatus;
+        }
+
+        // 2. Explicit sideName check (e.g. side accompaniment passed separately)
+        if (sideName) {
+            const sideKey = resolveInventoryKey(sideName);
+            const sideStatus = checkInvKeyStatus(inv, sideKey);
+            if (sideStatus !== 'ready') {
+                return sideStatus;
+            }
+        }
+
+        // 3. Check for side component inside name (e.g. "Beef Steak with Ugali / Chapati" or "Matumbo Fry (Chips)")
+        const withMatch = name.match(/^(.*?)\s+(?:with|\()\s*([^()]+)\)?$/i);
+        if (withMatch) {
+            const baseDish = withMatch[1].trim();
+            const sidePart = withMatch[2].trim();
+
+            if (baseDish) {
+                const baseKey = resolveInventoryKey(baseDish);
+                const baseStatus = checkInvKeyStatus(inv, baseKey);
+                if (baseStatus !== 'ready') {
+                    return baseStatus;
+                }
+            }
+            if (sidePart) {
+                const sideKey = resolveInventoryKey(sidePart);
+                const sideStatus = checkInvKeyStatus(inv, sideKey);
+                if (sideStatus !== 'ready') {
+                    return sideStatus;
+                }
+            }
+        }
+
+        return 'ready';
     } catch(e) {
         return 'ready';
     }
@@ -2500,15 +2638,19 @@ function initClickableMenuDishes() {
 
                 if (itemStatus === 'hold') {
                     row.style.opacity = '0.65';
-                    row.style.cursor = 'not-allowed';
+                    row.style.cursor = 'pointer';
                     row.style.background = '#FFFBEB';
                     rowPill.innerHTML = 'Hold';
                     rowPill.style.background = '#F59E0B';
                     rowPill.style.color = '#000000';
                     rowPill.style.borderColor = '#D97706';
-                    rowPill.style.cursor = 'not-allowed';
-                    row.onclick = null;
-                    rowPill.onclick = null;
+                    rowPill.style.cursor = 'pointer';
+                    const notifyHoldRow = (e) => {
+                        if (e) { e.stopPropagation(); e.preventDefault(); }
+                        showDishNoticeToast(`⚠️ "${fullDishName}" is currently ON HOLD in the kitchen and cannot be added to your order right now.`, true);
+                    };
+                    row.onclick = notifyHoldRow;
+                    rowPill.onclick = notifyHoldRow;
                     return;
                 }
 
@@ -2573,9 +2715,12 @@ function initClickableMenuDishes() {
                 cardBtn.innerHTML = 'ON HOLD';
                 cardBtn.style.background = '#F59E0B';
                 cardBtn.style.color = '#000000';
-                cardBtn.style.borderColor = '#D97706';
-                cardBtn.style.cursor = 'not-allowed';
-                cardBtn.onclick = null;
+                cardBtn.style.cursor = 'pointer';
+                const notifyHoldMulti = (e) => {
+                    if (e) { e.stopPropagation(); e.preventDefault(); }
+                    showDishNoticeToast(`⚠️ "${mainTitle}" is currently ON HOLD in the kitchen and cannot be ordered right now.`, true);
+                };
+                cardBtn.onclick = notifyHoldMulti;
 
                 if (!cardBadge && mainCardAvail === 'hold') {
                     cardBadge = document.createElement('div');
@@ -2690,16 +2835,21 @@ function initClickableMenuDishes() {
 
             if (itemStatus === 'hold') {
                 card.style.opacity = '1';
-                card.style.cursor = 'not-allowed';
-                card.style.border = '1px solid var(--color-border-gold)';
+                card.style.cursor = 'pointer';
+                card.style.border = '1.5px solid var(--color-hold, #F59E0B)';
                 orderBtn.style.display = 'block';
-                orderBtn.innerHTML = 'On Hold';
+                orderBtn.innerHTML = 'ON HOLD';
                 orderBtn.style.background = '#F59E0B';
                 orderBtn.style.color = '#000000';
                 orderBtn.style.borderColor = '#D97706';
-                orderBtn.style.cursor = 'not-allowed';
-                card.onclick = null;
-                orderBtn.onclick = null;
+                orderBtn.style.cursor = 'pointer';
+
+                const notifyHoldSingle = (e) => {
+                    if (e) { e.stopPropagation(); e.preventDefault(); }
+                    showDishNoticeToast(`⚠️ "${dishName}" is currently ON HOLD in the kitchen and cannot be ordered right now.`, true);
+                };
+                card.onclick = notifyHoldSingle;
+                orderBtn.onclick = notifyHoldSingle;
                 return;
             }
 

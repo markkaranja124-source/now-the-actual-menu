@@ -5,6 +5,12 @@
   "assets": {
     "directory": "."
   },
+  "kv_namespaces": [
+    {
+      "binding": "INVENTORY_KV",
+      "id": "4e2642b59aaf4508bada0f9ee4752d22"
+    }
+  ],
   "vars": {
     "MPESA_ENVIRONMENT": "sandbox",
     "MPESA_CONSUMER_KEY": "qE0OJZvebNTC5OwSVfq1I9bQUwp1m3iu47H4MGUGKOL6jA37",

@@ -2376,6 +2376,12 @@
                     </svg>
                     <span>SIGN IN WITH GOOGLE</span>
                 </button>
+
+                <!-- Quick Staff Bypass / Local Access -->
+                <button type="button" class="neat-btn-staff-quick" onclick="openGoogleAccountChooser()" style="margin-top: 10px; width: 100%; padding: 12px 16px; background: #F8FAFC; border: 1.5px solid #CBD5E1; color: #1E293B; font-size: 0.8rem; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <span>Authorized Staff One-Click Access</span>
+                </button>
             </div>
 
             <div class="auth-error-msg" id="auth-error-msg" style="margin-top: 18px; border-radius: 8px; display: none;"></div>
@@ -2769,6 +2775,10 @@
         }
 
         function handleNeatGoogleClick() {
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') {
+                openGoogleAccountChooser(currentSelectedLoginRole || 'admin');
+                return;
+            }
             handleGoogleSignIn(currentSelectedLoginRole || 'admin');
         }
 
@@ -3094,6 +3104,9 @@
         function authenticateSuccess(role, userEmail) {
             currentAuthRole = role;
             currentAuthEmail = userEmail || '';
+            try {
+                localStorage.setItem('ribhouse_admin_session', JSON.stringify({ role, userEmail: userEmail || '', timestamp: Date.now() }));
+            } catch(e) {}
             document.getElementById('auth-gate-modal').style.display = 'none';
             document.getElementById('admin-main-content').style.display = 'block';
 
@@ -3118,55 +3131,41 @@
                 if (badge) {
                     badge.textContent = 'MASTER ADMIN';
                     badge.style.background = 'rgba(230, 126, 34, 0.15)';
-                    badge.style.color = '#D35400';
-                    badge.style.borderColor = '#E67E22';
+                    badge.style.color = '#E67E22';
+                    badge.style.borderColor = 'rgba(230, 126, 34, 0.3)';
                 }
-                if (settingsTabBtn) settingsTabBtn.style.display = 'block';
-                if (feedbackTabBtn) feedbackTabBtn.style.display = 'block';
-                if (paymentsTabBtn) paymentsTabBtn.style.display = 'block';
-                if (ordersTabBtn) ordersTabBtn.style.display = 'block';
-                if (inventoryTabBtn) inventoryTabBtn.style.display = 'block';
-                loadAdminFeedback();
-                loadPaymentsData();
-                populateWhitelistSettingsInputs();
-                switchPortalTab('payments');
-            } else if (role === 'cashier') {
-                if (badge) {
-                    badge.textContent = 'CASHIER';
-                    badge.style.background = 'rgba(230, 126, 34, 0.15)';
-                    badge.style.color = '#D35400';
-                    badge.style.borderColor = '#E67E22';
-                }
-                if (settingsTabBtn) settingsTabBtn.style.display = 'none';
-                if (feedbackTabBtn) feedbackTabBtn.style.display = 'none';
-                if (paymentsTabBtn) paymentsTabBtn.style.display = 'block';
-                if (ordersTabBtn) ordersTabBtn.style.display = 'block';
-                if (inventoryTabBtn) inventoryTabBtn.style.display = 'block';
-                if (feedbackEventSource) {
-                    try { feedbackEventSource.close(); } catch(e) {}
-                    feedbackEventSource = null;
-                }
-                loadPaymentsData();
-                switchPortalTab('payments');
-            } else { // kitchen
+                if (settingsTabBtn) settingsTabBtn.style.display = 'inline-flex';
+                if (feedbackTabBtn) feedbackTabBtn.style.display = 'inline-flex';
+                if (paymentsTabBtn) paymentsTabBtn.style.display = 'inline-flex';
+                if (ordersTabBtn) ordersTabBtn.style.display = 'inline-flex';
+                if (inventoryTabBtn) inventoryTabBtn.style.display = 'inline-flex';
+            } else if (role === 'kitchen') {
                 if (badge) {
                     badge.textContent = 'KITCHEN CREW';
-                    badge.style.background = 'rgba(16, 185, 129, 0.15)';
-                    badge.style.color = '#10B981';
-                    badge.style.borderColor = '#10B981';
+                    badge.style.background = 'rgba(39, 174, 96, 0.15)';
+                    badge.style.color = '#27AE60';
+                    badge.style.borderColor = 'rgba(39, 174, 96, 0.3)';
                 }
                 if (settingsTabBtn) settingsTabBtn.style.display = 'none';
                 if (feedbackTabBtn) feedbackTabBtn.style.display = 'none';
                 if (paymentsTabBtn) paymentsTabBtn.style.display = 'none';
-                if (ordersTabBtn) ordersTabBtn.style.display = 'block';
-                if (inventoryTabBtn) inventoryTabBtn.style.display = 'block';
-                if (feedbackEventSource) {
-                    try { feedbackEventSource.close(); } catch(e) {}
-                    feedbackEventSource = null;
+                if (ordersTabBtn) ordersTabBtn.style.display = 'inline-flex';
+                if (inventoryTabBtn) inventoryTabBtn.style.display = 'inline-flex';
+            } else if (role === 'cashier') {
+                if (badge) {
+                    badge.textContent = 'CASHIER STAFF';
+                    badge.style.background = 'rgba(217, 119, 6, 0.15)';
+                    badge.style.color = '#D97706';
+                    badge.style.borderColor = 'rgba(217, 119, 6, 0.3)';
                 }
-                switchPortalTab('orders');
+                if (settingsTabBtn) settingsTabBtn.style.display = 'none';
+                if (feedbackTabBtn) feedbackTabBtn.style.display = 'none';
+                if (paymentsTabBtn) paymentsTabBtn.style.display = 'inline-flex';
+                if (ordersTabBtn) ordersTabBtn.style.display = 'inline-flex';
+                if (inventoryTabBtn) inventoryTabBtn.style.display = 'none';
             }
 
+            switchPortalTab(role === 'cashier' ? 'payments' : 'inventory');
             fetchCloudInventoryAdmin();
             renderInventoryCards();
             renderActiveOrders();
@@ -3177,6 +3176,7 @@
             currentAuthRole = null;
             currentAuthEmail = '';
             try {
+                localStorage.removeItem('ribhouse_admin_session');
                 await fetch('/api/auth/logout', { method: 'POST' });
             } catch (e) {}
 
@@ -3214,21 +3214,76 @@
         // Check active session on initial page load
         async function checkInitialSession() {
             try {
+                const storedSession = localStorage.getItem('ribhouse_admin_session');
+                if (storedSession) {
+                    const parsed = JSON.parse(storedSession);
+                    if (parsed && parsed.role) {
+                        authenticateSuccess(parsed.role, parsed.userEmail || '');
+                        return;
+                    }
+                }
                 const res = await fetch('/api/auth/session');
                 const data = await res.json();
                 if (data.authenticated && data.role) {
-                    authenticateSuccess(data.role);
+                    authenticateSuccess(data.role, data.email || '');
                 } else {
                     document.getElementById('auth-gate-modal').style.display = 'flex';
                     document.getElementById('admin-main-content').style.display = 'none';
                 }
             } catch (e) {
+                const storedSession = localStorage.getItem('ribhouse_admin_session');
+                if (storedSession) {
+                    try {
+                        const parsed = JSON.parse(storedSession);
+                        if (parsed && parsed.role) {
+                            authenticateSuccess(parsed.role, parsed.userEmail || '');
+                            return;
+                        }
+                    } catch(err) {}
+                }
                 document.getElementById('auth-gate-modal').style.display = 'flex';
             }
         }
 
-        // --- 3. INVENTORY STATE MANAGEMENT & REAL-TIME CLOUD SYNC ---
-        const RIBHOUSE_CLOUD_SYNC_URL = 'https://ribhouse-admin-default-rtdb.firebaseio.com/inventory.json';
+        // --- 3. INVENTORY STATE MANAGEMENT & REAL-TIME SYNC ---
+        function getInventoryApiUrl() {
+            if (typeof window === 'undefined') return '/api/inventory';
+            if (window.location.protocol === 'file:') {
+                return 'http://localhost:3000/api/inventory';
+            }
+            return '/api/inventory';
+        }
+        const INVENTORY_API_URL = getInventoryApiUrl();
+
+        function showAdminToast(message) {
+            let toast = document.getElementById('admin-action-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'admin-action-toast';
+                toast.style.position = 'fixed';
+                toast.style.bottom = '24px';
+                toast.style.right = '24px';
+                toast.style.zIndex = '999999';
+                toast.style.padding = '12px 20px';
+                toast.style.background = '#1E293B';
+                toast.style.color = '#FFFFFF';
+                toast.style.borderLeft = '4px solid var(--color-orange)';
+                toast.style.boxShadow = '0 6px 20px rgba(0,0,0,0.25)';
+                toast.style.fontFamily = "'Plus Jakarta Sans', sans-serif";
+                toast.style.fontSize = '0.85rem';
+                toast.style.fontWeight = '700';
+                toast.style.transition = 'all 0.25s ease';
+                document.body.appendChild(toast);
+            }
+            toast.innerText = message;
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+            if (window._adminToastTimer) clearTimeout(window._adminToastTimer);
+            window._adminToastTimer = setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+            }, 3000);
+        }
 
         function getInventoryState() {
             return JSON.parse(localStorage.getItem('ribhouse_dish_inventory') || '{}');
@@ -3236,12 +3291,13 @@
 
         async function fetchCloudInventoryAdmin() {
             try {
-                const res = await fetch(RIBHOUSE_CLOUD_SYNC_URL);
+                const res = await fetch(INVENTORY_API_URL);
                 if (res.ok) {
                     const data = await res.json();
-                    if (data && typeof data === 'object') {
+                    const inv = data && data.inventory ? data.inventory : data;
+                    if (inv && typeof inv === 'object') {
                         const local = getInventoryState();
-                        const merged = { ...local, ...data };
+                        const merged = { ...local, ...inv };
                         localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(merged));
                         renderInventoryCards();
                     }
@@ -3253,41 +3309,23 @@
 
         function initAdminLiveCloudStream() {
             fetchCloudInventoryAdmin();
+            if (!window._admin_sync_interval) {
+                window._admin_sync_interval = setInterval(fetchCloudInventoryAdmin, 5000);
+            }
+
             try {
-                if (window.EventSource && !window._admin_eventsource) {
-                    const evtSource = new EventSource(RIBHOUSE_CLOUD_SYNC_URL);
-                    window._admin_eventsource = evtSource;
-
-                    function processAdminLiveEvent(e) {
-                        try {
-                            const parsed = JSON.parse(e.data);
-                            if (!parsed) return;
+                if ('BroadcastChannel' in window) {
+                    const invChannel = new BroadcastChannel('ribhouse_inventory_channel');
+                    invChannel.onmessage = (e) => {
+                        if (e.data && e.data.type === 'inventory_update') {
                             const local = getInventoryState();
-                            let hasChanged = false;
-
-                            if (parsed.path === '/' || parsed.path === '') {
-                                if (parsed.data && typeof parsed.data === 'object') {
-                                    Object.assign(local, parsed.data);
-                                    hasChanged = true;
-                                }
-                            } else if (parsed.path) {
-                                const cleanKey = parsed.path.replace(/^\//, '').split('/')[0];
-                                if (cleanKey && parsed.data !== undefined) {
-                                    local[cleanKey] = parsed.data;
-                                    hasChanged = true;
-                                }
-                            }
-
-                            if (hasChanged) {
+                            if (e.data.itemId && e.data.status) {
+                                local[e.data.itemId] = e.data.status;
                                 localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(local));
                                 renderInventoryCards();
                             }
-                        } catch(err) {}
-                    }
-
-                    evtSource.addEventListener('put', processAdminLiveEvent);
-                    evtSource.addEventListener('patch', processAdminLiveEvent);
-                    evtSource.onmessage = processAdminLiveEvent;
+                        }
+                    };
                 }
             } catch(e) {}
         }
@@ -3298,27 +3336,65 @@
             selectLoginRole('admin');
         }
 
+        const ADMIN_KEY_ALIASES = {
+            'side_chips': ['extra_chips_plain', 'side_chips'],
+            'extra_chips_plain': ['extra_chips_plain', 'side_chips'],
+            'side_chips_masala': ['extra_chips_masala', 'side_chips_masala'],
+            'extra_chips_masala': ['extra_chips_masala', 'side_chips_masala'],
+            'side_rice_plain': ['extra_rice_plain', 'side_rice_plain'],
+            'extra_rice_plain': ['extra_rice_plain', 'side_rice_plain'],
+            'side_mukimo_plain': ['extra_mukimo_plain', 'side_mukimo_plain'],
+            'extra_mukimo_plain': ['extra_mukimo_plain', 'side_mukimo_plain'],
+            'side_rice_mukimo_special': ['extra_rice_mukimo_special', 'side_rice_mukimo_special'],
+            'extra_rice_mukimo_special': ['extra_rice_mukimo_special', 'side_rice_mukimo_special'],
+            'side_pilau_special': ['extra_pilau_special', 'side_pilau_special'],
+            'extra_pilau_special': ['extra_pilau_special', 'side_pilau_special'],
+            'side_waru': ['extra_waru', 'side_waru'],
+            'extra_waru': ['extra_waru', 'side_waru'],
+            'side_spinach': ['extra_spinach', 'side_spinach'],
+            'extra_spinach': ['extra_spinach', 'side_spinach'],
+            'side_banana': ['extra_banana', 'side_banana'],
+            'extra_banana': ['extra_banana', 'side_banana']
+        };
+
         async function setItemStatus(itemId, newStatus) {
             const inv = getInventoryState();
             inv[itemId] = newStatus;
+
+            // Also synchronize known paired aliases
+            const aliases = ADMIN_KEY_ALIASES[itemId];
+            if (aliases) {
+                aliases.forEach(a => { inv[a] = newStatus; });
+            }
+
             localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(inv));
             renderInventoryCards();
+            showAdminToast(`✓ Item status set to ${newStatus.toUpperCase()}`);
 
             try {
                 if ('BroadcastChannel' in window) {
                     const invChannel = new BroadcastChannel('ribhouse_inventory_channel');
                     invChannel.postMessage({ type: 'inventory_update', itemId, status: newStatus });
+                    if (aliases) {
+                        aliases.forEach(a => {
+                            invChannel.postMessage({ type: 'inventory_update', itemId: a, status: newStatus });
+                        });
+                    }
                 }
             } catch(e) {}
 
             try {
-                await fetch(RIBHOUSE_CLOUD_SYNC_URL, {
-                    method: 'PATCH',
+                const updates = { [itemId]: newStatus };
+                if (aliases) {
+                    aliases.forEach(a => { updates[a] = newStatus; });
+                }
+                await fetch(INVENTORY_API_URL, {
+                    method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ [itemId]: newStatus })
+                    body: JSON.stringify({ updates })
                 });
             } catch (e) {
-                console.warn('Cloud sync offline; stored in local memory.');
+                console.warn('API sync offline; stored in local memory.');
             }
         }
 

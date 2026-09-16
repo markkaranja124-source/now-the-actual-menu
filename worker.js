@@ -4,6 +4,7 @@
  */
 
 const transactions = new Map();
+const liveInventory = new Map();
 
 function formatPhoneNumber(phone) {
     if (!phone) return null;
@@ -285,6 +286,83 @@ export default {
             }
         }
 
+        // 4b. LIVE INVENTORY MANAGEMENT API (GET / POST / PATCH)
+        if (url.pathname === '/api/inventory') {
+            const apiHeaders = {
+                ...corsHeaders,
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate'
+            };
+
+            if (request.method === 'GET') {
+                let invObj = Object.fromEntries(liveInventory.entries());
+                if (env.INVENTORY_KV) {
+                    try {
+                        const raw = await env.INVENTORY_KV.get('inventory_state');
+                        if (raw) {
+                            const parsed = JSON.parse(raw);
+                            invObj = { ...invObj, ...parsed };
+                            for (const [k, v] of Object.entries(parsed)) {
+                                liveInventory.set(k, v);
+                            }
+                        }
+                    } catch (kvErr) {
+                        console.warn('[KV Get Error]:', kvErr.message);
+                    }
+                }
+                return new Response(JSON.stringify({ success: true, inventory: invObj }), {
+                    headers: apiHeaders
+                });
+            }
+
+            if (request.method === 'POST' || request.method === 'PATCH') {
+                try {
+                    const body = await request.json();
+                    let current = Object.fromEntries(liveInventory.entries());
+                    if (env.INVENTORY_KV) {
+                        try {
+                            const raw = await env.INVENTORY_KV.get('inventory_state');
+                            if (raw) current = { ...current, ...JSON.parse(raw) };
+                        } catch (e) {}
+                    }
+
+                    if (body.itemId && body.status !== undefined) {
+                        current[body.itemId] = body.status;
+                        liveInventory.set(body.itemId, body.status);
+                    } else if (body.updates && typeof body.updates === 'object') {
+                        for (const [k, v] of Object.entries(body.updates)) {
+                            current[k] = v;
+                            liveInventory.set(k, v);
+                        }
+                    } else if (typeof body === 'object') {
+                        for (const [k, v] of Object.entries(body)) {
+                            if (typeof v === 'string' || typeof v === 'boolean') {
+                                current[k] = v;
+                                liveInventory.set(k, v);
+                            }
+                        }
+                    }
+
+                    if (env.INVENTORY_KV) {
+                        try {
+                            await env.INVENTORY_KV.put('inventory_state', JSON.stringify(current));
+                        } catch (kvErr) {
+                            console.warn('[KV Put Error]:', kvErr.message);
+                        }
+                    }
+
+                    return new Response(JSON.stringify({ success: true, inventory: current }), {
+                        headers: apiHeaders
+                    });
+                } catch (e) {
+                    return new Response(JSON.stringify({ success: false, error: e.message }), {
+                        status: 500,
+                        headers: apiHeaders
+                    });
+                }
+            }
+        }
+
         // 5. ROUTE REWRITES & REDIRECTS FOR PAYMENT & HOME
         const cleanPath = url.pathname.toLowerCase();
         if (cleanPath === '/home' || cleanPath === '/home/') {
@@ -306,13 +384,13 @@ export default {
         if (/\.(webp|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$/.test(pathname)) {
             newHeaders.set('Cache-Control', 'public, max-age=31536000, immutable');
         }
-        // 2. CSS and JS bundles - Cache with stale-while-revalidate
+        // 2. CSS and JS bundles - Short cache + background revalidation
         else if (/\.(css|js)$/.test(pathname)) {
-            newHeaders.set('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
+            newHeaders.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=600');
         }
-        // 3. HTML pages - Fast 5-minute browser cache + background revalidation
+        // 3. HTML pages - No stale caching so admin/menu changes are visible immediately
         else {
-            newHeaders.set('Cache-Control', 'public, max-age=300, stale-while-revalidate=86400');
+            newHeaders.set('Cache-Control', 'no-cache, no-store, must-revalidate');
         }
 
         return new Response(assetResponse.body, {

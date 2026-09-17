@@ -543,6 +543,54 @@ function syncMainDishesUIState() {
             pill.style.setProperty('border-color', '#CBD5E1', 'important');
         }
     });
+
+    // 6. Sync Split Showcase Variant Cards (.main-dish-variant-card & .variant-order-btn)
+    const variantCards = document.querySelectorAll('.main-dish-variant-card');
+    variantCards.forEach(card => {
+        let exactName = card.getAttribute('data-dish-name') || '';
+        const btn = card.querySelector('.variant-order-btn');
+        if (!exactName && btn) {
+            exactName = btn.getAttribute('data-dish-name') || '';
+        }
+        if (!exactName) {
+            const h4 = card.querySelector('.variant-name');
+            if (h4) exactName = h4.innerText.trim();
+        }
+        if (!exactName) return;
+
+        const isSel = cart.some(item => norm(item.name) === norm(exactName));
+        const itemStatus = typeof getItemAvailability === 'function' ? getItemAvailability(exactName) : 'ready';
+
+        if (itemStatus === 'hold') {
+            card.style.opacity = '0.65';
+            if (btn) {
+                btn.innerHTML = 'ON HOLD';
+                btn.classList.add('hold-state');
+                btn.classList.remove('added-state');
+                btn.style.background = '#F59E0B';
+                btn.style.color = '#000000';
+            }
+        } else if (isSel) {
+            card.style.opacity = '1';
+            card.style.borderColor = '#10B981';
+            if (btn) {
+                btn.innerHTML = '✓ ADDED';
+                btn.classList.add('added-state');
+                btn.classList.remove('hold-state');
+                btn.style.background = '#10B981';
+                btn.style.color = '#FFFFFF';
+            }
+        } else {
+            card.style.opacity = '1';
+            card.style.borderColor = '#EFE4D6';
+            if (btn) {
+                btn.innerHTML = '+ Add to Order';
+                btn.classList.remove('added-state', 'hold-state');
+                btn.style.background = 'linear-gradient(135deg, #FF6B00 0%, #EA580C 100%)';
+                btn.style.color = '#FFFFFF';
+            }
+        }
+    });
 }
 
 function autoInjectDishCardThumbnails() {

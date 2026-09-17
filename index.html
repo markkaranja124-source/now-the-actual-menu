@@ -573,6 +573,225 @@
             box-shadow: 0 6px 18px rgba(234, 88, 12, 0.38) !important;
         }
 
+        /* 5. MAIN DISHES SPLIT FEATURE SHOWCASE (REFERENCE MOCKUP STYLE) */
+        .main-dishes-showcase-section {
+            background: #FFFDF9 !important;
+            padding: 30px 0 60px !important;
+            border-top: 1px solid #F1E5D8;
+            position: relative;
+        }
+
+        .main-dish-split-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1.18fr;
+            gap: 36px;
+            align-items: stretch;
+            background: #FAF7F2;
+            border: 1px solid #EFE4D6;
+            border-radius: 16px;
+            padding: 24px 26px;
+            margin-bottom: 42px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .main-dish-split-showcase:hover {
+            border-color: #E2CEB7;
+            box-shadow: 0 8px 26px rgba(0, 0, 0, 0.06);
+        }
+
+        .main-dish-split-showcase .watermark-leaf-accent {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            opacity: 0.15;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Left Column: Hero Photography */
+        .main-dish-hero-visual {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            background: #EDE4D8;
+            min-height: 380px;
+            display: flex;
+        }
+
+        .main-dish-hero-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .main-dish-split-showcase:hover .main-dish-hero-visual img {
+            transform: scale(1.025);
+        }
+
+        /* Right Column: Title, Description, and Stacked Variant Cards */
+        .main-dish-details-pane {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0;
+            padding-right: 4px;
+        }
+
+        .main-dish-title {
+            font-family: var(--font-serif);
+            font-size: 2.15rem;
+            font-weight: 700;
+            color: #111114;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0 0 6px 0;
+            line-height: 1.15;
+        }
+
+        .main-dish-desc {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            color: #64748B;
+            line-height: 1.5;
+            margin: 0 0 18px 0;
+        }
+
+        .main-dish-variants-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+        }
+
+        /* Individual Variant Card */
+        .main-dish-variant-card {
+            background: #FFFFFF;
+            border: 1px solid #EFE4D6;
+            border-radius: 12px;
+            padding: 8px 14px 8px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .main-dish-variant-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(234, 88, 12, 0.12);
+            border-color: #EA580C;
+        }
+
+        /* Left info cluster */
+        .variant-info-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+            flex-grow: 1;
+        }
+
+        .variant-thumb {
+            width: 76px;
+            height: 52px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            background: #F8F4EE;
+        }
+
+        .variant-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        .variant-name {
+            font-family: var(--font-serif);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #0F172A;
+            margin: 0;
+            line-height: 1.25;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .variant-desc {
+            font-family: var(--font-sans);
+            font-size: 0.78rem;
+            color: #64748B;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Right action cluster */
+        .variant-action-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+            flex-shrink: 0;
+            margin-left: 12px;
+        }
+
+        .variant-price {
+            font-family: var(--font-sans);
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #EA580C;
+            line-height: 1;
+            letter-spacing: 0.3px;
+        }
+
+        .variant-order-btn {
+            background: linear-gradient(135deg, #FF6B00 0%, #EA580C 100%);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 20px;
+            padding: 5px 14px;
+            font-family: var(--font-sans);
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(234, 88, 12, 0.22);
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .variant-order-btn:hover {
+            background: linear-gradient(135deg, #FF7A00 0%, #C2410C 100%);
+            transform: scale(1.03);
+            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
+        }
+
+        .variant-order-btn.added-state {
+            background: #10B981 !important;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3) !important;
+        }
+
+        .variant-order-btn.hold-state {
+            background: #F59E0B !important;
+            color: #000000 !important;
+            box-shadow: none !important;
+        }
+
         /* Mobile Adjustments */
         @media (max-width: 900px) {
             .navbar .nav-container {
@@ -619,6 +838,35 @@
             }
             .cj-leaf-watermark {
                 display: none;
+            }
+            .main-dish-split-showcase {
+                grid-template-columns: 1fr !important;
+                gap: 18px !important;
+                padding: 16px !important;
+            }
+            .main-dish-hero-visual {
+                min-height: 240px !important;
+                max-height: 290px !important;
+            }
+            .main-dish-title {
+                font-size: 1.65rem !important;
+            }
+            .variant-thumb {
+                width: 62px !important;
+                height: 46px !important;
+            }
+            .variant-name {
+                font-size: 0.95rem !important;
+            }
+            .variant-desc {
+                font-size: 0.72rem !important;
+            }
+            .variant-price {
+                font-size: 1.1rem !important;
+            }
+            .variant-order-btn {
+                padding: 4px 10px !important;
+                font-size: 0.72rem !important;
             }
         }
     </style>
@@ -1459,494 +1707,589 @@
             </div>
         </section>
 
-        <!-- PART 2: MAIN DISHES MENU SECTION -->
-        <section class="menu-catalog-section" id="main-dishes-section"
-            style="background: #FFFFFF; border-top: 1px solid #E5E7EB;">
-            <div class="section-wrapper">
-                <div class="section-header-editorial">
-                    <h2 class="section-heading-editorial">MAIN DISHES MENU</h2>
-                    <p class="section-subtext-editorial">Explore our main meat and fish dishes with all side options and
-                        exact prices listed below.</p>
+        <!-- PART 2: MAIN DISHES MENU SECTION (2-COLUMN LUXURY SPLIT SHOWCASE) -->
+        <section class="main-dishes-showcase-section" id="main-dishes-section">
+            <div class="section-wrapper" style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+
+                <!-- Section Editorial Header -->
+                <div class="cj-hero-editorial" style="padding: 20px 20px 32px; background: transparent;">
+                    <div class="cj-kicker">FRESH &bull; SIZZLING &bull; FLAVORFUL</div>
+                    <h2 class="cj-main-title" style="font-size: 2.8rem;">MAIN DISHES</h2>
+                    <div class="cj-title-divider">
+                        <span class="rule"></span>
+                        <span class="label">SIGNATURE SPECIALS</span>
+                        <span class="rule"></span>
+                    </div>
+                    <p class="cj-subtitle" style="margin-bottom: 30px;">
+                        Explore our chef-crafted beef, simmered goat, crispy & wet fry chicken, and whole lake tilapia paired with your choice of savory accompaniments.
+                    </p>
+
+                    <!-- Section Divider Bar -->
+                    <div class="cj-category-header-bar" style="margin: 10px 0 28px;">
+                        <div class="cj-category-title-wrap">
+                            <span class="cj-category-icon">🍴</span>
+                            <span class="cj-category-name">MAIN COURSES &amp; SIZZLING COMBOS</span>
+                        </div>
+                        <div class="cj-category-line"></div>
+                    </div>
                 </div>
 
-                <!-- Main Dishes Grid (Structured Matching Reference Screenshot) -->
-                <div id="main-dishes-grid" style="display: flex; flex-direction: column; gap: 35px; max-width: 600px; margin: 0 auto 50px auto;">
+                <div id="main-dishes-showcase-container">
 
-                    <!-- BEEF STEAK -->
-                    <div class="main-dish-section-block" id="dish-beef-steak">
-                        <div class="main-dish-title-header">
-                            <h3>BEEF STEAK</h3>
-                            <div class="divider-symbol"><img src="logo.webp" alt="Rib House Emblem" / loading="lazy" decoding="async"></div>
+                    <!-- SHOWCASE 1: BEEF STEW & RICE (EXACT MATCH TO REFERENCE MOCKUP) -->
+                    <div class="main-dish-split-showcase" id="dish-beef-stew-showcase">
+                        <!-- Watermark Leaf Accent -->
+                        <svg class="watermark-leaf-accent" width="95" height="95" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+                            <path d="M20,80 Q30,20 80,20 Q70,70 20,80 Z" stroke="#EA580C" stroke-width="2.5" fill="#EA580C"/>
+                            <path d="M20,80 Q50,50 80,20" stroke="#EA580C" stroke-width="1.5"/>
+                            <path d="M40,60 Q55,50 65,45" stroke="#EA580C" stroke-width="1.2"/>
+                            <path d="M30,70 Q45,60 55,55" stroke="#EA580C" stroke-width="1.2"/>
+                        </svg>
+
+                        <!-- Left Column: Large Hero Visual -->
+                        <div class="main-dish-hero-visual">
+                            <img src="beef_stew_showcase.webp" alt="Beef Stew & Rice" loading="lazy" decoding="async">
                         </div>
-                        <div class="main-dish-side-row" data-dish-name="Beef Steak with Ugali / Chapati" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Beef Steak with Ugali / Chapati', '590/=', 'Beef Steak served with Ugali or Chapati', 'Main Dishes');">
-                            <span class="main-dish-side-name">Ugali / Chapati</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">590/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
+
+                        <!-- Right Column: Details & Stacked Variant Cards -->
+                        <div class="main-dish-details-pane">
+                            <h3 class="main-dish-title">BEEF STEW &amp; RICE</h3>
+                            <p class="main-dish-desc">Tender beef cooked in a rich tomato-based sauce, served with fluffy rice and fresh greens.</p>
+
+                            <div class="main-dish-variants-stack">
+                                <!-- Variant 1: Classic Beef Stew & Rice -->
+                                <div class="main-dish-variant-card" data-dish-name="Classic Beef Stew & Rice" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Classic Beef Stew & Rice', '450/=', 'Tender beef, rich sauce, rice, greens.', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="beef_stew_thumb1.webp" alt="Classic Beef Stew & Rice" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Classic Beef Stew &amp; Rice</h4>
+                                            <p class="variant-desc">Tender beef, rich sauce, rice, greens.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">450/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Classic Beef Stew & Rice" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Classic Beef Stew & Rice', '450/=', 'Tender beef, rich sauce, rice, greens.', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <!-- Variant 2: Spicy Beef Stew & Rice -->
+                                <div class="main-dish-variant-card" data-dish-name="Spicy Beef Stew & Rice" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Spicy Beef Stew & Rice', '480/=', 'Tender beef, spicy sauce, rice, greens.', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="beef_stew_thumb2.webp" alt="Spicy Beef Stew & Rice" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Spicy Beef Stew &amp; Rice</h4>
+                                            <p class="variant-desc">Tender beef, spicy sauce, rice, greens.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">480/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Spicy Beef Stew & Rice" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Spicy Beef Stew & Rice', '480/=', 'Tender beef, spicy sauce, rice, greens.', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <!-- Variant 3: Beef Stew & Rice (With Veggies) -->
+                                <div class="main-dish-variant-card" data-dish-name="Beef Stew & Rice (With Veggies)" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Beef Stew & Rice (With Veggies)', '520/=', 'Tender beef, rich sauce, rice, mixed vegetables.', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="beef_stew_thumb3.webp" alt="Beef Stew & Rice (With Veggies)" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Beef Stew &amp; Rice (With Veggies)</h4>
+                                            <p class="variant-desc">Tender beef, rich sauce, rice, mixed vegetables.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">520/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Beef Stew & Rice (With Veggies)" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Beef Stew & Rice (With Veggies)', '520/=', 'Tender beef, rich sauce, rice, mixed vegetables.', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <!-- Variant 4: Extra Meat Beef Stew & Rice -->
+                                <div class="main-dish-variant-card" data-dish-name="Extra Meat Beef Stew & Rice" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Extra Meat Beef Stew & Rice', '600/=', 'More beef, rich sauce, rice, greens.', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="beef_stew_thumb4.webp" alt="Extra Meat Beef Stew & Rice" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Extra Meat Beef Stew &amp; Rice</h4>
+                                            <p class="variant-desc">More beef, rich sauce, rice, greens.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">600/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Extra Meat Beef Stew & Rice" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Extra Meat Beef Stew & Rice', '600/=', 'More beef, rich sauce, rice, greens.', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <!-- Variant 5: Beef Stew with Ugali / Chapati -->
+                                <div class="main-dish-variant-card" data-dish-name="Beef Stew / Fry with Ugali / Chapati" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Beef Stew / Fry with Ugali / Chapati', '440/=', 'Rich slow-cooked beef stew served with hot ugali or chapati.', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="beef.webp" alt="Beef Stew with Ugali / Chapati" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Beef Stew with Ugali / Chapati</h4>
+                                            <p class="variant-desc">Slow-cooked tender beef served with fresh ugali or soft chapati.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">440/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Beef Stew / Fry with Ugali / Chapati" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Beef Stew / Fry with Ugali / Chapati', '440/=', 'Rich slow-cooked beef stew served with hot ugali or chapati.', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Beef Steak with Rice / Mukimo', '600/=', 'Beef Steak served with Rice or Mukimo', 'Main Dishes');">
-                            <span class="main-dish-side-name">Rice / Mukimo</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">600/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Beef Steak with Pilau', '690/=', 'Beef Steak served with Pilau', 'Main Dishes');">
-                            <span class="main-dish-side-name">Pilau</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">690/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Beef Steak with Chips', '740/=', 'Beef Steak served with Chips', 'Main Dishes');">
-                            <span class="main-dish-side-name">Chips</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">740/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Beef Steak with Chips Masala', '800/=', 'Beef Steak served with Chips Masala', 'Main Dishes');">
-                            <span class="main-dish-side-name">Chips Masala</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">800/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <!-- Bottom Action Banner -->
-                        <div class="main-dish-featured-banner" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'BEEF STEAK', '590/=', 'Sizzling Beef Steak', 'Main Dishes');">
-                            <img src="Steakbeaf.webp" alt="BEEF STEAK" class="main-dish-featured-img" / loading="lazy" decoding="async">
-                            <div class="main-dish-featured-text">ADD BEEF STEAK<br>TO ORDER</div>
-                            <button type="button" class="main-dish-featured-arrow-btn">➔</button>
                         </div>
                     </div>
 
-                    <!-- DEEP FRIED CHICKEN -->
-                    <div class="main-dish-section-block" id="dish-deep-fried-chicken">
-                        <div class="main-dish-title-header">
-                            <h3>DEEP FRIED CHICKEN</h3>
-                            <div class="divider-symbol"><img src="logo.webp" alt="Rib House Emblem" / loading="lazy" decoding="async"></div>
+                    <!-- SHOWCASE 2: BEEF STEAK SPECIALS -->
+                    <div class="main-dish-split-showcase" id="dish-beef-steak-showcase">
+                        <!-- Watermark Leaf Accent -->
+                        <svg class="watermark-leaf-accent" width="95" height="95" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+                            <path d="M20,80 Q30,20 80,20 Q70,70 20,80 Z" stroke="#EA580C" stroke-width="2.5" fill="#EA580C"/>
+                            <path d="M20,80 Q50,50 80,20" stroke="#EA580C" stroke-width="1.5"/>
+                            <path d="M40,60 Q55,50 65,45" stroke="#EA580C" stroke-width="1.2"/>
+                            <path d="M30,70 Q45,60 55,55" stroke="#EA580C" stroke-width="1.2"/>
+                        </svg>
+
+                        <!-- Left Column: Hero Visual -->
+                        <div class="main-dish-hero-visual">
+                            <img src="Steakbeaf.webp" alt="Beef Steak Specials" loading="lazy" decoding="async">
                         </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Deep Fried Chicken with Ugali / Chapati', '390/=', 'Deep Fried Chicken served with Ugali or Chapati', 'Main Dishes');">
-                            <span class="main-dish-side-name">Ugali / Chapati</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">390/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
+
+                        <!-- Right Column: Details & Cards -->
+                        <div class="main-dish-details-pane">
+                            <h3 class="main-dish-title">BEEF STEAK SPECIALS</h3>
+                            <p class="main-dish-desc">Prime tender cut beef steak seasoned with herbs and flame-grilled to sizzling perfection.</p>
+
+                            <div class="main-dish-variants-stack">
+                                <div class="main-dish-variant-card" data-dish-name="Beef Steak with Ugali / Chapati" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Beef Steak with Ugali / Chapati', '590/=', 'Sizzling prime steak served with hot ugali or soft chapati.', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="Steakbeaf.webp" alt="Beef Steak with Ugali / Chapati" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Beef Steak with Ugali / Chapati</h4>
+                                            <p class="variant-desc">Sizzling prime steak served with hot ugali or soft chapati.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">590/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Beef Steak with Ugali / Chapati" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Beef Steak with Ugali / Chapati', '590/=', 'Sizzling prime steak served with hot ugali or soft chapati.', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Beef Steak with Rice / Mukimo" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Beef Steak with Rice / Mukimo', '600/=', 'Flame-grilled beef steak served with seasoned rice or traditional mukimo.', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="mukimoplain.webp" alt="Beef Steak with Rice / Mukimo" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Beef Steak with Rice / Mukimo</h4>
+                                            <p class="variant-desc">Flame-grilled beef steak served with steamed rice or traditional mukimo.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">600/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Beef Steak with Rice / Mukimo" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Beef Steak with Rice / Mukimo', '600/=', 'Flame-grilled beef steak served with seasoned rice or traditional mukimo.', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Beef Steak with Pilau" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Beef Steak with Pilau', '690/=', 'Charcoal-grilled steak served with fragrant Swahili pilau.', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="Pilauplain.webp" alt="Beef Steak with Pilau" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Beef Steak with Pilau</h4>
+                                            <p class="variant-desc">Charcoal-grilled steak served with aromatic Swahili pilau.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">690/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Beef Steak with Pilau" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Beef Steak with Pilau', '690/=', 'Charcoal-grilled steak served with fragrant Swahili pilau.', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Beef Steak with Chips" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Beef Steak with Chips', '740/=', 'Juicy grilled steak paired with golden hand-cut fries.', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="Fries with salad.webp" alt="Beef Steak with Chips" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Beef Steak with Chips</h4>
+                                            <p class="variant-desc">Juicy grilled steak paired with golden crispy French fries.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">740/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Beef Steak with Chips" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Beef Steak with Chips', '740/=', 'Juicy grilled steak paired with golden hand-cut fries.', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Beef Steak with Chips Masala" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Beef Steak with Chips Masala', '800/=', 'Spicy masala-tossed chips served with tender beef steak.', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="Chipsmasala.webp" alt="Beef Steak with Chips Masala" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Beef Steak with Chips Masala</h4>
+                                            <p class="variant-desc">Spicy masala-tossed fries served with sizzling prime steak.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">800/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Beef Steak with Chips Masala" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Beef Steak with Chips Masala', '800/=', 'Spicy masala-tossed chips served with tender beef steak.', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Deep Fried Chicken with Rice / Mukimo', '400/=', 'Deep Fried Chicken served with Rice or Mukimo', 'Main Dishes');">
-                            <span class="main-dish-side-name">Rice / Mukimo</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">400/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Deep Fried Chicken with Pilau', '490/=', 'Deep Fried Chicken served with Pilau', 'Main Dishes');">
-                            <span class="main-dish-side-name">Pilau</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">490/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Deep Fried Chicken with Chips', '600/=', 'Deep Fried Chicken served with Chips', 'Main Dishes');">
-                            <span class="main-dish-side-name">Chips</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">600/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Deep Fried Chicken with Chips Masala', '630/=', 'Deep Fried Chicken served with Chips Masala', 'Main Dishes');">
-                            <span class="main-dish-side-name">Chips Masala</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">630/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-featured-banner" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'DEEP FRIED CHICKEN', '390/=', 'Crispy Deep Fried Chicken', 'Main Dishes');">
-                            <img src="chickenquaterwithchips.webp" alt="DEEP FRIED CHICKEN" class="main-dish-featured-img" / loading="lazy" decoding="async">
-                            <div class="main-dish-featured-text">ADD DEEP FRIED CHICKEN<br>TO ORDER</div>
-                            <button type="button" class="main-dish-featured-arrow-btn">➔</button>
                         </div>
                     </div>
 
-                    <!-- BEEF STEW / FRY -->
-                    <div class="main-dish-section-block" id="dish-beef-stew-fry">
-                        <div class="main-dish-title-header">
-                            <h3>BEEF STEW / FRY</h3>
-                            <div class="divider-symbol"><img src="logo.webp" alt="Rib House Emblem" / loading="lazy" decoding="async"></div>
+                    <!-- SHOWCASE 3: GOAT STEW & COMBOS -->
+                    <div class="main-dish-split-showcase" id="dish-goat-stew-showcase">
+                        <svg class="watermark-leaf-accent" width="95" height="95" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+                            <path d="M20,80 Q30,20 80,20 Q70,70 20,80 Z" stroke="#EA580C" stroke-width="2.5" fill="#EA580C"/>
+                            <path d="M20,80 Q50,50 80,20" stroke="#EA580C" stroke-width="1.5"/>
+                            <path d="M40,60 Q55,50 65,45" stroke="#EA580C" stroke-width="1.2"/>
+                            <path d="M30,70 Q45,60 55,55" stroke="#EA580C" stroke-width="1.2"/>
+                        </svg>
+
+                        <div class="main-dish-hero-visual">
+                            <img src="Chemshagoat.webp" alt="Goat Stew Combos" loading="lazy" decoding="async">
                         </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Beef Stew / Fry with Ugali / Chapati', '440/=', 'Beef Stew/Fry served with Ugali or Chapati', 'Main Dishes');">
-                            <span class="main-dish-side-name">Ugali / Chapati</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">440/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
+
+                        <div class="main-dish-details-pane">
+                            <h3 class="main-dish-title">GOAT STEW &amp; COMBOS</h3>
+                            <p class="main-dish-desc">Tender goat meat slow-simmered in aromatic spices, sweet red onions, and rich pan gravy.</p>
+
+                            <div class="main-dish-variants-stack">
+                                <div class="main-dish-variant-card" data-dish-name="Goat Stew / Fry with Ugali / Chapati" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Goat Stew / Fry with Ugali / Chapati', '470/=', 'Goat Stew/Fry served with Ugali or Chapati', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="Chemshagoat.webp" alt="Goat Stew with Ugali / Chapati" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Goat Stew with Ugali / Chapati</h4>
+                                            <p class="variant-desc">Simmered tender goat meat served with ugali or hot chapati.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">470/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Goat Stew / Fry with Ugali / Chapati" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Goat Stew / Fry with Ugali / Chapati', '470/=', 'Goat Stew/Fry served with Ugali or Chapati', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Goat Stew / Fry with Rice / Mukimo" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Goat Stew / Fry with Rice / Mukimo', '480/=', 'Goat Stew/Fry served with Rice or Mukimo', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="ricebeef.webp" alt="Goat Stew with Rice / Mukimo" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Goat Stew with Rice / Mukimo</h4>
+                                            <p class="variant-desc">Slow-cooked savory goat stew served with fluffy rice or mukimo.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">480/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Goat Stew / Fry with Rice / Mukimo" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Goat Stew / Fry with Rice / Mukimo', '480/=', 'Goat Stew/Fry served with Rice or Mukimo', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Goat Stew / Fry with Pilau" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Goat Stew / Fry with Pilau', '570/=', 'Goat Stew/Fry served with Pilau', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="Pilauplain.webp" alt="Goat Stew with Pilau" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Goat Stew with Pilau</h4>
+                                            <p class="variant-desc">Fragrant spiced coastal pilau served with rich goat stew.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">570/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Goat Stew / Fry with Pilau" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Goat Stew / Fry with Pilau', '570/=', 'Goat Stew/Fry served with Pilau', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Goat Stew / Fry with Chips" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Goat Stew / Fry with Chips', '620/=', 'Goat Stew/Fry served with Chips', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="Fries with salad.webp" alt="Goat Stew with Chips" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Goat Stew with Chips</h4>
+                                            <p class="variant-desc">Succulent goat stew paired with crispy golden French fries.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">620/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Goat Stew / Fry with Chips" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Goat Stew / Fry with Chips', '620/=', 'Goat Stew/Fry served with Chips', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Goat Stew / Fry with Chips Masala" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Goat Stew / Fry with Chips Masala', '670/=', 'Goat Stew/Fry served with Chips Masala', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="Chipsmasala.webp" alt="Goat Stew with Chips Masala" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Goat Stew with Chips Masala</h4>
+                                            <p class="variant-desc">Rich goat stew served with seasoned spicy masala fries.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">670/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Goat Stew / Fry with Chips Masala" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Goat Stew / Fry with Chips Masala', '670/=', 'Goat Stew/Fry served with Chips Masala', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Beef Stew / Fry with Rice / Mukimo', '450/=', 'Beef Stew/Fry served with Rice or Mukimo', 'Main Dishes');">
-                            <span class="main-dish-side-name">Rice / Mukimo</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">450/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Beef Stew / Fry with Pilau', '510/=', 'Beef Stew/Fry served with Pilau', 'Main Dishes');">
-                            <span class="main-dish-side-name">Pilau</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">510/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Beef Stew / Fry with Chips', '590/=', 'Beef Stew/Fry served with Chips', 'Main Dishes');">
-                            <span class="main-dish-side-name">Chips</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">590/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Beef Stew / Fry with Chips Masala', '630/=', 'Beef Stew/Fry served with Chips Masala', 'Main Dishes');">
-                            <span class="main-dish-side-name">Chips Masala</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">630/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-featured-banner" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'BEEF STEW / FRY', '440/=', 'Beef Stew or Fry', 'Main Dishes');">
-                            <img src="beef.webp" alt="BEEF STEW / FRY" class="main-dish-featured-img" / loading="lazy" decoding="async">
-                            <div class="main-dish-featured-text">ADD BEEF STEW / FRY<br>TO ORDER</div>
-                            <button type="button" class="main-dish-featured-arrow-btn">➔</button>
                         </div>
                     </div>
 
-                    <!-- GOAT STEW / FRY -->
-                    <div class="main-dish-section-block" id="dish-goat-stew-fry">
-                        <div class="main-dish-title-header">
-                            <h3>GOAT STEW / FRY</h3>
-                            <div class="divider-symbol"><img src="logo.webp" alt="Rib House Emblem" / loading="lazy" decoding="async"></div>
+                    <!-- SHOWCASE 4: CHICKEN WET & DEEP FRIED -->
+                    <div class="main-dish-split-showcase" id="dish-chicken-showcase">
+                        <svg class="watermark-leaf-accent" width="95" height="95" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+                            <path d="M20,80 Q30,20 80,20 Q70,70 20,80 Z" stroke="#EA580C" stroke-width="2.5" fill="#EA580C"/>
+                            <path d="M20,80 Q50,50 80,20" stroke="#EA580C" stroke-width="1.5"/>
+                            <path d="M40,60 Q55,50 65,45" stroke="#EA580C" stroke-width="1.2"/>
+                            <path d="M30,70 Q45,60 55,55" stroke="#EA580C" stroke-width="1.2"/>
+                        </svg>
+
+                        <div class="main-dish-hero-visual">
+                            <img src="chickenquaterwithchips.webp" alt="Chicken Wet & Deep Fried" loading="lazy" decoding="async">
                         </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Goat Stew / Fry with Ugali / Chapati', '470/=', 'Goat Stew/Fry served with Ugali or Chapati', 'Main Dishes');">
-                            <span class="main-dish-side-name">Ugali / Chapati</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">470/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
+
+                        <div class="main-dish-details-pane">
+                            <h3 class="main-dish-title">CHICKEN WET &amp; DEEP FRIED</h3>
+                            <p class="main-dish-desc">Crispy seasoned quarter chicken or tender kienyeji chicken simmered in fresh tomato, garlic, and coriander sauce.</p>
+
+                            <div class="main-dish-variants-stack">
+                                <div class="main-dish-variant-card" data-dish-name="Deep Fried Chicken with Ugali / Chapati" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Deep Fried Chicken with Ugali / Chapati', '390/=', 'Deep Fried Chicken served with Ugali or Chapati', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="chickenquaterwithchips.webp" alt="Deep Fried Chicken with Ugali / Chapati" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Deep Fried Chicken with Ugali / Chapati</h4>
+                                            <p class="variant-desc">Golden crispy chicken served with hot ugali or soft chapati.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">390/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Deep Fried Chicken with Ugali / Chapati" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Deep Fried Chicken with Ugali / Chapati', '390/=', 'Deep Fried Chicken served with Ugali or Chapati', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Deep Fried Chicken with Rice / Mukimo" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Deep Fried Chicken with Rice / Mukimo', '400/=', 'Deep Fried Chicken served with Rice or Mukimo', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="deepfiredchickenwithugali.webp" alt="Deep Fried Chicken with Rice / Mukimo" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Deep Fried Chicken with Rice / Mukimo</h4>
+                                            <p class="variant-desc">Crispy quarter chicken served with fluffy rice or hearty mukimo.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">400/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Deep Fried Chicken with Rice / Mukimo" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Deep Fried Chicken with Rice / Mukimo', '400/=', 'Deep Fried Chicken served with Rice or Mukimo', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Chicken Wet Fry with Ugali / Chapati" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Chicken Wet Fry with Ugali / Chapati', '450/=', 'Chicken Wet Fry served with Ugali or Chapati', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="chickenquaterwithchips.webp" alt="Chicken Wet Fry with Ugali / Chapati" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Chicken Wet Fry with Ugali / Chapati</h4>
+                                            <p class="variant-desc">Simmered kienyeji chicken in thick sauce served with hot ugali.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">450/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Chicken Wet Fry with Ugali / Chapati" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Chicken Wet Fry with Ugali / Chapati', '450/=', 'Chicken Wet Fry served with Ugali or Chapati', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Chicken Wet Fry with Pilau" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Chicken Wet Fry with Pilau', '550/=', 'Chicken Wet Fry served with Pilau', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="Pilauplain.webp" alt="Chicken Wet Fry with Pilau" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Chicken Wet Fry with Pilau</h4>
+                                            <p class="variant-desc">Savory wet fry chicken served with fragrant coastal pilau.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">550/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Chicken Wet Fry with Pilau" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Chicken Wet Fry with Pilau', '550/=', 'Chicken Wet Fry served with Pilau', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Chicken Wet Fry with Chips" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Chicken Wet Fry with Chips', '580/=', 'Chicken Wet Fry served with Chips', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="Fries with salad.webp" alt="Chicken Wet Fry with Chips" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Chicken Wet Fry with Chips</h4>
+                                            <p class="variant-desc">Tender chicken in rich sauce paired with golden crispy French fries.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">580/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Chicken Wet Fry with Chips" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Chicken Wet Fry with Chips', '580/=', 'Chicken Wet Fry served with Chips', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Goat Stew / Fry with Rice / Mukimo', '480/=', 'Goat Stew/Fry served with Rice or Mukimo', 'Main Dishes');">
-                            <span class="main-dish-side-name">Rice / Mukimo</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">480/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Goat Stew / Fry with Pilau', '570/=', 'Goat Stew/Fry served with Pilau', 'Main Dishes');">
-                            <span class="main-dish-side-name">Pilau</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">570/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Goat Stew / Fry with Chips', '620/=', 'Goat Stew/Fry served with Chips', 'Main Dishes');">
-                            <span class="main-dish-side-name">Chips</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">620/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Goat Stew / Fry with Chips Masala', '670/=', 'Goat Stew/Fry served with Chips Masala', 'Main Dishes');">
-                            <span class="main-dish-side-name">Chips Masala</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">670/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-featured-banner" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'GOAT STEW / FRY', '470/=', 'Goat Stew or Fry', 'Main Dishes');">
-                            <img src="ricebeef.webp" alt="GOAT STEW / FRY" class="main-dish-featured-img" / loading="lazy" decoding="async">
-                            <div class="main-dish-featured-text">ADD GOAT STEW / FRY<br>TO ORDER</div>
-                            <button type="button" class="main-dish-featured-arrow-btn">➔</button>
                         </div>
                     </div>
 
-                    <!-- MATUMBO FRY -->
-                    <div class="main-dish-section-block" id="dish-matumbo-fry">
-                        <div class="main-dish-title-header">
-                            <h3>MATUMBO FRY</h3>
-                            <div class="divider-symbol"><img src="logo.webp" alt="Rib House Emblem" / loading="lazy" decoding="async"></div>
+                    <!-- SHOWCASE 5: TILAPIA WET & CRISPY DRY FRY -->
+                    <div class="main-dish-split-showcase" id="dish-tilapia-showcase">
+                        <svg class="watermark-leaf-accent" width="95" height="95" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+                            <path d="M20,80 Q30,20 80,20 Q70,70 20,80 Z" stroke="#EA580C" stroke-width="2.5" fill="#EA580C"/>
+                            <path d="M20,80 Q50,50 80,20" stroke="#EA580C" stroke-width="1.5"/>
+                            <path d="M40,60 Q55,50 65,45" stroke="#EA580C" stroke-width="1.2"/>
+                            <path d="M30,70 Q45,60 55,55" stroke="#EA580C" stroke-width="1.2"/>
+                        </svg>
+
+                        <div class="main-dish-hero-visual">
+                            <img src="fishwetfry.webp" alt="Fresh Lake Tilapia" loading="lazy" decoding="async">
                         </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Matumbo Fry with Ugali / Chapati', '400/=', 'Matumbo Fry served with Ugali or Chapati', 'Main Dishes');">
-                            <span class="main-dish-side-name">Ugali / Chapati</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">400/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
+
+                        <div class="main-dish-details-pane">
+                            <h3 class="main-dish-title">TILAPIA WET &amp; CRISPY DRY FRY</h3>
+                            <p class="main-dish-desc">Whole fresh lake tilapia prepared wet-fried in rich garlic-tomato sauce or seasoned golden crisp.</p>
+
+                            <div class="main-dish-variants-stack">
+                                <div class="main-dish-variant-card" data-dish-name="Tilapia Wet Fry with Ugali / Chapati" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Tilapia Wet Fry with Ugali / Chapati', '590/=', 'Tilapia Wet Fry served with Ugali or Chapati', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="fishwetfry.webp" alt="Tilapia Wet Fry with Ugali / Chapati" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Tilapia Wet Fry with Ugali / Chapati</h4>
+                                            <p class="variant-desc">Fresh whole lake tilapia stewed in savory sauce with hot ugali.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">590/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Tilapia Wet Fry with Ugali / Chapati" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Tilapia Wet Fry with Ugali / Chapati', '590/=', 'Tilapia Wet Fry served with Ugali or Chapati', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Tilapia Wet Fry with Rice / Mukimo" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Tilapia Wet Fry with Rice / Mukimo', '600/=', 'Tilapia Wet Fry served with Rice or Mukimo', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="fishwetfry.webp" alt="Tilapia Wet Fry with Rice / Mukimo" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Tilapia Wet Fry with Rice / Mukimo</h4>
+                                            <p class="variant-desc">Whole tilapia stewed to perfection served with steamed rice.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">600/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Tilapia Wet Fry with Rice / Mukimo" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Tilapia Wet Fry with Rice / Mukimo', '600/=', 'Tilapia Wet Fry served with Rice or Mukimo', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Deep Fried Tilapia with Ugali / Chapati" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Deep Fried Tilapia with Ugali / Chapati', '570/=', 'Deep Fried Tilapia served with Ugali or Chapati', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="fishdryfry.webp" alt="Deep Fried Tilapia with Ugali / Chapati" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Deep Fried Tilapia with Ugali / Chapati</h4>
+                                            <p class="variant-desc">Crispy whole fried tilapia with traditional ugali & greens.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">570/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Deep Fried Tilapia with Ugali / Chapati" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Deep Fried Tilapia with Ugali / Chapati', '570/=', 'Deep Fried Tilapia served with Ugali or Chapati', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Deep Fried Tilapia with Pilau" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Deep Fried Tilapia with Pilau', '680/=', 'Deep Fried Tilapia served with Pilau', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="Pilauplain.webp" alt="Deep Fried Tilapia with Pilau" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Deep Fried Tilapia with Pilau</h4>
+                                            <p class="variant-desc">Golden fried whole tilapia served with Swahili spiced pilau.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">680/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Deep Fried Tilapia with Pilau" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Deep Fried Tilapia with Pilau', '680/=', 'Deep Fried Tilapia served with Pilau', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Tilapia Wet Fry with Chips" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Tilapia Wet Fry with Chips', '720/=', 'Tilapia Wet Fry served with Chips', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="fishwetfry.webp" alt="Tilapia Wet Fry with Chips" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Tilapia Wet Fry with Chips</h4>
+                                            <p class="variant-desc">Lake tilapia in rich gravy paired with golden French fries.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">720/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Tilapia Wet Fry with Chips" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Tilapia Wet Fry with Chips', '720/=', 'Tilapia Wet Fry served with Chips', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Matumbo Fry with Rice / Mukimo', '410/=', 'Matumbo Fry served with Rice or Mukimo', 'Main Dishes');">
-                            <span class="main-dish-side-name">Rice / Mukimo</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">410/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Matumbo Fry with Pilau', '500/=', 'Matumbo Fry served with Pilau', 'Main Dishes');">
-                            <span class="main-dish-side-name">Pilau</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">500/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Matumbo Fry with Chips', '540/=', 'Matumbo Fry served with Chips', 'Main Dishes');">
-                            <span class="main-dish-side-name">Chips</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">540/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Matumbo Fry with Chips Masala', '600/=', 'Matumbo Fry served with Chips Masala', 'Main Dishes');">
-                            <span class="main-dish-side-name">Chips Masala</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">600/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-featured-banner" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'MATUMBO FRY', '400/=', 'Savory Matumbo Fry', 'Main Dishes');">
-                            <img src="matumboplainwetfry.webp" alt="MATUMBO FRY" class="main-dish-featured-img" / loading="lazy" decoding="async">
-                            <div class="main-dish-featured-text">ADD MATUMBO FRY<br>TO ORDER</div>
-                            <button type="button" class="main-dish-featured-arrow-btn">➔</button>
                         </div>
                     </div>
 
-                    <!-- LIVER -->
-                    <div class="main-dish-section-block" id="dish-liver">
-                        <div class="main-dish-title-header">
-                            <h3>LIVER</h3>
-                            <div class="divider-symbol"><img src="logo.webp" alt="Rib House Emblem" / loading="lazy" decoding="async"></div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Liver with Ugali / Chapati', '470/=', 'Liver served with Ugali or Chapati', 'Main Dishes');">
-                            <span class="main-dish-side-name">Ugali / Chapati</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">470/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Liver with Rice / Mukimo', '480/=', 'Liver served with Rice or Mukimo', 'Main Dishes');">
-                            <span class="main-dish-side-name">Rice / Mukimo</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">480/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Liver with Pilau', '570/=', 'Liver served with Pilau', 'Main Dishes');">
-                            <span class="main-dish-side-name">Pilau</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">570/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Liver with Chips', '620/=', 'Liver served with Chips', 'Main Dishes');">
-                            <span class="main-dish-side-name">Chips</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">620/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Liver with Chips Masala', '630/=', 'Liver served with Chips Masala', 'Main Dishes');">
-                            <span class="main-dish-side-name">Chips Masala</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">630/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-featured-banner" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'LIVER', '470/=', 'Delicious Roasted Liver', 'Main Dishes');">
-                            <img src="Liverrice.webp" alt="LIVER" class="main-dish-featured-img" / loading="lazy" decoding="async">
-                            <div class="main-dish-featured-text">ADD LIVER<br>TO ORDER</div>
-                            <button type="button" class="main-dish-featured-arrow-btn">➔</button>
-                        </div>
-                    </div>
+                    <!-- SHOWCASE 6: MATUMBO & SAVORY LIVER -->
+                    <div class="main-dish-split-showcase" id="dish-matumbo-liver-showcase">
+                        <svg class="watermark-leaf-accent" width="95" height="95" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+                            <path d="M20,80 Q30,20 80,20 Q70,70 20,80 Z" stroke="#EA580C" stroke-width="2.5" fill="#EA580C"/>
+                            <path d="M20,80 Q50,50 80,20" stroke="#EA580C" stroke-width="1.5"/>
+                            <path d="M40,60 Q55,50 65,45" stroke="#EA580C" stroke-width="1.2"/>
+                            <path d="M30,70 Q45,60 55,55" stroke="#EA580C" stroke-width="1.2"/>
+                        </svg>
 
-                    <!-- CHICKEN WET FRY -->
-                    <div class="main-dish-section-block" id="dish-chicken-wet-fry">
-                        <div class="main-dish-title-header">
-                            <h3>CHICKEN WET FRY</h3>
-                            <div class="divider-symbol"><img src="logo.webp" alt="Rib House Emblem" / loading="lazy" decoding="async"></div>
+                        <div class="main-dish-hero-visual">
+                            <img src="matumboplainwetfry.webp" alt="Matumbo & Savory Liver" loading="lazy" decoding="async">
                         </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Chicken Wet Fry with Ugali / Chapati', '450/=', 'Chicken Wet Fry served with Ugali or Chapati', 'Main Dishes');">
-                            <span class="main-dish-side-name">Ugali / Chapati</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">450/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Chicken Wet Fry with Rice / Mukimo', '460/=', 'Chicken Wet Fry served with Rice or Mukimo', 'Main Dishes');">
-                            <span class="main-dish-side-name">Rice / Mukimo</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">460/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Chicken Wet Fry with Pilau', '550/=', 'Chicken Wet Fry served with Pilau', 'Main Dishes');">
-                            <span class="main-dish-side-name">Pilau</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">550/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Chicken Wet Fry with Chips', '580/=', 'Chicken Wet Fry served with Chips', 'Main Dishes');">
-                            <span class="main-dish-side-name">Chips</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">580/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Chicken Wet Fry with Chips Masala', '630/=', 'Chicken Wet Fry served with Chips Masala', 'Main Dishes');">
-                            <span class="main-dish-side-name">Chips Masala</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">630/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-featured-banner" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'CHICKEN WET FRY', '450/=', 'Chicken Wet Fry', 'Main Dishes');">
-                            <img src="chickenquaterwithchips.webp" alt="CHICKEN WET FRY" class="main-dish-featured-img" / loading="lazy" decoding="async">
-                            <div class="main-dish-featured-text">ADD CHICKEN WET FRY<br>TO ORDER</div>
-                            <button type="button" class="main-dish-featured-arrow-btn">➔</button>
-                        </div>
-                    </div>
 
-                    <!-- TILAPIA WET FRY -->
-                    <div class="main-dish-section-block" id="dish-tilapia-stew">
-                        <div class="main-dish-title-header">
-                            <h3>TILAPIA WET FRY</h3>
-                            <div class="divider-symbol"><img src="logo.webp" alt="Rib House Emblem" / loading="lazy" decoding="async"></div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Tilapia Wet Fry with Ugali / Chapati', '590/=', 'Tilapia Wet Fry served with Ugali or Chapati', 'Main Dishes');">
-                            <span class="main-dish-side-name">Ugali / Chapati</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">590/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Tilapia Wet Fry with Rice / Mukimo', '600/=', 'Tilapia Wet Fry served with Rice or Mukimo', 'Main Dishes');">
-                            <span class="main-dish-side-name">Rice / Mukimo</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">600/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Tilapia Wet Fry with Pilau', '690/=', 'Tilapia Wet Fry served with Pilau', 'Main Dishes');">
-                            <span class="main-dish-side-name">Pilau</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">690/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Tilapia Wet Fry with Chips', '720/=', 'Tilapia Wet Fry served with Chips', 'Main Dishes');">
-                            <span class="main-dish-side-name">Chips</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">720/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Tilapia Wet Fry with Chips Masala', '770/=', 'Tilapia Wet Fry served with Chips Masala', 'Main Dishes');">
-                            <span class="main-dish-side-name">Chips Masala</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">770/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-featured-banner" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'TILAPIA WET FRY', '590/=', 'Fresh Tilapia Wet Fry', 'Main Dishes');">
-                            <img src="fishwetfry.webp" alt="TILAPIA WET FRY" class="main-dish-featured-img" / loading="lazy" decoding="async">
-                            <div class="main-dish-featured-text">ADD TILAPIA WET FRY<br>TO ORDER</div>
-                            <button type="button" class="main-dish-featured-arrow-btn">➔</button>
-                        </div>
-                    </div>
+                        <div class="main-dish-details-pane">
+                            <h3 class="main-dish-title">MATUMBO &amp; SAVORY LIVER</h3>
+                            <p class="main-dish-desc">Traditional Kenyan matumbo stew and flash-seared beef liver sautéed with sweet onions and peppers.</p>
 
-                    <!-- DEEP FRIED TILAPIA -->
-                    <div class="main-dish-section-block" id="dish-tilapia-fry">
-                        <div class="main-dish-title-header">
-                            <h3>DEEP FRIED TILAPIA</h3>
-                            <div class="divider-symbol"><img src="logo.webp" alt="Rib House Emblem" / loading="lazy" decoding="async"></div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Deep Fried Tilapia with Ugali / Chapati', '570/=', 'Deep Fried Tilapia served with Ugali or Chapati', 'Main Dishes');">
-                            <span class="main-dish-side-name">Ugali / Chapati</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">570/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
+                            <div class="main-dish-variants-stack">
+                                <div class="main-dish-variant-card" data-dish-name="Matumbo Fry with Ugali / Chapati" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Matumbo Fry with Ugali / Chapati', '400/=', 'Matumbo Fry served with Ugali or Chapati', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="matumboplainwetfry.webp" alt="Matumbo Fry with Ugali / Chapati" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Matumbo Fry with Ugali / Chapati</h4>
+                                            <p class="variant-desc">Savory spiced matumbo fry served with hot ugali.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">400/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Matumbo Fry with Ugali / Chapati" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Matumbo Fry with Ugali / Chapati', '400/=', 'Matumbo Fry served with Ugali or Chapati', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Matumbo Fry with Rice / Mukimo" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Matumbo Fry with Rice / Mukimo', '410/=', 'Matumbo Fry served with Rice or Mukimo', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="chipsmatumbocombo.webp" alt="Matumbo Fry with Rice / Mukimo" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Matumbo Fry with Rice / Mukimo</h4>
+                                            <p class="variant-desc">Tender matumbo stew served with fluffy rice or mukimo.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">410/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Matumbo Fry with Rice / Mukimo" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Matumbo Fry with Rice / Mukimo', '410/=', 'Matumbo Fry served with Rice or Mukimo', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Matumbo Fry with Pilau" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Matumbo Fry with Pilau', '500/=', 'Matumbo Fry served with Pilau', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="Pilauplain.webp" alt="Matumbo Fry with Pilau" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Matumbo Fry with Pilau</h4>
+                                            <p class="variant-desc">Fragrant pilau served with rich tender matumbo fry.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">500/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Matumbo Fry with Pilau" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Matumbo Fry with Pilau', '500/=', 'Matumbo Fry served with Pilau', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Liver with Ugali / Chapati" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Liver with Ugali / Chapati', '470/=', 'Liver served with Ugali or Chapati', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="Liverrice.webp" alt="Liver with Ugali / Chapati" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Sizzling Liver with Ugali / Chapati</h4>
+                                            <p class="variant-desc">Pan-seared tender liver with sweet onions and hot ugali.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">470/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Liver with Ugali / Chapati" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Liver with Ugali / Chapati', '470/=', 'Liver served with Ugali or Chapati', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
+
+                                <div class="main-dish-variant-card" data-dish-name="Liver with Rice / Mukimo" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Liver with Rice / Mukimo', '480/=', 'Liver served with Rice or Mukimo', 'Main Dishes');">
+                                    <div class="variant-info-group">
+                                        <img src="Liverrice.webp" alt="Liver with Rice / Mukimo" class="variant-thumb" loading="lazy">
+                                        <div class="variant-text">
+                                            <h4 class="variant-name">Sizzling Liver with Rice / Mukimo</h4>
+                                            <p class="variant-desc">Tender sautéed liver served with steamed rice or traditional mukimo.</p>
+                                        </div>
+                                    </div>
+                                    <div class="variant-action-group">
+                                        <span class="variant-price">480/=</span>
+                                        <button type="button" class="variant-order-btn" data-dish-name="Liver with Rice / Mukimo" onclick="if(window.handleDirectDishSelect){event.stopPropagation();handleDirectDishSelect(this, 'Liver with Rice / Mukimo', '480/=', 'Liver served with Rice or Mukimo', 'Main Dishes');}">+ Add to Order</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Deep Fried Tilapia with Rice / Mukimo', '580/=', 'Deep Fried Tilapia served with Rice or Mukimo', 'Main Dishes');">
-                            <span class="main-dish-side-name">Rice / Mukimo</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">580/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Deep Fried Tilapia with Pilau', '680/=', 'Deep Fried Tilapia served with Pilau', 'Main Dishes');">
-                            <span class="main-dish-side-name">Pilau</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">680/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Deep Fried Tilapia with Chips', '700/=', 'Deep Fried Tilapia served with Chips', 'Main Dishes');">
-                            <span class="main-dish-side-name">Chips</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">700/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-side-row" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Deep Fried Tilapia with Chips Masala', '750/=', 'Deep Fried Tilapia served with Chips Masala', 'Main Dishes');">
-                            <span class="main-dish-side-name">Chips Masala</span>
-                            <div class="main-dish-dotted-spacer"></div>
-                            <div class="main-dish-side-actions">
-                                <span class="main-dish-side-price">750/=</span>
-                                <button type="button" class="main-dish-side-add-btn">+ ADD</button>
-                            </div>
-                        </div>
-                        <div class="main-dish-featured-banner" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'DEEP FRIED TILAPIA', '570/=', 'Crispy Deep Fried Tilapia', 'Main Dishes');">
-                            <img src="fishdryfry.webp" alt="DEEP FRIED TILAPIA" class="main-dish-featured-img" / loading="lazy" decoding="async">
-                            <div class="main-dish-featured-text">ADD DEEP FRIED TILAPIA<br>TO ORDER</div>
-                            <button type="button" class="main-dish-featured-arrow-btn">➔</button>
                         </div>
                     </div>
 

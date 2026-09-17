@@ -642,16 +642,13 @@
             <img src="slides/slide-7.webp" alt="Rib House Signature Dish 7" class="slide-img" loading="lazy">
         </div>
         <div class="slide-item" data-index="8">
-            <img src="slides/slide-8.webp" alt="Rib House Signature Dish 8" class="slide-img" loading="lazy">
+            <img src="slides/slide-9.webp" alt="Rib House Signature Dish 8" class="slide-img" loading="lazy">
         </div>
         <div class="slide-item" data-index="9">
-            <img src="slides/slide-9.webp" alt="Rib House Signature Dish 9" class="slide-img" loading="lazy">
+            <img src="slides/slide-10.webp" alt="Rib House Signature Dish 9" class="slide-img" loading="lazy">
         </div>
         <div class="slide-item" data-index="10">
-            <img src="slides/slide-10.webp" alt="Rib House Signature Dish 10" class="slide-img" loading="lazy">
-        </div>
-        <div class="slide-item" data-index="11">
-            <img src="slides/slide-11.webp" alt="Rib House Signature Dish 11" class="slide-img" loading="lazy">
+            <img src="slides/slide-11.webp" alt="Rib House Signature Dish 10" class="slide-img" loading="lazy">
         </div>
     </div>
 
@@ -729,7 +726,7 @@
     <!-- 4. BOTTOM CONTROLS & SLIDE INDICATOR -->
     <div class="slider-controls-bar" aria-label="Slider Controls">
         <div class="slide-counter">
-            <span class="current-num" id="current-slide-num">01</span> / <span class="total-num" id="total-slide-num">11</span>
+            <span class="current-num" id="current-slide-num">01</span> / <span class="total-num" id="total-slide-num">10</span>
         </div>
 
         <div class="slider-dots" id="slider-dots" role="tablist" aria-label="Slide Selector">
@@ -744,7 +741,6 @@
             <button class="dot-btn" data-to="7" aria-label="Slide 8"></button>
             <button class="dot-btn" data-to="8" aria-label="Slide 9"></button>
             <button class="dot-btn" data-to="9" aria-label="Slide 10"></button>
-            <button class="dot-btn" data-to="10" aria-label="Slide 11"></button>
         </div>
 
         <div class="slider-arrows">
@@ -813,12 +809,14 @@
             const slides = document.querySelectorAll('.slide-item');
             const dots = document.querySelectorAll('.dot-btn');
             const currentNumEl = document.getElementById('current-slide-num');
+            const totalNumEl = document.getElementById('total-slide-num');
             const prevBtn = document.getElementById('prev-slide-btn');
             const nextBtn = document.getElementById('next-slide-btn');
             const viewport = document.getElementById('slider-viewport');
 
             let currentIndex = 0;
             const totalSlides = slides.length;
+            if (totalNumEl) totalNumEl.textContent = padZero(totalSlides);
             const GLIDE_INTERVAL = 5000; // 5 seconds per slide
             let slideTimer = null;
             let isPaused = false;

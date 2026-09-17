@@ -393,14 +393,14 @@
         }
 
         .info-modal-card {
-            background: #18181E;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            border-radius: 8px;
+            background: #FFFFFF;
+            border: 2px solid #EA580C;
+            border-radius: 0;
             width: 100%;
             max-width: 520px;
-            padding: 34px;
-            color: #F8FAFC;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+            padding: 36px 32px;
+            color: #0F172A;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
             transform: translateY(20px) scale(0.96);
             transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
@@ -412,65 +412,72 @@
 
         .info-modal-close {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 16px;
+            right: 16px;
             width: 32px;
             height: 32px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: #FFFFFF;
-            font-size: 1.2rem;
+            border-radius: 0;
+            background: #F1F5F9;
+            border: 1px solid #CBD5E1;
+            color: #475569;
+            font-size: 1.3rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.2s ease;
+            transition: all 0.2s ease;
+            line-height: 1;
         }
 
         .info-modal-close:hover {
-            background: var(--color-red);
+            background: #EA580C;
+            border-color: #EA580C;
+            color: #FFFFFF;
         }
 
         .info-modal-title {
             font-family: var(--font-serif);
             font-size: 2rem;
-            color: var(--color-gold);
-            margin-bottom: 16px;
-            letter-spacing: 1px;
+            color: #EA580C;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+            font-weight: 700;
         }
 
         .info-modal-body {
-            font-size: 0.98rem;
+            font-size: 1rem;
             line-height: 1.7;
-            color: #CBD5E1;
+            color: #334155;
         }
 
         .info-modal-body p {
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .info-modal-highlight {
-            color: #FFFFFF;
+            color: #0F172A;
             font-weight: 700;
         }
 
         .info-modal-btn {
             display: inline-block;
             margin-top: 18px;
-            background: var(--color-gold);
-            color: #0F0F12;
+            background: linear-gradient(135deg, #FF6B00 0%, #EA580C 100%);
+            color: #FFFFFF;
             font-weight: 800;
-            padding: 12px 24px;
-            border-radius: 4px;
+            padding: 13px 26px;
+            border-radius: 0;
             text-decoration: none;
             letter-spacing: 1px;
             transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35);
         }
 
         .info-modal-btn:hover {
-            background: var(--color-gold-light);
+            background: linear-gradient(135deg, #FF7A00 0%, #C2410C 100%);
+            color: #FFFFFF;
             transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(234, 88, 12, 0.45);
         }
 
         /* KEYFRAME ANIMATIONS */
@@ -780,7 +787,7 @@
                 <p><span class="info-modal-highlight">BUY GOODS TILL NO:</span> <strong style="color: #10B981; font-size: 1.4rem; letter-spacing: 2px;">4977556</strong></p>
                 <p><span class="info-modal-highlight">Store Name:</span> RIB HOUSE RESTAURANT</p>
                 <p>1. Go to your M-Pesa Menu &rarr; Lipa na M-Pesa &rarr; Buy Goods and Services.</p>
-                <p>2. Enter Till Number: <strong style="color: #D4AF37;">4977556</strong>.</p>
+                <p>2. Enter Till Number: <strong style="color: #EA580C; font-weight: 800;">4977556</strong>.</p>
                 <p>3. Enter Amount and your M-Pesa PIN to complete payment.</p>
                 <a href="payment.html" class="info-modal-btn">DIRECT M-PESA CHECKOUT &rarr;</a>
             </div>
@@ -951,6 +958,15 @@
         function closeModal(id) {
             const modal = document.getElementById(id);
             if (modal) modal.classList.remove('open');
+        }
+
+        // Auto open if hash in URL
+        if (window.location.hash === '#modal-till' || window.location.hash === '#till-info') {
+            openModal('modal-till');
+        } else if (window.location.hash === '#locations' || window.location.hash === '#modal-locations') {
+            openModal('modal-locations');
+        } else if (window.location.hash === '#about-us' || window.location.hash === '#modal-about') {
+            openModal('modal-about');
         }
 
         window.addEventListener('keydown', (e) => {

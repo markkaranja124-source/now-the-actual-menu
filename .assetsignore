@@ -35,6 +35,8 @@ wrangler.toml
 # Exclude raw 102MB camera originals (we use optimized slides/*.webp)
 DSC_*.JPG
 DSC_*.jpg
-
-
-
+chrome_*
+chrome_*/**
+test_*.js
+debug_*.js
+*.png

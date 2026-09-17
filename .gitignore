@@ -6,4 +6,7 @@ data/
 master_images_backup/
 DSC_*.JPG
 DSC_*.jpg
+chrome_*
+chrome_*/
+*.png
 

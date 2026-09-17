@@ -2602,7 +2602,7 @@ function initClickableMenuDishes() {
     // Prevent corrupting or injecting into Tumbukiza sides card
     const tumbukizaSidesCard = document.querySelector('.tumbukiza-sides-card, #dish-card-tumbukiza-sides');
     if (tumbukizaSidesCard) {
-        tumbukizaSidesCard.querySelectorAll('.row-order-pill, > .card-order-action-btn').forEach(el => el.remove());
+        tumbukizaSidesCard.querySelectorAll('.row-order-pill, .card-order-action-btn').forEach(el => el.remove());
     }
 
     const allCards = document.querySelectorAll('.menu-grid > div:not(.tumbukiza-sides-card), .menu-card-luxury-wrapper:not(.tumbukiza-sides-card)');
@@ -2613,9 +2613,10 @@ function initClickableMenuDishes() {
         }
 
         const h3Header = card.querySelector('h3, h4');
-        if (!h3Header || !h3Header.innerText.trim()) return;
+        const titleRaw = (h3Header ? (h3Header.textContent || h3Header.innerText || '') : '').trim();
+        if (!titleRaw) return;
 
-        const mainTitle = h3Header.innerText.replace(/\s+/g, ' ').trim();
+        const mainTitle = titleRaw.replace(/\s+/g, ' ').trim();
         if (!mainTitle || mainTitle.toLowerCase() === 'dish' || mainTitle.toLowerCase().includes('tumbukiza sides')) return;
 
         // Detect if this card has sub-item option rows (like Matumbo Fry with sides)
@@ -2648,8 +2649,8 @@ function initClickableMenuDishes() {
                 const spans = row.querySelectorAll('span');
                 if (spans.length < 2) return;
 
-                const sideName = spans[0].innerText.replace(/\s+/g, ' ').trim();
-                const sidePrice = spans[1].innerText.replace(/\s+/g, ' ').trim();
+                const sideName = (spans[0].textContent || spans[0].innerText || '').replace(/\s+/g, ' ').trim();
+                const sidePrice = (spans[1].textContent || spans[1].innerText || '').replace(/\s+/g, ' ').trim();
 
                 if (!sideName || !sidePrice) return;
                 const fullDishName = `${mainTitle} (${sideName})`;
@@ -2759,15 +2760,16 @@ function initClickableMenuDishes() {
                 rowPill.onclick = handleRowClick;
             });
 
-            let cardBtn = card.querySelector('.card-order-action-btn');
+            // Card level Add to Order button for multi-option cards
+            let cardBtn = card.querySelector(':scope > .card-order-action-btn');
             if (!cardBtn) {
                 cardBtn = document.createElement('button');
                 cardBtn.className = 'card-order-action-btn';
-                cardBtn.style.marginTop = '16px';
+                cardBtn.style.marginTop = '14px';
                 cardBtn.style.width = '100%';
-                cardBtn.style.padding = '10px 14px';
+                cardBtn.style.padding = '8px 12px';
                 cardBtn.style.borderRadius = '0 !important';
-                cardBtn.style.fontSize = '0.82rem';
+                cardBtn.style.fontSize = '0.8rem';
                 cardBtn.style.fontWeight = '700';
                 cardBtn.style.border = '1px solid #B8860B';
                 cardBtn.style.transition = 'all 0.2s ease';
@@ -2778,12 +2780,15 @@ function initClickableMenuDishes() {
 
             let cardBadge = card.querySelector('.card-hold-badge');
 
-            if (mainCardAvail === 'hold' || !firstAvailableOption) {
-                card.style.opacity = '1';
+            if (mainCardAvail === 'hold') {
+                card.style.opacity = '0.85';
+                card.style.cursor = 'pointer';
+                card.style.border = '1.5px solid var(--color-hold, #F59E0B)';
                 cardBtn.style.display = 'block';
                 cardBtn.innerHTML = 'ON HOLD';
                 cardBtn.style.background = '#F59E0B';
                 cardBtn.style.color = '#000000';
+                cardBtn.style.borderColor = '#D97706';
                 cardBtn.style.cursor = 'pointer';
                 const notifyHoldMulti = (e) => {
                     if (e) { e.stopPropagation(); e.preventDefault(); }
@@ -2827,7 +2832,7 @@ function initClickableMenuDishes() {
                 const anySelected = optionRows.some(row => {
                     const spans = row.querySelectorAll('span');
                     if (spans.length < 2) return false;
-                    const sideName = spans[0].innerText.replace(/\s+/g, ' ').trim();
+                    const sideName = (spans[0].textContent || spans[0].innerText || '').replace(/\s+/g, ' ').trim();
                     return isDishSelected(`${mainTitle} (${sideName})`);
                 });
 
@@ -2866,8 +2871,8 @@ function initClickableMenuDishes() {
             if (!priceSpan) return;
 
             const dishName = mainTitle;
-            const priceText = priceSpan.innerText.replace(/\s+/g, ' ').trim();
-            const descText = descP ? descP.innerText.replace(/\s+/g, ' ').trim() : '';
+            const priceText = (priceSpan.textContent || priceSpan.innerText || '').replace(/\s+/g, ' ').trim();
+            const descText = descP ? (descP.textContent || descP.innerText || '').replace(/\s+/g, ' ').trim() : '';
 
             const itemStatus = getItemAvailability(dishName);
 

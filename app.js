@@ -2391,7 +2391,9 @@ function resolveInventoryKey(name) {
     return clean.replace(/[^a-z0-9]/g, '_');
 }
 
-// --- LIVE INVENTORY SYNC ENGINE (REST API + BROADCASTCHANNEL + LOCALSTORAGE) ---
+// --- LIVE INVENTORY SYNC ENGINE (FIREBASE RTDB + REST API + BROADCASTCHANNEL + LOCALSTORAGE) ---
+const RIBHOUSE_FIREBASE_INVENTORY_URL = 'https://ribhouse-admin-default-rtdb.firebaseio.com/inventory.json';
+
 function getInventoryApiUrl() {
     if (typeof window === 'undefined') return '/api/inventory';
     if (window.location.protocol === 'file:') {
@@ -2401,8 +2403,26 @@ function getInventoryApiUrl() {
 }
 const INVENTORY_API_URL = getInventoryApiUrl();
 
-// Fetch latest inventory from backend API & merge into local cache
+// Fetch latest inventory from Firebase & backend API, merging into local cache
 async function fetchCloudInventory() {
+    // 1. Primary: Global Firebase Realtime Database
+    try {
+        const fbRes = await fetch(RIBHOUSE_FIREBASE_INVENTORY_URL);
+        if (fbRes.ok) {
+            const fbData = await fbRes.json();
+            if (fbData && typeof fbData === 'object') {
+                const local = getDishInventoryState();
+                const updated = { ...local, ...fbData };
+                localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(updated));
+                refreshAllDishCardsUI();
+                if (typeof renderSelectedOrderPage === 'function') {
+                    renderSelectedOrderPage();
+                }
+            }
+        }
+    } catch (fbErr) {}
+
+    // 2. Secondary fallback / supplement: Cloudflare Edge & Server API
     try {
         const res = await fetch(INVENTORY_API_URL);
         if (res.ok) {
@@ -2410,8 +2430,8 @@ async function fetchCloudInventory() {
             const inv = data && data.inventory ? data.inventory : data;
             if (inv && typeof inv === 'object') {
                 const local = getDishInventoryState();
-                const merged = { ...local, ...inv };
-                localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(merged));
+                const updated = { ...local, ...inv };
+                localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(updated));
                 refreshAllDishCardsUI();
                 if (typeof renderSelectedOrderPage === 'function') {
                     renderSelectedOrderPage();
@@ -2423,8 +2443,16 @@ async function fetchCloudInventory() {
     }
 }
 
-// Push item status to backend API
+// Push item status to Firebase and backend API
 async function pushCloudInventoryItem(itemId, status) {
+    try {
+        await fetch(RIBHOUSE_FIREBASE_INVENTORY_URL, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ [itemId]: status })
+        });
+    } catch (e) {}
+
     try {
         await fetch(INVENTORY_API_URL, {
             method: 'POST',
@@ -2436,14 +2464,55 @@ async function pushCloudInventoryItem(itemId, status) {
     }
 }
 
-// Live listener for customer devices (Initial fetch + periodic polling + BroadcastChannel)
+// Live real-time listener for customer devices (SSE EventSource + Periodic Check + BroadcastChannel)
 function initLiveInventoryListener() {
     fetchCloudInventory();
     
-    // Auto sync periodically every 5 seconds for cross-device updates
+    // Auto sync periodically every 5 seconds for background resilience
     if (!window._ribhouse_sync_interval) {
         window._ribhouse_sync_interval = setInterval(fetchCloudInventory, 5000);
     }
+
+    // Zero-latency live EventSource SSE stream from Firebase
+    try {
+        if (typeof window !== 'undefined' && window.EventSource && !window._fb_inventory_eventsource) {
+            const evtSource = new EventSource(RIBHOUSE_FIREBASE_INVENTORY_URL);
+            window._fb_inventory_eventsource = evtSource;
+
+            function processLiveFirebaseEvent(e) {
+                try {
+                    const parsed = JSON.parse(e.data);
+                    if (!parsed) return;
+                    const local = getDishInventoryState();
+                    let hasChanged = false;
+
+                    if (parsed.path === '/' || parsed.path === '') {
+                        if (parsed.data && typeof parsed.data === 'object') {
+                            Object.assign(local, parsed.data);
+                            hasChanged = true;
+                        }
+                    } else if (parsed.path) {
+                        const cleanKey = parsed.path.replace(/^\//, '').split('/')[0];
+                        if (cleanKey && parsed.data !== undefined) {
+                            local[cleanKey] = parsed.data;
+                            hasChanged = true;
+                        }
+                    }
+
+                    if (hasChanged) {
+                        localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(local));
+                        refreshAllDishCardsUI();
+                        if (typeof renderSelectedOrderPage === 'function') {
+                            renderSelectedOrderPage();
+                        }
+                    }
+                } catch(err) {}
+            }
+
+            evtSource.addEventListener('put', processLiveFirebaseEvent);
+            evtSource.addEventListener('patch', processLiveFirebaseEvent);
+        }
+    } catch (sseErr) {}
 }
 
 if (typeof window !== 'undefined') {

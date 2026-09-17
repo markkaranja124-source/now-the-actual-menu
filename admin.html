@@ -3246,6 +3246,8 @@
         }
 
         // --- 3. INVENTORY STATE MANAGEMENT & REAL-TIME SYNC ---
+        const RIBHOUSE_FIREBASE_INVENTORY_URL = 'https://ribhouse-admin-default-rtdb.firebaseio.com/inventory.json';
+
         function getInventoryApiUrl() {
             if (typeof window === 'undefined') return '/api/inventory';
             if (window.location.protocol === 'file:') {
@@ -3290,6 +3292,21 @@
         }
 
         async function fetchCloudInventoryAdmin() {
+            // 1. Primary: Global Firebase Realtime Database
+            try {
+                const fbRes = await fetch(RIBHOUSE_FIREBASE_INVENTORY_URL);
+                if (fbRes.ok) {
+                    const fbData = await fbRes.json();
+                    if (fbData && typeof fbData === 'object') {
+                        const local = getInventoryState();
+                        const merged = { ...local, ...fbData };
+                        localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(merged));
+                        renderInventoryCards();
+                    }
+                }
+            } catch (e) {}
+
+            // 2. Secondary fallback / supplement: Cloudflare Edge & Server API
             try {
                 const res = await fetch(INVENTORY_API_URL);
                 if (res.ok) {
@@ -3312,6 +3329,42 @@
             if (!window._admin_sync_interval) {
                 window._admin_sync_interval = setInterval(fetchCloudInventoryAdmin, 5000);
             }
+
+            // Zero-latency live EventSource SSE stream from Firebase
+            try {
+                if ('EventSource' in window && !window._admin_fb_eventsource) {
+                    const evtSource = new EventSource(RIBHOUSE_FIREBASE_INVENTORY_URL);
+                    window._admin_fb_eventsource = evtSource;
+
+                    function processAdminFirebaseEvent(e) {
+                        try {
+                            const parsed = JSON.parse(e.data);
+                            if (!parsed) return;
+                            const local = getInventoryState();
+                            let changed = false;
+                            if (parsed.path === '/' || parsed.path === '') {
+                                if (parsed.data && typeof parsed.data === 'object') {
+                                    Object.assign(local, parsed.data);
+                                    changed = true;
+                                }
+                            } else if (parsed.path) {
+                                const cleanKey = parsed.path.replace(/^\//, '').split('/')[0];
+                                if (cleanKey && parsed.data !== undefined) {
+                                    local[cleanKey] = parsed.data;
+                                    changed = true;
+                                }
+                            }
+                            if (changed) {
+                                localStorage.setItem('ribhouse_dish_inventory', JSON.stringify(local));
+                                renderInventoryCards();
+                            }
+                        } catch(err) {}
+                    }
+
+                    evtSource.addEventListener('put', processAdminFirebaseEvent);
+                    evtSource.addEventListener('patch', processAdminFirebaseEvent);
+                }
+            } catch(e) {}
 
             try {
                 if ('BroadcastChannel' in window) {
@@ -3371,6 +3424,11 @@
             renderInventoryCards();
             showAdminToast(`✓ Item status set to ${newStatus.toUpperCase()}`);
 
+            const updates = { [itemId]: newStatus };
+            if (aliases) {
+                aliases.forEach(a => { updates[a] = newStatus; });
+            }
+
             try {
                 if ('BroadcastChannel' in window) {
                     const invChannel = new BroadcastChannel('ribhouse_inventory_channel');
@@ -3383,11 +3441,19 @@
                 }
             } catch(e) {}
 
+            // Real-time Cloud Broadcast to Firebase RTDB
             try {
-                const updates = { [itemId]: newStatus };
-                if (aliases) {
-                    aliases.forEach(a => { updates[a] = newStatus; });
-                }
+                await fetch(RIBHOUSE_FIREBASE_INVENTORY_URL, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updates)
+                });
+            } catch (fbErr) {
+                console.warn('Firebase sync offline; falling back to API.');
+            }
+
+            // Cloudflare Edge & Server sync
+            try {
                 await fetch(INVENTORY_API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },

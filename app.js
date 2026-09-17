@@ -469,9 +469,9 @@ function syncMainDishesUIState() {
             if (isSelected) {
                 btn.innerHTML = btn.classList.contains('tumbukiza-box-btn') ? '✓ ADDED' : '✓ ADDED TO ORDER';
                 btn.classList.add('selected-btn-active', 'is-selected');
-                btn.style.setProperty('background', '#B8860B', 'important');
+                btn.style.setProperty('background', '#C2410C', 'important');
                 btn.style.setProperty('color', '#FFFFFF', 'important');
-                btn.style.setProperty('border-color', '#B8860B', 'important');
+                btn.style.setProperty('border-color', '#C2410C', 'important');
                 if (cardBox && cardBox.classList.contains('tumbukiza-mini-box')) {
                     cardBox.classList.add('is-selected');
                 }
@@ -483,9 +483,11 @@ function syncMainDishesUIState() {
                     btn.style.setProperty('color', '#1E293B', 'important');
                     btn.style.setProperty('border-color', '#CBD5E1', 'important');
                 } else {
-                    btn.style.setProperty('background', 'transparent', 'important');
-                    btn.style.setProperty('color', '#B8860B', 'important');
-                    btn.style.setProperty('border-color', '#B8860B', 'important');
+                    btn.style.setProperty('background', '#EA580C', 'important');
+                    btn.style.setProperty('color', '#FFFFFF', 'important');
+                    btn.style.setProperty('border-color', '#EA580C', 'important');
+                    btn.style.setProperty('border-radius', '20px', 'important');
+                    btn.style.setProperty('padding', '8px 20px', 'important');
                 }
                 if (cardBox && cardBox.classList.contains('tumbukiza-mini-box')) {
                     cardBox.classList.remove('is-selected');

@@ -31,6 +31,597 @@
     <meta property="og:image" content="logo.png">
 
     <link rel="stylesheet" href="style.css?v=20260823_exact_individual_v11">
+
+    <!-- CJ'S-INSPIRED WARM ORANGE MENU REDESIGN STYLES -->
+    <style id="cj-warm-orange-redesign">
+        :root {
+            --cj-orange: #EA580C;
+            --cj-orange-light: #FF6B00;
+            --cj-orange-dark: #C2410C;
+            --cj-cream-bg: #FFFDF9;
+            --cj-strip-bg: #FAF5EE;
+            --cj-border-soft: #F1E5D8;
+            --cj-text-main: #0F172A;
+            --cj-text-muted: #64748B;
+        }
+
+        /* 1. TOP ORANGE HEADER BAR (CJ'S RESTAURANT STYLE) */
+        .navbar#navbar {
+            background: linear-gradient(135deg, #FF6B00 0%, #EA580C 100%) !important;
+            padding: 12px 0 !important;
+            box-shadow: 0 4px 20px rgba(234, 88, 12, 0.25) !important;
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 1000 !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+        }
+
+        .navbar .nav-container {
+            max-width: 1320px !important;
+            margin: 0 auto !important;
+            padding: 0 24px !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            gap: 16px !important;
+        }
+
+        /* Brand Block Left */
+        .cj-brand-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .cj-brand-group:hover .cj-brand-name {
+            opacity: 0.95;
+        }
+
+        .cj-brand-logo {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+        }
+
+        .cj-brand-titles {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        .cj-brand-name {
+            font-family: var(--font-serif);
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            letter-spacing: 1.5px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .cj-brand-sub {
+            font-family: var(--font-sans);
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.85);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+        }
+
+        /* Center Nav Links */
+        .cj-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin: 0 auto;
+        }
+
+        .cj-nav-link {
+            color: #FFFFFF;
+            font-family: var(--font-sans);
+            font-size: 0.92rem;
+            font-weight: 600;
+            text-decoration: none;
+            position: relative;
+            padding: 6px 2px;
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .cj-nav-link:hover {
+            opacity: 0.85;
+        }
+
+        .cj-nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2.5px;
+            background: #FFFFFF;
+            border-radius: 2px;
+        }
+
+        /* Right Search & Cart Actions */
+        .cj-nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .cj-search-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: #FFFFFF;
+            border-radius: 20px;
+            padding: 6px 14px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .cj-search-wrap .search-icon {
+            color: #EA580C;
+            margin-right: 6px;
+            flex-shrink: 0;
+        }
+
+        .cj-search-input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            color: #0F172A;
+            width: 120px;
+            transition: width 0.25s ease;
+        }
+
+        .cj-search-input:focus {
+            width: 170px;
+        }
+
+        .cj-search-input::placeholder {
+            color: #94A3B8;
+        }
+
+        /* Cart Badge Button */
+        .cj-cart-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1.5px solid rgba(255, 255, 255, 0.5);
+            padding: 6px 14px;
+            border-radius: 20px;
+            color: #FFFFFF;
+            text-decoration: none;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .cj-cart-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .cj-cart-badge {
+            background: #FFFFFF;
+            color: #EA580C;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 10px;
+            line-height: 1;
+        }
+
+        /* Categories Drawer Button in Navbar */
+        .cj-categories-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: transparent;
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            color: #FFFFFF;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .cj-categories-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* 2. VISUAL SHOWCASE FOOD STRIP (SUB-HEADER) */
+        .cj-food-strip-section {
+            background: var(--cj-strip-bg);
+            border-bottom: 1px solid #EFE6D8;
+            padding: 20px 0 16px;
+            overflow: hidden;
+        }
+
+        .cj-food-strip-track {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .cj-food-strip-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cj-strip-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            flex-shrink: 0;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+        }
+
+        .cj-strip-item:hover {
+            transform: translateY(-4px) scale(1.05);
+        }
+
+        .cj-strip-circle {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            border: 2.5px solid #FFFFFF;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: border-color 0.2s ease;
+        }
+
+        .cj-strip-item:hover .cj-strip-circle {
+            border-color: #EA580C;
+        }
+
+        .cj-strip-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cj-strip-badge-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0 12px;
+            flex-shrink: 0;
+        }
+
+        .cj-strip-badge-logo {
+            width: 52px;
+            height: 52px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
+        }
+
+        .cj-strip-badge-text {
+            font-family: var(--font-serif);
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #111114;
+            letter-spacing: 1.5px;
+            margin-top: 2px;
+        }
+
+        .cj-strip-label {
+            font-family: var(--font-sans);
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #475569;
+            text-align: center;
+            max-width: 80px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* 3. EDITORIAL HERO & SECTION HEADER */
+        .cj-hero-editorial {
+            position: relative;
+            text-align: center;
+            padding: 44px 20px 24px;
+            background: #FFFFFF;
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .cj-leaf-watermark {
+            position: absolute;
+            top: 20px;
+            pointer-events: none;
+            user-select: none;
+            opacity: 0.12;
+        }
+
+        .cj-leaf-left {
+            left: 20px;
+        }
+
+        .cj-leaf-right {
+            right: 20px;
+            transform: scaleX(-1);
+        }
+
+        .cj-kicker {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #EA580C;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .cj-main-title {
+            font-family: var(--font-serif);
+            font-size: 3.1rem;
+            font-weight: 700;
+            color: #111114;
+            letter-spacing: 1px;
+            margin: 0 0 6px 0;
+            text-transform: uppercase;
+        }
+
+        .cj-title-divider {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .cj-title-divider span.rule {
+            width: 50px;
+            height: 1px;
+            background: #CBD5E1;
+        }
+
+        .cj-title-divider span.label {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #EA580C;
+            letter-spacing: 3px;
+        }
+
+        .cj-subtitle {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: #475569;
+            max-width: 620px;
+            margin: 0 auto 36px;
+            line-height: 1.6;
+        }
+
+        /* Category Section Header Divider Bar */
+        .cj-category-header-bar {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 30px 0 24px;
+            text-align: left;
+        }
+
+        .cj-category-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+
+        .cj-category-icon {
+            color: #EA580C;
+            font-size: 1.35rem;
+            line-height: 1;
+        }
+
+        .cj-category-name {
+            font-family: var(--font-sans);
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #EA580C;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .cj-category-line {
+            flex-grow: 1;
+            height: 1px;
+            background: #F1D2B8;
+        }
+
+        /* 4. 2-COLUMN LUXURY MENU CARDS */
+        .menu-catalog-section {
+            background: #FFFDF9 !important;
+            padding: 10px 0 60px !important;
+        }
+
+        .menu-catalog-section .section-wrapper {
+            max-width: 1240px !important;
+            margin: 0 auto !important;
+            padding: 0 24px !important;
+        }
+
+        .menu-grid {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 32px 28px !important;
+            margin-bottom: 50px !important;
+        }
+
+        .menu-card-luxury-wrapper {
+            background: #FFFFFF !important;
+            border: 1px solid #EFE4D6 !important;
+            border-radius: 12px !important;
+            overflow: hidden !important;
+            padding: 0 !important;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05) !important;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            min-height: 420px !important;
+        }
+
+        .menu-card-luxury-wrapper:hover {
+            transform: translateY(-4px) !important;
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.1) !important;
+            border-color: #EA580C !important;
+        }
+
+        .menu-card-luxury-wrapper > img,
+        .menu-card-img {
+            width: 100% !important;
+            height: 230px !important;
+            max-height: 230px !important;
+            object-fit: cover !important;
+            border-radius: 0 !important;
+            margin: 0 !important;
+            display: block !important;
+            background: #F5EFE6 !important;
+        }
+
+        .menu-dish-card {
+            padding: 22px 24px 6px !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: baseline !important;
+            margin: 0 !important;
+        }
+
+        .menu-dish-card h4,
+        .menu-dish-card h3 {
+            font-family: var(--font-serif) !important;
+            font-size: 1.35rem !important;
+            font-weight: 700 !important;
+            color: #0F172A !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            margin: 0 !important;
+            line-height: 1.25 !important;
+        }
+
+        .menu-dish-card span {
+            font-family: var(--font-sans) !important;
+            font-size: 1.3rem !important;
+            font-weight: 800 !important;
+            color: #EA580C !important;
+            white-space: nowrap !important;
+            margin-left: 14px !important;
+        }
+
+        .menu-card-luxury-wrapper > p {
+            padding: 0 24px !important;
+            font-family: var(--font-sans) !important;
+            font-size: 0.92rem !important;
+            color: #64748B !important;
+            line-height: 1.55 !important;
+            margin: 4px 0 18px 0 !important;
+            flex-grow: 1 !important;
+        }
+
+        .card-order-action-btn {
+            margin: 0 24px 22px auto !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: linear-gradient(135deg, #FF6B00 0%, #EA580C 100%) !important;
+            color: #FFFFFF !important;
+            border: none !important;
+            padding: 9px 22px !important;
+            border-radius: 20px !important;
+            font-family: var(--font-sans) !important;
+            font-size: 0.85rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.5px !important;
+            text-transform: uppercase !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25) !important;
+        }
+
+        .card-order-action-btn:hover {
+            background: linear-gradient(135deg, #FF7A00 0%, #C2410C 100%) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 18px rgba(234, 88, 12, 0.38) !important;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 900px) {
+            .navbar .nav-container {
+                padding: 0 12px !important;
+                gap: 8px !important;
+            }
+            .cj-nav-links {
+                display: none;
+            }
+            .cj-brand-name {
+                font-size: 1.15rem !important;
+                letter-spacing: 1px !important;
+            }
+            .cj-brand-sub {
+                display: none !important;
+            }
+            .cj-categories-btn {
+                padding: 5px 9px !important;
+                font-size: 0.72rem !important;
+            }
+            .cj-search-wrap {
+                padding: 5px 8px !important;
+            }
+            .cj-search-input {
+                width: 65px;
+            }
+            .cj-search-input:focus {
+                width: 110px;
+            }
+            .cj-cart-btn {
+                padding: 5px 10px !important;
+                font-size: 0.8rem !important;
+            }
+            .menu-grid {
+                grid-template-columns: 1fr !important;
+                gap: 22px !important;
+            }
+            .cj-main-title {
+                font-size: 2.1rem;
+            }
+            .cj-food-strip-track {
+                justify-content: flex-start;
+                padding: 0 14px;
+            }
+            .cj-leaf-watermark {
+                display: none;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -121,149 +712,149 @@
         </div>
     </aside>
 
-    <!-- Floating Transparent Navbar over Hero -->
+    <!-- WARM ORANGE HEADER (CJ'S RESTAURANT STYLE) -->
     <header class="navbar" id="navbar">
         <div class="nav-container">
-            <!-- Left: HOME & MENU Navigation Controls -->
-            <div class="nav-left-box" style="display: flex; align-items: center; gap: 10px;">
-                <a href="home.html" class="nav-home-btn" id="nav-home-btn" aria-label="Rib House Home Showcase" title="Return to Home Showcase" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: #FFFFFF; border: 1.5px solid #111114; border-radius: 6px; color: #111114; text-decoration: none; font-family: var(--font-sans); font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
-                    <svg class="nav-home-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #D35400;">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                    </svg>
-                    <span>HOME</span>
+            <!-- Left: Brand Group & Categories Button -->
+            <div style="display: flex; align-items: center; gap: 14px;">
+                <a href="home.html" class="cj-brand-group" aria-label="Rib House Restaurant Home">
+                    <img src="logo.webp" alt="Rib House Logo" class="cj-brand-logo" width="44" height="44">
+                    <div class="cj-brand-titles">
+                        <span class="cj-brand-name">RIB HOUSE</span>
+                        <span class="cj-brand-sub">RESTAURANT</span>
+                    </div>
                 </a>
-                <button class="menu-box-btn" id="side-drawer-toggle" aria-label="Open Navigation Menu" onclick="if(window.openSideDrawer) window.openSideDrawer(event); else { document.getElementById('side-drawer')?.classList.add('active'); document.getElementById('drawer-backdrop')?.classList.add('active'); document.body.style.overflow='hidden'; }">
-                    <span class="menu-box-text">CATEGORIES</span>
-                    <span class="menu-box-icon">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </span>
+                <button class="cj-categories-btn" id="side-drawer-toggle" aria-label="Open Categories Menu" onclick="if(window.openSideDrawer) window.openSideDrawer(event); else { document.getElementById('side-drawer')?.classList.add('active'); document.getElementById('drawer-backdrop')?.classList.add('active'); document.body.style.overflow='hidden'; }">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    <span>CATEGORIES</span>
                 </button>
             </div>
 
-            <!-- Centered Luxury Logo Emblem -->
-            <a href="home.html" class="brand-logo" aria-label="Rib House Home Showcase" title="Go to Home Showcase">
-                <img src="logo.webp" alt="Rib House Logo" class="nav-logo-img" width="48" height="48" decoding="async" loading="lazy">
-                <span class="brand-title">RIB HOUSE</span>
-                <span class="brand-subtitle">BEST QUALITY GRILLED MEAT</span>
-            </a>
+            <!-- Center: Navigation Links -->
+            <nav class="cj-nav-links" aria-label="Primary Navigation">
+                <a href="home.html" class="cj-nav-link">Home</a>
+                <a href="#breakfast-section" class="cj-nav-link active">Menu</a>
+                <a href="#main-dishes-section" class="cj-nav-link">Main Dishes</a>
+                <a href="order.html" class="cj-nav-link">Order Online</a>
+                <a href="tel:0724594204" class="cj-nav-link">Contact</a>
+            </nav>
 
-            <!-- Right: Search Bar -->
-            <div class="nav-right">
-                <div class="nav-search-box">
-                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Right: Search Input & Cart Button with Dynamic Badge -->
+            <div class="cj-nav-actions">
+                <div class="cj-search-wrap">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
-                    <input type="text" id="menu-dish-search-input" class="nav-search-input" placeholder="Search dish..." autocomplete="off">
+                    <input type="text" id="menu-dish-search-input" class="cj-search-input" placeholder="Search dish..." autocomplete="off">
                     <button class="search-clear-btn" id="search-clear-btn" aria-label="Clear Search" style="display: none;">&times;</button>
-                    <!-- 10-Dish Auto-Suggest Dropdown (Sharp Corners) -->
                     <div id="search-suggestions-dropdown" class="search-suggestions-dropdown" style="display: none;" role="listbox" aria-label="Dish Suggestions"></div>
                 </div>
+
+                <a href="order.html" class="cj-cart-btn" id="nav-cart-btn" aria-label="View Selected Order">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span class="cj-cart-badge" id="nav-cart-count">0</span>
+                </a>
             </div>
         </div>
     </header>
 
     <main>
-                <!-- 100VH FULL SCREEN CINEMATIC HERO SECTION -->
-        <section class="hero-landing" id="hero">
-            <!-- Dish Showcase Continuous Gliding Strip -->
-            <div class="hero-dishes-strip">
-                <div class="hero-dishes-track">
-                    <!-- Set 1: Breakfast -> Meats -> Desserts/Sides -->
-                    <div class="hero-dish-thumb"><img src="housecoffee.webp" width="306" height="204" decoding="async" data-img-key="hero_housecoffee" alt="Barista Coffee" class="hero-dish-img" loading="lazy"></div>
-                    <div class="hero-dish-thumb"><img src="Lemontea.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_lemontea" alt="Lemon Tea" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="breakfastbreadandeggs1.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_breakfast_eggs" alt="Bread & Eggs Breakfast" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="breakfastbreadwithbacon1.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_bacon_toast" alt="Bacon & Toast" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="Andazisamosawitheggs.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_andazi_eggs" alt="Andazi & Eggs" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="Samosa.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_samosa" alt="Samosa" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="Sauseges.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_sausages" alt="Grilled Sausages" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="Goatchoma1kg.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_goat_choma" alt="Goat Choma 1KG" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="Steakbeaf.webp" width="306" height="204" decoding="async" data-img-key="hero_steakbeaf" alt="Steak Beef" class="hero-dish-img" loading="lazy"></div>
-                    <div class="hero-dish-thumb"><img src="beef.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_beef" alt="Grilled Beef Stew" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="fishwetfry.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_fish" alt="Fish Wet Fry" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="fishdryfry.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_fish_dry" alt="Fish Dry Fry" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="chickenquaterwithchips.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_chicken" alt="Chicken Quarter with Chips" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="Chips special with meat.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_chips_meat" alt="Chips Special with Meat" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="Chipsmatumbocombo.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_chips_matumbo" alt="Chips Matumbo Combo" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="Fries with salad.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_fries_salad" alt="Fries & Salad" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="icecream.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_icecream" alt="Ice Cream Dessert" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="Oreoshake.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_oreoshake" alt="Oreo Shake" class="hero-dish-img"></div>
-
-                    <!-- Set 2 (Seamless Infinite Gliding Loop) -->
-                    <div class="hero-dish-thumb"><img src="housecoffee.webp" width="306" height="204" decoding="async" data-img-key="hero_housecoffee" alt="Barista Coffee" class="hero-dish-img" loading="lazy"></div>
-                    <div class="hero-dish-thumb"><img src="Lemontea.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_lemontea" alt="Lemon Tea" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="breakfastbreadandeggs1.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_breakfast_eggs" alt="Bread & Eggs Breakfast" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="breakfastbreadwithbacon1.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_bacon_toast" alt="Bacon & Toast" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="Andazisamosawitheggs.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_andazi_eggs" alt="Andazi & Eggs" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="Samosa.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_samosa" alt="Samosa" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="Sauseges.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_sausages" alt="Grilled Sausages" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="Goatchoma1kg.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_goat_choma" alt="Goat Choma 1KG" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="Steakbeaf.webp" width="306" height="204" decoding="async" data-img-key="hero_steakbeaf" alt="Steak Beef" class="hero-dish-img" loading="lazy"></div>
-                    <div class="hero-dish-thumb"><img src="beef.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_beef" alt="Grilled Beef Stew" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="fishwetfry.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_fish" alt="Fish Wet Fry" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="fishdryfry.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_fish_dry" alt="Fish Dry Fry" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="chickenquaterwithchips.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_chicken" alt="Chicken Quarter with Chips" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="Chips special with meat.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_chips_meat" alt="Chips Special with Meat" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="Chipsmatumbocombo.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_chips_matumbo" alt="Chips Matumbo Combo" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="Fries with salad.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_fries_salad" alt="Fries & Salad" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="icecream.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_icecream" alt="Ice Cream Dessert" class="hero-dish-img"></div>
-                    <div class="hero-dish-thumb"><img src="Oreoshake.webp" width="306" height="204" loading="lazy" decoding="async" data-img-key="hero_oreoshake" alt="Oreo Shake" class="hero-dish-img"></div>
+        <!-- 1. VISUAL SHOWCASE FOOD STRIP (SUB-HEADER) -->
+        <section class="cj-food-strip-section" aria-label="Visual Appetizer Showcase">
+            <div class="cj-food-strip-track">
+                <a href="#dish-oreo-shake" class="cj-strip-item" title="Oreo Shake">
+                    <div class="cj-strip-circle"><img src="Oreoshake.webp" alt="Oreo Shake" loading="lazy"></div>
+                    <span class="cj-strip-label">Milkshake</span>
+                </a>
+                <a href="#dish-coffee-latte" class="cj-strip-item" title="Coffee Latte">
+                    <div class="cj-strip-circle"><img src="coffeelatte1.webp" alt="Latte Art" loading="lazy"></div>
+                    <span class="cj-strip-label">Latte Art</span>
+                </a>
+                <a href="#dish-lemon-tea" class="cj-strip-item" title="Lemon Tea">
+                    <div class="cj-strip-circle"><img src="Lemontea.webp" alt="Lemon Tea" loading="lazy"></div>
+                    <span class="cj-strip-label">Special Tea</span>
+                </a>
+                <a href="#dish-mini-breakfast" class="cj-strip-item" title="Mini Breakfast">
+                    <div class="cj-strip-circle"><img src="Breakfast1.webp" alt="Toast & Eggs" loading="lazy"></div>
+                    <span class="cj-strip-label">Eggs & Toast</span>
+                </a>
+                <div class="cj-strip-badge-center">
+                    <img src="logo.webp" alt="Rib House Logo" class="cj-strip-badge-logo">
+                    <span class="cj-strip-badge-text">RIB HOUSE</span>
                 </div>
+                <a href="#dish-rib-house-breakfast" class="cj-strip-item" title="Rib House Breakfast">
+                    <div class="cj-strip-circle"><img src="ribhousebreakfast.webp" alt="Chef Special Breakfast" loading="lazy"></div>
+                    <span class="cj-strip-label">Chef Special</span>
+                </a>
+                <a href="#dish-samosa-combo" class="cj-strip-item" title="Samosas & Andazi">
+                    <div class="cj-strip-circle"><img src="Andazisamosawitheggs.webp" alt="Samosas & Pastries" loading="lazy"></div>
+                    <span class="cj-strip-label">Pastries</span>
+                </a>
+                <a href="#dish-chips-combo" class="cj-strip-item" title="Crispy Fries">
+                    <div class="cj-strip-circle"><img src="Fries with salad.webp" alt="Fries with Salad" loading="lazy"></div>
+                    <span class="cj-strip-label">Crispy Fries</span>
+                </a>
+                <a href="#dish-sausages" class="cj-strip-item" title="Grilled Sausages">
+                    <div class="cj-strip-circle"><img src="Sauseges.webp" alt="Grilled Sausages" loading="lazy"></div>
+                    <span class="cj-strip-label">Sausages</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- 2. EDITORIAL HERO TITLE & SECTION HEADER -->
+        <section class="cj-hero-editorial" id="hero">
+            <!-- Subtle Botanical Leaf Watermark Accents -->
+            <div class="cj-leaf-watermark cj-leaf-left" aria-hidden="true">
+                <svg width="110" height="110" viewBox="0 0 100 100" fill="none">
+                    <path d="M20,80 Q30,20 80,20 Q70,70 20,80 Z" stroke="#EA580C" stroke-width="2.5" fill="#EA580C"/>
+                    <path d="M20,80 Q50,50 80,20" stroke="#EA580C" stroke-width="1.5"/>
+                    <path d="M40,60 Q55,50 65,45" stroke="#EA580C" stroke-width="1.2"/>
+                    <path d="M30,70 Q45,60 55,55" stroke="#EA580C" stroke-width="1.2"/>
+                </svg>
+            </div>
+            <div class="cj-leaf-watermark cj-leaf-right" aria-hidden="true">
+                <svg width="110" height="110" viewBox="0 0 100 100" fill="none">
+                    <path d="M20,80 Q30,20 80,20 Q70,70 20,80 Z" stroke="#EA580C" stroke-width="2.5" fill="#EA580C"/>
+                    <path d="M20,80 Q50,50 80,20" stroke="#EA580C" stroke-width="1.5"/>
+                    <path d="M40,60 Q55,50 65,45" stroke="#EA580C" stroke-width="1.2"/>
+                    <path d="M30,70 Q45,60 55,55" stroke="#EA580C" stroke-width="1.2"/>
+                </svg>
             </div>
 
-            <div class="hero-content">
-                <div class="hero-logo-container">
-                    <img src="logo.webp" alt="Rib House Grill Logo" class="hero-logo-img" width="193" height="193" fetchpriority="high">
-                </div>
-                <h1 class="hero-title">RIB HOUSE <span class="gold-gradient">MENU</span></h1>
-                <p class="hero-description">
-                    Ready for an unforgettable feast? From sizzlin' beef steak to juicy grilled goat and beef choma to rich barista brews prepared by the most qualified and skilled, dive in and discover your next favourite dish below!
-                </p>
-                <div class="hero-cta-group">
-                    <a href="#breakfast-section" class="btn-hero-outline">
-                        <span>1. BREAKFAST COMBOS</span>
-                    </a>
-                    <a href="#bk-hot" class="btn-hero-outline">
-                        <span>2. HOT & COLD BARISTA DRINKS</span>
-                    </a>
-                    <a href="#main-dishes-section" class="btn-hero-secondary">
-                        <span>3. MAIN DISHES MENU</span>
-                    </a>
-                </div>
+            <div class="cj-kicker">FRESH &bull; TASTY &bull; ALWAYS</div>
+            <h1 class="cj-main-title">BREAKFAST &amp; BARISTA</h1>
+            <div class="cj-title-divider">
+                <span class="rule"></span>
+                <span class="label">MENU</span>
+                <span class="rule"></span>
             </div>
+            <p class="cj-subtitle">Start your day the right way! All breakfasts served hot &amp; fresh.</p>
 
-            <!-- Smooth Scroll Indicator -->
-            <a href="#metrics" class="hero-scroll-indicator" aria-label="Scroll Down">
-                <span>SCROLL TO EXPLORE</span>
-                <div class="scroll-line"></div>
-            </a>
+            <!-- Section 1 Divider Bar: Breakfast Combos & Specials -->
+            <div class="cj-category-header-bar" id="bk-combos">
+                <div class="cj-category-title-wrap">
+                    <span class="cj-category-icon">🍴</span>
+                    <span class="cj-category-name">BREAKFAST COMBOS &amp; SPECIALS</span>
+                </div>
+                <div class="cj-category-line"></div>
+            </div>
         </section>
 
         <!-- BREAKFAST & BARISTA MENU SECTION -->
-        <section class="menu-catalog-section" id="breakfast-section" style="background: #FFFFFF;">
+        <section class="menu-catalog-section" id="breakfast-section">
             <div class="section-wrapper">
-                <div class="section-header-editorial">
-                    <h2 class="section-heading-editorial">BREAKFAST & BARISTA MENU</h2>
-                    <p class="section-subtext-editorial">Start your day the right way! All breakfasts served hot &
-                        fresh.</p>
-                </div>
-
-                <!-- SUBSECTION 1: BREAKFAST COMBOS & SPECIALS -->
-                <div id="bk-combos"
-                    style="scroll-margin-top: 100px; margin-bottom: 30px; border-bottom: 1px solid var(--color-border-gold); padding-bottom: 10px;">
-                    <h3
-                        style="font-family: var(--font-serif); font-size: 1.8rem; color: var(--color-gold); text-transform: uppercase;">
-                        BREAKFAST COMBOS & SPECIALS</h3>
-                </div>
 
                 <div class="menu-grid"
                     style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); margin-bottom: 60px;">
                     <!-- TEST DISH (FOR TESTING PURPOSES) -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 2px dashed var(--color-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="Breakfast1.webp" alt="TEST DISH" class="menu-card-img" loading="lazy" decoding="async">
                         <div id="dish-test-dish" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-gold); text-transform: uppercase;">
@@ -271,12 +862,13 @@
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: #10B981; font-weight: bold;">1/=</span>
                         </div>
                         <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Developer testing dish (KSh 1/=) for M-Pesa verification and checkout order testing.</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- PANCAKE BREAKFAST -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="breakfastbreadwithbacon1.webp" alt="PANCAKE BREAKFAST" class="menu-card-img" loading="lazy" decoding="async">
                         <div id="dish-pancake-breakfast" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -284,13 +876,13 @@
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">400/=</span>
                         </div>
                         <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, 2 pancakes and pan Fried Bacon</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- MINI BREAKFAST -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="Breakfast1.webp" alt="MINI BREAKFAST" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="Breakfast1.webp" alt="MINI BREAKFAST" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-mini-breakfast" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -298,13 +890,13 @@
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">310/=</span>
                         </div>
                         <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, 2 fried egg, Toast and sausage, A Small Glass Of Juice</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- RIB HOUSE BREAKFAST -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="ribhousebreakfast.webp" alt="RIB HOUSE BREAKFAST" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="ribhousebreakfast.webp" alt="RIB HOUSE BREAKFAST" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-rib-house-breakfast" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -312,13 +904,13 @@
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">300/=</span>
                         </div>
                         <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, Liver and Chapati</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- MAIN BREAKFAST -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="breakfastbreadwithbacon1.webp" alt="MAIN BREAKFAST" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="Specialbreakfast.webp" alt="MAIN BREAKFAST" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-main-breakfast" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -326,13 +918,13 @@
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">400/=</span>
                         </div>
                         <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, 2 Eggs, Beef Bacon/Sausages, Toast and a glass of juice</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- GOAT SOUP BREAKFAST -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="Goatsoup.webp" alt="GOAT SOUP BREAKFAST" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="Goatsoup.webp" alt="GOAT SOUP BREAKFAST" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-goat-soup-breakfast" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -340,13 +932,13 @@
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">300/=</span>
                         </div>
                         <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Served with a piece of goat meat, goat soup, chapati and veges.</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- CHICKEN SOUP BREAKFAST -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="chickensoup.webp" alt="CHICKEN SOUP BREAKFAST" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="chickensoup.webp" alt="CHICKEN SOUP BREAKFAST" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-chicken-soup-breakfast" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -354,12 +946,13 @@
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">300/=</span>
                         </div>
                         <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Served With: A Piece Of Chicken Kienyeji, Chicken Soup, Chapati And Veges</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- CHIPS COMBO -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="Chips special with meat.webp" alt="CHIPS COMBO" class="menu-card-img" loading="lazy" decoding="async">
                         <div id="dish-chips-combo" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -367,7 +960,7 @@
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">300/=</span>
                         </div>
                         <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Chips Served With Tea / Egg / Andazi / Kachumbari</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- SAMOSA COMBO -->
@@ -381,7 +974,7 @@
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">280/=</span>
                         </div>
                         <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">1 Egg / Samosa / Andazi / Tea</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- TRADITIONAL BREAKFAST -->
@@ -394,7 +987,7 @@
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">300/=</span>
                         </div>
                         <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, Nduma / Ngwaci, Egg Kienyeji, veges</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- FARMERS CHOICE -->
@@ -407,7 +1000,7 @@
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">380/=</span>
                         </div>
                         <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, Beef bacon/Sausage and a Toast</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- RIB HOUSE BITE -->
@@ -421,7 +1014,7 @@
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">200/=</span>
                         </div>
                         <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, Andazi and a Sausage</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- SPECIAL BREAKFAST -->
@@ -435,7 +1028,7 @@
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">220/=</span>
                         </div>
                         <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, one fried egg, toast and a sausage</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- RIB HOUSE SPECIAL -->
@@ -448,7 +1041,7 @@
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">310/=</span>
                         </div>
                         <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, Bacon/ 2 Sausages and Chapati</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- BRITISH BREAKFAST -->
@@ -461,7 +1054,7 @@
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">320/=</span>
                         </div>
                         <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Tea, Liver and Toast</p>
-                        <button type="button" class="card-order-action-btn" style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
                 </div>
 
@@ -485,8 +1078,7 @@
                                 House Coffee white</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">150/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- House Coffee Black -->
@@ -499,8 +1091,7 @@
                                 House Coffee Black</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">100/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Black Coffee W lemon -->
@@ -513,8 +1104,7 @@
                                 Black Coffee W lemon</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">110/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Americano -->
@@ -527,8 +1117,7 @@
                                 Americano</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">150/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Latte Mocha -->
@@ -541,8 +1130,7 @@
                                 Latte Mocha</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">150/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Latte Machiatto -->
@@ -555,8 +1143,7 @@
                                 Latte Machiatto</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">180/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Coffee Latte -->
@@ -569,8 +1156,7 @@
                                 Coffee Latte</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">150/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Lemon Tea -->
@@ -583,8 +1169,7 @@
                                 Lemon Tea</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">100/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Lemon Tea W Honey -->
@@ -596,8 +1181,7 @@
                                 Lemon Tea W Honey</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">150/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Lemon Water -->
@@ -610,8 +1194,7 @@
                                 Lemon Water</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">70/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Tea special -->
@@ -624,8 +1207,7 @@
                                 Tea special</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">100/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Tea Masala White -->
@@ -638,8 +1220,7 @@
                                 Tea Masala White</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">130/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Tea Masala Black -->
@@ -652,8 +1233,7 @@
                                 Tea Masala Black</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">100/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Ginger Tea -->
@@ -666,8 +1246,7 @@
                                 Ginger Tea</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">130/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Dawa -->
@@ -680,8 +1259,7 @@
                                 Dawa</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">200/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Honey Espresso -->
@@ -693,8 +1271,7 @@
                                 Honey Espresso</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">110/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Hot Milk -->
@@ -707,8 +1284,7 @@
                                 Hot Milk</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">100/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Honey Cone -->
@@ -721,8 +1297,7 @@
                                 Honey Cone</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">50/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Cappuccino (Single) -->
@@ -735,8 +1310,7 @@
                                 Cappuccino (Single)</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">150/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Cappuccino (Double) -->
@@ -749,8 +1323,7 @@
                                 Cappuccino (Double)</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">180/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Espresso (Single) -->
@@ -763,8 +1336,7 @@
                                 Espresso (Single)</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">120/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Espresso (Double) -->
@@ -777,8 +1349,7 @@
                                 Espresso (Double)</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">150/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
                 </div>
 
@@ -804,8 +1375,7 @@
                                 MILKSHAKE (FLAVORED)</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">250/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Espresso (Cold) -->
@@ -818,8 +1388,7 @@
                                 Espresso (Cold)</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">250/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Oreo shake -->
@@ -832,8 +1401,7 @@
                                 Oreo shake</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">300/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Smoothies (Tropical) -->
@@ -846,8 +1414,7 @@
                                 Smoothies (Tropical)</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">200/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Ice Cream Scoops -->
@@ -860,8 +1427,7 @@
                                 Ice Cream Scoops</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">150/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Lemonade (Flavor) -->
@@ -873,8 +1439,7 @@
                                 Lemonade (Flavor)</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">100/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
 
                     <!-- Iced Coffee -->
@@ -887,8 +1452,7 @@
                                 Iced Coffee</h4>
                             <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">180/=</span>
                         </div>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 10px; width: 100%; padding: 8px 12px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.8rem; cursor: pointer;">+ ADD TO ORDER</button>
+                        <button type="button" class="card-order-action-btn">+ ADD TO ORDER</button>
                     </div>
                 </div>
 
@@ -2102,6 +2666,38 @@
     </div>
 
     <script src="app.js?v=20260917_hold_fixed_v3"></script>
+    <script>
+        // Automatic Real-Time Synchronization for Top Header Cart Badge
+        (function() {
+            function syncNavCartBadge() {
+                try {
+                    const cart = JSON.parse(localStorage.getItem('ribhouse_cart') || '[]');
+                    const totalItems = cart.reduce((sum, item) => sum + (parseInt(item.quantity, 10) || 1), 0);
+                    const badge = document.getElementById('nav-cart-count');
+                    if (badge) {
+                        badge.textContent = totalItems;
+                        badge.style.display = totalItems > 0 ? 'inline-flex' : 'none';
+                    }
+                } catch (err) {}
+            }
+
+            window.addEventListener('DOMContentLoaded', syncNavCartBadge);
+            window.addEventListener('load', syncNavCartBadge);
+            window.addEventListener('storage', syncNavCartBadge);
+            document.addEventListener('click', () => setTimeout(syncNavCartBadge, 120));
+
+            const targetBadge = document.getElementById('floating-order-count');
+            if (targetBadge && window.MutationObserver) {
+                new MutationObserver(() => {
+                    const badge = document.getElementById('nav-cart-count');
+                    if (badge && targetBadge) {
+                        badge.textContent = targetBadge.textContent || '0';
+                        badge.style.display = (targetBadge.style.display !== 'none' && targetBadge.textContent !== '0') ? 'inline-flex' : 'none';
+                    }
+                }).observe(targetBadge, { childList: true, characterData: true, subtree: true, attributes: true });
+            }
+        })();
+    </script>
 </body>
 
 </html>

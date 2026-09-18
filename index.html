@@ -244,27 +244,90 @@
 
         /* 2. VISUAL SHOWCASE FOOD STRIP (SUB-HEADER) */
         .cj-food-strip-section {
+            position: relative;
             background: var(--cj-strip-bg);
             border-bottom: 1px solid #EFE6D8;
-            padding: 20px 0 16px;
+            padding: 18px 0 16px;
             overflow: hidden;
+            user-select: none;
         }
 
-        .cj-food-strip-track {
-            max-width: 1320px;
-            margin: 0 auto;
-            padding: 0 16px;
+        /* Stationary Centered Rib House Spotlight Badge */
+        .cj-strip-center-badge-fixed {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            pointer-events: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
         }
 
-        .cj-food-strip-track::-webkit-scrollbar {
-            display: none;
+        .cj-center-badge-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 24px 6px;
+            background: radial-gradient(ellipse at center, rgba(253, 250, 245, 0.98) 60%, rgba(253, 250, 245, 0.9) 80%, rgba(253, 250, 245, 0) 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 35px 25px rgba(253, 250, 245, 0.95);
+            pointer-events: auto;
+            text-align: center;
+        }
+
+        .cj-strip-badge-logo {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.18));
+            transition: transform 0.3s ease;
+        }
+
+        .cj-center-badge-inner:hover .cj-strip-badge-logo {
+            transform: scale(1.08) rotate(3deg);
+        }
+
+        .cj-strip-badge-text {
+            font-family: var(--font-serif);
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: #111114;
+            letter-spacing: 2px;
+            margin-top: 2px;
+            white-space: nowrap;
+        }
+
+        /* Marquee Wrapper & Track Moving Left to Right */
+        .cj-marquee-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cj-marquee-track {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            width: max-content;
+            animation: cjScrollLeftToRight 28s linear infinite;
+            will-change: transform;
+        }
+
+        .cj-marquee-wrapper:hover .cj-marquee-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes cjScrollLeftToRight {
+            0% {
+                transform: translate3d(-50%, 0, 0);
+            }
+            100% {
+                transform: translate3d(0%, 0, 0);
+            }
         }
 
         .cj-strip-item {
@@ -279,25 +342,26 @@
         }
 
         .cj-strip-item:hover {
-            transform: translateY(-4px) scale(1.05);
+            transform: translateY(-4px) scale(1.06);
         }
 
         .cj-strip-circle {
-            width: 76px;
-            height: 76px;
+            width: 74px;
+            height: 74px;
             border-radius: 50%;
             background: #FFFFFF;
             border: 2.5px solid #FFFFFF;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            transition: border-color 0.2s ease;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
         .cj-strip-item:hover .cj-strip-circle {
             border-color: #EA580C;
+            box-shadow: 0 6px 16px rgba(234, 88, 12, 0.25);
         }
 
         .cj-strip-circle img {
@@ -306,41 +370,14 @@
             object-fit: cover;
         }
 
-        .cj-strip-badge-center {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 0 12px;
-            flex-shrink: 0;
-        }
-
-        .cj-strip-badge-logo {
-            width: 52px;
-            height: 52px;
-            object-fit: contain;
-            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
-        }
-
-        .cj-strip-badge-text {
-            font-family: var(--font-serif);
-            font-size: 0.85rem;
-            font-weight: 800;
-            color: #111114;
-            letter-spacing: 1.5px;
-            margin-top: 2px;
-        }
-
         .cj-strip-label {
             font-family: var(--font-sans);
             font-size: 0.72rem;
-            font-weight: 600;
+            font-weight: 700;
             color: #475569;
             text-align: center;
-            max-width: 80px;
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            letter-spacing: 0.3px;
         }
 
         /* 3. EDITORIAL HERO & SECTION HEADER */
@@ -931,9 +968,30 @@
             .cj-main-title {
                 font-size: 2.1rem;
             }
-            .cj-food-strip-track {
-                justify-content: flex-start;
-                padding: 0 14px;
+            .cj-food-strip-section {
+                padding: 12px 0 10px !important;
+            }
+            .cj-strip-circle {
+                width: 64px !important;
+                height: 64px !important;
+            }
+            .cj-strip-label {
+                font-size: 0.68rem !important;
+            }
+            .cj-strip-badge-logo {
+                width: 38px !important;
+                height: 38px !important;
+            }
+            .cj-strip-badge-text {
+                font-size: 0.74rem !important;
+                letter-spacing: 1.2px !important;
+            }
+            .cj-center-badge-inner {
+                padding: 6px 14px 4px !important;
+            }
+            .cj-marquee-track {
+                gap: 16px !important;
+                animation-duration: 22s !important;
             }
             .cj-leaf-watermark {
                 display: none;
@@ -1120,43 +1178,101 @@
     <main>
         <!-- 1. VISUAL SHOWCASE FOOD STRIP (SUB-HEADER) -->
         <section class="cj-food-strip-section" aria-label="Visual Appetizer Showcase">
-            <div class="cj-food-strip-track">
-                <a href="#dish-oreo-shake" class="cj-strip-item" title="Oreo Shake">
-                    <div class="cj-strip-circle"><img src="Oreoshake.webp" alt="Oreo Shake" loading="lazy"></div>
-                    <span class="cj-strip-label">Milkshake</span>
-                </a>
-                <a href="#dish-coffee-latte" class="cj-strip-item" title="Coffee Latte">
-                    <div class="cj-strip-circle"><img src="coffeelatte1.webp" alt="Latte Art" loading="lazy"></div>
-                    <span class="cj-strip-label">Latte Art</span>
-                </a>
-                <a href="#dish-lemon-tea" class="cj-strip-item" title="Lemon Tea">
-                    <div class="cj-strip-circle"><img src="Lemontea.webp" alt="Lemon Tea" loading="lazy"></div>
-                    <span class="cj-strip-label">Special Tea</span>
-                </a>
-                <a href="#dish-mini-breakfast" class="cj-strip-item" title="Mini Breakfast">
-                    <div class="cj-strip-circle"><img src="Breakfast1.webp" alt="Toast & Eggs" loading="lazy"></div>
-                    <span class="cj-strip-label">Eggs & Toast</span>
-                </a>
-                <div class="cj-strip-badge-center">
-                    <img src="logo.webp" alt="Rib House Logo" class="cj-strip-badge-logo">
+            <!-- Stationary Centered Rib House Spotlight Badge -->
+            <div class="cj-strip-center-badge-fixed">
+                <div class="cj-center-badge-inner">
+                    <img src="logo.webp" alt="Rib House Logo" class="cj-strip-badge-logo" width="48" height="48">
                     <span class="cj-strip-badge-text">RIB HOUSE</span>
                 </div>
-                <a href="#dish-rib-house-breakfast" class="cj-strip-item" title="Rib House Breakfast">
-                    <div class="cj-strip-circle"><img src="ribhousebreakfast.webp" alt="Chef Special Breakfast" loading="lazy"></div>
-                    <span class="cj-strip-label">Chef Special</span>
-                </a>
-                <a href="#dish-samosa-combo" class="cj-strip-item" title="Samosas & Andazi">
-                    <div class="cj-strip-circle"><img src="Andazisamosawitheggs.webp" alt="Samosas & Pastries" loading="lazy"></div>
-                    <span class="cj-strip-label">Pastries</span>
-                </a>
-                <a href="#dish-chips-combo" class="cj-strip-item" title="Crispy Fries">
-                    <div class="cj-strip-circle"><img src="Fries with salad.webp" alt="Fries with Salad" loading="lazy"></div>
-                    <span class="cj-strip-label">Crispy Fries</span>
-                </a>
-                <a href="#dish-sausages" class="cj-strip-item" title="Grilled Sausages">
-                    <div class="cj-strip-circle"><img src="Sauseges.webp" alt="Grilled Sausages" loading="lazy"></div>
-                    <span class="cj-strip-label">Sausages</span>
-                </a>
+            </div>
+
+            <!-- Continuous Infinite Scrolling Food Conveyor Track (Moves Left to Right Behind Logo) -->
+            <div class="cj-marquee-wrapper">
+                <div class="cj-marquee-track">
+                    <!-- Set 1 -->
+                    <a href="#dish-oreo-shake" class="cj-strip-item" title="Oreo Shake">
+                        <div class="cj-strip-circle"><img src="Oreoshake.webp" alt="Oreo Shake" loading="lazy"></div>
+                        <span class="cj-strip-label">Milkshake</span>
+                    </a>
+                    <a href="#dish-coffee-latte" class="cj-strip-item" title="Coffee Latte">
+                        <div class="cj-strip-circle"><img src="coffeelatte1.webp" alt="Latte Art" loading="lazy"></div>
+                        <span class="cj-strip-label">Latte Art</span>
+                    </a>
+                    <a href="#dish-lemon-tea" class="cj-strip-item" title="Lemon Tea">
+                        <div class="cj-strip-circle"><img src="Lemontea.webp" alt="Lemon Tea" loading="lazy"></div>
+                        <span class="cj-strip-label">Special Tea</span>
+                    </a>
+                    <a href="#dish-mini-breakfast" class="cj-strip-item" title="Mini Breakfast">
+                        <div class="cj-strip-circle"><img src="Breakfast1.webp" alt="Toast & Eggs" loading="lazy"></div>
+                        <span class="cj-strip-label">Eggs & Toast</span>
+                    </a>
+                    <a href="#dish-rib-house-breakfast" class="cj-strip-item" title="Rib House Breakfast">
+                        <div class="cj-strip-circle"><img src="ribhousebreakfast.webp" alt="Chef Special Breakfast" loading="lazy"></div>
+                        <span class="cj-strip-label">Chef Special</span>
+                    </a>
+                    <a href="#dish-samosa-combo" class="cj-strip-item" title="Samosas & Andazi">
+                        <div class="cj-strip-circle"><img src="Andazisamosawitheggs.webp" alt="Samosas & Pastries" loading="lazy"></div>
+                        <span class="cj-strip-label">Pastries</span>
+                    </a>
+                    <a href="#dish-chips-combo" class="cj-strip-item" title="Crispy Fries">
+                        <div class="cj-strip-circle"><img src="Fries with salad.webp" alt="Fries with Salad" loading="lazy"></div>
+                        <span class="cj-strip-label">Crispy Fries</span>
+                    </a>
+                    <a href="#dish-sausages" class="cj-strip-item" title="Grilled Sausages">
+                        <div class="cj-strip-circle"><img src="Sauseges.webp" alt="Grilled Sausages" loading="lazy"></div>
+                        <span class="cj-strip-label">Sausages</span>
+                    </a>
+                    <a href="#dish-beef-stew-showcase" class="cj-strip-item" title="Beef Stew">
+                        <div class="cj-strip-circle"><img src="beef_stew_thumb1.webp" alt="Beef Stew" loading="lazy"></div>
+                        <span class="cj-strip-label">Beef Stew</span>
+                    </a>
+                    <a href="#dish-chicken-showcase" class="cj-strip-item" title="Crispy Chicken">
+                        <div class="cj-strip-circle"><img src="deepfiredchickenwithugali.webp" alt="Chicken" loading="lazy"></div>
+                        <span class="cj-strip-label">Crispy Chicken</span>
+                    </a>
+
+                    <!-- Set 2 (Duplicate for Seamless Infinite Loop) -->
+                    <a href="#dish-oreo-shake" class="cj-strip-item" title="Oreo Shake" aria-hidden="true">
+                        <div class="cj-strip-circle"><img src="Oreoshake.webp" alt="Oreo Shake" loading="lazy"></div>
+                        <span class="cj-strip-label">Milkshake</span>
+                    </a>
+                    <a href="#dish-coffee-latte" class="cj-strip-item" title="Coffee Latte" aria-hidden="true">
+                        <div class="cj-strip-circle"><img src="coffeelatte1.webp" alt="Latte Art" loading="lazy"></div>
+                        <span class="cj-strip-label">Latte Art</span>
+                    </a>
+                    <a href="#dish-lemon-tea" class="cj-strip-item" title="Lemon Tea" aria-hidden="true">
+                        <div class="cj-strip-circle"><img src="Lemontea.webp" alt="Lemon Tea" loading="lazy"></div>
+                        <span class="cj-strip-label">Special Tea</span>
+                    </a>
+                    <a href="#dish-mini-breakfast" class="cj-strip-item" title="Mini Breakfast" aria-hidden="true">
+                        <div class="cj-strip-circle"><img src="Breakfast1.webp" alt="Toast & Eggs" loading="lazy"></div>
+                        <span class="cj-strip-label">Eggs & Toast</span>
+                    </a>
+                    <a href="#dish-rib-house-breakfast" class="cj-strip-item" title="Rib House Breakfast" aria-hidden="true">
+                        <div class="cj-strip-circle"><img src="ribhousebreakfast.webp" alt="Chef Special Breakfast" loading="lazy"></div>
+                        <span class="cj-strip-label">Chef Special</span>
+                    </a>
+                    <a href="#dish-samosa-combo" class="cj-strip-item" title="Samosas & Andazi" aria-hidden="true">
+                        <div class="cj-strip-circle"><img src="Andazisamosawitheggs.webp" alt="Samosas & Pastries" loading="lazy"></div>
+                        <span class="cj-strip-label">Pastries</span>
+                    </a>
+                    <a href="#dish-chips-combo" class="cj-strip-item" title="Crispy Fries" aria-hidden="true">
+                        <div class="cj-strip-circle"><img src="Fries with salad.webp" alt="Fries with Salad" loading="lazy"></div>
+                        <span class="cj-strip-label">Crispy Fries</span>
+                    </a>
+                    <a href="#dish-sausages" class="cj-strip-item" title="Grilled Sausages" aria-hidden="true">
+                        <div class="cj-strip-circle"><img src="Sauseges.webp" alt="Grilled Sausages" loading="lazy"></div>
+                        <span class="cj-strip-label">Sausages</span>
+                    </a>
+                    <a href="#dish-beef-stew-showcase" class="cj-strip-item" title="Beef Stew" aria-hidden="true">
+                        <div class="cj-strip-circle"><img src="beef_stew_thumb1.webp" alt="Beef Stew" loading="lazy"></div>
+                        <span class="cj-strip-label">Beef Stew</span>
+                    </a>
+                    <a href="#dish-chicken-showcase" class="cj-strip-item" title="Crispy Chicken" aria-hidden="true">
+                        <div class="cj-strip-circle"><img src="deepfiredchickenwithugali.webp" alt="Chicken" loading="lazy"></div>
+                        <span class="cj-strip-label">Crispy Chicken</span>
+                    </a>
+                </div>
             </div>
         </section>
 

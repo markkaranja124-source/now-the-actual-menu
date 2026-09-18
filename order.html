@@ -2,16 +2,15 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RIB HOUSE | Your Selected Feast</title>
-    <meta name="description" content="Review your selected Rib House wood-fired dishes, adjust quantities, and proceed to checkout.">
+    <meta name="description" content="Review your selected Rib House wood-fired dishes, adjust portion sides and quantities, and proceed to checkout.">
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Favicon / Tab Logo -->
     <link rel="icon" type="image/png" href="logo.webp">
@@ -20,49 +19,1015 @@
     <meta property="og:image" content="logo.webp">
 
     <link rel="stylesheet" href="style.css?v=20260819_wa_text_clean_v32_1787092931582">
+
+    <!-- WARM ORANGE & SHARP CORNERS THEME (MATCHING MENU PAGE) -->
+    <style id="warm-orange-order-theme">
+        :root {
+            --primary-orange: #EA580C;
+            --primary-orange-light: #FF6B00;
+            --primary-orange-dark: #C2410C;
+            --primary-orange-soft: #FFF7ED;
+            --primary-orange-border: #FED7AA;
+            --color-cream: #FAF7F2;
+            --color-card-bg: #FFFFFF;
+            --color-border-warm: #EFE4D6;
+            --color-text-main: #0F172A;
+            --color-text-slate: #334155;
+            --color-text-muted: #64748B;
+            --font-serif: 'Cormorant Garamond', Georgia, serif;
+            --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        }
+
+        /* STRICT SHARP CORNERS ACROSS THE ENTIRE PAGE */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            border-radius: 0px !important;
+        }
+
+        body.order-page-body {
+            background-color: var(--color-cream) !important;
+            background: var(--color-cream) !important;
+            color: var(--color-text-main) !important;
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ==========================================================================
+           1. WARM ORANGE NAVBAR (MATCHING index.html)
+           ========================================================================== */
+        .navbar {
+            background: linear-gradient(135deg, #FF6B00 0%, #EA580C 100%) !important;
+            padding: 12px 0 !important;
+            box-shadow: 0 4px 20px rgba(234, 88, 12, 0.25) !important;
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 1000 !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+        }
+
+        .navbar .nav-container {
+            max-width: 1320px !important;
+            margin: 0 auto !important;
+            padding: 0 24px !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            gap: 16px !important;
+        }
+
+        /* Brand Block Left */
+        .cj-brand-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .cj-brand-group:hover .cj-brand-name {
+            opacity: 0.95;
+        }
+
+        .cj-brand-logo {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+        }
+
+        .cj-brand-titles {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        .cj-brand-name {
+            font-family: var(--font-serif);
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            letter-spacing: 1.5px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .cj-brand-sub {
+            font-family: var(--font-sans);
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.85);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+        }
+
+        /* Center Nav Links */
+        .cj-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin: 0 auto;
+        }
+
+        .cj-nav-link {
+            color: #FFFFFF;
+            font-family: var(--font-sans);
+            font-size: 0.92rem;
+            font-weight: 600;
+            text-decoration: none;
+            position: relative;
+            padding: 6px 4px;
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .cj-nav-link:hover {
+            opacity: 0.85;
+        }
+
+        .cj-nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2.5px;
+            background: #FFFFFF;
+            border-radius: 0px !important;
+        }
+
+        /* Right Nav Actions */
+        .cj-nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .cj-menu-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            color: #FFFFFF;
+            padding: 7px 14px;
+            font-family: var(--font-sans);
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .cj-menu-back-btn:hover {
+            background: #FFFFFF;
+            color: #EA580C;
+            border-color: #FFFFFF;
+        }
+
+        .cj-cart-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 7px 14px;
+            color: #FFFFFF;
+            text-decoration: none;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .cj-cart-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .cj-cart-badge {
+            background: #FFFFFF;
+            color: #EA580C;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 2px 7px;
+            line-height: 1;
+        }
+
+        /* ==========================================================================
+           2. EDITORIAL HERO BANNER (MATCHING MENU PAGE)
+           ========================================================================== */
+        .cj-hero-editorial {
+            position: relative;
+            text-align: center;
+            padding: 40px 20px 24px;
+            background: #FFFDF9;
+            border-bottom: 1px solid var(--color-border-warm);
+            max-width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .cj-leaf-watermark {
+            position: absolute;
+            top: 15px;
+            pointer-events: none;
+            user-select: none;
+            opacity: 0.12;
+        }
+
+        .cj-leaf-left {
+            left: 24px;
+        }
+
+        .cj-leaf-right {
+            right: 24px;
+            transform: scaleX(-1);
+        }
+
+        .cj-kicker {
+            font-family: var(--font-sans);
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: #EA580C;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .cj-main-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 4.5vw, 3rem);
+            font-weight: 700;
+            color: #0F172A;
+            letter-spacing: 1.5px;
+            margin: 0 0 6px 0;
+            text-transform: uppercase;
+            line-height: 1.15;
+        }
+
+        .cj-title-divider {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 10px;
+        }
+
+        .cj-title-divider span.rule {
+            width: 50px;
+            height: 1.5px;
+            background: #FDBA74;
+        }
+
+        .cj-title-divider span.label {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #EA580C;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .cj-subtitle {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            color: #475569;
+            max-width: 620px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ==========================================================================
+           3. MAIN ORDER WRAPPER & SECTIONS
+           ========================================================================== */
+        .order-luxury-wrapper {
+            flex: 1;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 36px 24px 80px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .order-vertical-container {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            width: 100%;
+        }
+
+        /* Section Tag Bar */
+        .order-section-badge-bar {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+
+        .order-section-tag {
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: #EA580C !important;
+            white-space: nowrap;
+        }
+
+        .order-gold-line {
+            flex: 1;
+            height: 1.5px;
+            background: #FDBA74 !important;
+        }
+
+        /* ==========================================================================
+           4. DINING MODE SWITCHER (DINE-IN VS TAKEAWAY)
+           ========================================================================== */
+        .dining-mode-container {
+            background: #FFFFFF !important;
+            border: 1px solid var(--color-border-warm) !important;
+            border-top: 4px solid #EA580C !important;
+            padding: 22px 24px !important;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04) !important;
+            margin-bottom: 24px !important;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .dining-mode-header {
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .dining-mode-title {
+            font-size: 1rem !important;
+            font-weight: 800 !important;
+            color: #0F172A !important;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .dining-mode-subtitle {
+            font-size: 0.84rem !important;
+            color: #64748B !important;
+        }
+
+        .dining-toggle-pills {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .dining-pill {
+            background: #FFFFFF !important;
+            border: 1.5px solid #CBD5E1 !important;
+            color: #334155 !important;
+            padding: 10px 18px !important;
+            font-size: 0.82rem !important;
+            font-weight: 700 !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dining-pill:hover {
+            border-color: #EA580C !important;
+            color: #EA580C !important;
+        }
+
+        .dining-pill.active {
+            background: #FFF7ED !important;
+            border-color: #EA580C !important;
+            color: #EA580C !important;
+            box-shadow: 0 2px 10px rgba(234, 88, 12, 0.18) !important;
+        }
+
+        .pill-radio {
+            color: #EA580C;
+            font-weight: 900;
+        }
+
+        /* ==========================================================================
+           5. FOOD ITEM CARD ROW (SHARP CORNERS & WARM ORANGE)
+           ========================================================================== */
+        .order-vertical-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .order-item-row-luxury {
+            background: #FFFFFF !important;
+            border: 1px solid var(--color-border-warm) !important;
+            border-top: 3px solid #EA580C !important;
+            padding: 24px 28px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 24px !important;
+            width: 100% !important;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04) !important;
+            transition: all 0.25s ease !important;
+            position: relative;
+            box-sizing: border-box !important;
+        }
+
+        .order-item-row-luxury:hover {
+            box-shadow: 0 8px 26px rgba(234, 88, 12, 0.12) !important;
+            border-color: #EA580C !important;
+        }
+
+        .order-item-main-info {
+            display: flex !important;
+            align-items: flex-start !important;
+            gap: 20px !important;
+            flex: 1 !important;
+            min-width: 0 !important;
+        }
+
+        .order-dish-image-frame {
+            width: 95px !important;
+            height: 95px !important;
+            flex-shrink: 0 !important;
+            background: #FFFFFF !important;
+            border: 1px solid var(--color-border-warm) !important;
+            padding: 6px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            overflow: hidden !important;
+        }
+
+        .order-dish-img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain !important;
+            transition: transform 0.3s ease !important;
+        }
+
+        .order-item-row-luxury:hover .order-dish-img {
+            transform: scale(1.08) !important;
+        }
+
+        .order-dish-text-block {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 6px !important;
+            flex: 1 !important;
+            min-width: 0 !important;
+        }
+
+        .order-dish-title {
+            font-family: var(--font-serif) !important;
+            font-size: 1.4rem !important;
+            font-weight: 700 !important;
+            color: #0F172A !important;
+            letter-spacing: 0.5px !important;
+            margin: 0 !important;
+            text-transform: uppercase !important;
+            line-height: 1.2 !important;
+        }
+
+        .order-dish-desc {
+            font-size: 0.85rem !important;
+            color: #64748B !important;
+            line-height: 1.45 !important;
+            margin: 0 !important;
+        }
+
+        .order-dish-price-tag {
+            font-size: 0.85rem !important;
+            color: #475569 !important;
+            margin-top: 2px !important;
+        }
+
+        .order-dish-price-tag strong {
+            color: #EA580C !important;
+            font-weight: 800 !important;
+            font-size: 0.95rem !important;
+        }
+
+        .item-packaging-tag {
+            display: inline-block;
+            background: #FFF7ED;
+            border: 1px solid #FED7AA;
+            color: #C2410C;
+            font-size: 0.74rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            margin-top: 4px;
+            width: fit-content;
+        }
+
+        /* Portion Option Cards */
+        .multi-portion-container {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--color-border-warm);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .multi-portion-header {
+            font-size: 0.76rem;
+            font-weight: 800;
+            color: #EA580C;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .portion-selector-card {
+            background: #FFFDF9;
+            border: 1px solid var(--color-border-warm);
+            padding: 10px 14px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .portion-badge {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #0F172A;
+            background: #EFE4D6;
+            padding: 3px 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .custom-choice-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .choice-pill {
+            background: #FFFFFF !important;
+            border: 1px solid #CBD5E1 !important;
+            color: #334155 !important;
+            padding: 5px 10px !important;
+            font-size: 0.74rem !important;
+            font-weight: 700 !important;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .choice-pill:hover {
+            border-color: #EA580C !important;
+            color: #EA580C !important;
+        }
+
+        .choice-pill.active {
+            background: #FFF7ED !important;
+            border-color: #EA580C !important;
+            color: #EA580C !important;
+            font-weight: 800 !important;
+        }
+
+        /* Right Action Block (Qty, Subtotal, Remove) */
+        .order-item-actions-block {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: flex-end !important;
+            gap: 14px !important;
+            flex-shrink: 0 !important;
+        }
+
+        .quantity-controls-pill {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #FAF7F2;
+            border: 1px solid var(--color-border-warm);
+            padding: 4px 10px;
+        }
+
+        .qty-pill-label {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #64748B;
+            text-transform: uppercase;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-qty-round {
+            width: 32px !important;
+            height: 32px !important;
+            background: #FFFFFF !important;
+            border: 1.5px solid #CBD5E1 !important;
+            color: #0F172A !important;
+            font-size: 1.1rem !important;
+            font-weight: 800 !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            transition: all 0.2s ease !important;
+            line-height: 1 !important;
+        }
+
+        .btn-qty-round:hover {
+            background: #EA580C !important;
+            border-color: #EA580C !important;
+            color: #FFFFFF !important;
+        }
+
+        .qty-number {
+            font-family: var(--font-sans) !important;
+            font-size: 1.05rem !important;
+            font-weight: 800 !important;
+            color: #0F172A !important;
+            min-width: 24px !important;
+            text-align: center !important;
+        }
+
+        .order-subtotal-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
+        }
+
+        .subtotal-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #64748B;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .order-subtotal-amount {
+            font-family: var(--font-sans) !important;
+            font-size: 1.3rem !important;
+            font-weight: 800 !important;
+            color: #EA580C !important;
+            line-height: 1;
+        }
+
+        .btn-remove-pill {
+            background: #FEF2F2 !important;
+            border: 1px solid #FECACA !important;
+            color: #DC2626 !important;
+            padding: 6px 12px !important;
+            font-size: 0.75rem !important;
+            font-weight: 700 !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 4px !important;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .btn-remove-pill:hover {
+            background: #DC2626 !important;
+            color: #FFFFFF !important;
+            border-color: #DC2626 !important;
+        }
+
+        /* ==========================================================================
+           6. IN-FLOW ORDER SUMMARY CARD (WARM LUXURY ORANGE)
+           ========================================================================== */
+        .order-summary-luxury-card {
+            background: #FFFFFF !important;
+            border: 1px solid var(--color-border-warm) !important;
+            border-top: 4px solid #EA580C !important;
+            padding: 32px 28px !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+            margin-top: 12px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .summary-card-header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--color-border-warm);
+        }
+
+        .summary-top-tag {
+            display: inline-block;
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 2.5px;
+            color: #EA580C;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .summary-main-heading {
+            font-family: var(--font-serif);
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: #0F172A;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin: 0 0 6px 0;
+        }
+
+        .summary-subtext {
+            font-size: 0.85rem;
+            color: #64748B;
+            margin: 0;
+        }
+
+        .summary-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .summary-stat-card {
+            background: #FFF7ED;
+            border: 1px solid #FED7AA;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stat-card-label {
+            font-size: 0.74rem;
+            font-weight: 800;
+            color: #64748B;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card-value {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #0F172A;
+        }
+
+        .summary-total-banner {
+            background: linear-gradient(135deg, #FF6B00 0%, #EA580C 100%);
+            color: #FFFFFF;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 18px rgba(234, 88, 12, 0.28);
+        }
+
+        .summary-total-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .summary-grand-total {
+            font-family: var(--font-sans);
+            font-size: 1.85rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-view-order-summary {
+            background: linear-gradient(135deg, #FF6B00 0%, #EA580C 100%) !important;
+            color: #FFFFFF !important;
+            border: none !important;
+            box-shadow: 0 4px 18px rgba(234, 88, 12, 0.35) !important;
+            transition: all 0.25s ease !important;
+        }
+
+        .btn-view-order-summary:hover {
+            background: linear-gradient(135deg, #FF7A00 0%, #C2410C 100%) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px rgba(234, 88, 12, 0.45) !important;
+        }
+
+        .btn-add-more-dishes {
+            background: #FFFFFF !important;
+            border: 1.5px solid #EA580C !important;
+            color: #EA580C !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            font-size: 0.85rem !important;
+            text-decoration: none !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .btn-add-more-dishes:hover {
+            background: #FFF7ED !important;
+            border-color: #C2410C !important;
+            color: #C2410C !important;
+        }
+
+        /* ==========================================================================
+           7. MOBILE ZERO-OVERLAP RESPONSIVENESS
+           ========================================================================== */
+        @media (max-width: 900px) {
+            .navbar {
+                padding: 10px 0 !important;
+            }
+
+            .navbar .nav-container {
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                padding: 0 14px !important;
+            }
+
+            .cj-brand-group {
+                gap: 8px !important;
+            }
+
+            .cj-brand-logo {
+                width: 38px !important;
+                height: 38px !important;
+            }
+
+            .cj-brand-name {
+                font-size: 1.2rem !important;
+                letter-spacing: 1px !important;
+            }
+
+            .cj-brand-sub {
+                display: none !important;
+            }
+
+            .cj-nav-links {
+                display: none !important;
+            }
+
+            .cj-nav-actions {
+                display: flex !important;
+                align-items: center !important;
+                gap: 8px !important;
+            }
+
+            .cj-menu-back-btn {
+                padding: 6px 10px !important;
+                font-size: 0.72rem !important;
+            }
+
+            .cj-cart-btn {
+                padding: 6px 10px !important;
+                font-size: 0.78rem !important;
+            }
+
+            .order-luxury-wrapper {
+                padding: 20px 12px 60px !important;
+            }
+
+            .order-item-row-luxury {
+                padding: 18px 14px !important;
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 16px !important;
+            }
+
+            .order-item-main-info {
+                width: 100% !important;
+                gap: 14px !important;
+            }
+
+            .order-dish-image-frame {
+                width: 80px !important;
+                height: 80px !important;
+            }
+
+            .order-dish-title {
+                font-size: 1.2rem !important;
+            }
+
+            .order-item-actions-block {
+                width: 100% !important;
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                padding-top: 12px !important;
+                border-top: 1px dashed var(--color-border-warm) !important;
+            }
+
+            .summary-stats-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 10px !important;
+            }
+
+            .summary-stat-card {
+                padding: 12px 14px !important;
+            }
+
+            .summary-stat-card .stat-card-value {
+                font-size: 1.15rem !important;
+            }
+
+            .summary-total-banner {
+                padding: 14px 16px !important;
+            }
+
+            .summary-grand-total {
+                font-size: 1.45rem !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="order-page-body">
 
-    <!-- Header Navigation Bar -->
-    <header class="page-header-bar">
-        <div class="header-bar-container">
-            <a href="index.html" class="btn-back-menu">
-                <span>&larr; Back to Full Menu</span>
+    <!-- WARM ORANGE HEADER (MATCHING MENU PAGE) -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <!-- Brand Group Left -->
+            <a href="index.html" class="cj-brand-group" aria-label="Rib House Restaurant Home">
+                <img src="logo.webp" alt="Rib House Logo" class="cj-brand-logo" width="44" height="44">
+                <div class="cj-brand-titles">
+                    <span class="cj-brand-name">RIB HOUSE</span>
+                    <span class="cj-brand-sub">RESTAURANT</span>
+                </div>
             </a>
 
-            <a href="index.html" class="brand-logo">
-                <img src="logo.webp" alt="Rib House Logo" class="nav-logo-img" style="height: 42px;">
-                <span class="brand-title" style="font-size: 1.4rem;">RIB HOUSE</span>
-            </a>
+            <!-- Center Navigation Links -->
+            <nav class="cj-nav-links" aria-label="Primary Navigation">
+                <a href="index.html" class="cj-nav-link">&larr; Full Menu</a>
+                <a href="order.html" class="cj-nav-link active">Your Order</a>
+                <a href="payment.html" class="cj-nav-link">Place Order</a>
+                <a href="tel:0724594204" class="cj-nav-link">Contact</a>
+            </nav>
 
-            <div class="nav-right-buttons" style="display: flex; align-items: center; gap: 12px;">
-                <a href="order.html" class="nav-link-btn active">Your Order</a>
-                <a href="order-summary.html" class="nav-link-btn">Order Summary</a>
-                <a href="payment.html" class="nav-link-btn">Place Order</a>
+            <!-- Right Action Buttons -->
+            <div class="cj-nav-actions">
+                <a href="index.html" class="cj-menu-back-btn">
+                    <span>&larr; Menu</span>
+                </a>
+                <a href="order.html" class="cj-cart-btn" id="nav-cart-btn" aria-label="View Selected Order">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span class="cj-cart-badge" id="nav-cart-count">0</span>
+                </a>
             </div>
         </div>
     </header>
 
-    <!-- Artistic Culinary Hero Banner Header -->
-    <section class="order-hero-banner-section">
-        <div class="order-hero-overlay"></div>
-        
-        <!-- Animated Ember Particles -->
-        <div class="embers-container">
-            <div class="ember-particle" style="left: 15%; animation-duration: 4s; animation-delay: 0s;"></div>
-            <div class="ember-particle" style="left: 35%; animation-duration: 5.5s; animation-delay: 1.2s;"></div>
-            <div class="ember-particle" style="left: 60%; animation-duration: 4.8s; animation-delay: 0.5s;"></div>
-            <div class="ember-particle" style="left: 80%; animation-duration: 6s; animation-delay: 1.8s;"></div>
+    <!-- EDITORIAL HERO TITLE BANNER -->
+    <section class="cj-hero-editorial" id="hero">
+        <div class="cj-leaf-watermark cj-leaf-left" aria-hidden="true">
+            <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+                <path d="M20,80 Q30,20 80,20 Q70,70 20,80 Z" stroke="#EA580C" stroke-width="2.5" fill="#EA580C"/>
+                <path d="M20,80 Q50,50 80,20" stroke="#EA580C" stroke-width="1.5"/>
+                <path d="M40,60 Q55,50 65,45" stroke="#EA580C" stroke-width="1.2"/>
+                <path d="M30,70 Q45,60 55,55" stroke="#EA580C" stroke-width="1.2"/>
+            </svg>
+        </div>
+        <div class="cj-leaf-watermark cj-leaf-right" aria-hidden="true">
+            <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+                <path d="M20,80 Q30,20 80,20 Q70,70 20,80 Z" stroke="#EA580C" stroke-width="2.5" fill="#EA580C"/>
+                <path d="M20,80 Q50,50 80,20" stroke="#EA580C" stroke-width="1.5"/>
+                <path d="M40,60 Q55,50 65,45" stroke="#EA580C" stroke-width="1.2"/>
+                <path d="M30,70 Q45,60 55,55" stroke="#EA580C" stroke-width="1.2"/>
+            </svg>
         </div>
 
-        <div class="order-hero-content">
-            <h1 class="order-hero-title">YOUR SELECTED FEAST</h1>
-            <p class="order-hero-desc">Every dish crafted fresh with authentic natural spices</p>
+        <div class="cj-kicker">FRESH &bull; WOOD-FIRED &bull; AUTHENTIC</div>
+        <h1 class="cj-main-title">YOUR SELECTED FEAST</h1>
+        <div class="cj-title-divider">
+            <span class="rule"></span>
+            <span class="label">ORDER REVIEW</span>
+            <span class="rule"></span>
         </div>
+        <p class="cj-subtitle">Every dish crafted fresh with authentic natural spices. Adjust side options and quantities before placing your order.</p>
     </section>
 
-    <!-- Seamless Luxury Main Section -->
+    <!-- SEAMLESS LUXURY MAIN SECTION -->
     <main class="order-luxury-wrapper">
         <div class="order-vertical-container">
 
@@ -82,7 +1047,7 @@
             <!-- In-Flow Luxury Order Summary Card -->
             <div class="order-summary-luxury-card" id="order-summary-card">
                 <div class="summary-card-header">
-                    <span class="summary-top-tag">RESERVATION & ORDER REVIEW</span>
+                    <span class="summary-top-tag">RESERVATION &amp; ORDER REVIEW</span>
                     <h2 class="summary-main-heading">ORDER SUMMARY</h2>
                     <p class="summary-subtext">All prices are inclusive of taxes and freshly prepared to order</p>
                 </div>
@@ -110,8 +1075,8 @@
                         <span>Place Order &rarr;</span>
                     </a>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                        <a href="order-summary.html" class="btn-add-more-dishes" id="btn-proceed-order-summary" style="text-align: center; justify-content: center; padding: 14px;">
-                            <span>View Summary</span>
+                        <a href="payment.html" class="btn-add-more-dishes" id="btn-proceed-order-summary" style="text-align: center; justify-content: center; padding: 14px;">
+                            <span>Checkout &amp; Pay</span>
                         </a>
                         <a href="index.html" class="btn-add-more-dishes" style="text-align: center; justify-content: center; padding: 14px;">
                             <span>+ Add More Dishes</span>
@@ -127,6 +1092,9 @@
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof renderSelectedOrderPage === 'function') {
                 renderSelectedOrderPage();
+            }
+            if (typeof updateCartBadges === 'function') {
+                updateCartBadges();
             }
         });
     </script>

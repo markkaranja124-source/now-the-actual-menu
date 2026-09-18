@@ -5780,15 +5780,9 @@ img {
 }
 
 @media (max-width: 640px) {
-    /* Mobile Floating Action Buttons Fix - Zero Overlap */
+    /* Mobile Floating Action Buttons Fix - Zero Overlap with Content Cards */
     .feedback-trigger-btn {
-        bottom: 74px !important;
-        left: 16px !important;
-        right: auto !important;
-        padding: 8px 14px !important;
-        font-size: 0.75rem !important;
-        border-radius: 8px !important;
-        z-index: 1005 !important;
+        display: none !important;
     }
 
     .floating-order-btn {

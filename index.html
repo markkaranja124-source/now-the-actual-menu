@@ -499,13 +499,21 @@
         .menu-card-luxury-wrapper > img,
         .menu-card-img {
             width: 100% !important;
-            height: 230px !important;
-            max-height: 230px !important;
-            object-fit: cover !important;
-            border-radius: 0 !important;
+            height: 205px !important;
+            max-height: 205px !important;
+            object-fit: contain !important;
+            border-radius: 8px 8px 0 0 !important;
             margin: 0 !important;
             display: block !important;
-            background: #F5EFE6 !important;
+            background: #FFFFFF !important;
+            padding: 12px 14px 4px !important;
+            box-sizing: border-box !important;
+            transition: transform 0.25s ease !important;
+        }
+
+        .menu-card-luxury-wrapper:hover > img,
+        .menu-card-luxury-wrapper:hover .menu-card-img {
+            transform: scale(1.04) !important;
         }
 
         .menu-dish-card {
@@ -792,39 +800,126 @@
             box-shadow: none !important;
         }
 
-        /* Mobile Adjustments */
+        /* Mobile Adjustments - Zero Overlap Layout */
         @media (max-width: 900px) {
-            .navbar .nav-container {
-                padding: 0 12px !important;
-                gap: 8px !important;
+            .navbar {
+                padding: 10px 0 !important;
             }
-            .cj-nav-links {
-                display: none;
+            .navbar .nav-container {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                padding: 0 14px !important;
+                gap: 8px 0 !important;
+            }
+            .cj-brand-group {
+                order: 1 !important;
+                gap: 8px !important;
+                flex-shrink: 0 !important;
+            }
+            .cj-brand-logo {
+                width: 36px !important;
+                height: 36px !important;
             }
             .cj-brand-name {
                 font-size: 1.15rem !important;
-                letter-spacing: 1px !important;
+                letter-spacing: 0.8px !important;
             }
             .cj-brand-sub {
                 display: none !important;
             }
+            .cj-nav-links {
+                display: none !important;
+            }
+            .cj-nav-actions {
+                order: 2 !important;
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: flex-end !important;
+                align-items: center !important;
+                gap: 8px !important;
+                flex: 1 1 auto !important;
+            }
             .cj-categories-btn {
-                padding: 5px 9px !important;
+                order: 1 !important;
+                padding: 6px 11px !important;
                 font-size: 0.72rem !important;
-            }
-            .cj-search-wrap {
-                padding: 5px 8px !important;
-            }
-            .cj-search-input {
-                width: 65px;
-            }
-            .cj-search-input:focus {
-                width: 110px;
+                font-weight: 700 !important;
+                white-space: nowrap !important;
+                border-radius: 18px !important;
             }
             .cj-cart-btn {
-                padding: 5px 10px !important;
+                order: 2 !important;
+                padding: 6px 12px !important;
+                font-size: 0.8rem !important;
+                border-radius: 18px !important;
+                flex-shrink: 0 !important;
+            }
+            /* Row 2: Full-width dedicated search bar on mobile */
+            .cj-search-wrap {
+                order: 3 !important;
+                width: 100% !important;
+                flex-basis: 100% !important;
+                margin-top: 6px !important;
+                padding: 7px 12px !important;
+                box-sizing: border-box !important;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08) !important;
+            }
+            .cj-search-input {
+                width: 100% !important;
+                font-size: 0.88rem !important;
+            }
+            .cj-search-input:focus {
+                width: 100% !important;
+            }
+            .search-suggestions-dropdown {
+                width: 100% !important;
+                left: 0 !important;
+                right: 0 !important;
+            }
+
+            /* Zero Overlap: Hide floating feedback button on mobile so it never obscures cards */
+            .feedback-trigger-btn {
+                display: none !important;
+            }
+
+            /* Prevent floating order button from covering bottom cards */
+            body, main {
+                padding-bottom: 85px !important;
+            }
+
+            /* Responsive Card Proportions on Mobile */
+            .menu-card-luxury-wrapper {
+                min-height: auto !important;
+            }
+            .menu-card-luxury-wrapper > img,
+            .menu-card-img {
+                height: 185px !important;
+                max-height: 185px !important;
+                padding: 10px 12px 2px !important;
+            }
+            .menu-dish-card {
+                padding: 14px 16px 4px !important;
+            }
+            .menu-dish-card h4,
+            .menu-dish-card h3 {
+                font-size: 1.15rem !important;
+            }
+            .menu-dish-card span {
+                font-size: 1.15rem !important;
+            }
+            .menu-card-luxury-wrapper > p {
+                padding: 0 16px !important;
+                font-size: 0.82rem !important;
+                margin-bottom: 8px !important;
+            }
+            .card-order-action-btn {
+                margin: 8px 16px 16px auto !important;
+                padding: 8px 18px !important;
                 font-size: 0.8rem !important;
             }
+
             .menu-grid {
                 grid-template-columns: 1fr !important;
                 gap: 22px !important;
@@ -947,6 +1042,10 @@
                         <span class="drawer-link-text">TILL NO: 4977556</span>
                         <span class="drawer-link-arrow">&rsaquo;</span>
                     </a>
+                    <a href="javascript:void(0)" onclick="if(window.openCustomerFeedbackModal) openCustomerFeedbackModal(); if(window.closeSideDrawer) closeSideDrawer();" class="drawer-link" style="color: #EA580C; font-weight: 700;">
+                        <span class="drawer-link-text">⭐ SHARE DINING FEEDBACK</span>
+                        <span class="drawer-link-arrow">&rsaquo;</span>
+                    </a>
                 </nav>
             </div>
         </div>
@@ -963,20 +1062,14 @@
     <!-- WARM ORANGE HEADER (CJ'S RESTAURANT STYLE) -->
     <header class="navbar" id="navbar">
         <div class="nav-container">
-            <!-- Left: Brand Group & Categories Button -->
-            <div style="display: flex; align-items: center; gap: 14px;">
-                <a href="home.html" class="cj-brand-group" aria-label="Rib House Restaurant Home">
-                    <img src="logo.webp" alt="Rib House Logo" class="cj-brand-logo" width="44" height="44">
-                    <div class="cj-brand-titles">
-                        <span class="cj-brand-name">RIB HOUSE</span>
-                        <span class="cj-brand-sub">RESTAURANT</span>
-                    </div>
-                </a>
-                <button class="cj-categories-btn" id="side-drawer-toggle" aria-label="Open Categories Menu" onclick="if(window.openSideDrawer) window.openSideDrawer(event); else { document.getElementById('side-drawer')?.classList.add('active'); document.getElementById('drawer-backdrop')?.classList.add('active'); document.body.style.overflow='hidden'; }">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-                    <span>CATEGORIES</span>
-                </button>
-            </div>
+            <!-- Left: Brand Group -->
+            <a href="home.html" class="cj-brand-group" aria-label="Rib House Restaurant Home">
+                <img src="logo.webp" alt="Rib House Logo" class="cj-brand-logo" width="44" height="44">
+                <div class="cj-brand-titles">
+                    <span class="cj-brand-name">RIB HOUSE</span>
+                    <span class="cj-brand-sub">RESTAURANT</span>
+                </div>
+            </a>
 
             <!-- Center: Navigation Links -->
             <nav class="cj-nav-links" aria-label="Primary Navigation">
@@ -987,8 +1080,13 @@
                 <a href="tel:0724594204" class="cj-nav-link">Contact</a>
             </nav>
 
-            <!-- Right: Search Input & Cart Button with Dynamic Badge -->
+            <!-- Right: Categories Drawer Button, Search Input & Cart Button -->
             <div class="cj-nav-actions">
+                <button class="cj-categories-btn" id="side-drawer-toggle" aria-label="Open Categories Menu" onclick="if(window.openSideDrawer) window.openSideDrawer(event); else { document.getElementById('side-drawer')?.classList.add('active'); document.getElementById('drawer-backdrop')?.classList.add('active'); document.body.style.overflow='hidden'; }">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    <span>CATEGORIES</span>
+                </button>
+
                 <div class="cj-search-wrap">
                     <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
@@ -1228,6 +1326,7 @@
                     <!-- TRADITIONAL BREAKFAST -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="Breakfast1.webp" alt="TRADITIONAL BREAKFAST" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-traditional-breakfast" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1241,6 +1340,7 @@
                     <!-- FARMERS CHOICE -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="breakfastbreadwithbacon1.webp" alt="FARMERS CHOICE" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-farmers-choice" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1282,6 +1382,7 @@
                     <!-- RIB HOUSE SPECIAL -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="ribhousebreakfast.webp" alt="RIB HOUSE SPECIAL" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-rib-house-special" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1295,6 +1396,7 @@
                     <!-- BRITISH BREAKFAST -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="breakfastbreadandeggs1.webp" alt="BRITISH BREAKFAST" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-british-breakfast" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1423,6 +1525,7 @@
                     <!-- Lemon Tea W Honey -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="Dawawithhoney.webp" alt="Lemon Tea W Honey" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-lemon-tea-w-honey" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1513,6 +1616,7 @@
                     <!-- Honey Espresso -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="esspressodouble.webp" alt="Honey Espresso" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-honey-espresso" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1681,6 +1785,7 @@
                     <!-- Lemonade (Flavor) -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="Freejuice.webp" alt="Lemonade (Flavor)" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-lemonade-flavor" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">

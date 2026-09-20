@@ -162,6 +162,7 @@ function getDishImage(dishName, dishDesc) {
     if (textLower.includes('espresso (double)') || textLower.includes('espresso double') || textLower.includes('esspressodouble') || textLower.includes('espresso (cold)') || textLower.includes('espresso cold')) return 'esspressodouble.webp';
     if (textLower.includes('milkshake (flavored)') || textLower.includes('milkshake flavored') || textLower.includes('chocolate milkshake')) return 'chocolatemilkshake.webp';
     if (textLower.includes('blueberry milkshake')) return 'blueberrymilkshake.webp';
+    if (textLower.includes('smoothies (tropical)') || textLower.includes('smoothies tropical') || textLower.includes('tropical smoothie') || textLower.includes('smoothie')) return 'tropicalsmoothie.webp?v=20260920_v1';
 
     // No auto-guessing for any other dishes until explicitly requested by user
     return null;
@@ -1099,7 +1100,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-smoothies-tropical",
     "id": "dish-smoothies-tropical",
-    "image": "tropicalsmoothie.webp",
+    "image": "tropicalsmoothie.webp?v=20260920_v1",
     "name": "Smoothies (Tropical)",
     "price": "200/=",
     "priceNum": 200

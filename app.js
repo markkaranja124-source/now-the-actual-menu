@@ -156,7 +156,7 @@ function getDishImage(dishName, dishDesc) {
     if (textLower.includes('chemsha beef (1 kg)') || textLower.includes('chemsha beef 1 kg')) return 'beefchemsha1kg.webp';
     if (textLower.includes('beef fry / tumbukiza') || textLower.includes('beef tumbukiza') || textLower.includes('beef fry (1 kg)')) return 'tumbukizabeeffry1kg.webp';
     if (textLower.includes('special breakfast')) return 'Specialbreakfast.webp';
-    if (textLower.includes('goat stew') || textLower.includes('goat fry / stew') || textLower.includes('goat stew / fry')) return 'goatstew100.webp?v=20260920_v1';
+    if (textLower.includes('goat stew') || textLower.includes('goat fry / stew') || textLower.includes('goat stew / fry')) return 'goatstew100.webp?v=20260920_v2';
     if (textLower.includes('goat fry') || textLower.includes('goat tumbukiza')) return 'tumbukizagoatfry1kg.webp';
     if (textLower.includes('cappuccino')) return 'cappuccino_transparent.webp';
     if (textLower.includes('espresso (double)') || textLower.includes('espresso double') || textLower.includes('esspressodouble') || textLower.includes('espresso (cold)') || textLower.includes('espresso cold')) return 'esspressodouble.webp';
@@ -1159,7 +1159,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-goat-stew-fry",
     "id": "dish-goat-stew-fry",
-    "image": "goatstew100.webp?v=20260920_v1",
+    "image": "goatstew100.webp?v=20260920_v2",
     "name": "GOAT STEW / FRY",
     "price": "Price on request",
     "priceNum": 0

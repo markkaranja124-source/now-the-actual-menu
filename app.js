@@ -74,7 +74,15 @@ if (typeof document !== 'undefined') {
                     const fullDishName = `${mainTitle} (${sideName})`;
                     
                     if (typeof getItemAvailability === 'function') {
-                        if (getItemAvailability(fullDishName) === 'hold' || getItemAvailability(sideName) === 'hold') return;
+                        const status = getItemAvailability(fullDishName) !== 'ready' ? getItemAvailability(fullDishName) : getItemAvailability(sideName);
+                        if (status === 'unavailable') {
+                            showDishNoticeToast(`⚠️ "${fullDishName}" is currently unavailable.`, true);
+                            return;
+                        }
+                        if (status === 'hold') {
+                            showDishNoticeToast(`⚠️ "${fullDishName}" is currently ON HOLD in the kitchen and cannot be added to your order right now.`, true);
+                            return;
+                        }
                     }
                     
                     if (typeof toggleSelectItem === 'function') {
@@ -108,7 +116,15 @@ if (typeof document !== 'undefined') {
                 const descText = descP ? descP.innerText.replace(/\s+/g, ' ').trim() : '';
                 
                 if (typeof getItemAvailability === 'function') {
-                    if (getItemAvailability(dishName) === 'hold' || getItemAvailability(dishName) === 'unavailable') return;
+                    const status = getItemAvailability(dishName);
+                    if (status === 'unavailable') {
+                        showDishNoticeToast(`⚠️ "${dishName}" is currently unavailable.`, true);
+                        return;
+                    }
+                    if (status === 'hold') {
+                        showDishNoticeToast(`⚠️ "${dishName}" is currently ON HOLD in the kitchen and cannot be ordered right now.`, true);
+                        return;
+                    }
                 }
                 
                 if (typeof toggleSelectItem === 'function') {
@@ -121,6 +137,30 @@ if (typeof document !== 'undefined') {
                 }
                 if (typeof refreshAllDishCardsUI === 'function') {
                     refreshAllDishCardsUI();
+                }
+            }
+        }
+
+        // Direct card wrapper click on unavailable or on-hold items
+        const cardWrapper = e.target.closest('.menu-card-luxury-wrapper, .menu-dish-card');
+        if (cardWrapper && !actionBtn && !rowPill) {
+            const h3 = cardWrapper.querySelector('h3, h4');
+            if (h3) {
+                const dishName = h3.innerText.replace(/\s+/g, ' ').trim();
+                if (typeof getItemAvailability === 'function') {
+                    const status = getItemAvailability(dishName);
+                    if (status === 'unavailable') {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        showDishNoticeToast(`⚠️ "${dishName}" is currently unavailable.`, true);
+                        return;
+                    }
+                    if (status === 'hold') {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        showDishNoticeToast(`⚠️ "${dishName}" is currently ON HOLD in the kitchen and cannot be ordered right now.`, true);
+                        return;
+                    }
                 }
             }
         }
@@ -193,27 +233,22 @@ function showDishNoticeToast(message, isWarning) {
         toast.style.zIndex = '99999';
         toast.style.maxWidth = '90vw';
         toast.style.width = 'max-content';
-        toast.style.padding = '14px 24px';
+        toast.style.padding = '14px 28px';
         toast.style.fontFamily = "'Plus Jakarta Sans', sans-serif";
-        toast.style.fontSize = '0.92rem';
+        toast.style.fontSize = '0.95rem';
         toast.style.fontWeight = '700';
-        toast.style.borderRadius = '8px';
-        toast.style.boxShadow = '0 10px 30px rgba(0,0,0,0.35)';
+        toast.style.borderRadius = '10px';
         toast.style.transition = 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
         toast.style.pointerEvents = 'none';
         toast.style.textAlign = 'center';
         document.body.appendChild(toast);
     }
 
-    if (isWarning) {
-        toast.style.background = '#1E1B18';
-        toast.style.color = '#F59E0B';
-        toast.style.border = '1.5px solid #F59E0B';
-    } else {
-        toast.style.background = '#111114';
-        toast.style.color = '#D4AF37';
-        toast.style.border = '1.5px solid #B8860B';
-    }
+    // User requirement: popup box background MUST be white and text MUST match the orange of the website (#EA580C)
+    toast.style.background = '#FFFFFF';
+    toast.style.color = '#EA580C';
+    toast.style.border = '2px solid #EA580C';
+    toast.style.boxShadow = '0 12px 36px rgba(234, 88, 12, 0.22), 0 4px 16px rgba(0,0,0,0.12)';
 
     toast.innerText = message;
     toast.style.transform = 'translateX(-50%) translateY(0)';
@@ -235,7 +270,11 @@ function handleDirectDishSelect(element, dishName, dishPrice, dishDesc, dishCate
     // Safety check availability
     if (typeof getItemAvailability === 'function') {
         const status = getItemAvailability(dishName);
-        if (status === 'hold' || status === 'unavailable') {
+        if (status === 'unavailable') {
+            showDishNoticeToast(`⚠️ "${dishName}" is currently unavailable.`, true);
+            return;
+        }
+        if (status === 'hold') {
             showDishNoticeToast(`⚠️ "${dishName}" is currently ON HOLD in the kitchen and cannot be ordered right now.`, true);
             return;
         }
@@ -299,11 +338,25 @@ function syncMainDishesUIState() {
         const itemStatus = typeof getItemAvailability === 'function' ? getItemAvailability(exactName) : 'ready';
 
         const btnEl = row.querySelector('.main-dish-side-add-btn');
-        if (itemStatus === 'hold') {
+        if (itemStatus === 'unavailable') {
+            row.classList.remove('selected-item-active');
+            row.style.opacity = '0.55';
+            row.style.cursor = 'pointer';
+            if (btnEl) {
+                btnEl.style.display = 'none';
+            }
+            const notifyUnavailableRow = (e) => {
+                if (e) { e.stopPropagation(); e.preventDefault(); }
+                showDishNoticeToast(`⚠️ "${exactName}" is currently unavailable.`, true);
+            };
+            row.onclick = notifyUnavailableRow;
+            if (btnEl) btnEl.onclick = notifyUnavailableRow;
+        } else if (itemStatus === 'hold') {
             row.classList.remove('selected-item-active');
             row.style.opacity = '0.65';
             row.style.cursor = 'pointer';
             if (btnEl) {
+                btnEl.style.display = '';
                 btnEl.innerText = 'ON HOLD';
                 btnEl.style.background = '#F59E0B';
                 btnEl.style.color = '#000000';
@@ -321,6 +374,7 @@ function syncMainDishesUIState() {
             row.style.opacity = '1';
             row.style.cursor = 'pointer';
             if (btnEl) {
+                btnEl.style.display = '';
                 btnEl.innerText = '✓ ADDED';
                 btnEl.style.background = '#B8860B';
                 btnEl.style.color = '#FFFFFF';
@@ -332,6 +386,7 @@ function syncMainDishesUIState() {
             row.style.opacity = '1';
             row.style.cursor = 'pointer';
             if (btnEl) {
+                btnEl.style.display = '';
                 btnEl.innerText = '+ ADD';
                 btnEl.style.background = 'transparent';
                 btnEl.style.color = '#B8860B';
@@ -365,12 +420,25 @@ function syncMainDishesUIState() {
         const textEl = banner.querySelector('.main-dish-featured-text');
         const arrowEl = banner.querySelector('.main-dish-featured-arrow-btn');
 
-        if (itemStatus === 'hold') {
+        if (itemStatus === 'unavailable') {
+            banner.classList.remove('selected-item-active');
+            banner.style.opacity = '0.6';
+            banner.style.cursor = 'pointer';
+            if (textEl) textEl.innerHTML = `${exactName}<br><span style="color:#EA580C;font-weight:700;">CURRENTLY UNAVAILABLE</span>`;
+            if (arrowEl) {
+                arrowEl.style.display = 'none';
+            }
+            banner.onclick = (e) => {
+                if (e) { e.stopPropagation(); e.preventDefault(); }
+                showDishNoticeToast(`⚠️ "${exactName}" is currently unavailable.`, true);
+            };
+        } else if (itemStatus === 'hold') {
             banner.classList.remove('selected-item-active');
             banner.style.opacity = '0.65';
             banner.style.cursor = 'pointer';
             if (textEl) textEl.innerHTML = `${exactName}<br><span style="color:#F59E0B;font-weight:700;">ON HOLD IN KITCHEN</span>`;
             if (arrowEl) {
+                arrowEl.style.display = 'inline-flex';
                 arrowEl.innerHTML = 'HOLD';
                 arrowEl.style.background = '#F59E0B';
                 arrowEl.style.color = '#000000';
@@ -385,6 +453,7 @@ function syncMainDishesUIState() {
             banner.style.cursor = 'pointer';
             if (textEl) textEl.innerHTML = `✓ ${exactName}<br>ADDED TO ORDER`;
             if (arrowEl) {
+                arrowEl.style.display = 'inline-flex';
                 arrowEl.innerHTML = '✓';
                 arrowEl.style.background = '#B8860B';
                 arrowEl.style.color = '#FFFFFF';
@@ -395,6 +464,7 @@ function syncMainDishesUIState() {
             banner.style.cursor = 'pointer';
             if (textEl) textEl.innerHTML = `ADD ${exactName}<br>TO ORDER`;
             if (arrowEl) {
+                arrowEl.style.display = 'inline-flex';
                 arrowEl.innerHTML = '➔';
                 arrowEl.style.background = '';
                 arrowEl.style.color = '';
@@ -425,15 +495,61 @@ function syncMainDishesUIState() {
         const isSelected = cart.some(item => norm(item.name) === norm(exactName));
         const itemStatus = typeof getItemAvailability === 'function' ? getItemAvailability(exactName) : 'ready';
 
-        let badge = cardBox.querySelector('.card-hold-badge');
+        let holdBadge = cardBox.querySelector('.card-hold-badge');
+        let unavailBadge = cardBox.querySelector('.card-unavailable-badge');
 
-        if (itemStatus === 'hold') {
+        if (itemStatus === 'unavailable') {
+            // User requirement: dish MUST NOT have the add to order button when unavailable
+            btn.style.display = 'none';
+            btn.classList.remove('selected-btn-active', 'is-selected');
+
+            if (holdBadge) holdBadge.style.display = 'none';
+
+            if (!unavailBadge) {
+                unavailBadge = document.createElement('div');
+                unavailBadge.className = 'card-unavailable-badge';
+                unavailBadge.style.position = 'absolute';
+                unavailBadge.style.top = '10px';
+                unavailBadge.style.right = '10px';
+                unavailBadge.style.background = '#EF4444';
+                unavailBadge.style.color = '#FFFFFF';
+                unavailBadge.style.fontSize = '0.7rem';
+                unavailBadge.style.fontWeight = '800';
+                unavailBadge.style.padding = '4px 8px';
+                unavailBadge.style.borderRadius = '3px';
+                unavailBadge.style.zIndex = '5';
+                unavailBadge.style.letterSpacing = '0.5px';
+                unavailBadge.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+                unavailBadge.innerText = 'UNAVAILABLE';
+                if (getComputedStyle(cardBox).position === 'static') {
+                    cardBox.style.position = 'relative';
+                }
+                cardBox.appendChild(unavailBadge);
+            } else {
+                unavailBadge.style.display = 'block';
+            }
+
+            cardBox.style.opacity = '0.85';
+            cardBox.style.cursor = 'pointer';
+
+            const notifyUnavailableCard = (e) => {
+                if (e) { e.stopPropagation(); e.preventDefault(); }
+                showDishNoticeToast(`⚠️ "${exactName}" is currently unavailable.`, true);
+            };
+            btn.onclick = notifyUnavailableCard;
+            cardBox.onclick = notifyUnavailableCard;
+            unavailBadge.onclick = notifyUnavailableCard;
+
+        } else if (itemStatus === 'hold') {
+            btn.style.display = 'block';
             btn.innerHTML = 'ON HOLD';
             btn.classList.remove('selected-btn-active', 'is-selected');
             btn.style.setProperty('background', '#F59E0B', 'important');
             btn.style.setProperty('color', '#000000', 'important');
             btn.style.setProperty('border-color', '#D97706', 'important');
             btn.style.setProperty('cursor', 'pointer', 'important');
+
+            if (unavailBadge) unavailBadge.style.display = 'none';
 
             const notifyHoldCard = (e) => {
                 if (e) { e.stopPropagation(); e.preventDefault(); }
@@ -444,32 +560,35 @@ function syncMainDishesUIState() {
 
             if (cardBox) {
                 cardBox.style.opacity = '0.85';
-                if (!badge) {
-                    badge = document.createElement('div');
-                    badge.className = 'card-hold-badge';
-                    badge.style.position = 'absolute';
-                    badge.style.top = '10px';
-                    badge.style.right = '10px';
-                    badge.style.background = '#F59E0B';
-                    badge.style.color = '#000000';
-                    badge.style.fontSize = '0.7rem';
-                    badge.style.fontWeight = '800';
-                    badge.style.padding = '4px 8px';
-                    badge.style.borderRadius = '3px';
-                    badge.style.zIndex = '5';
-                    badge.style.letterSpacing = '0.5px';
-                    badge.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
-                    badge.innerText = 'ON HOLD';
+                cardBox.style.cursor = 'pointer';
+                if (!holdBadge) {
+                    holdBadge = document.createElement('div');
+                    holdBadge.className = 'card-hold-badge';
+                    holdBadge.style.position = 'absolute';
+                    holdBadge.style.top = '10px';
+                    holdBadge.style.right = '10px';
+                    holdBadge.style.background = '#F59E0B';
+                    holdBadge.style.color = '#000000';
+                    holdBadge.style.fontSize = '0.7rem';
+                    holdBadge.style.fontWeight = '800';
+                    holdBadge.style.padding = '4px 8px';
+                    holdBadge.style.borderRadius = '3px';
+                    holdBadge.style.zIndex = '5';
+                    holdBadge.style.letterSpacing = '0.5px';
+                    holdBadge.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+                    holdBadge.innerText = 'ON HOLD';
                     if (getComputedStyle(cardBox).position === 'static') {
                         cardBox.style.position = 'relative';
                     }
-                    cardBox.appendChild(badge);
+                    cardBox.appendChild(holdBadge);
                 } else {
-                    badge.style.display = 'block';
+                    holdBadge.style.display = 'block';
                 }
             }
         } else {
-            if (badge) badge.style.display = 'none';
+            btn.style.display = 'block';
+            if (holdBadge) holdBadge.style.display = 'none';
+            if (unavailBadge) unavailBadge.style.display = 'none';
             if (cardBox) cardBox.style.opacity = '1';
             btn.style.removeProperty('cursor');
 
@@ -509,8 +628,36 @@ function syncMainDishesUIState() {
         const dishName = btn.getAttribute('data-dish-name') || '';
         if (!dishName) return;
         const isSel = cart.some(item => norm(item.name) === norm(dishName));
+        const itemStatus = typeof getItemAvailability === 'function' ? getItemAvailability(dishName) : 'ready';
         const itemBox = btn.closest('.tumbukiza-mini-box');
-        if (isSel) {
+
+        if (itemStatus === 'unavailable') {
+            btn.style.display = 'none';
+            if (itemBox) {
+                itemBox.style.opacity = '0.6';
+                itemBox.style.cursor = 'pointer';
+                itemBox.onclick = (e) => {
+                    if (e) { e.stopPropagation(); e.preventDefault(); }
+                    showDishNoticeToast(`⚠️ "${dishName}" is currently unavailable.`, true);
+                };
+            }
+        } else if (itemStatus === 'hold') {
+            btn.style.display = 'block';
+            btn.innerHTML = 'HOLD';
+            btn.classList.remove('selected-btn-active', 'is-selected');
+            btn.style.setProperty('background', '#F59E0B', 'important');
+            btn.style.setProperty('color', '#000000', 'important');
+            btn.style.setProperty('border-color', '#D97706', 'important');
+            if (itemBox) {
+                itemBox.style.opacity = '0.65';
+                itemBox.style.cursor = 'pointer';
+                itemBox.onclick = (e) => {
+                    if (e) { e.stopPropagation(); e.preventDefault(); }
+                    showDishNoticeToast(`⚠️ "${dishName}" is currently ON HOLD in the kitchen.`, true);
+                };
+            }
+        } else if (isSel) {
+            btn.style.display = 'block';
             btn.innerHTML = '✓ ADDED';
             btn.classList.add('selected-btn-active', 'is-selected');
             btn.style.setProperty('background', '#B8860B', 'important');
@@ -518,6 +665,7 @@ function syncMainDishesUIState() {
             btn.style.setProperty('border-color', '#B8860B', 'important');
             if (itemBox) itemBox.classList.add('is-selected');
         } else {
+            btn.style.display = 'block';
             btn.innerHTML = '+ ADD';
             btn.classList.remove('selected-btn-active', 'is-selected');
             btn.style.setProperty('background', '#FFFBEB', 'important');
@@ -535,14 +683,31 @@ function syncMainDishesUIState() {
         const dishName = pill.getAttribute('data-dish-name') || '';
         if (!dishName) return;
         const isSel = cart.some(item => norm(item.name) === norm(dishName));
+        const itemStatus = typeof getItemAvailability === 'function' ? getItemAvailability(dishName) : 'ready';
         const price = pill.getAttribute('data-price') || '';
-        if (isSel) {
+
+        if (itemStatus === 'unavailable') {
+            pill.style.display = 'none';
+        } else if (itemStatus === 'hold') {
+            pill.style.display = 'inline-flex';
+            pill.classList.remove('is-selected');
+            pill.innerHTML = `HOLD ${dishName}`;
+            pill.style.setProperty('background', '#F59E0B', 'important');
+            pill.style.setProperty('color', '#000000', 'important');
+            pill.style.setProperty('border-color', '#D97706', 'important');
+            pill.onclick = (e) => {
+                if (e) { e.stopPropagation(); e.preventDefault(); }
+                showDishNoticeToast(`⚠️ "${dishName}" is currently ON HOLD in the kitchen.`, true);
+            };
+        } else if (isSel) {
+            pill.style.display = 'inline-flex';
             pill.classList.add('is-selected');
             pill.innerHTML = `✓ ${dishName} ${price}`;
             pill.style.setProperty('background', '#B8860B', 'important');
             pill.style.setProperty('color', '#FFFFFF', 'important');
             pill.style.setProperty('border-color', '#B8860B', 'important');
         } else {
+            pill.style.display = 'inline-flex';
             pill.classList.remove('is-selected');
             pill.innerHTML = `+ ${dishName} ${price}`;
             pill.style.setProperty('background', '#FFFFFF', 'important');
@@ -568,19 +733,37 @@ function syncMainDishesUIState() {
         const isSel = cart.some(item => norm(item.name) === norm(exactName));
         const itemStatus = typeof getItemAvailability === 'function' ? getItemAvailability(exactName) : 'ready';
 
-        if (itemStatus === 'hold') {
+        if (itemStatus === 'unavailable') {
             card.style.opacity = '0.65';
+            card.style.cursor = 'pointer';
+            card.style.borderColor = '#CBD5E1';
             if (btn) {
+                btn.style.display = 'none';
+            }
+            card.onclick = (e) => {
+                if (e) { e.stopPropagation(); e.preventDefault(); }
+                showDishNoticeToast(`⚠️ "${exactName}" is currently unavailable.`, true);
+            };
+        } else if (itemStatus === 'hold') {
+            card.style.opacity = '0.65';
+            card.style.cursor = 'pointer';
+            if (btn) {
+                btn.style.display = 'block';
                 btn.innerHTML = 'ON HOLD';
                 btn.classList.add('hold-state');
                 btn.classList.remove('added-state');
                 btn.style.background = '#F59E0B';
                 btn.style.color = '#000000';
             }
+            card.onclick = (e) => {
+                if (e) { e.stopPropagation(); e.preventDefault(); }
+                showDishNoticeToast(`⚠️ "${exactName}" is currently ON HOLD in the kitchen.`, true);
+            };
         } else if (isSel) {
             card.style.opacity = '1';
             card.style.borderColor = '#10B981';
             if (btn) {
+                btn.style.display = 'block';
                 btn.innerHTML = '✓ ADDED';
                 btn.classList.add('added-state');
                 btn.classList.remove('hold-state');
@@ -591,6 +774,7 @@ function syncMainDishesUIState() {
             card.style.opacity = '1';
             card.style.borderColor = '#EFE4D6';
             if (btn) {
+                btn.style.display = 'block';
                 btn.innerHTML = '+ Add to Order';
                 btn.classList.remove('added-state', 'hold-state');
                 btn.style.background = 'linear-gradient(135deg, #FF6B00 0%, #EA580C 100%)';
@@ -2836,8 +3020,47 @@ function initClickableMenuDishes() {
             const mainCardAvail = getItemAvailability(mainTitle);
 
             let cardBadge = card.querySelector('.card-hold-badge');
+            let cardUnavailBadge = card.querySelector('.card-unavailable-badge');
 
-            if (mainCardAvail === 'hold') {
+            if (mainCardAvail === 'unavailable') {
+                card.style.opacity = '0.85';
+                card.style.cursor = 'pointer';
+                cardBtn.style.display = 'none';
+                if (cardBadge) cardBadge.style.display = 'none';
+
+                if (!cardUnavailBadge) {
+                    cardUnavailBadge = document.createElement('div');
+                    cardUnavailBadge.className = 'card-unavailable-badge';
+                    cardUnavailBadge.style.position = 'absolute';
+                    cardUnavailBadge.style.top = '10px';
+                    cardUnavailBadge.style.right = '10px';
+                    cardUnavailBadge.style.background = '#EF4444';
+                    cardUnavailBadge.style.color = '#FFFFFF';
+                    cardUnavailBadge.style.fontSize = '0.7rem';
+                    cardUnavailBadge.style.fontWeight = '800';
+                    cardUnavailBadge.style.padding = '4px 8px';
+                    cardUnavailBadge.style.borderRadius = '3px';
+                    cardUnavailBadge.style.zIndex = '5';
+                    cardUnavailBadge.style.letterSpacing = '0.5px';
+                    cardUnavailBadge.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+                    cardUnavailBadge.innerText = 'UNAVAILABLE';
+                    if (getComputedStyle(card).position === 'static') {
+                        card.style.position = 'relative';
+                    }
+                    card.appendChild(cardUnavailBadge);
+                } else {
+                    cardUnavailBadge.style.display = 'block';
+                }
+
+                const notifyUnavailMulti = (e) => {
+                    if (e) { e.stopPropagation(); e.preventDefault(); }
+                    showDishNoticeToast(`⚠️ "${mainTitle}" is currently unavailable.`, true);
+                };
+                card.onclick = notifyUnavailMulti;
+                cardBtn.onclick = notifyUnavailMulti;
+                cardUnavailBadge.onclick = notifyUnavailMulti;
+                return;
+            } else if (mainCardAvail === 'hold') {
                 card.style.opacity = '0.85';
                 card.style.cursor = 'pointer';
                 card.style.border = '1.5px solid var(--color-hold, #F59E0B)';
@@ -2847,13 +3070,15 @@ function initClickableMenuDishes() {
                 cardBtn.style.color = '#000000';
                 cardBtn.style.borderColor = '#D97706';
                 cardBtn.style.cursor = 'pointer';
+                if (cardUnavailBadge) cardUnavailBadge.style.display = 'none';
                 const notifyHoldMulti = (e) => {
                     if (e) { e.stopPropagation(); e.preventDefault(); }
                     showDishNoticeToast(`⚠️ "${mainTitle}" is currently ON HOLD in the kitchen and cannot be ordered right now.`, true);
                 };
                 cardBtn.onclick = notifyHoldMulti;
+                card.onclick = notifyHoldMulti;
 
-                if (!cardBadge && mainCardAvail === 'hold') {
+                if (!cardBadge) {
                     cardBadge = document.createElement('div');
                     cardBadge.className = 'card-hold-badge';
                     cardBadge.style.position = 'absolute';
@@ -2873,18 +3098,21 @@ function initClickableMenuDishes() {
                         card.style.position = 'relative';
                     }
                     card.appendChild(cardBadge);
-                } else if (cardBadge) {
-                    cardBadge.style.display = (mainCardAvail === 'hold') ? 'block' : 'none';
+                } else {
+                    cardBadge.style.display = 'block';
                 }
-            } else if (visibleOptionCount === 0 || mainCardAvail === 'unavailable') {
+            } else if (visibleOptionCount === 0) {
                 card.style.opacity = '1';
                 cardBtn.style.display = 'none';
                 cardBtn.onclick = null;
                 if (cardBadge) cardBadge.style.display = 'none';
+                if (cardUnavailBadge) cardUnavailBadge.style.display = 'none';
             } else {
                 card.style.opacity = '1';
                 cardBtn.style.display = 'block';
                 cardBtn.style.cursor = 'pointer';
+                if (cardBadge) cardBadge.style.display = 'none';
+                if (cardUnavailBadge) cardUnavailBadge.style.display = 'none';
 
                 const anySelected = optionRows.some(row => {
                     const spans = row.querySelectorAll('span');
@@ -2954,18 +3182,52 @@ function initClickableMenuDishes() {
                 card.appendChild(orderBtn);
             }
 
+            let cardBadge = card.querySelector('.card-hold-badge');
+            let cardUnavailBadge = card.querySelector('.card-unavailable-badge');
+
             if (itemStatus === 'unavailable') {
-                card.style.opacity = '1';
-                card.style.cursor = 'default';
+                card.style.opacity = '0.85';
+                card.style.cursor = 'pointer';
                 card.style.border = '1px solid var(--color-border-gold)';
                 orderBtn.style.display = 'none';
-                card.onclick = null;
-                orderBtn.onclick = null;
+                if (cardBadge) cardBadge.style.display = 'none';
+
+                if (!cardUnavailBadge) {
+                    cardUnavailBadge = document.createElement('div');
+                    cardUnavailBadge.className = 'card-unavailable-badge';
+                    cardUnavailBadge.style.position = 'absolute';
+                    cardUnavailBadge.style.top = '10px';
+                    cardUnavailBadge.style.right = '10px';
+                    cardUnavailBadge.style.background = '#EF4444';
+                    cardUnavailBadge.style.color = '#FFFFFF';
+                    cardUnavailBadge.style.fontSize = '0.7rem';
+                    cardUnavailBadge.style.fontWeight = '800';
+                    cardUnavailBadge.style.padding = '4px 8px';
+                    cardUnavailBadge.style.borderRadius = '3px';
+                    cardUnavailBadge.style.zIndex = '5';
+                    cardUnavailBadge.style.letterSpacing = '0.5px';
+                    cardUnavailBadge.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+                    cardUnavailBadge.innerText = 'UNAVAILABLE';
+                    if (getComputedStyle(card).position === 'static') {
+                        card.style.position = 'relative';
+                    }
+                    card.appendChild(cardUnavailBadge);
+                } else {
+                    cardUnavailBadge.style.display = 'block';
+                }
+
+                const notifyUnavailableSingle = (e) => {
+                    if (e) { e.stopPropagation(); e.preventDefault(); }
+                    showDishNoticeToast(`⚠️ "${dishName}" is currently unavailable.`, true);
+                };
+                card.onclick = notifyUnavailableSingle;
+                orderBtn.onclick = notifyUnavailableSingle;
+                cardUnavailBadge.onclick = notifyUnavailableSingle;
                 return;
             }
 
             if (itemStatus === 'hold') {
-                card.style.opacity = '1';
+                card.style.opacity = '0.85';
                 card.style.cursor = 'pointer';
                 card.style.border = '1.5px solid var(--color-hold, #F59E0B)';
                 orderBtn.style.display = 'block';
@@ -2974,6 +3236,7 @@ function initClickableMenuDishes() {
                 orderBtn.style.color = '#000000';
                 orderBtn.style.borderColor = '#D97706';
                 orderBtn.style.cursor = 'pointer';
+                if (cardUnavailBadge) cardUnavailBadge.style.display = 'none';
 
                 const notifyHoldSingle = (e) => {
                     if (e) { e.stopPropagation(); e.preventDefault(); }
@@ -2983,6 +3246,9 @@ function initClickableMenuDishes() {
                 orderBtn.onclick = notifyHoldSingle;
                 return;
             }
+
+            if (cardBadge) cardBadge.style.display = 'none';
+            if (cardUnavailBadge) cardUnavailBadge.style.display = 'none';
 
             card.style.opacity = '1';
             card.style.cursor = 'pointer';

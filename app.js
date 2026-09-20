@@ -142,12 +142,12 @@ function getDishImage(dishName, dishDesc) {
     if (textLower.includes('beef steak') || textLower.includes('steakbeaf')) return 'Steakbeaf.webp';
     if (textLower.includes('house coffee black') || textLower.includes('black coffee w lemon') || textLower.includes('black coffee with lemon') || textLower.includes('tea masala black')) return 'housecoffeeblack.webp';
     if (textLower.includes('americano')) return 'americano.webp';
-    if (textLower.includes('latte mocha')) return 'lattemocha.webp';
-    if (textLower.includes('latte macchiato') || textLower.includes('latte machiatto')) return 'lattemachiato.webp';
-    if (textLower.includes('lemon water')) return 'lemonwater.webp';
-    if (textLower.includes('honey espresso')) return 'honeyespresso.webp';
-    if (textLower.includes('hot milk')) return 'Hotmilk.webp';
-    if (textLower.includes('espresso (single)') || textLower.includes('espresso single')) return 'esspressosingle.webp';
+    if (textLower.includes('latte mocha')) return 'lattemocha.webp?v=20260920_v2';
+    if (textLower.includes('latte macchiato') || textLower.includes('latte machiatto')) return 'lattemachiato.webp?v=20260920_v2';
+    if (textLower.includes('lemon water')) return 'lemonwater.webp?v=20260920_v2';
+    if (textLower.includes('honey espresso')) return 'honeyespresso.webp?v=20260920_v2';
+    if (textLower.includes('hot milk')) return 'Hotmilk.webp?v=20260920_v2';
+    if (textLower.includes('espresso (single)') || textLower.includes('espresso single')) return 'esspressosingle.webp?v=20260920_v2';
     if (textLower.includes('tea special') || textLower.includes('tea masala white') || textLower.includes('ginger tea')) return 'teamasalaspecialteagingertea.webp';
     if (textLower.includes('choma goat (0.5 kg)') || textLower.includes('choma goat 0.5 kg') || textLower.includes('goat choma 0.5')) return 'Goatchomahalfkg.webp';
     if (textLower.includes('choma beef (1 kg)') || textLower.includes('choma beef 1 kg') || textLower.includes('beef choma 1')) return 'beefchoma1kg.webp';
@@ -888,7 +888,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-latte-mocha",
     "id": "dish-latte-mocha",
-    "image": "lattemocha.webp",
+    "image": "lattemocha.webp?v=20260920_v2",
     "name": "Latte Mocha",
     "price": "150/=",
     "priceNum": 150
@@ -898,7 +898,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-latte-machiatto",
     "id": "dish-latte-machiatto",
-    "image": "lattemachiato.webp",
+    "image": "lattemachiato.webp?v=20260920_v2",
     "name": "Latte Machiatto",
     "price": "180/=",
     "priceNum": 180
@@ -939,7 +939,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-lemon-water",
     "id": "dish-lemon-water",
-    "image": "lemonwater.webp",
+    "image": "lemonwater.webp?v=20260920_v2",
     "name": "Lemon Water",
     "price": "70/=",
     "priceNum": 70
@@ -998,7 +998,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-honey-espresso",
     "id": "dish-honey-espresso",
-    "image": "honeyespresso.webp",
+    "image": "honeyespresso.webp?v=20260920_v2",
     "name": "Honey Espresso",
     "price": "110/=",
     "priceNum": 110
@@ -1008,7 +1008,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-hot-milk",
     "id": "dish-hot-milk",
-    "image": "Hotmilk.webp",
+    "image": "Hotmilk.webp?v=20260920_v2",
     "name": "Hot Milk",
     "price": "100/=",
     "priceNum": 100
@@ -1048,7 +1048,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-espresso-single",
     "id": "dish-espresso-single",
-    "image": "esspressosingle.webp",
+    "image": "esspressosingle.webp?v=20260920_v2",
     "name": "Espresso (Single)",
     "price": "120/=",
     "priceNum": 120
@@ -1058,7 +1058,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-espresso-double",
     "id": "dish-espresso-double",
-    "image": "esspressodouble.webp",
+    "image": "esspressodouble.webp?v=20260920_v2",
     "name": "Espresso (Double)",
     "price": "150/=",
     "priceNum": 150

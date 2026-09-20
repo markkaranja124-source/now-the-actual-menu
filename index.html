@@ -534,6 +534,7 @@
         }
 
         .menu-card-luxury-wrapper > img,
+        .menu-card-luxury-wrapper > video,
         .menu-card-img {
             width: 100% !important;
             height: 205px !important;
@@ -549,6 +550,7 @@
         }
 
         .menu-card-luxury-wrapper:hover > img,
+        .menu-card-luxury-wrapper:hover > video,
         .menu-card-luxury-wrapper:hover .menu-card-img {
             transform: scale(1.04) !important;
         }
@@ -1219,7 +1221,7 @@
                         <span class="cj-strip-label">Crispy Fries</span>
                     </a>
                     <a href="#dish-sausages" class="cj-strip-item" title="Grilled Sausages">
-                        <div class="cj-strip-circle"><img src="Sauseges.webp" alt="Grilled Sausages" loading="lazy"></div>
+                        <div class="cj-strip-circle"><img src="sausages.webp" alt="Grilled Sausages" loading="lazy"></div>
                         <span class="cj-strip-label">Sausages</span>
                     </a>
                     <a href="#dish-beef-stew-showcase" class="cj-strip-item" title="Beef Stew">
@@ -1261,7 +1263,7 @@
                         <span class="cj-strip-label">Crispy Fries</span>
                     </a>
                     <a href="#dish-sausages" class="cj-strip-item" title="Grilled Sausages" aria-hidden="true">
-                        <div class="cj-strip-circle"><img src="Sauseges.webp" alt="Grilled Sausages" loading="lazy"></div>
+                        <div class="cj-strip-circle"><img src="sausages.webp" alt="Grilled Sausages" loading="lazy"></div>
                         <span class="cj-strip-label">Sausages</span>
                     </a>
                     <a href="#dish-beef-stew-showcase" class="cj-strip-item" title="Beef Stew" aria-hidden="true">
@@ -1422,7 +1424,11 @@
                     <!-- CHIPS COMBO -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="Chips special with meat.webp" alt="CHIPS COMBO" class="menu-card-img" loading="lazy" decoding="async">
+                        <video class="menu-card-img" autoplay muted loop playsinline preload="metadata" poster="chipsclip_poster.webp" style="width: 100%; height: 205px; max-height: 205px; object-fit: contain; background: #FFFFFF; padding: 12px 14px 4px; box-sizing: border-box; display: block; border-radius: 0px;" aria-label="Fresh Crispy Fries in Motion">
+                            <source src="chipsclip_clean.mp4" type="video/mp4">
+                            <source src="Chipsclip.mp4" type="video/mp4">
+                            <img src="chipsclip_poster.webp" alt="CHIPS COMBO" class="menu-card-img">
+                        </video>
                         <div id="dish-chips-combo" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1740,7 +1746,7 @@
                     <!-- Honey Espresso -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="esspressodouble.webp" alt="Honey Espresso" class="menu-card-img" loading="lazy" decoding="async" />
+                        <img src="honeyespresso.webp" alt="Honey Espresso" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-honey-espresso" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">

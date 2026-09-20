@@ -6,7 +6,12 @@ data/
 master_images_backup/
 DSC_*.JPG
 DSC_*.jpg
+*.JPG
+*.jpg
 chrome_*
 chrome_*/
 *.png
+Chipsclip_original_backup.mp4
+steakonpan.webp.jpg
+
 

@@ -143,6 +143,11 @@ function getDishImage(dishName, dishDesc) {
     if (textLower.includes('house coffee black') || textLower.includes('black coffee w lemon') || textLower.includes('black coffee with lemon') || textLower.includes('tea masala black')) return 'housecoffeeblack.webp';
     if (textLower.includes('americano')) return 'americano.webp';
     if (textLower.includes('latte mocha')) return 'lattemocha.webp';
+    if (textLower.includes('latte macchiato') || textLower.includes('latte machiatto')) return 'lattemachiato.webp';
+    if (textLower.includes('lemon water')) return 'lemonwater.webp';
+    if (textLower.includes('honey espresso')) return 'honeyespresso.webp';
+    if (textLower.includes('hot milk')) return 'Hotmilk.webp';
+    if (textLower.includes('espresso (single)') || textLower.includes('espresso single')) return 'esspressosingle.webp';
     if (textLower.includes('tea special') || textLower.includes('tea masala white') || textLower.includes('ginger tea')) return 'teamasalaspecialteagingertea.webp';
     if (textLower.includes('choma goat (0.5 kg)') || textLower.includes('choma goat 0.5 kg') || textLower.includes('goat choma 0.5')) return 'Goatchomahalfkg.webp';
     if (textLower.includes('choma beef (1 kg)') || textLower.includes('choma beef 1 kg') || textLower.includes('beef choma 1')) return 'beefchoma1kg.webp';
@@ -993,7 +998,7 @@ const RIBHOUSE_MASTER_DISHES = [
     "desc": "",
     "domId": "dish-honey-espresso",
     "id": "dish-honey-espresso",
-    "image": "housecoffee.webp",
+    "image": "honeyespresso.webp",
     "name": "Honey Espresso",
     "price": "110/=",
     "priceNum": 110

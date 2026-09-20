@@ -21,6 +21,7 @@ const DSC_FILES = [
     'DSC_3101.JPG',
     'DSC_3114.JPG',
     'DSC_3136.JPG',
+    'DSC_3171.JPG',
     'DSC_3201.JPG'
 ];
 

@@ -6959,16 +6959,37 @@ img {
 }
 
 
-/* BRIGHT VIBRANT ORANGE FOR GRAND TOTAL ACROSS ALL PAGES */
+/* GRAND TOTAL COLOR HANDLING - ORANGE FOR LIGHT BACKGROUNDS, PURE WHITE ON ORANGE BANNER */
 .stat-card-value.gold-text,
 #summary-overview-grand-total,
-.summary-grand-total,
-#summary-total-amount,
 .total-amount-display,
 .waiter-slip-total-amount,
 .order-subtotal-amount {
     color: #EA580C !important;
     font-weight: 800 !important;
+}
+
+/* On the orange summary total banner, grand total MUST be pure white for high contrast */
+.summary-total-banner,
+.summary-total-banner *,
+.summary-total-banner .summary-grand-total,
+.summary-total-banner #summary-total-amount,
+.summary-total-banner .summary-total-title {
+    color: #FFFFFF !important;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Ensure customer input fields (Name, Phone, Special Notes) have solid black typed text */
+.form-control,
+input.form-control,
+textarea.form-control,
+select.form-control,
+#cust-name,
+#cust-phone,
+#cust-notes {
+    color: #000000 !important;
+    font-weight: 600 !important;
+    background-color: #FFFFFF !important;
 }
 
 

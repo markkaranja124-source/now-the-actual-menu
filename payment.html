@@ -261,12 +261,34 @@
             overflow: hidden;
         }
 
+        .cj-home-nav-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            color: #FFFFFF;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            border-radius: 4px;
+        }
+
+        .cj-home-nav-btn:hover {
+            background: #FFFFFF;
+            color: #EA580C;
+            border-color: #FFFFFF;
+            transform: translateY(-1px);
+        }
+
         .cj-leaf-watermark {
             position: absolute;
             top: 15px;
             pointer-events: none;
             user-select: none;
-            opacity: 0.12;
+            opacity: 0.14;
         }
 
         .cj-leaf-left {
@@ -275,7 +297,13 @@
 
         .cj-leaf-right {
             right: 24px;
-            transform: scaleX(-1);
+        }
+
+        .cj-logo-watermark-img {
+            width: 85px;
+            height: auto;
+            display: block;
+            opacity: 0.14;
         }
 
         .cj-kicker {
@@ -429,13 +457,20 @@
             margin-left: 2px;
         }
 
-        .form-control {
+        .form-control,
+        input.form-control,
+        textarea.form-control,
+        select.form-control,
+        #cust-name,
+        #cust-phone,
+        #cust-notes {
             width: 100%;
             padding: 13px 16px;
             font-family: var(--font-sans);
             font-size: 0.95rem;
-            color: var(--dark-text);
-            background: #FFFFFF;
+            color: #000000 !important;
+            font-weight: 600 !important;
+            background: #FFFFFF !important;
             border: 1.5px solid #CBD5E1;
             outline: none;
             transition: all 0.25s ease;
@@ -443,13 +478,14 @@
         }
 
         .form-control::placeholder {
-            color: #94A3B8;
-            font-weight: 400;
+            color: #64748B !important;
+            font-weight: 400 !important;
         }
 
         .form-control:focus {
             border-color: #EA580C;
-            background: #FFFFFF;
+            background: #FFFFFF !important;
+            color: #000000 !important;
             box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.15);
         }
 
@@ -1485,6 +1521,12 @@
                 gap: 8px !important;
             }
 
+            .cj-home-nav-btn {
+                width: 32px !important;
+                height: 32px !important;
+                padding: 0 !important;
+            }
+
             .cj-menu-back-btn {
                 padding: 6px 10px !important;
                 font-size: 0.72rem !important;
@@ -1559,6 +1601,12 @@
 
             <!-- Right Action Buttons -->
             <div class="cj-nav-actions">
+                <a href="home.html" class="cj-home-nav-btn" aria-label="Home" title="Home">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </a>
                 <a href="index.html" class="cj-menu-back-btn">
                     <span>&larr; Menu</span>
                 </a>
@@ -1577,20 +1625,10 @@
     <!-- EDITORIAL HERO TITLE BANNER -->
     <section class="cj-hero-editorial" id="hero">
         <div class="cj-leaf-watermark cj-leaf-left" aria-hidden="true">
-            <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
-                <path d="M20,80 Q30,20 80,20 Q70,70 20,80 Z" stroke="#EA580C" stroke-width="2.5" fill="#EA580C"/>
-                <path d="M20,80 Q50,50 80,20" stroke="#EA580C" stroke-width="1.5"/>
-                <path d="M40,60 Q55,50 65,45" stroke="#EA580C" stroke-width="1.2"/>
-                <path d="M30,70 Q45,60 55,55" stroke="#EA580C" stroke-width="1.2"/>
-            </svg>
+            <img src="logo.png" alt="" class="cj-logo-watermark-img" width="95" height="auto" />
         </div>
         <div class="cj-leaf-watermark cj-leaf-right" aria-hidden="true">
-            <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
-                <path d="M20,80 Q30,20 80,20 Q70,70 20,80 Z" stroke="#EA580C" stroke-width="2.5" fill="#EA580C"/>
-                <path d="M20,80 Q50,50 80,20" stroke="#EA580C" stroke-width="1.5"/>
-                <path d="M40,60 Q55,50 65,45" stroke="#EA580C" stroke-width="1.2"/>
-                <path d="M30,70 Q45,60 55,55" stroke="#EA580C" stroke-width="1.2"/>
-            </svg>
+            <img src="logo.png" alt="" class="cj-logo-watermark-img" width="95" height="auto" />
         </div>
 
         <div class="cj-kicker">EXPRESS DISPATCH &bull; DINE-IN &bull; TAKEAWAY</div>

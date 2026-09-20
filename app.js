@@ -3912,14 +3912,19 @@ function renderSelectedOrderPage() {
             ? `<div class="item-packaging-tag">Takeaway Packaging: ${pkgDetails.label} (+KSh ${pkgDetails.totalFee.toLocaleString()}/=)</div>`
             : '';
 
+        const catLabel = item.category ? String(item.category).replace(/_/g, ' ').toUpperCase() : 'MEALS & SPECIALS';
+
         html += `
             <div class="order-item-row-luxury" data-id="${item.id}">
                 <div class="order-item-main-info">
                     ${imageFrameHtml}
                     <div class="order-dish-text-block">
+                        <div class="order-dish-breadcrumb">MENU &gt; ${catLabel} &gt; ${item.name.toUpperCase()}</div>
                         <h3 class="order-dish-title">${item.name}</h3>
                         ${item.desc ? `<p class="order-dish-desc">${item.desc}</p>` : ''}
-                        <div class="order-dish-price-tag">Base Price: <strong>KSh ${baseVal.toLocaleString()}/=</strong></div>
+                        <div class="order-dish-price-tag">
+                            <span class="price-val">KSh ${baseVal.toLocaleString()}/=</span>
+                        </div>
                         ${packagingBadgeHtml}
                         ${portionsHtml}
                     </div>
@@ -3941,7 +3946,7 @@ function renderSelectedOrderPage() {
                     </div>
 
                     <button type="button" class="btn-remove-pill" onclick="removeCartItem('${item.id}')" title="Remove Dish">
-                        <span>&times; Remove Item</span>
+                        <span>&times; Remove</span>
                     </button>
                 </div>
             </div>
@@ -3956,9 +3961,9 @@ function renderSelectedOrderPage() {
     if (totalQtyEl) totalQtyEl.textContent = `${totalQuantity} ${totalQuantity === 1 ? 'Item' : 'Items'}`;
     if (totalAmountEl) {
         if (diningType === 'takeaway') {
-            totalAmountEl.innerHTML = `KSh ${grandTotal.toLocaleString()}/= <span style="font-size: 0.85rem; font-weight: 500; color: #64748B; display: block; margin-top: 4px;">(Includes KSh ${packagingTotal.toLocaleString()}/= Takeaway Packaging)</span>`;
+            totalAmountEl.innerHTML = `<span style="color: #FFFFFF !important; font-weight: 800; font-size: 1.85rem; text-shadow: 0 2px 6px rgba(0,0,0,0.35);">KSh ${grandTotal.toLocaleString()}/=</span> <span style="font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.95); display: block; margin-top: 4px;">(Includes KSh ${packagingTotal.toLocaleString()}/= Takeaway Packaging)</span>`;
         } else {
-            totalAmountEl.innerHTML = `<span style="color: #EA580C !important; font-weight: 800;">KSh ${grandTotal.toLocaleString()}/=</span>`;
+            totalAmountEl.innerHTML = `<span style="color: #FFFFFF !important; font-weight: 800; font-size: 1.85rem; text-shadow: 0 2px 6px rgba(0,0,0,0.35);">KSh ${grandTotal.toLocaleString()}/=</span>`;
         }
     }
 }

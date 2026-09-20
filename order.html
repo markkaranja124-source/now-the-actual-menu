@@ -167,6 +167,28 @@
             flex-shrink: 0;
         }
 
+        .cj-home-nav-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            color: #FFFFFF;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            border-radius: 4px;
+        }
+
+        .cj-home-nav-btn:hover {
+            background: #FFFFFF;
+            color: #EA580C;
+            border-color: #FFFFFF;
+            transform: translateY(-1px);
+        }
+
         .cj-menu-back-btn {
             display: inline-flex;
             align-items: center;
@@ -183,6 +205,7 @@
             letter-spacing: 0.5px;
             transition: all 0.2s ease;
             white-space: nowrap;
+            border-radius: 4px;
         }
 
         .cj-menu-back-btn:hover {
@@ -205,6 +228,7 @@
             font-weight: 700;
             transition: all 0.2s ease;
             position: relative;
+            border-radius: 4px;
         }
 
         .cj-cart-btn:hover {
@@ -219,20 +243,118 @@
             font-weight: 800;
             padding: 2px 7px;
             line-height: 1;
+            border-radius: 10px;
         }
 
         /* ==========================================================================
-           2. EDITORIAL HERO BANNER (MATCHING MENU PAGE)
+           2. CJ'S STYLE PANORAMIC EDITORIAL BANNER (DSC_3114) & BREADCRUMBS
            ========================================================================== */
-        .cj-hero-editorial {
+        .cj-panoramic-hero-banner {
             position: relative;
-            text-align: center;
-            padding: 40px 20px 24px;
-            background: #FFFDF9;
-            border-bottom: 1px solid var(--color-border-warm);
-            max-width: 100%;
-            margin: 0 auto;
+            width: 100%;
+            min-height: 240px;
+            background: #FFFFFF;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .cj-banner-media {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .cj-banner-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center right;
+        }
+
+        .cj-banner-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, #FFFFFF 0%, rgba(255, 255, 255, 0.97) 32%, rgba(255, 255, 255, 0.75) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 100%);
+            z-index: 2;
+        }
+
+        .cj-banner-content {
+            position: relative;
+            z-index: 3;
+            max-width: 650px;
+            padding: 36px 40px;
+        }
+
+        .cj-banner-kicker {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: #EA580C;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .cj-banner-title {
+            font-family: var(--font-sans);
+            font-size: 2.3rem;
+            font-weight: 900;
+            color: #0F2F4E;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            line-height: 1.15;
+            margin-bottom: 10px;
+        }
+
+        .cj-banner-subtitle {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        /* BREADCRUMB BAR (MATCHING SCREENSHOT 1 & 2) */
+        .cj-breadcrumbs-bar {
+            background: #F8FAFC;
+            border-bottom: 1px solid #E2E8F0;
+            padding: 12px 30px;
+            font-family: var(--font-sans);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .cj-breadcrumbs-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .cj-breadcrumbs-inner a {
+            color: #64748B;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .cj-breadcrumbs-inner a:hover {
+            color: #EA580C;
+        }
+
+        .cj-breadcrumbs-inner .sep {
+            color: #94A3B8;
+        }
+
+        .cj-breadcrumbs-inner .current {
+            color: #0F2F4E;
         }
 
         .cj-leaf-watermark {
@@ -249,7 +371,13 @@
 
         .cj-leaf-right {
             right: 24px;
-            transform: scaleX(-1);
+        }
+
+        .cj-logo-watermark-img {
+            width: 80px;
+            height: auto;
+            display: block;
+            opacity: 0.12;
         }
 
         .cj-kicker {
@@ -462,16 +590,18 @@
         }
 
         .order-dish-image-frame {
-            width: 95px !important;
-            height: 95px !important;
+            width: 220px !important;
+            height: 175px !important;
             flex-shrink: 0 !important;
             background: #FFFFFF !important;
-            border: 1px solid var(--color-border-warm) !important;
-            padding: 6px !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 10px !important;
+            padding: 8px !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             overflow: hidden !important;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04) !important;
         }
 
         .order-dish-img {
@@ -482,7 +612,7 @@
         }
 
         .order-item-row-luxury:hover .order-dish-img {
-            transform: scale(1.08) !important;
+            transform: scale(1.05) !important;
         }
 
         .order-dish-text-block {
@@ -493,34 +623,42 @@
             min-width: 0 !important;
         }
 
-        .order-dish-title {
-            font-family: var(--font-serif) !important;
-            font-size: 1.4rem !important;
+        .order-dish-breadcrumb {
+            font-size: 0.72rem !important;
             font-weight: 700 !important;
-            color: #0F172A !important;
+            color: #64748B !important;
+            letter-spacing: 0.8px !important;
+            text-transform: uppercase !important;
+            margin-bottom: 2px !important;
+        }
+
+        .order-dish-title {
+            font-family: var(--font-sans) !important;
+            font-size: 1.38rem !important;
+            font-weight: 800 !important;
+            color: #0F2F4E !important;
             letter-spacing: 0.5px !important;
             margin: 0 !important;
             text-transform: uppercase !important;
-            line-height: 1.2 !important;
+            line-height: 1.25 !important;
         }
 
         .order-dish-desc {
-            font-size: 0.85rem !important;
+            font-size: 0.88rem !important;
             color: #64748B !important;
-            line-height: 1.45 !important;
+            line-height: 1.5 !important;
             margin: 0 !important;
         }
 
         .order-dish-price-tag {
-            font-size: 0.85rem !important;
-            color: #475569 !important;
-            margin-top: 2px !important;
+            margin: 4px 0 !important;
         }
 
-        .order-dish-price-tag strong {
-            color: #EA580C !important;
+        .order-dish-price-tag .price-val {
+            font-size: 1.35rem !important;
             font-weight: 800 !important;
-            font-size: 0.95rem !important;
+            color: #15803D !important;
+            display: inline-block !important;
         }
 
         .item-packaging-tag {
@@ -790,8 +928,8 @@
         }
 
         .summary-total-banner {
-            background: linear-gradient(135deg, #FF6B00 0%, #EA580C 100%);
-            color: #FFFFFF;
+            background: linear-gradient(135deg, #FF6B00 0%, #EA580C 100%) !important;
+            color: #FFFFFF !important;
             padding: 18px 24px;
             display: flex;
             justify-content: space-between;
@@ -799,18 +937,27 @@
             box-shadow: 0 4px 18px rgba(234, 88, 12, 0.28);
         }
 
+        .summary-total-banner,
+        .summary-total-banner * {
+            color: #FFFFFF !important;
+        }
+
         .summary-total-title {
+            color: #FFFFFF !important;
             font-size: 0.95rem;
             font-weight: 800;
             letter-spacing: 1.5px;
             text-transform: uppercase;
         }
 
-        .summary-grand-total {
+        .summary-grand-total,
+        #summary-total-amount {
+            color: #FFFFFF !important;
             font-family: var(--font-sans);
             font-size: 1.85rem;
             font-weight: 800;
             letter-spacing: 0.5px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35) !important;
         }
 
         .btn-view-order-summary {
@@ -891,6 +1038,12 @@
                 gap: 8px !important;
             }
 
+            .cj-home-nav-btn {
+                width: 32px !important;
+                height: 32px !important;
+                padding: 0 !important;
+            }
+
             .cj-menu-back-btn {
                 padding: 6px 10px !important;
                 font-size: 0.72rem !important;
@@ -899,6 +1052,28 @@
             .cj-cart-btn {
                 padding: 6px 10px !important;
                 font-size: 0.78rem !important;
+            }
+
+            .cj-panoramic-hero-banner {
+                min-height: 180px !important;
+            }
+
+            .cj-banner-content {
+                padding: 22px 18px !important;
+                max-width: 85% !important;
+            }
+
+            .cj-banner-title {
+                font-size: 1.55rem !important;
+            }
+
+            .cj-banner-subtitle {
+                display: none !important;
+            }
+
+            .cj-breadcrumbs-bar {
+                padding: 10px 16px !important;
+                font-size: 0.72rem !important;
             }
 
             .order-luxury-wrapper {
@@ -915,11 +1090,15 @@
             .order-item-main-info {
                 width: 100% !important;
                 gap: 14px !important;
+                flex-direction: column !important;
+                align-items: center !important;
             }
 
             .order-dish-image-frame {
-                width: 80px !important;
-                height: 80px !important;
+                width: 100% !important;
+                max-width: 280px !important;
+                height: 180px !important;
+                margin: 0 auto !important;
             }
 
             .order-dish-title {
@@ -983,6 +1162,12 @@
 
             <!-- Right Action Buttons -->
             <div class="cj-nav-actions">
+                <a href="home.html" class="cj-home-nav-btn" aria-label="Home" title="Home">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </a>
                 <a href="index.html" class="cj-menu-back-btn">
                     <span>&larr; Menu</span>
                 </a>
@@ -998,34 +1183,29 @@
         </div>
     </header>
 
-    <!-- EDITORIAL HERO TITLE BANNER -->
-    <section class="cj-hero-editorial" id="hero">
-        <div class="cj-leaf-watermark cj-leaf-left" aria-hidden="true">
-            <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
-                <path d="M20,80 Q30,20 80,20 Q70,70 20,80 Z" stroke="#EA580C" stroke-width="2.5" fill="#EA580C"/>
-                <path d="M20,80 Q50,50 80,20" stroke="#EA580C" stroke-width="1.5"/>
-                <path d="M40,60 Q55,50 65,45" stroke="#EA580C" stroke-width="1.2"/>
-                <path d="M30,70 Q45,60 55,55" stroke="#EA580C" stroke-width="1.2"/>
-            </svg>
+    <!-- CJ'S STYLE PANORAMIC FOOD BANNER (using DSC_3114) -->
+    <section class="cj-panoramic-hero-banner" id="order-hero-banner">
+        <div class="cj-banner-media">
+            <img src="order_banner.webp" alt="Rib House Gourmet Feasts" class="cj-banner-img">
+            <div class="cj-banner-overlay"></div>
         </div>
-        <div class="cj-leaf-watermark cj-leaf-right" aria-hidden="true">
-            <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
-                <path d="M20,80 Q30,20 80,20 Q70,70 20,80 Z" stroke="#EA580C" stroke-width="2.5" fill="#EA580C"/>
-                <path d="M20,80 Q50,50 80,20" stroke="#EA580C" stroke-width="1.5"/>
-                <path d="M40,60 Q55,50 65,45" stroke="#EA580C" stroke-width="1.2"/>
-                <path d="M30,70 Q45,60 55,55" stroke="#EA580C" stroke-width="1.2"/>
-            </svg>
+        <div class="cj-banner-content">
+            <span class="cj-banner-kicker">FRESH &bull; SIZZLING &bull; AUTHENTIC</span>
+            <h1 class="cj-banner-title">YOUR SELECTED FEAST</h1>
+            <p class="cj-banner-subtitle">Every dish crafted fresh with authentic natural spices. Adjust side options and quantities before placing your order.</p>
         </div>
-
-        <div class="cj-kicker">FRESH &bull; WOOD-FIRED &bull; AUTHENTIC</div>
-        <h1 class="cj-main-title">YOUR SELECTED FEAST</h1>
-        <div class="cj-title-divider">
-            <span class="rule"></span>
-            <span class="label">ORDER REVIEW</span>
-            <span class="rule"></span>
-        </div>
-        <p class="cj-subtitle">Every dish crafted fresh with authentic natural spices. Adjust side options and quantities before placing your order.</p>
     </section>
+
+    <!-- BREADCRUMBS BAR (MATCHING SCREENSHOT 1 & 2) -->
+    <nav class="cj-breadcrumbs-bar" aria-label="Breadcrumb navigation">
+        <div class="cj-breadcrumbs-inner">
+            <a href="index.html">MENU</a>
+            <span class="sep">&gt;</span>
+            <a href="index.html#dishes">SELECTED MEALS</a>
+            <span class="sep">&gt;</span>
+            <span class="current">YOUR ORDER &amp; CART</span>
+        </div>
+    </nav>
 
     <!-- SEAMLESS LUXURY MAIN SECTION -->
     <main class="order-luxury-wrapper">

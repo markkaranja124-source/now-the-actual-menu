@@ -30,7 +30,7 @@
     <meta property="og:description" content="Official Rib House Menu. Best Quality Grilled Meat, Breakfast Combos, Barista Hot & Cold Drinks, Choma Zone, Chemsha. Till No: 4977556.">
     <meta property="og:image" content="logo.png">
 
-    <link rel="stylesheet" href="style.css?v=20260920_v12">
+    <link rel="stylesheet" href="style.css?v=20260921_v14">
 
     <!-- CJ'S-INSPIRED WARM ORANGE MENU REDESIGN STYLES -->
     <style id="cj-warm-orange-redesign">
@@ -260,7 +260,7 @@
             transform: translate(-50%, -50%);
             z-index: 10;
             pointer-events: none;
-            display: flex;
+            display: none !important; /* Hidden in favor of prominent centerpiece logo */
             align-items: center;
             justify-content: center;
         }
@@ -384,10 +384,68 @@
         .cj-hero-editorial {
             position: relative;
             text-align: center;
-            padding: 44px 20px 24px;
-            background: #FFFFFF;
+            padding: 36px 20px 32px;
+            background: #FFFFFF !important;
             max-width: 1240px;
             margin: 0 auto;
+            z-index: 10;
+        }
+
+        /* Still Fixed Brand Watermark (Remains in one place while scrolling through dishes) */
+        .cj-fixed-dishes-watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(850px, 85vw);
+            height: min(850px, 85vw);
+            pointer-events: none;
+            user-select: none;
+            z-index: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            will-change: opacity;
+        }
+
+        .cj-fixed-dishes-watermark.is-visible {
+            opacity: 0.28;
+        }
+
+        .cj-fixed-watermark-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 16px 44px rgba(230, 126, 34, 0.24));
+        }
+
+        /* Prominent Rib House Brand Centerpiece */
+        .cj-hero-brand-spotlight {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 16px auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cj-hero-huge-logo {
+            width: 360px;
+            height: 360px;
+            max-width: 90vw;
+            object-fit: contain;
+            filter: drop-shadow(0 14px 32px rgba(0, 0, 0, 0.13)) drop-shadow(0 4px 12px rgba(230, 126, 34, 0.22));
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+            cursor: pointer;
+            will-change: transform;
+            display: block;
+        }
+
+        .cj-hero-huge-logo:hover {
+            transform: scale(1.04) translateY(-3px);
+            filter: drop-shadow(0 20px 44px rgba(0, 0, 0, 0.18)) drop-shadow(0 8px 22px rgba(230, 126, 34, 0.32));
         }
 
         .cj-home-nav-btn {
@@ -447,42 +505,44 @@
 
         .cj-main-title {
             font-family: var(--font-serif);
-            font-size: 3.1rem;
-            font-weight: 700;
+            font-size: clamp(3.4rem, 6vw, 4.6rem);
+            font-weight: 800;
             color: #111114;
-            letter-spacing: 1px;
-            margin: 0 0 6px 0;
+            letter-spacing: 1.5px;
+            margin: 0 0 10px 0;
             text-transform: uppercase;
+            line-height: 1.15;
         }
 
         .cj-title-divider {
             display: inline-flex;
             align-items: center;
             gap: 16px;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .cj-title-divider span.rule {
-            width: 50px;
-            height: 1px;
+            width: 60px;
+            height: 1.5px;
             background: #CBD5E1;
         }
 
         .cj-title-divider span.label {
             font-family: var(--font-serif);
-            font-size: 1.8rem;
-            font-weight: 600;
+            font-size: 2.2rem;
+            font-weight: 700;
             color: #EA580C;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
         }
 
         .cj-subtitle {
             font-family: var(--font-sans);
-            font-size: 1rem;
-            color: #475569;
-            max-width: 620px;
-            margin: 0 auto 36px;
-            line-height: 1.6;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #1E293B;
+            max-width: 680px;
+            margin: 0 auto 38px;
+            line-height: 1.65;
         }
 
         /* Category Section Header Divider Bar */
@@ -509,29 +569,34 @@
 
         .cj-category-name {
             font-family: var(--font-sans);
-            font-size: 1.15rem;
+            font-size: 1.4rem;
             font-weight: 800;
             color: #EA580C;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
         .cj-category-line {
             flex-grow: 1;
-            height: 1px;
+            height: 1.5px;
             background: #F1D2B8;
         }
 
         /* 4. 2-COLUMN LUXURY MENU CARDS */
         .menu-catalog-section {
-            background: #FFFDF9 !important;
+            background: rgba(255, 253, 249, 0.78) !important;
             padding: 10px 0 60px !important;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
         }
 
         .menu-catalog-section .section-wrapper {
             max-width: 1240px !important;
             margin: 0 auto !important;
             padding: 0 24px !important;
+            position: relative;
+            z-index: 2;
         }
 
         .menu-grid {
@@ -542,7 +607,8 @@
         }
 
         .menu-card-luxury-wrapper {
-            background: #FFFFFF !important;
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(8px) !important;
             border: 1px solid #EFE4D6 !important;
             border-radius: 0px !important;
             overflow: hidden !important;
@@ -552,7 +618,9 @@
             display: flex !important;
             flex-direction: column !important;
             justify-content: space-between !important;
-            min-height: 420px !important;
+            min-height: 520px !important;
+            position: relative;
+            z-index: 2;
         }
 
         .menu-card-luxury-wrapper:hover {
@@ -563,28 +631,33 @@
 
         .menu-card-luxury-wrapper > img,
         .menu-card-luxury-wrapper > video,
-        .menu-card-img {
+        .menu-card-img,
+        .menu-card-luxury-wrapper > .menu-card-slideshow-wrap,
+        .menu-card-luxury-wrapper > div:has(#milkshake-slideshow-img) {
             width: 100% !important;
-            height: 205px !important;
-            max-height: 205px !important;
+            height: 380px !important;
+            max-height: 400px !important;
             object-fit: contain !important;
+            object-position: center !important;
             border-radius: 0px !important;
-            margin: 0 !important;
+            margin: 0 auto !important;
             display: block !important;
             background: #FFFFFF !important;
-            padding: 12px 14px 4px !important;
+            padding: 8px 12px 4px !important;
             box-sizing: border-box !important;
             transition: transform 0.25s ease !important;
         }
 
         .menu-card-luxury-wrapper:hover > img,
         .menu-card-luxury-wrapper:hover > video,
-        .menu-card-luxury-wrapper:hover .menu-card-img {
-            transform: scale(1.04) !important;
+        .menu-card-luxury-wrapper:hover .menu-card-img,
+        .menu-card-luxury-wrapper:hover #milkshake-slideshow-img,
+        .menu-card-luxury-wrapper:hover #milkshake-slideshow-img-next {
+            transform: scale(1.03) !important;
         }
 
         .menu-dish-card {
-            padding: 22px 24px 6px !important;
+            padding: 22px 24px 8px !important;
             display: flex !important;
             justify-content: space-between !important;
             align-items: baseline !important;
@@ -594,9 +667,9 @@
         .menu-dish-card h4,
         .menu-dish-card h3 {
             font-family: var(--font-serif) !important;
-            font-size: 1.35rem !important;
-            font-weight: 700 !important;
-            color: #0F172A !important;
+            font-size: 1.6rem !important;
+            font-weight: 800 !important;
+            color: #090D16 !important;
             text-transform: uppercase !important;
             letter-spacing: 0.5px !important;
             margin: 0 !important;
@@ -605,7 +678,7 @@
 
         .menu-dish-card span {
             font-family: var(--font-sans) !important;
-            font-size: 1.3rem !important;
+            font-size: 1.5rem !important;
             font-weight: 800 !important;
             color: #EA580C !important;
             white-space: nowrap !important;
@@ -615,9 +688,10 @@
         .menu-card-luxury-wrapper > p {
             padding: 0 24px !important;
             font-family: var(--font-sans) !important;
-            font-size: 0.92rem !important;
-            color: #64748B !important;
-            line-height: 1.55 !important;
+            font-size: 1.08rem !important;
+            font-weight: 450 !important;
+            color: #334155 !important;
+            line-height: 1.65 !important;
             margin: 4px 0 18px 0 !important;
             flex-grow: 1 !important;
         }
@@ -627,33 +701,38 @@
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
-            background: linear-gradient(135deg, #FF6B00 0%, #EA580C 100%) !important;
-            color: #FFFFFF !important;
+            background: transparent !important;
+            color: #EA580C !important;
             border: none !important;
-            padding: 9px 22px !important;
+            padding: 6px 0 !important;
             border-radius: 0px !important;
             font-family: var(--font-sans) !important;
-            font-size: 0.85rem !important;
-            font-weight: 700 !important;
-            letter-spacing: 0.5px !important;
+            font-size: 1.05rem !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.8px !important;
             text-transform: uppercase !important;
             cursor: pointer !important;
-            transition: all 0.2s ease !important;
-            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25) !important;
+            transition: color 0.2s ease, transform 0.2s ease !important;
+            box-shadow: none !important;
+            text-decoration: none !important;
         }
 
         .card-order-action-btn:hover {
-            background: linear-gradient(135deg, #FF7A00 0%, #C2410C 100%) !important;
-            transform: translateY(-2px) !important;
-            box-shadow: 0 6px 18px rgba(234, 88, 12, 0.38) !important;
+            background: transparent !important;
+            color: #C2410C !important;
+            transform: scale(1.05) !important;
+            box-shadow: none !important;
+            text-decoration: underline !important;
         }
 
         /* 5. MAIN DISHES SPLIT FEATURE SHOWCASE (REFERENCE MOCKUP STYLE) */
         .main-dishes-showcase-section {
-            background: #FFFDF9 !important;
+            background: rgba(255, 253, 249, 0.78) !important;
             padding: 30px 0 60px !important;
             border-top: 1px solid #F1E5D8;
             position: relative;
+            z-index: 1;
+            overflow: hidden;
         }
 
         .main-dish-split-showcase {
@@ -843,28 +922,31 @@
         }
 
         .variant-order-btn {
-            background: linear-gradient(135deg, #FF6B00 0%, #EA580C 100%);
-            color: #FFFFFF;
-            border: none;
+            background: transparent !important;
+            color: #EA580C !important;
+            border: none !important;
             border-radius: 0px !important;
-            padding: 5px 12px;
+            padding: 4px 0 !important;
             font-family: var(--font-sans);
-            font-size: 0.74rem;
-            font-weight: 700;
-            letter-spacing: 0.2px;
+            font-size: 0.9rem !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.4px;
             cursor: pointer;
             white-space: nowrap;
-            box-shadow: 0 2px 8px rgba(234, 88, 12, 0.22);
+            box-shadow: none !important;
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            text-decoration: none !important;
         }
 
         .variant-order-btn:hover {
-            background: linear-gradient(135deg, #FF7A00 0%, #C2410C 100%);
-            transform: scale(1.03);
-            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
+            background: transparent !important;
+            color: #C2410C !important;
+            transform: scale(1.05);
+            box-shadow: none !important;
+            text-decoration: underline !important;
         }
 
         .variant-order-btn.added-state {
@@ -984,30 +1066,41 @@
                 min-height: auto !important;
             }
             .menu-card-luxury-wrapper > img,
-            .menu-card-img {
-                height: 185px !important;
-                max-height: 185px !important;
-                padding: 10px 12px 2px !important;
+            .menu-card-luxury-wrapper > video,
+            .menu-card-img,
+            .menu-card-luxury-wrapper > .menu-card-slideshow-wrap,
+            .menu-card-luxury-wrapper > div:has(#milkshake-slideshow-img) {
+                height: 275px !important;
+                max-height: 295px !important;
+                padding: 6px 10px 2px !important;
             }
             .menu-dish-card {
                 padding: 14px 16px 4px !important;
             }
             .menu-dish-card h4,
             .menu-dish-card h3 {
-                font-size: 1.15rem !important;
+                font-size: 1.35rem !important;
+                font-weight: 800 !important;
             }
             .menu-dish-card span {
-                font-size: 1.15rem !important;
+                font-size: 1.35rem !important;
+                font-weight: 800 !important;
             }
             .menu-card-luxury-wrapper > p {
                 padding: 0 16px !important;
-                font-size: 0.82rem !important;
+                font-size: 1rem !important;
+                color: #334155 !important;
+                line-height: 1.55 !important;
                 margin-bottom: 8px !important;
             }
             .card-order-action-btn {
                 margin: 8px 16px 16px auto !important;
-                padding: 8px 18px !important;
-                font-size: 0.8rem !important;
+                padding: 6px 0 !important;
+                font-size: 0.98rem !important;
+                font-weight: 800 !important;
+                border: none !important;
+                background: transparent !important;
+                box-shadow: none !important;
                 border-radius: 0px !important;
             }
 
@@ -1016,7 +1109,18 @@
                 gap: 22px !important;
             }
             .cj-main-title {
-                font-size: 2.1rem;
+                font-size: 2.6rem !important;
+            }
+            .cj-hero-editorial {
+                padding: 22px 16px 20px !important;
+            }
+            .cj-hero-huge-logo {
+                width: 240px !important;
+                height: 240px !important;
+                max-width: 80vw !important;
+            }
+            .cj-hero-brand-spotlight {
+                margin-bottom: 12px !important;
             }
             .cj-food-strip-section {
                 padding: 12px 0 10px !important;
@@ -1152,12 +1256,12 @@
                         <span class="drawer-link-text">COLD DRINKS</span>
                         <span class="drawer-link-arrow">&rsaquo;</span>
                     </a>
-                    <a href="#main-dishes-section" class="drawer-link">
-                        <span class="drawer-link-text">MAIN DISHES</span>
-                        <span class="drawer-link-arrow">&rsaquo;</span>
-                    </a>
                     <a href="#choma-chemsha-section" class="drawer-link">
                         <span class="drawer-link-text">CHOMA & PLATTERS</span>
+                        <span class="drawer-link-arrow">&rsaquo;</span>
+                    </a>
+                    <a href="#main-dishes-section" class="drawer-link">
+                        <span class="drawer-link-text">MAIN DISHES</span>
                         <span class="drawer-link-arrow">&rsaquo;</span>
                     </a>
                 </nav>
@@ -1219,6 +1323,7 @@
             <nav class="cj-nav-links" aria-label="Primary Navigation">
                 <a href="home.html" class="cj-nav-link">Home</a>
                 <a href="#breakfast-section" class="cj-nav-link active">Menu</a>
+                <a href="#choma-chemsha-section" class="cj-nav-link">Choma &amp; Platters</a>
                 <a href="#main-dishes-section" class="cj-nav-link">Main Dishes</a>
                 <a href="order.html" class="cj-nav-link">Order Online</a>
                 <a href="tel:0724594204" class="cj-nav-link">Contact</a>
@@ -1261,6 +1366,11 @@
     </header>
 
     <main>
+        <!-- Still Fixed Brand Watermark (Remains in place from Breakfast Combos through Dishes) -->
+        <div class="cj-fixed-dishes-watermark" id="fixed-dishes-watermark" aria-hidden="true">
+            <img src="logo.webp" alt="" class="cj-fixed-watermark-img" width="850" height="850" decoding="async">
+        </div>
+
         <!-- 1. VISUAL SHOWCASE FOOD STRIP (SUB-HEADER) -->
         <section class="cj-food-strip-section" aria-label="Visual Appetizer Showcase">
             <!-- Stationary Centered Rib House Spotlight Badge -->
@@ -1363,15 +1473,11 @@
 
         <!-- 2. EDITORIAL HERO TITLE & SECTION HEADER -->
         <section class="cj-hero-editorial" id="hero">
-            <!-- Subtle Rib House Logo Watermark Accents -->
-            <div class="cj-leaf-watermark cj-leaf-left" aria-hidden="true">
-                <img src="logo.png" alt="" class="cj-logo-watermark-img" width="95" height="auto" />
-            </div>
-            <div class="cj-leaf-watermark cj-leaf-right" aria-hidden="true">
-                <img src="logo.png" alt="" class="cj-logo-watermark-img" width="95" height="auto" />
+            <!-- Prominent Rib House Brand Centerpiece -->
+            <div class="cj-hero-brand-spotlight">
+                <img src="logo.webp" alt="Rib House Restaurant" class="cj-hero-huge-logo" width="360" height="360" decoding="async">
             </div>
 
-            <div class="cj-kicker">FRESH &bull; TASTY &bull; ALWAYS</div>
             <h1 class="cj-main-title">BREAKFAST &amp; BARISTA</h1>
             <div class="cj-title-divider">
                 <span class="rule"></span>
@@ -1379,20 +1485,19 @@
                 <span class="rule"></span>
             </div>
             <p class="cj-subtitle">Start your day the right way! All breakfasts served hot &amp; fresh.</p>
-
-            <!-- Section 1 Divider Bar: Breakfast Combos & Specials -->
-            <div class="cj-category-header-bar" id="bk-combos">
-                <div class="cj-category-title-wrap">
-                    <span class="cj-category-icon">🍴</span>
-                    <span class="cj-category-name">BREAKFAST COMBOS &amp; SPECIALS</span>
-                </div>
-                <div class="cj-category-line"></div>
-            </div>
         </section>
 
-        <!-- BREAKFAST & BARISTA MENU SECTION -->
+        <!-- BREAKFAST & BARISTA MENU SECTION (WATERMARK STARTS HERE) -->
         <section class="menu-catalog-section" id="breakfast-section">
             <div class="section-wrapper">
+                <!-- Section 1 Divider Bar: Breakfast Combos & Specials -->
+                <div class="cj-category-header-bar" id="bk-combos">
+                    <div class="cj-category-title-wrap">
+                        <span class="cj-category-icon">🍴</span>
+                        <span class="cj-category-name">BREAKFAST COMBOS &amp; SPECIALS</span>
+                    </div>
+                    <div class="cj-category-line"></div>
+                </div>
 
                 <div class="menu-grid"
                     style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); margin-bottom: 60px;">
@@ -1497,7 +1602,7 @@
                     <!-- CHIPS COMBO -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <video class="menu-card-img" autoplay muted loop playsinline preload="metadata" poster="chipsclip_poster.webp" style="width: 100%; height: 205px; max-height: 205px; object-fit: contain; background: #FFFFFF; padding: 12px 14px 4px; box-sizing: border-box; display: block; border-radius: 0px;" aria-label="Fresh Crispy Fries in Motion">
+                        <video class="menu-card-img" autoplay muted loop playsinline preload="metadata" poster="chipsclip_poster.webp" style="object-fit: contain; background: #FFFFFF; display: block; border-radius: 0px;" aria-label="Fresh Crispy Fries in Motion">
                             <source src="chipsclip_clean.mp4" type="video/mp4">
                             <source src="Chipsclip.mp4" type="video/mp4">
                             <img src="chipsclip_poster.webp" alt="CHIPS COMBO" class="menu-card-img">
@@ -1515,7 +1620,7 @@
                     <!-- SAMOSA COMBO -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="Andazisamosawitheggs.webp" alt="SAMOSA COMBO" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="Andazisamosawitheggs.webp" alt="SAMOSA COMBO" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-samosa-combo" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1557,7 +1662,7 @@
                     <!-- RIB HOUSE BITE -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="ribhousebite.webp" alt="RIB HOUSE BITE" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="ribhousebite.webp" alt="RIB HOUSE BITE" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-rib-house-bite" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1571,7 +1676,7 @@
                     <!-- SPECIAL BREAKFAST -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="Specialbreakfast.webp" alt="SPECIAL BREAKFAST" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="Specialbreakfast.webp" alt="SPECIAL BREAKFAST" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-special-breakfast" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1624,7 +1729,7 @@
                     <!-- House Coffee white -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="housecoffee.webp" alt="House Coffee white" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="housecoffee.webp" alt="House Coffee white" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-house-coffee-white" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1637,7 +1742,7 @@
                     <!-- House Coffee Black -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="housecoffeeblack.webp" alt="House Coffee Black" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="housecoffeeblack.webp" alt="House Coffee Black" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-house-coffee-black" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1650,7 +1755,7 @@
                     <!-- Black Coffee W lemon -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="housecoffeeblack.webp" alt="Black Coffee W lemon" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="housecoffeeblack.webp" alt="Black Coffee W lemon" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-black-coffee-w-lemon" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1663,7 +1768,7 @@
                     <!-- Americano -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="americano.webp" alt="Americano" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="americano.webp" alt="Americano" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-americano" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1702,7 +1807,7 @@
                     <!-- Coffee Latte -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="coffeelatte1.webp" alt="Coffee Latte" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="coffeelatte1.webp" alt="Coffee Latte" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-coffee-latte" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1715,7 +1820,7 @@
                     <!-- Lemon Tea -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="Lemontea.webp" alt="Lemon Tea" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="Lemontea.webp" alt="Lemon Tea" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-lemon-tea" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1754,7 +1859,7 @@
                     <!-- Tea special -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="teamasalaspecialteagingertea.webp" alt="Tea special" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="teamasalaspecialteagingertea.webp" alt="Tea special" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-tea-special" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1767,7 +1872,7 @@
                     <!-- Tea Masala White -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="teamasalaspecialteagingertea.webp" alt="Tea Masala White" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="teamasalaspecialteagingertea.webp" alt="Tea Masala White" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-tea-masala-white" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1780,7 +1885,7 @@
                     <!-- Tea Masala Black -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="housecoffeeblack.webp" alt="Tea Masala Black" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="housecoffeeblack.webp" alt="Tea Masala Black" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-tea-masala-black" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1793,7 +1898,7 @@
                     <!-- Ginger Tea -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="teamasalaspecialteagingertea.webp" alt="Ginger Tea" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="teamasalaspecialteagingertea.webp" alt="Ginger Tea" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-ginger-tea" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1806,7 +1911,7 @@
                     <!-- Dawa -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="Dawa.webp" alt="Dawa" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="Dawa.webp" alt="Dawa" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-dawa" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1920,7 +2025,7 @@
                     <!-- Milkshake (Flavored) -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div style="position: relative; width: 100%; height: 180px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                        <div class="menu-card-slideshow-wrap" style="position: relative; width: 100%; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
                             <img id="milkshake-slideshow-img" src="chocolatemilkshake.webp" alt="Milkshake (Flavored)" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; border-radius: 0px !important; transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; z-index: 2;" loading="lazy" decoding="async" />
                             <img id="milkshake-slideshow-img-next" src="blueberrymilkshake.webp" alt="Milkshake (Flavored)" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; border-radius: 0px !important; transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; z-index: 1;" loading="lazy" decoding="async" />
                         </div>
@@ -1936,7 +2041,7 @@
                     <!-- Espresso (Cold) -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="esspressodouble.webp" alt="Espresso (Cold)" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="esspressodouble.webp" alt="Espresso (Cold)" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-espresso-cold" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1949,7 +2054,7 @@
                     <!-- Oreo shake -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="Oreoshake.webp" alt="Oreo shake" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="Oreoshake.webp" alt="Oreo shake" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-oreo-shake" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1962,7 +2067,7 @@
                     <!-- Smoothies (Tropical) -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="tropicalsmoothie.webp?v=20260920_v1" alt="Smoothies (Tropical)" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="tropicalsmoothie.webp?v=20260920_v1" alt="Smoothies (Tropical)" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-smoothies-tropical" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -1975,7 +2080,7 @@
                     <!-- Ice Cream Scoops -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="icecream.webp" alt="Ice Cream Scoops" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="icecream.webp" alt="Ice Cream Scoops" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-ice-cream-scoops" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -2001,7 +2106,7 @@
                     <!-- Iced Coffee -->
                     <div class="menu-card-luxury-wrapper"
                         style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 20px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="Icedcoffee.webp" alt="Iced Coffee" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
+                        <img src="Icedcoffee.webp" alt="Iced Coffee" class="menu-card-img" loading="lazy" decoding="async" />
                         <div id="dish-iced-coffee" class="menu-dish-card"
                             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
@@ -2015,7 +2120,355 @@
             </div>
         </section>
 
-        <!-- PART 2: MAIN DISHES MENU SECTION (2-COLUMN LUXURY SPLIT SHOWCASE) -->
+        <!-- PART 2: CHOMA ZONE, CHEMSHA ZONE, TUMBUKIZA & PLATTERS -->
+        <section class="menu-catalog-section" id="choma-chemsha-section"
+            style="border-top: 1px solid #E5E7EB;">
+            <div class="section-wrapper">
+                <div class="section-header-editorial">
+                    <h2 class="section-heading-editorial">CHOMA, CHEMSHA & PLATTERS</h2>
+                    <p class="section-subtext-editorial">Beef & Goat by KG, Tumbukiza on order, and the Family Chicken Platter for 4.</p>
+                </div>
+
+                <!-- Choma & Platter Grid -->
+                <div class="menu-grid" id="meat-portions-grid"
+                    style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); margin-bottom: 50px;">
+
+                    <!-- CHOMA BEEF 1 KG -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="beefchoma1kg.webp" alt="CHOMA BEEF (1 KG)" class="menu-card-img" loading="lazy" decoding="async" />
+                        <div id="dish-choma-beef-1-kg" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
+                                CHOMA BEEF (1 KG)</h3>
+                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">1100/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Slow wood-fired tender roasted beef choma per 1 KG</p>
+                        <button type="button" class="card-order-action-btn"
+                            >+ ADD TO ORDER</button>
+                    </div>
+
+                    <!-- CHOMA BEEF 0.5 KG -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="beefchomahalfkg.webp" alt="CHOMA BEEF (0.5 KG)" class="menu-card-img" loading="lazy" decoding="async" />
+                        <div id="dish-choma-beef-0-5-kg" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
+                                CHOMA BEEF (0.5 KG)</h3>
+                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">550/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Slow wood-fired tender roasted beef choma per 0.5 KG</p>
+                        <button type="button" class="card-order-action-btn"
+                            >+ ADD TO ORDER</button>
+                    </div>
+
+                    <!-- CHOMA GOAT 1 KG -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="Goatchoma1kg.webp" alt="CHOMA GOAT (1 KG)" class="menu-card-img" loading="lazy" decoding="async" />
+                        <div id="dish-choma-goat-1-kg" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
+                                CHOMA GOAT (1 KG)</h3>
+                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">1200/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Juicy flame-roasted goat choma seasoned with herbs per 1 KG</p>
+                        <button type="button" class="card-order-action-btn"
+                            >+ ADD TO ORDER</button>
+                    </div>
+
+                    <!-- CHOMA GOAT 0.5 KG -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="Goatchomahalfkg.webp" alt="CHOMA GOAT (0.5 KG)" class="menu-card-img" loading="lazy" decoding="async" />
+                        <div id="dish-choma-goat-0-5-kg" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
+                                CHOMA GOAT (0.5 KG)</h3>
+                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">600/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Juicy flame-roasted goat choma seasoned with herbs per 0.5 KG</p>
+                        <button type="button" class="card-order-action-btn"
+                            >+ ADD TO ORDER</button>
+                    </div>
+
+                    <!-- CHEMSHA BEEF 1 KG -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="beefchemsha1kg.webp?v=studio2" alt="CHEMSHA BEEF (1 KG)" class="menu-card-img" loading="lazy" decoding="async" />
+                        <div id="dish-chemsha-beef-1-kg" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
+                                CHEMSHA BEEF (1 KG)</h3>
+                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">1200/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Slow-simmered tender beef in rich savory broth per 1 KG</p>
+                        <button type="button" class="card-order-action-btn"
+                            >+ ADD TO ORDER</button>
+                    </div>
+
+                    <!-- CHEMSHA BEEF 0.5 KG -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="chemshabeef.webp" alt="CHEMSHA BEEF (0.5 KG)" class="menu-card-img" loading="lazy" decoding="async" />
+                        <div id="dish-chemsha-beef-0-5-kg" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
+                                CHEMSHA BEEF (0.5 KG)</h3>
+                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">600/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Slow-simmered tender beef in rich savory broth per 0.5 KG</p>
+                        <button type="button" class="card-order-action-btn"
+                            >+ ADD TO ORDER</button>
+                    </div>
+
+                    <!-- CHEMSHA GOAT 1 KG -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="goat chemsha 1kg.webp" alt="CHEMSHA GOAT (1 KG)" class="menu-card-img" loading="lazy" decoding="async" />
+                        <div id="dish-chemsha-goat-1-kg" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
+                                CHEMSHA GOAT (1 KG)</h3>
+                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">1300/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Slow-simmered tender goat in rich herbal broth per 1 KG</p>
+                        <button type="button" class="card-order-action-btn"
+                            >+ ADD TO ORDER</button>
+                    </div>
+
+                    <!-- CHEMSHA GOAT 0.5 KG -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="Chemshagoat.webp" alt="CHEMSHA GOAT (0.5 KG)" class="menu-card-img" loading="lazy" decoding="async" />
+                        <div id="dish-chemsha-goat-0-5-kg" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
+                                CHEMSHA GOAT (0.5 KG)</h3>
+                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">650/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Slow-simmered tender goat in rich herbal broth per 0.5 KG</p>
+                        <button type="button" class="card-order-action-btn"
+                            >+ ADD TO ORDER</button>
+                    </div>
+
+                    <!-- BEEF FRY / TUMBUKIZA 1 KG -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="tumbukizabeeffry1kg.webp" alt="BEEF FRY / TUMBUKIZA (1 KG)" class="menu-card-img" loading="lazy" decoding="async" />
+                        <div id="dish-beef-fry-tumbukiza-1-kg" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
+                                BEEF FRY / TUMBUKIZA (1 KG)</h3>
+                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">1300/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Authentic wood-fired savory beef tumbukiza on order per 1 KG. Pair with Waru, Spinach & Banana.</p>
+                        <button type="button" class="card-order-action-btn"
+                            >+ ADD TO ORDER</button>
+                    </div>
+
+                    <!-- GOAT FRY / TUMBUKIZA 1 KG -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="tumbukizagoatfry1kg.webp" alt="GOAT FRY / TUMBUKIZA (1 KG)" class="menu-card-img" loading="lazy" decoding="async" />
+                        <div id="dish-goat-fry-tumbukiza-1-kg" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
+                                GOAT FRY / TUMBUKIZA (1 KG)</h3>
+                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">1400/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Authentic wood-fired savory goat tumbukiza on order per 1 KG. Pair with Waru, Spinach & Banana.</p>
+                        <button type="button" class="card-order-action-btn"
+                            >+ ADD TO ORDER</button>
+                    </div>
+
+                    <!-- TUMBUKIZA SIDES & ADD-ONS (WARU, SPINACH, BANANA) -->
+                    <div class="tumbukiza-sides-card" id="dish-card-tumbukiza-sides">
+                        <div>
+                            <!-- Header Info -->
+                            <div class="tumbukiza-header-wrap">
+                                <div class="tumbukiza-badge-tag">TUMBUKIZA PAIRINGS</div>
+                                <h3 class="tumbukiza-card-title">TUMBUKIZA SIDES</h3>
+                                <p class="tumbukiza-card-subtitle">Traditional sides served with Beef or Goat Tumbukiza.</p>
+                            </div>
+
+                            <!-- Tiny Boxes (matching location button aesthetics) -->
+                            <div class="tumbukiza-tiny-boxes-list">
+
+                                <!-- Box 1: Waru -->
+                                <div id="dish-waru" class="tumbukiza-mini-box"
+                                    onclick="handleDirectDishSelect(this, 'Waru', '120/=', 'Freshly boiled or fried spiced potatoes', 'sides')">
+                                    <div class="tumbukiza-box-info">
+                                        <div class="tumbukiza-box-name-row">
+                                            <span class="tumbukiza-box-name">WARU</span>
+                                            <span class="tumbukiza-box-price">120/=</span>
+                                        </div>
+                                        <div class="tumbukiza-box-desc">Boiled or fried spiced potatoes</div>
+                                    </div>
+                                    <button type="button" class="tumbukiza-mini-add-btn" data-dish-name="Waru"
+                                        onclick="handleDirectDishSelect(this, 'Waru', '120/=', 'Freshly boiled or fried spiced potatoes', 'sides')">+ ADD</button>
+                                </div>
+
+                                <!-- Box 2: Spinach -->
+                                <div id="dish-spinach" class="tumbukiza-mini-box"
+                                    onclick="handleDirectDishSelect(this, 'Spinach', '120/=', 'Fresh sauteed farm-fresh garden spinach', 'sides')">
+                                    <div class="tumbukiza-box-info">
+                                        <div class="tumbukiza-box-name-row">
+                                            <span class="tumbukiza-box-name">SPINACH</span>
+                                            <span class="tumbukiza-box-price">120/=</span>
+                                        </div>
+                                        <div class="tumbukiza-box-desc">Fresh sauteed garden spinach</div>
+                                    </div>
+                                    <button type="button" class="tumbukiza-mini-add-btn" data-dish-name="Spinach"
+                                        onclick="handleDirectDishSelect(this, 'Spinach', '120/=', 'Fresh sauteed farm-fresh garden spinach', 'sides')">+ ADD</button>
+                                </div>
+
+                                <!-- Box 3: Banana -->
+                                <div id="dish-banana" class="tumbukiza-mini-box"
+                                    onclick="handleDirectDishSelect(this, 'Banana', '100/=', 'Fresh cooked or roasted sweet bananas', 'sides')">
+                                    <div class="tumbukiza-box-info">
+                                        <div class="tumbukiza-box-name-row">
+                                            <span class="tumbukiza-box-name">BANANA</span>
+                                            <span class="tumbukiza-box-price">100/=</span>
+                                        </div>
+                                        <div class="tumbukiza-box-desc">Cooked or roasted sweet bananas</div>
+                                    </div>
+                                    <button type="button" class="tumbukiza-mini-add-btn" data-dish-name="Banana"
+                                        onclick="handleDirectDishSelect(this, 'Banana', '100/=', 'Fresh cooked or roasted sweet bananas', 'sides')">+ ADD</button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="tumbukiza-sides-footer">
+                            Cooked in broth or served fresh on the side
+                        </div>
+                    </div>
+
+                    <!-- CHICKEN PLATTER FOR 4 -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 32px 24px; grid-column: 1 / -1; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div style="width: 100%; display: flex; justify-content: center; align-items: center; padding: 10px 0 24px;">
+                            <img src="Chickenplatterforfour.webp?v=huge2" alt="CHICKEN PLATTER FOR 4 (ON ORDER)" style="width: 100%; max-width: 800px; height: auto; max-height: 750px; object-fit: contain; border-radius: 0px !important; filter: drop-shadow(0 18px 42px rgba(0, 0, 0, 0.15)); display: block; margin: 0 auto; transition: transform 0.3s ease;" loading="lazy" decoding="async" />
+                        </div>
+                        <div id="dish-chicken-platter-for-4-on-order" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="font-family: var(--font-serif); font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--color-cream); text-transform: uppercase;">
+                                CHICKEN PLATTER FOR 4 (ON ORDER)</h3>
+                            <span style="font-family: var(--font-serif); font-size: clamp(1.5rem, 2.8vw, 2rem); color: var(--color-gold); font-weight: bold;">1900/=</span>
+                        </div>
+                        <p style="font-size: 1.02rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">Includes 2 Portions Chicken Wet Fry, 2 Portions Beef Fry, 1 Portion Chips, 2 Portions Ugali/Chapati, 2 Portions Veggies-spinach, 4 Small Glasses of Juice</p>
+                        <button type="button" class="card-order-action-btn"
+                            >+ ADD TO ORDER</button>
+                    </div>
+
+                </div>
+
+                <div class="section-header-editorial" style="margin-bottom: 30px;">
+                    <h3
+                        style="font-family: var(--font-serif); font-size: 2rem; color: var(--color-cream); text-transform: uppercase;">
+                        EXTRA SIDES & VEGES</h3>
+                </div>
+
+                <!-- Extra Sides Grid -->
+                <div class="menu-grid" id="extra-sides-grid"
+                    style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));">
+                    
+                    <!-- Rice / Mukimo Special -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="mukimospecial.webp" alt="Rice / Mukimo Special" class="menu-card-img" loading="lazy" decoding="async" />
+                        <div id="dish-rice-mukimo-special" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                Rice / Mukimo Special</h3>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">250/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Steamed fragrant rice or seasoned mukimo special</p>
+                        <button type="button" class="card-order-action-btn"
+                            >+ ADD TO ORDER</button>
+                    </div>
+
+                    <!-- Pilau Special -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="Pilauplain.webp" alt="Pilau Special" class="menu-card-img" loading="lazy" decoding="async" />
+                        <div id="dish-pilau-special" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                Pilau Special</h3>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">270/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Swahili spiced aromatic special beef pilau</p>
+                        <button type="button" class="card-order-action-btn"
+                            >+ ADD TO ORDER</button>
+                    </div>
+
+                    <!-- Chips Plain -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="Fries with salad.webp" alt="Chips Plain" class="menu-card-img" loading="lazy" decoding="async" />
+                        <div id="dish-chips-plain" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                Chips Plain</h3>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">220/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Crispy golden potato chips / french fries</p>
+                        <button type="button" class="card-order-action-btn"
+                            >+ ADD TO ORDER</button>
+                    </div>
+
+                    <!-- Chips Masala -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="chipsmasalareality.webp?v=whiteplate2" alt="Chips Masala" class="menu-card-img" loading="lazy" decoding="async" />
+                        <div id="dish-chips-masala" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                Chips Masala</h3>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">270/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Spiced masala potato chips sauteed with tangy seasoning</p>
+                        <button type="button" class="card-order-action-btn"
+                            >+ ADD TO ORDER</button>
+                    </div>
+
+                    <!-- Rice Plain -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="Riceplain.webp" alt="Rice Plain" class="menu-card-img" loading="lazy" decoding="async" />
+                        <div id="dish-rice-plain" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                Rice Plain</h3>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">200/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Fragrant steamed plain white rice</p>
+                        <button type="button" class="card-order-action-btn"
+                            >+ ADD TO ORDER</button>
+                    </div>
+
+                    <!-- Mukimo Plain -->
+                    <div class="menu-card-luxury-wrapper"
+                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
+                        <img src="mukimoplain.webp" alt="Mukimo Plain" class="menu-card-img" loading="lazy" decoding="async" />
+                        <div id="dish-mukimo-plain" class="menu-dish-card"
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
+                                Mukimo Plain</h3>
+                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">200/=</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Authentic traditional mashed potato, maize and greens</p>
+                        <button type="button" class="card-order-action-btn"
+                            >+ ADD TO ORDER</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PART 3: MAIN DISHES MENU SECTION (2-COLUMN LUXURY SPLIT SHOWCASE) -->
         <section class="main-dishes-showcase-section" id="main-dishes-section">
             <div class="section-wrapper" style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
 
@@ -2212,7 +2665,7 @@
 
                                 <div class="main-dish-variant-card" data-dish-name="Beef Steak with Chips Masala" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Beef Steak with Chips Masala', '800/=', 'Spicy masala-tossed chips served with tender beef steak.', 'Main Dishes');">
                                     <div class="variant-info-group">
-                                        <img src="Chipsmasala.webp" alt="Beef Steak with Chips Masala" class="variant-thumb" loading="lazy">
+                                        <img src="chipsmasalareality.webp?v=whiteplate2" alt="Beef Steak with Chips Masala" class="variant-thumb" loading="lazy">
                                         <div class="variant-text">
                                             <h4 class="variant-name">Beef Steak with Chips Masala</h4>
                                             <p class="variant-desc">Spicy masala-tossed fries served with sizzling prime steak.</p>
@@ -2298,7 +2751,7 @@
 
                                 <div class="main-dish-variant-card" data-dish-name="Goat Stew / Fry with Chips Masala" onclick="if(window.handleDirectDishSelect) handleDirectDishSelect(this, 'Goat Stew / Fry with Chips Masala', '670/=', 'Goat Stew/Fry served with Chips Masala', 'Main Dishes');">
                                     <div class="variant-info-group">
-                                        <img src="Chipsmasala.webp" alt="Goat Stew with Chips Masala" class="variant-thumb" loading="lazy">
+                                        <img src="chipsmasalareality.webp?v=whiteplate2" alt="Goat Stew with Chips Masala" class="variant-thumb" loading="lazy">
                                         <div class="variant-text">
                                             <h4 class="variant-name">Goat Stew with Chips Masala</h4>
                                             <p class="variant-desc">Rich goat stew served with seasoned spicy masala fries.</p>
@@ -2575,352 +3028,6 @@
             </div>
         </section>
 
-        <!-- PART 3: CHOMA ZONE, CHEMSHA ZONE, TUMBUKIZA & PLATTERS -->
-        <section class="menu-catalog-section" id="choma-chemsha-section"
-            style="background: #FFFFFF; border-top: 1px solid #E5E7EB;">
-            <div class="section-wrapper">
-                <div class="section-header-editorial">
-                    <h2 class="section-heading-editorial">CHOMA, CHEMSHA & PLATTERS</h2>
-                    <p class="section-subtext-editorial">Beef & Goat by KG, Tumbukiza on order, and the Family Chicken Platter for 4.</p>
-                </div>
-
-                <!-- Choma & Platter Grid -->
-                <div class="menu-grid" id="meat-portions-grid"
-                    style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); margin-bottom: 50px;">
-
-                    <!-- CHOMA BEEF 1 KG -->
-                    <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="beefchoma1kg.webp" alt="CHOMA BEEF (1 KG)" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
-                        <div id="dish-choma-beef-1-kg" class="menu-dish-card"
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
-                                CHOMA BEEF (1 KG)</h3>
-                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">1100/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Slow wood-fired tender roasted beef choma per 1 KG</p>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ Add to Order</button>
-                    </div>
-
-                    <!-- CHOMA BEEF 0.5 KG -->
-                    <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="beefchomahalfkg.webp" alt="CHOMA BEEF (0.5 KG)" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
-                        <div id="dish-choma-beef-0-5-kg" class="menu-dish-card"
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
-                                CHOMA BEEF (0.5 KG)</h3>
-                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">550/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Slow wood-fired tender roasted beef choma per 0.5 KG</p>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ Add to Order</button>
-                    </div>
-
-                    <!-- CHOMA GOAT 1 KG -->
-                    <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="Goatchoma1kg.webp" alt="CHOMA GOAT (1 KG)" style="width: 100%; height: auto; max-height: 240px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
-                        <div id="dish-choma-goat-1-kg" class="menu-dish-card"
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
-                                CHOMA GOAT (1 KG)</h3>
-                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">1200/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Juicy flame-roasted goat choma seasoned with herbs per 1 KG</p>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ Add to Order</button>
-                    </div>
-
-                    <!-- CHOMA GOAT 0.5 KG -->
-                    <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="Goatchomahalfkg.webp" alt="CHOMA GOAT (0.5 KG)" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
-                        <div id="dish-choma-goat-0-5-kg" class="menu-dish-card"
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
-                                CHOMA GOAT (0.5 KG)</h3>
-                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">600/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Juicy flame-roasted goat choma seasoned with herbs per 0.5 KG</p>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ Add to Order</button>
-                    </div>
-
-                    <!-- CHEMSHA BEEF 1 KG -->
-                    <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="beefchemsha1kg.webp" alt="CHEMSHA BEEF (1 KG)" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
-                        <div id="dish-chemsha-beef-1-kg" class="menu-dish-card"
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
-                                CHEMSHA BEEF (1 KG)</h3>
-                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">1200/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Slow-simmered tender beef in rich savory broth per 1 KG</p>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ Add to Order</button>
-                    </div>
-
-                    <!-- CHEMSHA BEEF 0.5 KG -->
-                    <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="chemshabeef.webp" alt="CHEMSHA BEEF (0.5 KG)" style="width: 100%; height: auto; max-height: 240px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
-                        <div id="dish-chemsha-beef-0-5-kg" class="menu-dish-card"
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
-                                CHEMSHA BEEF (0.5 KG)</h3>
-                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">600/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Slow-simmered tender beef in rich savory broth per 0.5 KG</p>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ Add to Order</button>
-                    </div>
-
-                    <!-- CHEMSHA GOAT 1 KG -->
-                    <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="goat chemsha 1kg.webp" alt="CHEMSHA GOAT (1 KG)" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
-                        <div id="dish-chemsha-goat-1-kg" class="menu-dish-card"
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
-                                CHEMSHA GOAT (1 KG)</h3>
-                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">1300/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Slow-simmered tender goat in rich herbal broth per 1 KG</p>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ Add to Order</button>
-                    </div>
-
-                    <!-- CHEMSHA GOAT 0.5 KG -->
-                    <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="Chemshagoat.webp" alt="CHEMSHA GOAT (0.5 KG)" style="width: 100%; height: auto; max-height: 240px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
-                        <div id="dish-chemsha-goat-0-5-kg" class="menu-dish-card"
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
-                                CHEMSHA GOAT (0.5 KG)</h3>
-                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">650/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Slow-simmered tender goat in rich herbal broth per 0.5 KG</p>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ Add to Order</button>
-                    </div>
-
-                    <!-- BEEF FRY / TUMBUKIZA 1 KG -->
-                    <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="tumbukizabeeffry1kg.webp" alt="BEEF FRY / TUMBUKIZA (1 KG)" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
-                        <div id="dish-beef-fry-tumbukiza-1-kg" class="menu-dish-card"
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
-                                BEEF FRY / TUMBUKIZA (1 KG)</h3>
-                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">1300/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Authentic wood-fired savory beef tumbukiza on order per 1 KG. Pair with Waru, Spinach & Banana.</p>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ Add to Order</button>
-                    </div>
-
-                    <!-- GOAT FRY / TUMBUKIZA 1 KG -->
-                    <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="tumbukizagoatfry1kg.webp" alt="GOAT FRY / TUMBUKIZA (1 KG)" style="width: 100%; height: auto; max-height: 180px; object-fit: contain; border-radius: 0px !important; margin-bottom: 12px;" loading="lazy" decoding="async" />
-                        <div id="dish-goat-fry-tumbukiza-1-kg" class="menu-dish-card"
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-cream); text-transform: uppercase;">
-                                GOAT FRY / TUMBUKIZA (1 KG)</h3>
-                            <span style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-gold); font-weight: bold;">1400/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Authentic wood-fired savory goat tumbukiza on order per 1 KG. Pair with Waru, Spinach & Banana.</p>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ Add to Order</button>
-                    </div>
-
-                    <!-- TUMBUKIZA SIDES & ADD-ONS (WARU, SPINACH, BANANA) -->
-                    <div class="tumbukiza-sides-card" id="dish-card-tumbukiza-sides">
-                        <div>
-                            <!-- Header Info -->
-                            <div class="tumbukiza-header-wrap">
-                                <div class="tumbukiza-badge-tag">TUMBUKIZA PAIRINGS</div>
-                                <h3 class="tumbukiza-card-title">TUMBUKIZA SIDES</h3>
-                                <p class="tumbukiza-card-subtitle">Traditional sides served with Beef or Goat Tumbukiza.</p>
-                            </div>
-
-                            <!-- Tiny Boxes (matching location button aesthetics) -->
-                            <div class="tumbukiza-tiny-boxes-list">
-
-                                <!-- Box 1: Waru -->
-                                <div id="dish-waru" class="tumbukiza-mini-box"
-                                    onclick="handleDirectDishSelect(this, 'Waru', '120/=', 'Freshly boiled or fried spiced potatoes', 'sides')">
-                                    <div class="tumbukiza-box-info">
-                                        <div class="tumbukiza-box-name-row">
-                                            <span class="tumbukiza-box-name">WARU</span>
-                                            <span class="tumbukiza-box-price">120/=</span>
-                                        </div>
-                                        <div class="tumbukiza-box-desc">Boiled or fried spiced potatoes</div>
-                                    </div>
-                                    <button type="button" class="tumbukiza-mini-add-btn" data-dish-name="Waru"
-                                        onclick="handleDirectDishSelect(this, 'Waru', '120/=', 'Freshly boiled or fried spiced potatoes', 'sides')">+ ADD</button>
-                                </div>
-
-                                <!-- Box 2: Spinach -->
-                                <div id="dish-spinach" class="tumbukiza-mini-box"
-                                    onclick="handleDirectDishSelect(this, 'Spinach', '120/=', 'Fresh sauteed farm-fresh garden spinach', 'sides')">
-                                    <div class="tumbukiza-box-info">
-                                        <div class="tumbukiza-box-name-row">
-                                            <span class="tumbukiza-box-name">SPINACH</span>
-                                            <span class="tumbukiza-box-price">120/=</span>
-                                        </div>
-                                        <div class="tumbukiza-box-desc">Fresh sauteed garden spinach</div>
-                                    </div>
-                                    <button type="button" class="tumbukiza-mini-add-btn" data-dish-name="Spinach"
-                                        onclick="handleDirectDishSelect(this, 'Spinach', '120/=', 'Fresh sauteed farm-fresh garden spinach', 'sides')">+ ADD</button>
-                                </div>
-
-                                <!-- Box 3: Banana -->
-                                <div id="dish-banana" class="tumbukiza-mini-box"
-                                    onclick="handleDirectDishSelect(this, 'Banana', '100/=', 'Fresh cooked or roasted sweet bananas', 'sides')">
-                                    <div class="tumbukiza-box-info">
-                                        <div class="tumbukiza-box-name-row">
-                                            <span class="tumbukiza-box-name">BANANA</span>
-                                            <span class="tumbukiza-box-price">100/=</span>
-                                        </div>
-                                        <div class="tumbukiza-box-desc">Cooked or roasted sweet bananas</div>
-                                    </div>
-                                    <button type="button" class="tumbukiza-mini-add-btn" data-dish-name="Banana"
-                                        onclick="handleDirectDishSelect(this, 'Banana', '100/=', 'Fresh cooked or roasted sweet bananas', 'sides')">+ ADD</button>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="tumbukiza-sides-footer">
-                            Cooked in broth or served fresh on the side
-                        </div>
-                    </div>
-
-                    <!-- CHICKEN PLATTER FOR 4 -->
-                    <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; grid-column: 1 / -1; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="Chickenplatterforfour.webp" alt="CHICKEN PLATTER FOR 4 (ON ORDER)" style="width: 100%; height: auto; max-height: 450px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
-                        <div id="dish-chicken-platter-for-4-on-order" class="menu-dish-card"
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-cream); text-transform: uppercase;">
-                                CHICKEN PLATTER FOR 4 (ON ORDER)</h3>
-                            <span style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-gold); font-weight: bold;">1900/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Includes 2 Portions Chicken Wet Fry, 2 Portions Beef Fry, 1 Portion Chips, 2 Portions Ugali/Chapati, 2 Portions Veggies-spinach, 4 Small Glasses of Juice</p>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ Add to Order</button>
-                    </div>
-
-                </div>
-
-                <div class="section-header-editorial" style="margin-bottom: 30px;">
-                    <h3
-                        style="font-family: var(--font-serif); font-size: 2rem; color: var(--color-cream); text-transform: uppercase;">
-                        EXTRA SIDES & VEGES</h3>
-                </div>
-
-                <!-- Extra Sides Grid -->
-                <div class="menu-grid" id="extra-sides-grid"
-                    style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));">
-                    
-                    <!-- Rice / Mukimo Special -->
-                    <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="mukimospecial.webp" alt="Rice / Mukimo Special" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
-                        <div id="dish-rice-mukimo-special" class="menu-dish-card"
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
-                                Rice / Mukimo Special</h3>
-                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">250/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Steamed fragrant rice or seasoned mukimo special</p>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ Add to Order</button>
-                    </div>
-
-                    <!-- Pilau Special -->
-                    <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="Pilauplain.webp" alt="Pilau Special" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
-                        <div id="dish-pilau-special" class="menu-dish-card"
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
-                                Pilau Special</h3>
-                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">270/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Swahili spiced aromatic special beef pilau</p>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ Add to Order</button>
-                    </div>
-
-                    <!-- Chips Plain -->
-                    <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="Fries with salad.webp" alt="Chips Plain" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
-                        <div id="dish-chips-plain" class="menu-dish-card"
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
-                                Chips Plain</h3>
-                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">220/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Crispy golden potato chips / french fries</p>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ Add to Order</button>
-                    </div>
-
-                    <!-- Chips Masala -->
-                    <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="Chipsmasala.webp" alt="Chips Masala" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
-                        <div id="dish-chips-masala" class="menu-dish-card"
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
-                                Chips Masala</h3>
-                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">270/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Spiced masala potato chips sauteed with tangy seasoning</p>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ Add to Order</button>
-                    </div>
-
-                    <!-- Rice Plain -->
-                    <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="Riceplain.webp" alt="Rice Plain" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
-                        <div id="dish-rice-plain" class="menu-dish-card"
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
-                                Rice Plain</h3>
-                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">200/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Fragrant steamed plain white rice</p>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ Add to Order</button>
-                    </div>
-
-                    <!-- Mukimo Plain -->
-                    <div class="menu-card-luxury-wrapper"
-                        style="background: var(--color-card-bg); border: 1px solid var(--color-border-gold); padding: 24px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;">
-                        <img src="mukimoplain.webp" alt="Mukimo Plain" style="width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 0px !important; margin-bottom: 14px;" loading="lazy" decoding="async" />
-                        <div id="dish-mukimo-plain" class="menu-dish-card"
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-cream); text-transform: uppercase;">
-                                Mukimo Plain</h3>
-                            <span style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-gold); font-weight: bold;">200/=</span>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">Authentic traditional mashed potato, maize and greens</p>
-                        <button type="button" class="card-order-action-btn"
-                            style="margin-top: 16px; width: 100%; padding: 10px 14px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-weight: 700; font-size: 0.82rem; cursor: pointer;">+ Add to Order</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- VISIT RIB HOUSE - LOCATION, LIVE DIRECTIONS & SHARING -->
         <section class="location-section" id="location-section">
             <div class="location-container">
@@ -3079,13 +3186,14 @@
                 <a href="#bk-combos">Breakfast Combos</a>
                 <a href="#bk-hot">Hot Drinks</a>
                 <a href="#bk-cold">Cold Drinks</a>
+                <a href="#choma-chemsha-section">Choma & Platters</a>
                 <a href="#main-dishes-section">Main Dishes</a>
             </div>
 
             <div class="footer-col">
                 <h4>CATEGORIES</h4>
-                <a href="#main-dishes-section">Main Dishes</a>
                 <a href="#choma-chemsha-section">Choma & Chemsha</a>
+                <a href="#main-dishes-section">Main Dishes</a>
                 <a href="#bk-combos">Breakfast Combos</a>
                 <a href="#bk-hot">Barista Hot Drinks</a>
             </div>
@@ -3286,7 +3394,7 @@
         </div>
     </div>
 
-    <script src="app.js?v=20260920_v8"></script>
+    <script src="app.js?v=20260921_v14"></script>
     <script>
         // Automatic Real-Time Synchronization for Top Header Cart Badge
         (function() {
@@ -3317,6 +3425,35 @@
                     }
                 }).observe(targetBadge, { childList: true, characterData: true, subtree: true, attributes: true });
             }
+        })();
+
+        // Still Fixed Brand Watermark Scroll Sync
+        (function() {
+            const watermark = document.getElementById('fixed-dishes-watermark');
+            const bkCombos = document.getElementById('bk-combos') || document.getElementById('breakfast-section');
+            const dishesEndSection = document.getElementById('main-dishes-section') || document.getElementById('choma-chemsha-section');
+            if (!watermark || !bkCombos || !dishesEndSection) return;
+
+            function updateWatermark() {
+                const bkRect = bkCombos.getBoundingClientRect();
+                const dishesEndRect = dishesEndSection.getBoundingClientRect();
+
+                // Fades in once Breakfast Combos approaches top of viewport (within 220px)
+                // and stays still in place until all dishes (Choma & Main Dishes) end
+                const isAtDishesTop = bkRect.top <= 220;
+                const isBeforeDishesEnd = dishesEndRect.bottom >= 120;
+
+                if (isAtDishesTop && isBeforeDishesEnd) {
+                    watermark.classList.add('is-visible');
+                } else {
+                    watermark.classList.remove('is-visible');
+                }
+            }
+
+            window.addEventListener('scroll', updateWatermark, { passive: true });
+            window.addEventListener('resize', updateWatermark, { passive: true });
+            document.addEventListener('DOMContentLoaded', updateWatermark);
+            updateWatermark();
         })();
     </script>
 </body>

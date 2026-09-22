@@ -595,9 +595,23 @@ function syncMainDishesUIState() {
             if (isSelected) {
                 btn.innerHTML = btn.classList.contains('tumbukiza-box-btn') ? '✓ ADDED' : '✓ ADDED TO ORDER';
                 btn.classList.add('selected-btn-active', 'is-selected');
-                btn.style.setProperty('background', '#C2410C', 'important');
-                btn.style.setProperty('color', '#FFFFFF', 'important');
-                btn.style.setProperty('border-color', '#C2410C', 'important');
+                if (btn.classList.contains('tumbukiza-box-btn')) {
+                    btn.style.setProperty('background', '#C2410C', 'important');
+                    btn.style.setProperty('color', '#FFFFFF', 'important');
+                    btn.style.setProperty('border-color', '#C2410C', 'important');
+                } else {
+                    btn.style.setProperty('background', 'transparent', 'important');
+                    btn.style.setProperty('color', '#15803D', 'important');
+                    btn.style.setProperty('border', 'none', 'important');
+                    btn.style.setProperty('border-radius', '0px', 'important');
+                    btn.style.setProperty('padding', '6px 0', 'important');
+                    btn.style.setProperty('box-shadow', 'none', 'important');
+                    btn.style.setProperty('font-weight', '800', 'important');
+                    btn.style.setProperty('font-size', '1.05rem', 'important');
+                    btn.style.setProperty('letter-spacing', '0.8px', 'important');
+                    btn.style.setProperty('text-transform', 'uppercase', 'important');
+                    btn.style.setProperty('cursor', 'pointer', 'important');
+                }
                 if (cardBox && cardBox.classList.contains('tumbukiza-mini-box')) {
                     cardBox.classList.add('is-selected');
                 }
@@ -609,11 +623,17 @@ function syncMainDishesUIState() {
                     btn.style.setProperty('color', '#1E293B', 'important');
                     btn.style.setProperty('border-color', '#CBD5E1', 'important');
                 } else {
-                    btn.style.setProperty('background', '#EA580C', 'important');
-                    btn.style.setProperty('color', '#FFFFFF', 'important');
-                    btn.style.setProperty('border-color', '#EA580C', 'important');
-                    btn.style.setProperty('border-radius', '20px', 'important');
-                    btn.style.setProperty('padding', '8px 20px', 'important');
+                    btn.style.setProperty('background', 'transparent', 'important');
+                    btn.style.setProperty('color', '#EA580C', 'important');
+                    btn.style.setProperty('border', 'none', 'important');
+                    btn.style.setProperty('border-radius', '0px', 'important');
+                    btn.style.setProperty('padding', '6px 0', 'important');
+                    btn.style.setProperty('box-shadow', 'none', 'important');
+                    btn.style.setProperty('font-weight', '800', 'important');
+                    btn.style.setProperty('font-size', '1.05rem', 'important');
+                    btn.style.setProperty('letter-spacing', '0.8px', 'important');
+                    btn.style.setProperty('text-transform', 'uppercase', 'important');
+                    btn.style.setProperty('cursor', 'pointer', 'important');
                 }
                 if (cardBox && cardBox.classList.contains('tumbukiza-mini-box')) {
                     cardBox.classList.remove('is-selected');
@@ -3006,14 +3026,7 @@ function initClickableMenuDishes() {
             if (!cardBtn) {
                 cardBtn = document.createElement('button');
                 cardBtn.className = 'card-order-action-btn';
-                cardBtn.style.marginTop = '14px';
-                cardBtn.style.width = '100%';
-                cardBtn.style.padding = '8px 12px';
-                cardBtn.style.borderRadius = '0 !important';
-                cardBtn.style.fontSize = '0.8rem';
-                cardBtn.style.fontWeight = '700';
-                cardBtn.style.border = '1px solid #B8860B';
-                cardBtn.style.transition = 'all 0.2s ease';
+                cardBtn.innerHTML = '+ ADD TO ORDER';
                 card.appendChild(cardBtn);
             }
 
@@ -3171,14 +3184,7 @@ function initClickableMenuDishes() {
             if (!orderBtn) {
                 orderBtn = document.createElement('button');
                 orderBtn.className = 'card-order-action-btn';
-                orderBtn.style.marginTop = '12px';
-                orderBtn.style.width = '100%';
-                orderBtn.style.padding = '8px 12px';
-                orderBtn.style.borderRadius = '0 !important';
-                orderBtn.style.fontSize = '0.8rem';
-                orderBtn.style.fontWeight = '700';
-                orderBtn.style.border = '1px solid #B8860B';
-                orderBtn.style.transition = 'all 0.2s ease';
+                orderBtn.innerHTML = '+ ADD TO ORDER';
                 card.appendChild(orderBtn);
             }
 

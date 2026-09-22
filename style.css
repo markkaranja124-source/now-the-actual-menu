@@ -7030,29 +7030,31 @@ select.form-control,
     margin-left: auto !important;
     margin-right: 24px !important;
     width: auto !important;
-    padding: 9px 24px !important;
-    border-radius: 20px !important;
-    font-size: 0.82rem !important;
-    font-weight: 700 !important;
+    padding: 6px 0 !important;
+    border-radius: 0px !important;
+    font-size: 1.05rem !important;
+    font-weight: 800 !important;
     border: none !important;
-    background: linear-gradient(135deg, #FF6B00 0%, #EA580C 100%) !important;
-    color: #FFFFFF !important;
+    background: transparent !important;
+    color: #EA580C !important;
     cursor: pointer !important;
-    transition: all 0.2s ease !important;
+    transition: color 0.2s ease, transform 0.2s ease !important;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.8px;
     align-self: flex-end !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25) !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
 }
 
 .card-order-action-btn:hover {
-    background: linear-gradient(135deg, #FF7A00 0%, #C2410C 100%) !important;
-    color: #FFFFFF !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 18px rgba(234, 88, 12, 0.38) !important;
+    background: transparent !important;
+    color: #C2410C !important;
+    transform: scale(1.05) !important;
+    box-shadow: none !important;
+    text-decoration: underline !important;
 }
 
 /* ==========================================================================
@@ -7179,15 +7181,21 @@ select.form-control,
 /* Highlighted state when dish is added/selected */
 .card-order-action-btn.selected-btn-active,
 .card-order-action-btn.is-selected,
+.menu-card-luxury-wrapper.selected-item-active .card-order-action-btn {
+    background: transparent !important;
+    color: #15803D !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
 .has-card-thumb .card-info-col button.selected-btn-active,
 .has-card-thumb .card-info-col button.is-selected,
 .has-card-thumb.selected-item-active button,
-.has-card-thumb.selected-item-active .card-order-action-btn,
-.menu-card-luxury-wrapper.selected-item-active .card-order-action-btn {
-    background: #B8860B !important;
+.has-card-thumb.selected-item-active .card-order-action-btn {
+    background: #EA580C !important;
     color: #FFFFFF !important;
-    border-color: #B8860B !important;
-    box-shadow: 0 3px 12px rgba(184, 134, 11, 0.45) !important;
+    border-color: #EA580C !important;
+    box-shadow: 0 3px 12px rgba(234, 88, 12, 0.35) !important;
 }
 
 /* Mobile Responsive Horizontal Layout */
